@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copa Federações 2026 — Gerenciador Oficial de Beach Tennis</title>
+  <meta name="description" content="Sistema completo de gerenciamento de torneios de Beach Tennis entre federações estaduais brasileiras. Chaveamento por eliminação simples com BYEs, chaves reversas, grafo de jogos e telão ao vivo.">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos da Aplicação -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/bracket.css">
+  <link rel="stylesheet" href="css/schedule.css">
+  <link rel="stylesheet" href="css/telao.css">
+</head>
+<body>
+
+  <!-- BARRA DE TOPO DA COPA FEDERAÇÕES -->
+  <header class="topbar">
+    <div class="topbar-container">
+      <div class="brand-section">
+        <img src="assets/logo.jpg" alt="Logo Copa das Federações" class="main-logo" style="height: 60px; margin-right: 15px; border-radius: 8px; object-fit: contain;">
+        <div class="brand-titles">
+          <h1>
+            Copa das Federações 2026
+            <span class="brand-tag">Oficial CBT</span>
+          </h1>
+          <p>Campeonato Brasileiro de Beach Tennis</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="btn-topbar btn-topbar-ghost" onclick="window.switchTab('categorias')">
+          🎾 Categorias
+        </button>
+
+        <button class="btn-topbar btn-topbar-ghost" onclick="window.switchTab('chaveamento')">
+          ⚔️ Confrontos
+        </button>
+
+        <button class="btn-topbar btn-topbar-ghost" style="background: rgba(255, 183, 3, 0.2); border-color: rgba(255, 183, 3, 0.4); color: #ffb703;" onclick="window.switchTab('ranking')">
+          🏆 Ranking Geral
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- BARRA DE NAVEGAÇÃO PRINCIPAL -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <button class="nav-tab active" data-tab="home">
+        🏠 Início / Painel
+      </button>
+
+      <button class="nav-tab" data-tab="categorias">
+        🎾 Categorias
+      </button>
+
+      <button class="nav-tab" data-tab="chaveamento">
+        ⚔️ Confrontos
+      </button>
+
+      <button class="nav-tab" data-tab="ranking">
+        🏆 Classificação & Ranking
+      </button>
+
+      <button class="nav-tab" data-tab="cadastro">
+        👥 Federações & Atletas
+      </button>
+
+      <button class="nav-tab" data-tab="configuracoes">
+        ⚙️ Configurações
+      </button>
+    </div>
+  </nav>
+
+  <!-- CONTAINER DE TELAS (VIEWS) -->
+  <main class="main-content">
+    <!-- VIEW 1: HOME / PAINEL -->
+    <section id="view-home" class="app-view active"></section>
+
+    <!-- VIEW 2: CATEGORIAS (NOVO) -->
+    <section id="view-categorias" class="app-view"></section>
+
+    <!-- VIEW 3: CHAVEAMENTO -->
+    <section id="view-chaveamento" class="app-view"></section>
+
+    <!-- VIEW 4: RANKING -->
+    <section id="view-ranking" class="app-view"></section>
+
+    <!-- VIEW 5: CADASTRO -->
+    <section id="view-cadastro" class="app-view"></section>
+
+    <!-- VIEW 6: CONFIGURAÇÕES -->
+    <section id="view-configuracoes" class="app-view"></section>
+  </main>
+
+  <!-- MODAL GLOBAL DE CONFRONTO E AGENDAMENTO -->
+  <div id="match-modal-overlay" class="modal-overlay"></div>
+
+  <!-- CONTAINER PARA NOTIFICAÇÕES TOAST -->
+  <div id="toast-container"></div>
+
+  <!-- SCRIPT PRINCIPAL MODULAR -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="shieldGrad_pe" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d6efd;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#dc3545;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="ballGrad_pe" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c8e64a;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#8db600;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow_pe" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+    <clipPath id="shieldClip_pe">
+      <path d="M100,10 L175,35 Q185,38 185,48 L185,110 Q185,150 100,190 Q15,150 15,110 L15,48 Q15,38 25,35 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Shield shape -->
+  <path d="M100,10 L175,35 Q185,38 185,48 L185,110 Q185,150 100,190 Q15,150 15,110 L15,48 Q15,38 25,35 Z" 
+        fill="url(#shieldGrad_pe)" filter="url(#shadow_pe)" stroke="#ffffff" stroke-width="3"/>
+
+  <!-- Shield inner border -->
+  <path d="M100,18 L170,40 Q178,43 178,50 L178,108 Q178,144 100,182 Q22,144 22,108 L22,50 Q22,43 30,40 Z" 
+        fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Upper decorative band -->
+  <path d="M100,18 L170,40 Q178,43 178,50 L178,60 L22,60 L22,50 Q22,43 30,40 Z" 
+        fill="#ffffff" opacity="0.15"/>
+
+  <!-- Tennis ball -->
+  <circle cx="100" cy="148" r="22" fill="url(#ballGrad_pe)" stroke="#ffffff" stroke-width="1.5" opacity="0.85"/>
+  <!-- Tennis ball curve lines -->
+  <path d="M82,138 Q90,148 82,158" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+  <path d="M118,138 Q110,148 118,158" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Crossed rackets behind the ball -->
+  <g opacity="0.3">
+    <line x1="65" y1="80" x2="135" y2="165" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="135" y1="80" x2="65" y2="165" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <ellipse cx="72" cy="86" rx="12" ry="16" fill="none" stroke="#ffffff" stroke-width="2" transform="rotate(-40,72,86)"/>
+    <ellipse cx="128" cy="86" rx="12" ry="16" fill="none" stroke="#ffffff" stroke-width="2" transform="rotate(40,128,86)"/>
+  </g>
+
+  <!-- Federation sigla (main text) -->
+  <text x="100" y="118" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" 
+        font-size="42" font-weight="900" fill="#ffffff" letter-spacing="2"
+        stroke="#0d6efd" stroke-width="0.5" paint-order="stroke">FPT</text>
+
+  <!-- UF badge at bottom -->
+  <rect x="80" y="168" width="40" height="16" rx="8" fill="#ffffff" opacity="0.9"/>
+  <text x="100" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="800" fill="#0d6efd">PE</text>
+
+  <!-- Star decoration at top -->
+  <polygon points="100,25 103,33 111,33 105,38 107,46 100,42 93,46 95,38 89,33 97,33" fill="#ffffff" opacity="0.85"/>
+</svg>
