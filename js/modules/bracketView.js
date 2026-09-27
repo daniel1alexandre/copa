@@ -339,7 +339,7 @@ function renderMatchCard(game) {
       <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}" style="display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0.3rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderA}; min-height: 32px;">
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${isFirstRound && game.status === 'aguardando' ? `
-            <select class="inline-team-select" style="max-width: 170px; font-size: 0.7rem; padding: 0.2rem; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 600; outline: none; cursor: pointer; text-overflow: ellipsis;" onchange="window.inlineUpdateTeam('${game.code}', '${game.categoria_id}', 'A', this.value)">
+            <select id="inline-edit-a-${game.code}" class="inline-team-select" style="max-width: 170px; font-size: 0.7rem; padding: 0.2rem; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 600; outline: none; cursor: pointer; text-overflow: ellipsis;">
               ${getFedsOptions(game.is_bye && !game.lado_a ? 'BYE' : game.lado_a?.id)}
             </select>
           ` : getTeamName(game.lado_a, isBye && !game.lado_a, 'A')}
@@ -355,7 +355,7 @@ function renderMatchCard(game) {
       <div class="match-team-row ${isWinnerB ? 'is-winner' : (isWinnerA ? 'is-loser' : '')}" style="display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0.3rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 32px;">
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${isFirstRound && game.status === 'aguardando' ? `
-             <select class="inline-team-select" style="max-width: 170px; font-size: 0.7rem; padding: 0.2rem; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 600; outline: none; cursor: pointer; text-overflow: ellipsis;" onchange="window.inlineUpdateTeam('${game.code}', '${game.categoria_id}', 'B', this.value)">
+             <select id="inline-edit-b-${game.code}" class="inline-team-select" style="max-width: 170px; font-size: 0.7rem; padding: 0.2rem; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 600; outline: none; cursor: pointer; text-overflow: ellipsis;">
               ${getFedsOptions(game.is_bye && !game.lado_b ? 'BYE' : game.lado_b?.id)}
             </select>
           ` : getTeamName(game.lado_b, isBye && !game.lado_b, 'B')}
@@ -366,6 +366,12 @@ function renderMatchCard(game) {
           </div>
         ` : ''}
       </div>
+
+      ${isFirstRound && game.status === 'aguardando' ? `
+        <div style="display: flex; justify-content: center; margin-top: 0.5rem; padding-bottom: 0.2rem;">
+          <button style="background: #166534; color: white; border: none; padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; cursor: pointer; width: 100%; box-shadow: 0 1px 2px rgba(0,0,0,0.1);" onclick="window.saveInlineCard('${game.code}', '${game.categoria_id}')">💾 Salvar Estados</button>
+        </div>
+      ` : ''}
 
       <!-- DETALHES DE SUBJOGOS (PLACAR) -->
       <div class="match-footer-details" style="margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed #cbd5e1;">
@@ -513,16 +519,26 @@ function renderTableBracket(games) {
 
 
 // --- INLINE EDIT HANDLERS ---
-window.inlineUpdateTeam = function(code, catId, side, value) {
-  const isBye = value === 'BYE';
-  const teamId = isBye ? null : (value || null);
-  const game = window.store.getGames(catId).find(g => g.code === code);
-  if(!game) return;
-  const teamA = side === 'A' ? teamId : (game.lado_a ? game.lado_a.id : null);
-  const teamB = side === 'B' ? teamId : (game.lado_b ? game.lado_b.id : null);
-  const byeState = side === 'B' ? isBye : game.is_bye; // Permite forçar BYE
-  const res = window.store.updateFirstRoundMatch(catId, code, teamA, teamB, byeState, 'B');
-  if(!res.success) alert(res.message);
+window.saveInlineCard = function(code, catId) {
+  const selA = document.getElementById(`inline-edit-a-${code}`);
+  const selB = document.getElementById(`inline-edit-b-${code}`);
+  if (!selA || !selB) return;
+
+  const valA = selA.value;
+  const valB = selB.value;
+
+  if (valA === 'BYE' && valB === 'BYE') {
+    alert("Um confronto não pode ter dois BYEs.");
+    return;
+  }
+
+  const isBye = (valA === 'BYE' || valB === 'BYE');
+  const byeSlot = valA === 'BYE' ? 'A' : (valB === 'BYE' ? 'B' : 'B');
+  const teamAId = valA === 'BYE' ? null : (valA || null);
+  const teamBId = valB === 'BYE' ? null : (valB || null);
+
+  const res = window.store.updateFirstRoundMatch(catId, code, teamAId, teamBId, isBye, byeSlot);
+  if (!res.success) alert(res.message);
   else {
     if (window.renderBracket) window.renderBracket();
   }
