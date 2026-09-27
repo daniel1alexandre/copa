@@ -582,28 +582,44 @@ window.inlineUpdateScore = function(code, catId, jogoNum, field, value) {
 
 // --- MASK SCORE ---
 window.maskScore = function(input) {
-  // Guarda a posição do cursor
   let start = input.selectionStart;
   let lenBefore = input.value.length;
 
-  let v = input.value.replace(/\D/g, ''); // Remove não números
+  let raw = input.value;
   let out = '';
   
-  if (v.length <= 6) {
-    for (let i = 0; i < v.length; i++) {
-      if (i === 1 || i === 3 || i === 5) out += '/' + v[i];
-      else if (i === 2 || i === 4) out += ' ' + v[i];
-      else out += v[i];
+  // Se o usuário digitar manualmente barras, espaços ou parênteses, respeitamos a digitação livre
+  if (raw.includes('/') || raw.includes(' ') || raw.includes('(')) {
+    out = raw.replace(/[^\d\s\/\(\)]/g, '');
+  } else {
+    // Máscara automática para quem digita apenas números (ex: 64651010 -> 6/4 6/5 10/10)
+    let v = raw.replace(/\D/g, '');
+    if (v.length <= 2) {
+      out = v.length === 2 ? v[0] + '/' + v[1] : v;
+    } else if (v.length <= 4) {
+      out = v[0] + '/' + v[1] + ' ' + (v.length === 4 ? v[2] + '/' + v[3] : v.substring(2));
+    } else {
+      out = v[0] + '/' + v[1] + ' ' + v[2] + '/' + v[3] + ' ';
+      let s3 = v.substring(4);
+      if (s3.length === 1) {
+        out += s3;
+      } else if (s3.length === 2) {
+        if (s3.startsWith('1') || s3.startsWith('2')) out += s3; // 10, 11, 12... mantém 2 casas
+        else out += s3[0] + '/' + s3[1];
+      } else if (s3.length === 3) {
+        if (s3.startsWith('1') || s3.startsWith('2')) out += s3.substring(0,2) + '/' + s3[2];
+        else out += s3[0] + '/' + s3.substring(1,3);
+      } else if (s3.length >= 4) {
+        out += s3.substring(0,2) + '/' + s3.substring(2,4);
+      }
     }
-  } else if (v.length === 7) { // ex: 6 4 6 3 10 8 -> 6/4 6/3 10/8
-    out = v[0] + '/' + v[1] + ' ' + v[2] + '/' + v[3] + ' ' + v.substring(4, 6) + '/' + v[6];
-  } else if (v.length >= 8) { // ex: 6 4 6 3 12 10 -> 6/4 6/3 12/10
-    out = v[0] + '/' + v[1] + ' ' + v[2] + '/' + v[3] + ' ' + v.substring(4, 6) + '/' + v.substring(6, 8);
   }
 
   input.value = out;
   
   // Ajusta cursor grosseiramente
   let diff = out.length - lenBefore;
-  input.setSelectionRange(start + diff, start + diff);
+  let newPos = start + diff;
+  if (newPos < 0) newPos = 0;
+  input.setSelectionRange(newPos, newPos);
 };
