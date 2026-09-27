@@ -330,7 +330,7 @@ class AppStore {
         g.placar_jogo3 = ''; g.resultado_jogo3 = null;
         g.vencedor_id = null; g.perdedor_id = null;
         if (g.fase === '1ª Fase') {
-          g.status = (g.lado_a && g.lado_b) ? 'em espera' : 'aguardando';
+          g.status = 'aguardando';
         } else {
           g.lado_a = null;
           g.lado_b = null;

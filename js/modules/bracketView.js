@@ -10,6 +10,7 @@ let currentViewMode = 'tree'; // tree | table
 
 export function initBracketView() {
   window.openEditFirstRoundCardModal = (code, catId) => openEditFirstRoundCardModal(code, catId || currentCategory);
+  window.openMatchScore = (code, catId) => openMatchModal(code, catId || currentCategory);
 
   window.switchBracketCategory = (catId) => {
     currentCategory = catId;
@@ -332,7 +333,12 @@ function renderMatchCard(game) {
           <span class="match-code-tag" style="background: #334155; color: white; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.7rem; font-weight: 800;">${game.code}</span>
           ${(game.descricao || (game.code === 'C31' ? 'Grande Final (1º e 2º)' : (game.code === 'C32' ? 'Disputa 3º e 4º' : ''))) ? `<span style="font-size: 0.65rem; color: #64748b; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px;" title="${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}">${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}</span>` : ''}
         </div>
-        <span class="badge-status ${isBye ? 'encerrado' : game.status}" style="font-size: 0.6rem; padding: 0.15rem 0.4rem; border-radius: 12px; text-transform: uppercase; font-weight: 800; flex-shrink: 0;">${isBye ? 'BYE' : game.status}</span>
+        <div style="display: flex; align-items: center; gap: 0.35rem;">
+          <span class="badge-status ${isBye ? 'encerrado' : game.status}" style="font-size: 0.6rem; padding: 0.15rem 0.4rem; border-radius: 12px; text-transform: uppercase; font-weight: 800; flex-shrink: 0;">${isBye ? 'BYE' : game.status}</span>
+          ${(!isFirstRound || game.status !== 'aguardando') ? `
+            <button style="background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.3rem;" onclick="window.${isFirstRound ? 'openEditFirstRoundCardModal' : 'openMatchScore'}('${game.code}', '${game.categoria_id}')" title="Editar Confronto">✏️</button>
+          ` : ''}
+        </div>
       </div>
 
       <!-- TIME A -->
