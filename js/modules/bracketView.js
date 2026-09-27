@@ -306,7 +306,7 @@ function renderMatchCard(game) {
     
     const byesList = s ? s.getCategoryByes(game.categoria_id) : [];
     const byeRank = byesList.indexOf(team.id) + 1;
-    const seedText = byeRank > 0 ? `#${byeRank}` : (team.seed ? `#${team.seed}` : '');
+    const seedText = byeRank > 0 ? `#${byeRank}` : '';
 
     return `
       <div style="display: flex; align-items: center; gap: 0.4rem;">

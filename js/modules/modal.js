@@ -319,7 +319,7 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
                       ${federations.map(f => {
                         const byesList = store.getCategoryByes(categoryId);
                         const byeRank = byesList.indexOf(f.id) + 1;
-                        const seedLabel = byeRank > 0 ? `[#${byeRank}]` : (f.seed ? `[#${f.seed}]` : '');
+                        const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
                         return `
                         <option value="${f.id}" ${g.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
                         `;
@@ -334,7 +334,7 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
                       ${federations.map(f => {
                         const byesList = store.getCategoryByes(categoryId);
                         const byeRank = byesList.indexOf(f.id) + 1;
-                        const seedLabel = byeRank > 0 ? `[#${byeRank}]` : (f.seed ? `[#${f.seed}]` : '');
+                        const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
                         return `
                         <option value="${f.id}" ${(!g.is_bye && g.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
                         `;
@@ -609,7 +609,7 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
                   const isPart = participatingIds.has(f.id);
                   const byesList = store.getCategoryByes(categoryId);
                   const byeRank = byesList.indexOf(f.id) + 1;
-                  const seedLabel = byeRank > 0 ? `[#${byeRank}]` : (f.seed ? `[#${f.seed}]` : '');
+                  const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
                   return `
                     <option value="${f.id}" ${game.lado_a?.id === f.id ? 'selected' : ''}>
                       ${f.nome} (${f.uf}) ${seedLabel} ${!isPart ? '(não inscrito)' : ''}
@@ -639,7 +639,7 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
                   const isPart = participatingIds.has(f.id);
                   const byesList = store.getCategoryByes(categoryId);
                   const byeRank = byesList.indexOf(f.id) + 1;
-                  const seedLabel = byeRank > 0 ? `[#${byeRank}]` : (f.seed ? `[#${f.seed}]` : '');
+                  const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
                   return `
                     <option value="${f.id}" ${game.lado_b?.id === f.id ? 'selected' : ''}>
                       ${f.nome} (${f.uf}) ${seedLabel} ${!isPart ? '(não inscrito)' : ''}
