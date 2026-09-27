@@ -304,11 +304,15 @@ function renderMatchCard(game) {
       return `<span style="color: #94a3b8; font-style: italic; font-size: 0.7rem; font-weight: 600;">${sourceStr}</span>`;
     }
     
+    const byesList = s ? s.getCategoryByes(game.categoria_id) : [];
+    const byeRank = byesList.indexOf(team.id) + 1;
+    const seedText = byeRank > 0 ? `#${byeRank}` : (team.seed ? `#${team.seed}` : '');
+
     return `
       <div style="display: flex; align-items: center; gap: 0.4rem;">
         <img src="assets/federations/${team.id}.jpg" alt="${team.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
         <span style="font-weight: 700; font-size: 0.85rem; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px;" title="${team.nome}">${team.uf} - ${team.nome}</span>
-        ${team.seed ? `<span style="font-size: 0.65rem; color: var(--accent-gold); font-weight: 800; background: #fef3c7; padding: 0.1rem 0.2rem; border-radius: 2px;">#${team.seed}</span>` : ''}
+        ${seedText ? `<span style="font-size: 0.65rem; color: #b45309; font-weight: 800; background: #fef3c7; padding: 0.1rem 0.2rem; border-radius: 2px;">${seedText}</span>` : ''}
       </div>
     `;
   };

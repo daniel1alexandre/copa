@@ -316,9 +316,14 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
                     <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Equipe A:</label>
                     <select class="form-select cfg-team-a" data-code="${g.code}" style="padding: 0.35rem 0.5rem; font-size: 0.825rem;" onchange="window.updateFirstRoundCounters()">
                       <option value="">-- Selecionar Federação --</option>
-                      ${federations.map(f => `
-                        <option value="${f.id}" ${g.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf})</option>
-                      `).join('')}
+                      ${federations.map(f => {
+                        const byesList = store.getCategoryByes(categoryId);
+                        const byeRank = byesList.indexOf(f.id) + 1;
+                        const seedLabel = byeRank > 0 ? `[#${byeRank}]` : (f.seed ? `[#${f.seed}]` : '');
+                        return `
+                        <option value="${f.id}" ${g.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
+                        `;
+                      }).join('')}
                     </select>
                   </div>
 
@@ -326,9 +331,14 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
                     <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Equipe B:</label>
                     <select class="form-select cfg-team-b" data-code="${g.code}" style="padding: 0.35rem 0.5rem; font-size: 0.825rem;" ${g.is_bye ? 'disabled' : ''} onchange="window.updateFirstRoundCounters()">
                       <option value="">-- VAGA LIVRE (BYE) --</option>
-                      ${federations.map(f => `
-                        <option value="${f.id}" ${(!g.is_bye && g.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf})</option>
-                      `).join('')}
+                      ${federations.map(f => {
+                        const byesList = store.getCategoryByes(categoryId);
+                        const byeRank = byesList.indexOf(f.id) + 1;
+                        const seedLabel = byeRank > 0 ? `[#${byeRank}]` : (f.seed ? `[#${f.seed}]` : '');
+                        return `
+                        <option value="${f.id}" ${(!g.is_bye && g.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
+                        `;
+                      }).join('')}
                     </select>
                   </div>
                 </div>
@@ -597,9 +607,12 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
                 <option value="">-- Nenhuma Selecionada --</option>
                 ${sortedFeds.map(f => {
                   const isPart = participatingIds.has(f.id);
+                  const byesList = store.getCategoryByes(categoryId);
+                  const byeRank = byesList.indexOf(f.id) + 1;
+                  const seedLabel = byeRank > 0 ? `[#${byeRank}]` : (f.seed ? `[#${f.seed}]` : '');
                   return `
                     <option value="${f.id}" ${game.lado_a?.id === f.id ? 'selected' : ''}>
-                      ${f.nome} (${f.uf}) ${f.seed ? `[#${f.seed}]` : ''} ${!isPart ? '(não inscrito)' : ''}
+                      ${f.nome} (${f.uf}) ${seedLabel} ${!isPart ? '(não inscrito)' : ''}
                     </option>
                   `;
                 }).join('')}
@@ -624,9 +637,12 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
                 <option value="">-- Nenhuma Selecionada --</option>
                 ${sortedFeds.map(f => {
                   const isPart = participatingIds.has(f.id);
+                  const byesList = store.getCategoryByes(categoryId);
+                  const byeRank = byesList.indexOf(f.id) + 1;
+                  const seedLabel = byeRank > 0 ? `[#${byeRank}]` : (f.seed ? `[#${f.seed}]` : '');
                   return `
                     <option value="${f.id}" ${game.lado_b?.id === f.id ? 'selected' : ''}>
-                      ${f.nome} (${f.uf}) ${f.seed ? `[#${f.seed}]` : ''} ${!isPart ? '(não inscrito)' : ''}
+                      ${f.nome} (${f.uf}) ${seedLabel} ${!isPart ? '(não inscrito)' : ''}
                     </option>
                   `;
                 }).join('')}
