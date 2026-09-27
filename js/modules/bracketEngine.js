@@ -2,8 +2,13 @@
 const STANDARD_BYE_SLOTS_32 = [1, 31, 17, 15, 9, 23, 25, 7, 19, 11, 27, 3, 29, 5, 21, 13];
 
 export function createGraphBracket(federations, categoryId, categoryByes = []) {
-  // Separar as federações escolhidas para passar de BYE
-  const byeFeds = federations.filter(f => categoryByes.includes(f.id));
+  // Separar as federações escolhidas para passar de BYE (respeitando a ordem de seleção)
+  const byeFeds = [];
+  categoryByes.forEach(byeId => {
+    const fed = federations.find(f => f.id === byeId);
+    if (fed) byeFeds.push(fed);
+  });
+  
   const otherFeds = federations.filter(f => !categoryByes.includes(f.id));
 
   // Ordena o restante por seed e alfabeticamente
