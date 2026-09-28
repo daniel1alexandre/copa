@@ -118,11 +118,7 @@ export function renderConfig() {
         </p>
       </div>
 
-      <div style="display: flex; gap: 0.65rem;">
-        <button class="btn btn-outline" onclick="window.handleExportBackup()">💾 Exportar JSON</button>
-        <button class="btn btn-outline" onclick="window.handleImportBackup()">📂 Importar JSON</button>
-        <button class="btn btn-danger" onclick="window.handleResetAllData()">⚠️ Resetar aos Padrões</button>
-      </div>
+
     </div>
 
     <!-- GRADE DE CONFIGURAÇÕES -->
