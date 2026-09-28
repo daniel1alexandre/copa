@@ -397,14 +397,23 @@ class AppStore {
     if (res.success) {
       let byesList = [...this.getCategoryByes(categoryId)];
       
-      if (wasBye) {
-        if (oldTeamA) byesList = byesList.filter(id => id !== oldTeamA.id);
-        if (oldTeamB) byesList = byesList.filter(id => id !== oldTeamB.id);
-      }
+      let oldTeamId = null;
+      if (wasBye) oldTeamId = (oldTeamB && oldTeamB.id === 'bye') ? oldTeamA?.id : oldTeamB?.id;
+      if (!oldTeamId && wasBye) oldTeamId = oldTeamA?.id; // fallback
       
-      if (isBye) {
-        if (byeSlot === 'B' && teamA && !byesList.includes(teamA.id)) byesList.push(teamA.id);
-        else if (byeSlot === 'A' && teamB && !byesList.includes(teamB.id)) byesList.push(teamB.id);
+      let newTeamId = null;
+      if (isBye) newTeamId = (byeSlot === 'B') ? teamA?.id : teamB?.id;
+      
+      if (wasBye && isBye) {
+        // Swap while preserving rank
+        if (oldTeamId && newTeamId && oldTeamId !== newTeamId) {
+          let idx = byesList.indexOf(oldTeamId);
+          if (idx !== -1) byesList[idx] = newTeamId;
+          else byesList.push(newTeamId);
+        }
+      } else {
+        if (wasBye && oldTeamId) byesList = byesList.filter(id => id !== oldTeamId);
+        if (isBye && newTeamId && !byesList.includes(newTeamId)) byesList.push(newTeamId);
       }
       
       if (!this.state.categoryByes) this.state.categoryByes = {};
@@ -426,21 +435,44 @@ class AppStore {
       snapshot: JSON.parse(JSON.stringify(r32Games))
     });
 
-    const newByes = [];
+    let byesList = [...this.getCategoryByes(categoryId)];
+    
+    // Map existing BYE games to their active team IDs so we know who to replace
+    const oldByesMap = {};
+    const r32GamesForMap = games.filter(g => g.fase === '1ª Fase');
+    r32GamesForMap.forEach(g => {
+      if (g.is_bye) {
+        let teamId = (g.lado_b && g.lado_b.id === 'bye') ? g.lado_a?.id : g.lado_b?.id;
+        if (!teamId) teamId = g.lado_a?.id;
+        oldByesMap[g.code] = teamId;
+      }
+    });
 
     for (const item of matchups) {
       const teamA = item.teamAId ? this.getFederation(item.teamAId) : null;
       const teamB = item.teamBId ? this.getFederation(item.teamBId) : null;
-      updateFirstRoundMatch(games, item.code, teamA, teamB, item.isBye, item.byeSlot || 'B');
       
-      if (item.isBye) {
-        if (item.byeSlot === 'B' && item.teamAId) newByes.push(item.teamAId);
-        else if (item.byeSlot === 'A' && item.teamBId) newByes.push(item.teamBId);
+      const oldTeamId = oldByesMap[item.code];
+      const isBye = item.isBye;
+      let newTeamId = null;
+      if (isBye) newTeamId = (item.byeSlot === 'B') ? item.teamAId : item.teamBId;
+      
+      if (oldTeamId && isBye) {
+        if (newTeamId && oldTeamId !== newTeamId) {
+          let idx = byesList.indexOf(oldTeamId);
+          if (idx !== -1) byesList[idx] = newTeamId;
+          else byesList.push(newTeamId);
+        }
+      } else {
+        if (oldTeamId) byesList = byesList.filter(id => id !== oldTeamId);
+        if (isBye && newTeamId && !byesList.includes(newTeamId)) byesList.push(newTeamId);
       }
+      
+      updateFirstRoundMatch(games, item.code, teamA, teamB, item.isBye, item.byeSlot || 'B');
     }
 
     if (!this.state.categoryByes) this.state.categoryByes = {};
-    this.state.categoryByes[categoryId] = newByes;
+    this.state.categoryByes[categoryId] = byesList;
 
     this.save();
     return { success: true, message: 'Chaveamento da 1ª rodada atualizado com sucesso!' };

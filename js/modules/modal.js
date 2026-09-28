@@ -111,7 +111,7 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                 <div>
                   <label class="form-label">Placar do Jogo 1:</label>
-                  <input type="text" id="modal-placar-j1" class="form-control" value="${game.placar_jogo1 || ''}" placeholder="${isProf ? 'Ex: 6/3 6/4' : 'Ex: 4/1 4/2'}">
+                  <input type="text" id="modal-placar-j1" class="form-control" value="${game.placar_jogo1 || ''}" placeholder="${isProf ? 'Ex: 6/3 6/4' : 'Ex: 4/1 4/2'}" oninput="window.maskScore(this)">
                 </div>
                 <div>
                   <label class="form-label">Vencedor Jogo 1:</label>
@@ -133,7 +133,7 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                 <div>
                   <label class="form-label">Placar do Jogo 2:</label>
-                  <input type="text" id="modal-placar-j2" class="form-control" value="${game.placar_jogo2 || ''}" placeholder="${isProf ? 'Ex: 6/4 7/5' : 'Ex: 4/2 4/1'}">
+                  <input type="text" id="modal-placar-j2" class="form-control" value="${game.placar_jogo2 || ''}" placeholder="${isProf ? 'Ex: 6/4 7/5' : 'Ex: 4/2 4/1'}" oninput="window.maskScore(this)">
                 </div>
                 <div>
                   <label class="form-label">Vencedor Jogo 2:</label>
@@ -155,7 +155,7 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                 <div>
                   <label class="form-label">Placar Jogo 3 (Decisivo):</label>
-                  <input type="text" id="modal-placar-j3" class="form-control" value="${game.placar_jogo3 || ''}" placeholder="Ex: 10/8 Super TB">
+                  <input type="text" id="modal-placar-j3" class="form-control" value="${game.placar_jogo3 || ''}" placeholder="Ex: 10/8 Super TB" oninput="window.maskScore(this)">
                 </div>
                 <div>
                   <label class="form-label">Vencedor Jogo 3:</label>
@@ -662,7 +662,7 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
               <div>
                 <label class="form-label" style="color: #be185d; font-weight: 700;">Jogo 1: Dupla Feminina (F)</label>
-                <input type="text" id="card-edit-p1" class="form-control" value="${game.placar_jogo1 || ''}" placeholder="${isProf ? 'Ex: 6/3 6/4' : 'Ex: 4/1 4/2'}">
+                <input type="text" id="card-edit-p1" class="form-control" value="${game.placar_jogo1 || ''}" placeholder="${isProf ? 'Ex: 6/3 6/4' : 'Ex: 4/1 4/2'}" oninput="window.maskScore(this)">
               </div>
               <div>
                 <label class="form-label">Vencedor Jogo 1:</label>
@@ -677,7 +677,7 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
               <div>
                 <label class="form-label" style="color: #1d4ed8; font-weight: 700;">Jogo 2: Dupla Masculina (M)</label>
-                <input type="text" id="card-edit-p2" class="form-control" value="${game.placar_jogo2 || ''}" placeholder="${isProf ? 'Ex: 6/4 7/5' : 'Ex: 4/2 4/1'}">
+                <input type="text" id="card-edit-p2" class="form-control" value="${game.placar_jogo2 || ''}" placeholder="${isProf ? 'Ex: 6/4 7/5' : 'Ex: 4/2 4/1'}" oninput="window.maskScore(this)">
               </div>
               <div>
                 <label class="form-label">Vencedor Jogo 2:</label>
@@ -692,7 +692,7 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
               <div>
                 <label class="form-label" style="color: #b45309; font-weight: 700;">Jogo 3: Dupla Mista (DX - Decisivo)</label>
-                <input type="text" id="card-edit-p3" class="form-control" value="${game.placar_jogo3 || ''}" placeholder="Ex: 10/7 Super TB">
+                <input type="text" id="card-edit-p3" class="form-control" value="${game.placar_jogo3 || ''}" placeholder="Ex: 10/7 Super TB" oninput="window.maskScore(this)">
               </div>
               <div>
                 <label class="form-label">Vencedor Jogo 3:</label>
