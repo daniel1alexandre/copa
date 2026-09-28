@@ -585,39 +585,20 @@ window.maskScore = function(input) {
   let start = input.selectionStart;
   let lenBefore = input.value.length;
 
-  let raw = input.value;
+  let v = input.value.replace(/\D/g, ''); // Apenas números
   let out = '';
   
-  // Se o usuário digitar manualmente barras, espaços ou parênteses, respeitamos a digitação livre
-  if (raw.includes('/') || raw.includes(' ') || raw.includes('(')) {
-    out = raw.replace(/[^\d\s\/\(\)]/g, '');
-  } else {
-    // Máscara automática para quem digita apenas números (ex: 64651010 -> 6/4 6/5 10/10)
-    let v = raw.replace(/\D/g, '');
-    if (v.length <= 2) {
-      out = v.length === 2 ? v[0] + '/' + v[1] : v;
-    } else if (v.length <= 4) {
-      out = v[0] + '/' + v[1] + ' ' + (v.length === 4 ? v[2] + '/' + v[3] : v.substring(2));
-    } else {
-      out = v[0] + '/' + v[1] + ' ' + v[2] + '/' + v[3] + ' ';
-      let s3 = v.substring(4);
-      if (s3.length === 1) {
-        out += s3;
-      } else if (s3.length === 2) {
-        if (s3.startsWith('1') || s3.startsWith('2')) out += s3; // 10, 11, 12... mantém 2 casas
-        else out += s3[0] + '/' + s3[1];
-      } else if (s3.length === 3) {
-        if (s3.startsWith('1') || s3.startsWith('2')) out += s3.substring(0,2) + '/' + s3[2];
-        else out += s3[0] + '/' + s3.substring(1,3);
-      } else if (s3.length >= 4) {
-        out += s3.substring(0,2) + '/' + s3.substring(2,4);
-      }
-    }
-  }
+  if (v.length > 0) out += v[0];
+  if (v.length > 1) out += '/' + v[1];
+  if (v.length > 2) out += ' ' + v[2];
+  if (v.length > 3) out += '/' + v[3];
+  if (v.length > 4) out += ' ' + v[4];
+  if (v.length > 5) out += v[5];
+  if (v.length > 6) out += '/' + v[6];
+  if (v.length > 7) out += v[7];
 
   input.value = out;
   
-  // Ajusta cursor grosseiramente
   let diff = out.length - lenBefore;
   let newPos = start + diff;
   if (newPos < 0) newPos = 0;
