@@ -55,7 +55,7 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
 
         ${game.fase === '1ª Fase' ? `
           <!-- SEÇÃO DE EDIÇÃO DE EQUIPES E BYE PARA 1ª FASE -->
-          <details style="margin-bottom: 1.25rem; border: 1px solid #cbd5e1; border-radius: var(--radius-md); background: #ffffff; padding: 0.75rem;" ${game.is_bye ? 'open' : ''}>
+          <details style="margin-bottom: 1.25rem; border: 1px solid #cbd5e1; border-radius: var(--radius-md); background: #ffffff; padding: 0.75rem;" open>
             <summary style="font-weight: 700; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
               <span>⚙️ Editar Equipes do Confronto / Definir BYE</span>
               <span style="font-size: 0.75rem; background: var(--primary-light); padding: 0.2rem 0.5rem; border-radius: var(--radius-xs);">1ª Rodada</span>
@@ -63,29 +63,35 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
             <div style="margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px dashed var(--border-light);">
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                 <div>
-                  <label class="form-label">Equipe A:</label>
+                  <label class="form-label">Equipe A (ou BYE):</label>
                   <select id="edit-side-a" class="form-select">
                     <option value="">-- Nenhuma / Em Aberto --</option>
-                    ${store.getFederations().map(f => `
-                      <option value="${f.id}" ${game.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf})</option>
-                    `).join('')}
+                    ${store.getFederations().map(f => {
+                      const byesList = store.getCategoryByes(categoryId);
+                      const byeRank = byesList.indexOf(f.id) + 1;
+                      const lbl = byeRank > 0 ? ` [#${byeRank}]` : '';
+                      return `<option value="${f.id}" ${game.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf})${lbl}</option>`;
+                    }).join('')}
                   </select>
                 </div>
                 <div>
-                  <label class="form-label">Equipe B:</label>
-                  <select id="edit-side-b" class="form-select" ${game.is_bye ? 'disabled' : ''}>
+                  <label class="form-label">Equipe B (ou BYE):</label>
+                  <select id="edit-side-b" class="form-select">
                     <option value="">-- Nenhuma / Em Aberto --</option>
-                    ${store.getFederations().map(f => `
-                      <option value="${f.id}" ${game.lado_b?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf})</option>
-                    `).join('')}
+                    ${store.getFederations().map(f => {
+                      const byesList = store.getCategoryByes(categoryId);
+                      const byeRank = byesList.indexOf(f.id) + 1;
+                      const lbl = byeRank > 0 ? ` [#${byeRank}]` : '';
+                      return `<option value="${f.id}" ${(game.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf})${lbl}</option>`;
+                    }).join('')}
                   </select>
                 </div>
               </div>
 
               <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem;">
                 <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; color: #065f46;">
-                  <input type="checkbox" id="edit-is-bye" ${game.is_bye ? 'checked' : ''} onchange="document.getElementById('edit-side-b').disabled = this.checked">
-                  Definir este confronto como BYE (Equipe A avança automaticamente sem placar)
+                  <input type="checkbox" id="edit-is-bye" ${game.is_bye ? 'checked' : ''}>
+                  BYE — Equipe A avança automaticamente
                 </label>
 
                 <button type="button" class="btn btn-secondary btn-sm" id="btn-save-match-teams">
@@ -194,14 +200,18 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
   if (btnSaveTeams) {
     btnSaveTeams.addEventListener('click', () => {
       const teamAId = document.getElementById('edit-side-a').value || null;
+      const teamBId = document.getElementById('edit-side-b').value || null;
       const isBye = document.getElementById('edit-is-bye').checked;
-      const teamBId = isBye ? null : (document.getElementById('edit-side-b').value || null);
 
-      const res = store.updateFirstRoundMatch(categoryId, gameCode, teamAId, teamBId, isBye, 'B');
+      // byeSlot: determinar qual lado é o "bye" (quem avança automaticamente)
+      // Convention: A avança, byeSlot = 'B' (slot B é a vaga vazia/bye)
+      const byeSlot = 'B';
+
+      const res = store.updateFirstRoundMatch(categoryId, gameCode, teamAId, isBye ? null : teamBId, isBye, byeSlot);
       if (res.success) {
         toast.show({
           title: 'Confronto Atualizado',
-          message: `Equipes do jogo ${gameCode} e propagação de BYE atualizadas com sucesso!`,
+          message: `Equipes do jogo ${gameCode} atualizadas. Ranking BYE preservado!`,
           type: 'success'
         });
         openMatchModal(gameCode, categoryId); // Recarrega o modal atualizado
