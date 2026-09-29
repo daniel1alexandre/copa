@@ -40,6 +40,17 @@ class AppStore {
                   g.status = g.vencedor_id ? 'encerrado' : 'aguardando';
                 }
               });
+              // Atualiza o cruzamento de C5 e C7 para R17_3 e R17_4 nos brackets salvos
+              const c5 = gamesList.find(g => g.code === 'C5');
+              const c7 = gamesList.find(g => g.code === 'C7');
+              if (c5 && c5.proxima_fase_perdedor === 'R17_3') {
+                c5.proxima_fase_perdedor = 'R17_4';
+                c5.proxima_fase_perdedor_slot = 'A';
+              }
+              if (c7 && c7.proxima_fase_perdedor === 'R17_4') {
+                c7.proxima_fase_perdedor = 'R17_3';
+                c7.proxima_fase_perdedor_slot = 'A';
+              }
               // Propaga automaticamente confrontos com Vaga Livre (BYE) para a próxima fase
               propagateAllByes(gamesList);
             }

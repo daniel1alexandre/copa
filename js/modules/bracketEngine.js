@@ -75,8 +75,18 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     // Próximo jogo: Oitavas (C17 a C24)
     const nextGameNum = 17 + Math.floor(i / 2);
     const nextSlot = i % 2 === 0 ? 'A' : 'B';
-    const revGameNum = 1 + Math.floor(i / 2);
-    const revSlot = i % 2 === 0 ? 'A' : 'B';
+    let revGameNum = 1 + Math.floor(i / 2);
+    let revSlot = i % 2 === 0 ? 'A' : 'B';
+
+    // Regra específica: No confronto R17_3 o primeiro estado é o perdedor de C7 (que vinha para R17_4),
+    // e o perdedor de C5 (BYE) vai para R17_4, fazendo o perdedor de C8 ficar de BYE.
+    if (i === 4) { // C5
+      revGameNum = 4;
+      revSlot = 'A';
+    } else if (i === 6) { // C7
+      revGameNum = 3;
+      revSlot = 'A';
+    }
 
     const game = {
       id: gameId,
