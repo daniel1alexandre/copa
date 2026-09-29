@@ -15,12 +15,19 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
     ? 'Melhor de 3 sets convencionais (até 6 games)'
     : '2 sets até 4 games (3x3 tie-break até 7 pts) • Empate 1x1: Super Tie-break até 10 pts';
 
-  const teamAName = game.lado_a 
-    ? `<span style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${game.lado_a.id}.jpg" alt="${game.lado_a.uf}" style="width: 24px; height: 16px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);"> <strong>${game.lado_a.nome} (${game.lado_a.uf})</strong></span>` 
-    : 'Aguardando definição';
-  const teamBName = game.lado_b 
-    ? `<span style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${game.lado_b.id}.jpg" alt="${game.lado_b.uf}" style="width: 24px; height: 16px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);"> <strong>${game.lado_b.nome} (${game.lado_b.uf})</strong></span>` 
-    : (game.is_bye ? '<span style="color: #059669; font-weight: 700;">⏩ BYE (Avança Direto)</span>' : 'Aguardando definição');
+  const isByeA = game.is_bye && (!game.lado_a || game.bye_slot === 'A');
+  const isByeB = game.is_bye && (!game.lado_b || game.bye_slot === 'B');
+
+  const teamAName = isByeA
+    ? '<span style="color: #059669; font-weight: 700;">⏩ VAGA LIVRE (BYE)</span>'
+    : (game.lado_a 
+      ? `<span style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${game.lado_a.id}.jpg" alt="${game.lado_a.uf}" style="width: 24px; height: 16px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);"> <strong>${game.lado_a.nome} (${game.lado_a.uf})</strong></span>` 
+      : 'Aguardando definição');
+  const teamBName = isByeB
+    ? '<span style="color: #059669; font-weight: 700;">⏩ VAGA LIVRE (BYE)</span>'
+    : (game.lado_b 
+      ? `<span style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${game.lado_b.id}.jpg" alt="${game.lado_b.uf}" style="width: 24px; height: 16px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);"> <strong>${game.lado_b.nome} (${game.lado_b.uf})</strong></span>` 
+      : 'Aguardando definição');
 
   const content = `
     <div class="modal-dialog">
@@ -103,10 +110,19 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
         ` : ''}
 
         ${game.is_bye ? `
-          <div style="padding: 1.25rem; text-align: center; background: #ecfdf5; border-radius: var(--radius-md); color: #065f46; font-weight: 600;">
-            ⏩ Este confronto é um BYE. A equipe classificada avança automaticamente como vencedora para o jogo destino no chaveamento (${game.proxima_fase || 'Oitavas'}) sem resultado no placar.
+          <div style="padding: 1.25rem; text-align: center; background: #ecfdf5; border: 1px solid #10b981; border-radius: var(--radius-md); color: #065f46; font-weight: 600;">
+            ⏩ <strong>Confronto com Vaga Livre (BYE):</strong> A equipe <strong>${(game.lado_a?.id === game.vencedor_id ? game.lado_a?.nome : game.lado_b?.nome) || 'classificada'}</strong> passou direto para a próxima fase (${game.proxima_fase || 'próxima fase'}) sem necessidade de disputa de placar.
           </div>
         ` : `
+          ${game.status !== 'encerrado' ? `
+            <div style="margin-bottom: 1rem; padding: 0.6rem 0.85rem; border: 1px dashed #059669; border-radius: var(--radius-md); background: #f0fdf4; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: #065f46;">⏩ Vaga Livre / W.O.:</span>
+              <div style="display: flex; gap: 0.4rem;">
+                ${game.lado_a ? `<button type="button" class="btn btn-outline btn-xs" style="color: #065f46; border-color: #10b981; font-weight: 700;" onclick="window.advanceTeamByBye('${categoryId}', '${game.code}', 'A')">Avançar ${game.lado_a.uf} direto (BYE)</button>` : ''}
+                ${game.lado_b ? `<button type="button" class="btn btn-outline btn-xs" style="color: #065f46; border-color: #10b981; font-weight: 700;" onclick="window.advanceTeamByBye('${categoryId}', '${game.code}', 'B')">Avançar ${game.lado_b.uf} direto (BYE)</button>` : ''}
+              </div>
+            </div>
+          ` : ''}
           <form id="match-score-form">
             <!-- JOGO 1: DUPLA FEMININA -->
             <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
@@ -201,19 +217,19 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
     btnSaveTeams.addEventListener('click', () => {
       const teamAId = document.getElementById('edit-side-a').value || null;
       const teamBId = document.getElementById('edit-side-b').value || null;
-      const isBye = document.getElementById('edit-is-bye').checked;
-
-      // byeSlot: determinar qual lado é o "bye" (quem avança automaticamente)
-      // Convention: A avança, byeSlot = 'B' (slot B é a vaga vazia/bye)
-      const byeSlot = 'B';
+      const chkBye = document.getElementById('edit-is-bye').checked;
+      const isBye = Boolean(chkBye || (teamAId && !teamBId) || (!teamAId && teamBId));
+      const byeSlot = (!teamBId) ? 'B' : (!teamAId ? 'A' : 'B');
 
       const res = store.updateFirstRoundMatch(categoryId, gameCode, teamAId, isBye ? null : teamBId, isBye, byeSlot);
       if (res.success) {
         toast.show({
           title: 'Confronto Atualizado',
-          message: `Equipes do jogo ${gameCode} atualizadas. Ranking BYE preservado!`,
+          message: isBye ? `Confronto ${gameCode} definido como Vaga Livre (BYE). A outra equipe passou direto para a próxima fase!` : `Equipes do jogo ${gameCode} atualizadas com sucesso!`,
           type: 'success'
         });
+        if (window.renderBracket) window.renderBracket();
+        if (window.renderSchedule) window.renderSchedule();
         openMatchModal(gameCode, categoryId); // Recarrega o modal atualizado
       }
     });
@@ -437,15 +453,18 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
     cards.forEach(card => {
       const code = card.dataset.matchCode;
       const teamAId = card.querySelector('.cfg-team-a').value || null;
-      const isBye = card.querySelector('.cfg-is-bye').checked;
-      const teamBId = isBye ? null : (card.querySelector('.cfg-team-b').value || null);
+      const chkBye = card.querySelector('.cfg-is-bye').checked;
+      const rawTeamBId = card.querySelector('.cfg-team-b').value || null;
+      const isBye = Boolean(chkBye || (!rawTeamBId && teamAId) || (!teamAId && rawTeamBId));
+      const teamBId = isBye ? null : rawTeamBId;
+      const byeSlot = (!rawTeamBId) ? 'B' : (!teamAId ? 'A' : 'B');
 
       matchups.push({
         code,
         teamAId,
         teamBId,
         isBye,
-        byeSlot: 'B'
+        byeSlot
       });
     });
 
@@ -754,16 +773,19 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
       const chkBye = document.getElementById('card-edit-is-bye');
 
       const teamAId = selA ? selA.value : null;
-      const isByeVal = chkBye ? chkBye.checked : false;
-      const teamBId = isByeVal ? null : (selB ? selB.value : null);
+      const chkByeChecked = chkBye ? chkBye.checked : false;
+      const rawTeamBId = selB ? selB.value : null;
+      const isByeVal = Boolean(chkByeChecked || (!rawTeamBId && teamAId) || (!teamAId && rawTeamBId));
+      const teamBId = isByeVal ? null : rawTeamBId;
+      const byeSlot = (!rawTeamBId) ? 'B' : (!teamAId ? 'A' : 'B');
 
-      if (!teamAId && isByeVal) {
-        alert('Selecione uma Federação no Estado A para avançar de BYE.');
+      if (!teamAId && !teamBId && isByeVal) {
+        alert('Selecione uma Federação para avançar de BYE.');
         return;
       }
 
       // 1. Atualiza equipes e status de BYE
-      store.updateFirstRoundMatch(categoryId, gameCode, teamAId, teamBId, isByeVal, 'B');
+      store.updateFirstRoundMatch(categoryId, gameCode, teamAId, teamBId, isByeVal, byeSlot);
 
       // 2. Se não for BYE e tiver resultados, salva os jogos
       if (!isByeVal) {
@@ -792,9 +814,30 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
         message: `Confronto ${gameCode} atualizado com sucesso no chaveamento!`,
         type: 'success'
       });
+      if (window.renderBracket) window.renderBracket();
+      if (window.renderSchedule) window.renderSchedule();
     });
   }
 }
+
+export function advanceTeamByBye(categoryId, gameCode, winningSide = 'A') {
+  const res = store.setMatchAsBye(categoryId, gameCode, winningSide);
+  if (res.success) {
+    toast.show({
+      title: 'Avanço por BYE',
+      message: `${res.winTeam.nome} (${res.winTeam.uf}) avançou direto para a próxima fase!`,
+      type: 'success',
+      duration: 5000
+    });
+    if (window.renderBracket) window.renderBracket();
+    if (window.renderSchedule) window.renderSchedule();
+    openMatchModal(gameCode, categoryId);
+  } else {
+    alert(res.message);
+  }
+}
+
+window.advanceTeamByBye = advanceTeamByBye;
 window.openEditFirstRoundCardModal = openEditFirstRoundCardModal;
 window.openConfigureFirstRoundModal = openConfigureFirstRoundModal;
 

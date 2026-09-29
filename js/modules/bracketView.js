@@ -296,7 +296,7 @@ function renderMatchCard(game) {
       }
 
       if (matchGame) {
-        if (matchGame.is_bye && isFromLoser) {
+        if (matchGame.is_bye && (isFromLoser || (!matchGame.vencedor_id && !matchGame.lado_a && !matchGame.lado_b))) {
           return '<span style="color: #059669; font-weight: 700; font-size: 0.75rem;">⏩ Vaga Livre (BYE ' + matchGame.code + ')</span>';
         }
         sourceStr = `Aguardando ${isFromLoser ? 'Perd.' : 'Venc.'} ${matchGame.code}`;
@@ -450,10 +450,16 @@ function renderTableBracket(games) {
         <tbody>
           ${games.map(g => {
             const isBye = Boolean(g.is_bye);
-            const teamA = g.lado_a 
-              ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${g.lado_a.id}.jpg" alt="${g.lado_a.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${g.lado_a.nome} (${g.lado_a.uf})</strong></div>` 
-              : '<span style="color: var(--text-muted); font-style: italic;">Aguardando</span>';
-            const teamB = isBye 
+            const isByeA = isBye && (!g.lado_a || g.bye_slot === 'A');
+            const isByeB = isBye && (!g.lado_b || g.bye_slot === 'B');
+
+            const teamA = isByeA
+              ? '<span style="color: #059669; font-weight: 700;">⏩ VAGA LIVRE (BYE)</span>'
+              : (g.lado_a 
+                  ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${g.lado_a.id}.jpg" alt="${g.lado_a.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${g.lado_a.nome} (${g.lado_a.uf})</strong></div>` 
+                  : '<span style="color: var(--text-muted); font-style: italic;">Aguardando</span>');
+
+            const teamB = isByeB 
               ? '<span style="color: #059669; font-weight: 700;">⏩ VAGA LIVRE (BYE)</span>' 
               : (g.lado_b 
                   ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${g.lado_b.id}.jpg" alt="${g.lado_b.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${g.lado_b.nome} (${g.lado_b.uf})</strong></div>` 
@@ -468,13 +474,15 @@ function renderTableBracket(games) {
             let loser = '-';
 
             if (isBye) {
-              // Placar não recebe nenhum resultado
               j1Display = '-';
               j2Display = '-';
               j3Display = '-';
               placarGeral = '-';
-              // Estado passa como vencedor
-              winner = g.lado_a ? teamA : (g.lado_b ? teamB : '-');
+              // Estado passa como vencedor direto
+              const winningTeamObj = g.vencedor_id ? (g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b) : (g.lado_a || g.lado_b);
+              winner = winningTeamObj
+                ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${winningTeamObj.id}.jpg" alt="${winningTeamObj.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${winningTeamObj.nome} (${winningTeamObj.uf})</strong> <span style="font-size: 0.65rem; color: #059669; background: #ecfdf5; padding: 0.1rem 0.3rem; border-radius: 2px; border: 1px solid #a7f3d0;">BYE</span></div>`
+                : '-';
               loser = '-';
             } else {
               j1Display = g.resultado_jogo1 ? `<span class="badge-status ${g.resultado_jogo1 === 'a' ? 'em_andamento' : 'em_espera'}">${g.resultado_jogo1.toUpperCase()} (${g.placar_jogo1 || 'OK'})</span>` : '-';
@@ -538,15 +546,16 @@ window.saveInlineCard = function(code, catId) {
     return;
   }
 
-  const isBye = (valA === 'BYE' || valB === 'BYE');
-  const byeSlot = valA === 'BYE' ? 'A' : (valB === 'BYE' ? 'B' : 'B');
-  const teamAId = valA === 'BYE' ? null : (valA || null);
-  const teamBId = valB === 'BYE' ? null : (valB || null);
+  const isBye = Boolean(valA === 'BYE' || valB === 'BYE' || (valA && !valB) || (!valA && valB));
+  const byeSlot = (valA === 'BYE' || !valA) ? 'A' : 'B';
+  const teamAId = (valA === 'BYE' || !valA) ? null : valA;
+  const teamBId = (valB === 'BYE' || !valB) ? null : valB;
 
   const res = window.store.updateFirstRoundMatch(catId, code, teamAId, teamBId, isBye, byeSlot);
   if (!res.success) alert(res.message);
   else {
     if (window.renderBracket) window.renderBracket();
+    if (window.renderSchedule) window.renderSchedule();
   }
 };
 

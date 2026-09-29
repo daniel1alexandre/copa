@@ -40,6 +40,8 @@ class AppStore {
                   g.status = g.vencedor_id ? 'encerrado' : 'aguardando';
                 }
               });
+              // Propaga automaticamente confrontos com Vaga Livre (BYE) para a próxima fase
+              propagateAllByes(gamesList);
             }
           });
 
@@ -388,12 +390,15 @@ class AppStore {
     const teamA = teamAId ? this.getFederation(teamAId) : null;
     const teamB = teamBId ? this.getFederation(teamBId) : null;
 
+    const isActuallyBye = Boolean(isBye || (teamAId && !teamBId) || (!teamAId && teamBId));
+    const effectiveByeSlot = (!teamBId) ? 'B' : ((!teamAId) ? 'A' : byeSlot);
+
     const oldGame = games.find(g => g.code === gameCode);
     const wasBye = oldGame ? oldGame.is_bye : false;
     const oldTeamA = oldGame ? oldGame.lado_a : null;
     const oldTeamB = oldGame ? oldGame.lado_b : null;
 
-    const res = updateFirstRoundMatch(games, gameCode, teamA, teamB, isBye, byeSlot);
+    const res = updateFirstRoundMatch(games, gameCode, teamA, teamB, isActuallyBye, effectiveByeSlot);
     if (res.success) {
       let byesList = [...this.getCategoryByes(categoryId)];
       
@@ -402,9 +407,9 @@ class AppStore {
       if (!oldTeamId && wasBye) oldTeamId = oldTeamA?.id; // fallback
       
       let newTeamId = null;
-      if (isBye) newTeamId = (byeSlot === 'B') ? teamA?.id : teamB?.id;
+      if (isActuallyBye) newTeamId = (effectiveByeSlot === 'B') ? teamA?.id : teamB?.id;
       
-      if (wasBye && isBye) {
+      if (wasBye && isActuallyBye) {
         // Swap while preserving rank
         if (oldTeamId && newTeamId && oldTeamId !== newTeamId) {
           let idx = byesList.indexOf(oldTeamId);
@@ -413,7 +418,7 @@ class AppStore {
         }
       } else {
         if (wasBye && oldTeamId) byesList = byesList.filter(id => id !== oldTeamId);
-        if (isBye && newTeamId && !byesList.includes(newTeamId)) byesList.push(newTeamId);
+        if (isActuallyBye && newTeamId && !byesList.includes(newTeamId)) byesList.push(newTeamId);
       }
       
       if (!this.state.categoryByes) this.state.categoryByes = {};
@@ -422,6 +427,34 @@ class AppStore {
       this.save();
     }
     return res;
+  }
+
+  // Define qualquer confronto (em qualquer fase) como BYE / Vaga Livre e avança a equipe diretamente
+  setMatchAsBye(categoryId, gameCode, winningSide = 'A') {
+    const games = this.getGames(categoryId);
+    const game = games.find(g => g.code === gameCode);
+    if (!game) return { success: false, message: 'Jogo não encontrado.' };
+
+    const winTeam = winningSide === 'B' ? game.lado_b : game.lado_a;
+    if (!winTeam) return { success: false, message: 'Nenhuma equipe selecionada para avançar.' };
+
+    game.is_bye = true;
+    game.bye_slot = winningSide === 'B' ? 'A' : 'B';
+    game.status = 'encerrado';
+    game.vencedor_id = winTeam.id;
+    game.perdedor_id = null;
+    game.vitorias_a = 0;
+    game.vitorias_b = 0;
+    game.resultado_jogo1 = null;
+    game.placar_jogo1 = '';
+    game.resultado_jogo2 = null;
+    game.placar_jogo2 = '';
+    game.resultado_jogo3 = null;
+    game.placar_jogo3 = '';
+
+    propagateAllByes(games);
+    this.save();
+    return { success: true, game, winTeam };
   }
 
   saveAllFirstRoundMatchups(categoryId, matchups) {
@@ -449,13 +482,14 @@ class AppStore {
     });
 
     for (const item of matchups) {
+      const isBye = Boolean(item.isBye || (item.teamAId && !item.teamBId) || (!item.teamAId && item.teamBId));
+      const byeSlot = (!item.teamBId) ? 'B' : ((!item.teamAId) ? 'A' : (item.byeSlot || 'B'));
       const teamA = item.teamAId ? this.getFederation(item.teamAId) : null;
-      const teamB = item.teamBId ? this.getFederation(item.teamBId) : null;
+      const teamB = isBye && byeSlot === 'B' ? null : (item.teamBId ? this.getFederation(item.teamBId) : null);
       
       const oldTeamId = oldByesMap[item.code];
-      const isBye = item.isBye;
       let newTeamId = null;
-      if (isBye) newTeamId = (item.byeSlot === 'B') ? item.teamAId : item.teamBId;
+      if (isBye) newTeamId = (byeSlot === 'B') ? item.teamAId : item.teamBId;
       
       if (oldTeamId && isBye) {
         if (newTeamId && oldTeamId !== newTeamId) {
@@ -468,7 +502,7 @@ class AppStore {
         if (isBye && newTeamId && !byesList.includes(newTeamId)) byesList.push(newTeamId);
       }
       
-      updateFirstRoundMatch(games, item.code, teamA, teamB, item.isBye, item.byeSlot || 'B');
+      updateFirstRoundMatch(games, item.code, teamA, teamB, isBye, byeSlot);
     }
 
     if (!this.state.categoryByes) this.state.categoryByes = {};

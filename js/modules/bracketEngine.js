@@ -720,35 +720,159 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
   return games;
 }
 
-// Propaga vencedores de jogos BYE diretamente para o próximo jogo
+// Verifica se um determinado slot ('A' ou 'B') de um confronto é uma VAGA LIVRE (BYE)
+export function isSlotVagaLivre(games, game, slot) {
+  // 1. Na 1ª Fase (C1 a C16)
+  if (game.fase === '1ª Fase') {
+    if (game.is_bye) {
+      if (slot === 'A') return !game.lado_a || game.bye_slot === 'A';
+      if (slot === 'B') return !game.lado_b || game.bye_slot === 'B';
+    }
+    if (slot === 'A' && !game.lado_a && (game.is_bye || game.bye_slot === 'A')) return true;
+    if (slot === 'B' && !game.lado_b && (game.is_bye || game.bye_slot === 'B')) return true;
+    return false;
+  }
+
+  // 2. Nas demais fases (Oitavas, Quartas, Semis, Finais e Repescagens)
+  // (a) Origem de perdedor (Chaves reversas / repescagem)
+  const loserSources = games.filter(s => s.proxima_fase_perdedor === game.code);
+  let matchLoser = loserSources.find(s => s.proxima_fase_perdedor_slot === slot);
+  if (!matchLoser && loserSources.length > 0 && !loserSources.some(s => s.proxima_fase_perdedor_slot)) {
+    const idx = slot === 'A' ? 0 : 1;
+    matchLoser = loserSources[idx];
+  }
+
+  if (matchLoser) {
+    // Se o jogo de origem encerrou como BYE, ele NÃO produz perdedor.
+    // Logo, este slot que aguarda o perdedor é uma VAGA LIVRE (BYE)!
+    if (matchLoser.is_bye) {
+      return true;
+    }
+    return false;
+  }
+
+  // (b) Origem de vencedor
+  const winnerSources = games.filter(s => s.proxima_fase === game.code);
+  let matchWinner = winnerSources.find(s => s.proxima_fase_slot === slot);
+  if (!matchWinner && winnerSources.length > 0 && !winnerSources.some(s => s.proxima_fase_slot)) {
+    const idx = slot === 'A' ? 0 : 1;
+    matchWinner = winnerSources[idx];
+  }
+
+  if (matchWinner) {
+    // Se o jogo de origem foi um BYE vazio (sem nenhum participante), não há vencedor
+    if (matchWinner.is_bye && !matchWinner.vencedor_id && !matchWinner.lado_a && !matchWinner.lado_b) {
+      return true;
+    }
+    return false;
+  }
+
+  return false;
+}
+
+// Propaga vencedores de confrontos com VAGA LIVRE (BYE) automaticamente para a próxima fase em todo o grafo
 export function propagateAllByes(games) {
-  // Limpa primeiro os slots das Oitavas que dependem de BYEs antigos caso tenham mudado
-  games.filter(g => g.fase === 'Oitavas de Final' && g.status !== 'encerrado').forEach(oitava => {
-    // Será preenchido novamente abaixo
-  });
+  let changed = true;
+  let iterations = 0;
 
-  const byeGames = games.filter(g => g.fase === '1ª Fase' && g.is_bye && g.vencedor_id);
-  byeGames.forEach(bg => {
-    if (bg.proxima_fase) {
-      const target = games.find(g => g.code === bg.proxima_fase);
-      if (target) {
-        const winningTeam = bg.lado_a?.id === bg.vencedor_id ? bg.lado_a : bg.lado_b;
-        if (bg.proxima_fase_slot === 'A') target.lado_a = winningTeam;
-        else if (bg.proxima_fase_slot === 'B') target.lado_b = winningTeam;
+  while (changed && iterations < 50) {
+    changed = false;
+    iterations++;
 
-        // Se ambos lados estiverem preenchidos no jogo alvo, status passa a 'em espera' se estiver 'aguardando'
-        if (target.lado_a && target.lado_b && target.status === 'aguardando') {
-          target.status = 'em espera';
+    // 1. Propaga os vencedores de confrontos marcados como BYE para a sua próxima fase
+    for (const g of games) {
+      if (g.is_bye && g.vencedor_id && g.proxima_fase) {
+        const nextGame = games.find(tgt => tgt.code === g.proxima_fase);
+        if (nextGame) {
+          const winTeam = (g.lado_a?.id === g.vencedor_id) ? g.lado_a : g.lado_b;
+          if (winTeam) {
+            if (g.proxima_fase_slot === 'A') {
+              if (nextGame.lado_a?.id !== winTeam.id) {
+                nextGame.lado_a = winTeam;
+                changed = true;
+              }
+            } else if (g.proxima_fase_slot === 'B') {
+              if (nextGame.lado_b?.id !== winTeam.id) {
+                nextGame.lado_b = winTeam;
+                changed = true;
+              }
+            } else {
+              if (!nextGame.lado_a) { nextGame.lado_a = winTeam; changed = true; }
+              else if (!nextGame.lado_b && nextGame.lado_a.id !== winTeam.id) { nextGame.lado_b = winTeam; changed = true; }
+            }
+          }
         }
       }
     }
-  });
+
+    // 2. Todo confronto que tiver uma vaga livre (BYE): a outra equipe passa direto para a próxima fase!
+    for (const g of games) {
+      // Confrontos reais já jogados e finalizados com placar não são sobrescritos
+      if (g.status === 'encerrado' && !g.is_bye) {
+        continue;
+      }
+
+      const slotAIsBye = isSlotVagaLivre(games, g, 'A');
+      const slotBIsBye = isSlotVagaLivre(games, g, 'B');
+
+      if (slotAIsBye && slotBIsBye) {
+        // Ambas as vagas são livres (BYE duplo)
+        if (!g.is_bye || g.status !== 'encerrado') {
+          g.is_bye = true;
+          g.status = 'encerrado';
+          g.vencedor_id = null;
+          g.perdedor_id = null;
+          changed = true;
+        }
+      } else if (slotAIsBye && g.lado_b) {
+        // Vaga A é livre (BYE) -> Equipe B passa direto para a próxima fase!
+        if (!g.is_bye || g.vencedor_id !== g.lado_b.id || g.status !== 'encerrado') {
+          g.is_bye = true;
+          g.bye_slot = 'A';
+          g.status = 'encerrado';
+          g.vencedor_id = g.lado_b.id;
+          g.perdedor_id = null;
+          g.vitorias_a = 0;
+          g.vitorias_b = 0;
+          g.placar_jogo1 = ''; g.resultado_jogo1 = null;
+          g.placar_jogo2 = ''; g.resultado_jogo2 = null;
+          g.placar_jogo3 = ''; g.resultado_jogo3 = null;
+          changed = true;
+        }
+      } else if (slotBIsBye && g.lado_a) {
+        // Vaga B é livre (BYE) -> Equipe A passa direto para a próxima fase!
+        if (!g.is_bye || g.vencedor_id !== g.lado_a.id || g.status !== 'encerrado') {
+          g.is_bye = true;
+          g.bye_slot = 'B';
+          g.status = 'encerrado';
+          g.vencedor_id = g.lado_a.id;
+          g.perdedor_id = null;
+          g.vitorias_a = 0;
+          g.vitorias_b = 0;
+          g.placar_jogo1 = ''; g.resultado_jogo1 = null;
+          g.placar_jogo2 = ''; g.resultado_jogo2 = null;
+          g.placar_jogo3 = ''; g.resultado_jogo3 = null;
+          changed = true;
+        }
+      } else if (!slotAIsBye && !slotBIsBye) {
+        // Confronto normal com duas equipes definidas
+        if (g.lado_a && g.lado_b && g.status === 'aguardando') {
+          g.status = 'em espera';
+          changed = true;
+        }
+      }
+    }
+  }
 }
 
 // Atualiza individualmente um confronto da 1ª rodada (C1 a C16)
 export function updateFirstRoundMatch(games, gameCode, teamA, teamB, isBye, byeSlot = 'B') {
   const game = games.find(g => g.code === gameCode);
   if (!game) return { success: false, message: `Jogo ${gameCode} não encontrado.` };
+
+  // Se uma das equipes não existir ou estiver marcada como BYE, o confronto É um BYE
+  const isActuallyBye = Boolean(isBye || (teamA && !teamB) || (!teamA && teamB));
+  const effectiveByeSlot = (!teamB) ? 'B' : ((!teamA) ? 'A' : byeSlot);
 
   // Limpa propagação anterior no jogo destino caso não tenha sido jogado
   if (game.proxima_fase) {
@@ -760,12 +884,12 @@ export function updateFirstRoundMatch(games, gameCode, teamA, teamB, isBye, byeS
     }
   }
 
-  game.is_bye = Boolean(isBye);
-  game.bye_slot = isBye ? byeSlot : null;
+  game.is_bye = isActuallyBye;
+  game.bye_slot = isActuallyBye ? effectiveByeSlot : null;
 
-  if (isBye) {
-    // Confronto com BYE (vaga livre)
-    if (byeSlot === 'B') {
+  if (isActuallyBye) {
+    // Confronto com BYE (vaga livre): quem tiver equipe definida passa direto como vencedor!
+    if (effectiveByeSlot === 'B') {
       game.lado_a = teamA;
       game.lado_b = null;
       game.vencedor_id = teamA?.id || null;
@@ -802,7 +926,7 @@ export function updateFirstRoundMatch(games, gameCode, teamA, teamB, isBye, byeS
     game.status = (teamA && teamB) ? 'em espera' : 'aguardando';
   }
 
-  // Re-propaga os BYEs para as Oitavas de Final
+  // Propaga todos os BYEs para todo o chaveamento
   propagateAllByes(games);
 
   return { success: true, game };
@@ -905,6 +1029,9 @@ export function propagateMatchResult(games, gameCode, resultData) {
     }
   }
 
+  // Propaga todos os BYEs para avançar equipes que enfrentem vaga livre no destino
+  propagateAllByes(games);
+
   return {
     success: true,
     game: game,
@@ -964,6 +1091,8 @@ export function revertMatchResult(games, gameCode, previousState) {
     game.perdedor_id = null;
     game.status = (game.lado_a && game.lado_b) ? 'em espera' : 'aguardando';
   }
+
+  propagateAllByes(games);
 
   return { success: true, game };
 }
