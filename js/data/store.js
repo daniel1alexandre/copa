@@ -342,14 +342,32 @@ class AppStore {
     }
     this.state.categoryParticipants[categoryId] = fedIds;
     
-    // Validar os BYEs atuais para garantir que só tenham feds selecionadas e respeitem o limite
-    const byes = this.getCategoryByes(categoryId);
-    const validByes = byes.filter(id => fedIds.includes(id));
-    const numByes = Math.max(0, 32 - fedIds.length);
-    this.setCategoryByes(categoryId, validByes.slice(0, numByes), false);
-    
     const feds = this.getCategoryParticipatingFeds(categoryId);
-    this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, this.getCategoryByes(categoryId));
+    const numByes = Math.max(0, 32 - fedIds.length);
+
+    // Validar os BYEs atuais para garantir que só tenham federações participantes
+    let byes = (this.getCategoryByes(categoryId) || []).filter(id => fedIds.includes(id));
+
+    // Se faltarem BYEs para preencher a cota da categoria, completa automaticamente pelos melhores rankings/seeds
+    if (byes.length < numByes) {
+      const sortedBySeed = [...feds].sort((a, b) => {
+        if (a.seed && b.seed) return a.seed - b.seed;
+        if (a.seed) return -1;
+        if (b.seed) return 1;
+        return a.nome.localeCompare(b.nome, 'pt-BR');
+      });
+      for (const fed of sortedBySeed) {
+        if (!byes.includes(fed.id)) {
+          byes.push(fed.id);
+          if (byes.length === numByes) break;
+        }
+      }
+    }
+    byes = byes.slice(0, numByes);
+    this.setCategoryByes(categoryId, byes, false);
+    
+    // Gera o chaveamento colocando APENAS os estados de BYE; os demais slots da 1ª fase ficam vazios
+    this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byes);
     this.save();
     return feds;
   }
@@ -481,11 +499,13 @@ class AppStore {
   // ==========================================
   updateFirstRoundMatch(categoryId, gameCode, teamAId, teamBId, isBye, byeSlot = 'B') {
     const games = this.getGames(categoryId);
-    const teamA = teamAId ? this.getFederation(teamAId) : null;
-    const teamB = teamBId ? this.getFederation(teamBId) : null;
+    const isByeA = teamAId === 'BYE' || teamAId === 'bye';
+    const isByeB = teamBId === 'BYE' || teamBId === 'bye';
+    const isActuallyBye = Boolean(isBye || isByeA || isByeB);
+    const effectiveByeSlot = (isByeB || (!teamBId && isActuallyBye)) ? 'B' : ((isByeA || (!teamAId && isActuallyBye)) ? 'A' : byeSlot);
 
-    const isActuallyBye = Boolean(isBye || (teamAId && !teamBId) || (!teamAId && teamBId));
-    const effectiveByeSlot = (!teamBId) ? 'B' : ((!teamAId) ? 'A' : byeSlot);
+    const teamA = (teamAId && !isByeA) ? this.getFederation(teamAId) : null;
+    const teamB = (teamBId && !isByeB) ? this.getFederation(teamBId) : null;
 
     const oldGame = games.find(g => g.code === gameCode);
     const wasBye = oldGame ? oldGame.is_bye : false;

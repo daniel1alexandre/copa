@@ -8,19 +8,26 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     const fed = federations.find(f => f.id === byeId);
     if (fed) byeFeds.push(fed);
   });
-  
-  const otherFeds = federations.filter(f => !categoryByes.includes(f.id));
-
-  // Ordena o restante por seed e alfabeticamente
-  const sortedFeds = [...otherFeds].sort((a, b) => {
-    if (a.seed && b.seed) return a.seed - b.seed;
-    if (a.seed) return -1;
-    if (b.seed) return 1;
-    return a.nome.localeCompare(b.nome);
-  });
 
   // Quantidade de BYEs = 32 - N (onde N é o total de equipes participantes)
   const numByes = Math.max(0, 32 - federations.length);
+
+  // Se faltarem BYEs para preencher a cota da categoria, completa automaticamente pelos melhores seeds
+  if (byeFeds.length < numByes) {
+    const sortedFeds = [...federations].sort((a, b) => {
+      if (a.seed && b.seed) return a.seed - b.seed;
+      if (a.seed) return -1;
+      if (b.seed) return 1;
+      return a.nome.localeCompare(b.nome, 'pt-BR');
+    });
+    for (const fed of sortedFeds) {
+      if (!byeFeds.some(f => f.id === fed.id)) {
+        byeFeds.push(fed);
+        if (byeFeds.length === numByes) break;
+      }
+    }
+  }
+
   const byeSlots = STANDARD_BYE_SLOTS_32.slice(0, numByes);
   
   // Define os slots oponentes dos BYEs
@@ -33,26 +40,17 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     bracketSlots[byeSlots[i]] = { isBye: true, code: `B${i + 1}` };
   }
 
-  // Posiciona os times escolhidos para passar de BYE contra os slots de BYE
-  let byeFedIndex = 0;
+  // Posiciona SOMENTE os times escolhidos para passar de BYE contra os slots de BYE
+  // Os demais slots ficam VAZIOS (null) para preenchimento manual pelo usuário
   for (let i = 0; i < numByes; i++) {
     const oppSlot = byeOpponentSlots[i];
-    if (byeFedIndex < byeFeds.length) {
-      bracketSlots[oppSlot] = byeFeds[byeFedIndex];
-      byeFedIndex++;
-    } else {
-      bracketSlots[oppSlot] = sortedFeds.shift() || null;
+    if (i < byeFeds.length) {
+      bracketSlots[oppSlot] = byeFeds[i];
     }
+    // Se não houver federação atribuída a este BYE, o slot oponente fica null (aguardando)
   }
 
-  // Preenche o restante dos slots vazios com o que sobrou
-  let fedIndex = 0;
-  for (let i = 0; i < 32; i++) {
-    if (bracketSlots[i] === null) {
-      bracketSlots[i] = sortedFeds[fedIndex] || null;
-      fedIndex++;
-    }
-  }
+  // Os demais slots (não-BYE) ficam TODOS como null para preenchimento manual
 
   const games = [];
 
@@ -917,9 +915,11 @@ export function updateFirstRoundMatch(games, gameCode, teamA, teamB, isBye, byeS
   const game = games.find(g => g.code === gameCode);
   if (!game) return { success: false, message: `Jogo ${gameCode} não encontrado.` };
 
-  // Se uma das equipes não existir ou estiver marcada como BYE, o confronto É um BYE
-  const isActuallyBye = Boolean(isBye || (teamA && !teamB) || (!teamA && teamB));
-  const effectiveByeSlot = (!teamB) ? 'B' : ((!teamA) ? 'A' : byeSlot);
+  // Se o confronto estiver marcado como BYE (ou uma equipe for 'BYE'), ele é BYE
+  const isByeA = teamA?.id === 'bye' || teamA?.id === 'BYE';
+  const isByeB = teamB?.id === 'bye' || teamB?.id === 'BYE';
+  const isActuallyBye = Boolean(isBye || isByeA || isByeB);
+  const effectiveByeSlot = (isByeB || (!teamB && isActuallyBye)) ? 'B' : ((isByeA || (!teamA && isActuallyBye)) ? 'A' : byeSlot);
 
   // Limpa propagação anterior no jogo destino caso não tenha sido jogado
   if (game.proxima_fase) {

@@ -832,7 +832,7 @@ export function advanceTeamByBye(categoryId, gameCode, winningSide = 'A') {
   }
 }
 
-export function openChangeTeamSlotModal(gameCode, categoryId = 'prof', targetSlot = 'A') {
+export function openChangeTeamSlotModal(gameCode, categoryId = 'prof') {
   const games = store.getGames(categoryId);
   const game = games.find(g => g.code === gameCode);
   if (!game) return;
@@ -842,19 +842,20 @@ export function openChangeTeamSlotModal(gameCode, categoryId = 'prof', targetSlo
 
   const catObj = store.getCategories().find(c => c.id === categoryId);
   const allFeds = store.getFederations(); // Sempre em ordem alfabética A-Z
-  const currentTeam = targetSlot === 'A' ? game.lado_a : game.lado_b;
-  const otherTeam = targetSlot === 'A' ? game.lado_b : game.lado_a;
-  const isBye = Boolean(game.is_bye && (game.bye_slot === targetSlot || (!currentTeam && otherTeam)));
+  const participatingFeds = store.getCategoryParticipatingFeds(categoryId);
+  const partIds = new Set(participatingFeds.map(f => f.id));
+  const isBye = Boolean(game.is_bye);
+  const isFirstRound = game.fase === '1ª Fase';
 
   overlay.innerHTML = `
-    <div class="modal-dialog" style="max-width: 520px;">
+    <div class="modal-dialog" style="max-width: 600px;">
       <div class="modal-header" style="background: linear-gradient(135deg, #091b2c 0%, #004b57 100%); color: white; border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg); padding: 1.1rem 1.25rem;">
         <div>
-          <h3 style="color: white; font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
-            🔄 Trocar Estado — Confronto ${game.code} (${targetSlot === 'A' ? 'Estado A' : 'Estado B'})
+          <h3 style="color: white; font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            ⚔️ Editar Confronto ${game.code}
           </h3>
           <p style="font-size: 0.8rem; color: rgba(255,255,255,0.85); margin-top: 0.25rem; margin-bottom: 0;">
-            Categoria: <strong>${catObj?.nome || categoryId}</strong> • Fase: <strong>${game.fase}</strong> (${game.descricao || game.code})
+            Categoria: <strong>${catObj?.nome || categoryId}</strong> • Fase: <strong>${game.fase}</strong> ${game.descricao ? `(${game.descricao})` : ''}
           </p>
         </div>
         <button class="modal-close-btn" style="color: white;" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">&times;</button>
@@ -862,36 +863,49 @@ export function openChangeTeamSlotModal(gameCode, categoryId = 'prof', targetSlo
 
       <div class="modal-body" style="padding: 1.25rem;">
         <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.85rem; color: #166534;">
-          💡 Selecione a nova federação estadual para a posição <strong>${targetSlot === 'A' ? 'Superior (Estado A)' : 'Inferior (Estado B)'}</strong> ou defina como Vaga Livre (BYE).
+          💡 <strong>Definição do Confronto:</strong> Escolha os dois estados para este jogo. Se marcar <strong>BYE</strong>, o Estado A avança direto para a próxima fase.
         </div>
 
-        <div style="margin-bottom: 1.25rem;">
-          <label class="form-label" style="font-weight: 700; color: var(--accent-dark-blue); font-size: 0.9rem; margin-bottom: 0.4rem;">
-            🇧🇷 Selecionar Estado (${targetSlot === 'A' ? 'Estado A' : 'Estado B'}):
+        <!-- ESTADO A -->
+        <div style="margin-bottom: 1rem;">
+          <label class="form-label" style="font-weight: 700; color: var(--accent-dark-blue); font-size: 0.9rem; margin-bottom: 0.35rem;">
+            🇧🇷 Estado A (Superior):
           </label>
-          <select id="modal-select-team-slot" class="form-select" style="font-weight: 700; font-size: 0.95rem; padding: 0.6rem 0.75rem; border: 2px solid #028090; border-radius: var(--radius-sm);">
-            <option value="">-- Deixar Vazio / Em Aberto --</option>
-            <option value="BYE" ${isBye ? 'selected' : ''}>⏩ VAGA LIVRE (BYE - Avanço Direto do Adversário)</option>
-            <optgroup label="Federações Estaduais (Ordem Alfabética A-Z)">
-              ${allFeds.map(f => {
-                const isSelected = !isBye && currentTeam?.id === f.id;
-                const isOther = otherTeam?.id === f.id;
-                const otherTag = isOther ? ` (Já no Adversário ${targetSlot === 'A' ? 'B' : 'A'})` : '';
-                return `<option value="${f.id}" ${isSelected ? 'selected' : ''}>${f.nome} (${f.uf})${otherTag}</option>`;
-              }).join('')}
-            </optgroup>
+          <select id="modal-edit-team-a" class="form-select" style="font-weight: 700; font-size: 0.92rem; padding: 0.55rem 0.7rem; border: 2px solid #028090; border-radius: var(--radius-sm); width: 100%;">
+            <option value="">-- Em Aberto / Vazio --</option>
+            ${allFeds.map(f => {
+              const sel = game.lado_a?.id === f.id ? 'selected' : '';
+              const notPart = !partIds.has(f.id) ? ' (não inscrito)' : '';
+              return `<option value="${f.id}" ${sel}>${f.nome} (${f.uf})${notPart}</option>`;
+            }).join('')}
           </select>
         </div>
 
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-md); padding: 0.75rem 1rem; font-size: 0.825rem; color: var(--text-muted); margin-bottom: 0.5rem;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
-            <span>Estado Atual na vaga:</span>
-            <strong style="color: var(--accent-dark-blue);">${isBye ? '⏩ BYE (Vaga Livre)' : (currentTeam ? `${currentTeam.nome} (${currentTeam.uf})` : 'Em Aberto')}</strong>
+        <!-- OPÇÃO BYE -->
+        <div style="background: #ffffff; border: 2px solid ${isBye ? '#10b981' : '#cbd5e1'}; border-radius: var(--radius-sm); padding: 0.7rem 0.85rem; margin-bottom: 1rem; transition: all 0.2s ease;">
+          <label style="display: flex; align-items: center; gap: 0.65rem; font-weight: 700; cursor: pointer; color: #047857; font-size: 0.9rem;">
+            <input type="checkbox" id="modal-edit-is-bye" ${isBye ? 'checked' : ''} style="width: 18px; height: 18px; accent-color: #10b981;"
+              onchange="document.getElementById('modal-edit-team-b-wrap').style.display = this.checked ? 'none' : 'block'">
+            ⏩ Confronto com Vaga Livre (BYE) — Estado A avança direto às Oitavas / Próxima fase
+          </label>
+        </div>
+
+        <!-- ESTADO B -->
+        <div id="modal-edit-team-b-wrap" style="${isBye ? 'display: none;' : ''}">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem;">
+            <label class="form-label" style="font-weight: 700; color: var(--accent-dark-blue); font-size: 0.9rem; margin: 0;">
+              🇧🇷 Estado B (Inferior):
+            </label>
+            <button type="button" class="btn btn-outline btn-xs" onclick="(function(){var a=document.getElementById('modal-edit-team-a'),b=document.getElementById('modal-edit-team-b');if(a&&b){var t=a.value;a.value=b.value;b.value=t;}})()">⇄ Inverter A e B</button>
           </div>
-          <div style="display: flex; justify-content: space-between;">
-            <span>Adversário (${targetSlot === 'A' ? 'Estado B' : 'Estado A'}):</span>
-            <strong style="color: var(--accent-dark-blue);">${otherTeam ? `${otherTeam.nome} (${otherTeam.uf})` : 'Em Aberto'}</strong>
-          </div>
+          <select id="modal-edit-team-b" class="form-select" style="font-weight: 700; font-size: 0.92rem; padding: 0.55rem 0.7rem; border: 2px solid #028090; border-radius: var(--radius-sm); width: 100%;">
+            <option value="">-- Em Aberto / Vazio --</option>
+            ${allFeds.map(f => {
+              const sel = (!isBye && game.lado_b?.id === f.id) ? 'selected' : '';
+              const notPart = !partIds.has(f.id) ? ' (não inscrito)' : '';
+              return `<option value="${f.id}" ${sel}>${f.nome} (${f.uf})${notPart}</option>`;
+            }).join('')}
+          </select>
         </div>
       </div>
 
@@ -899,8 +913,8 @@ export function openChangeTeamSlotModal(gameCode, categoryId = 'prof', targetSlo
         <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary" id="btn-save-slot-team" style="background: #166534; border-color: #166534; font-weight: 800; padding: 0.55rem 1.25rem;">
-          💾 Salvar Estado
+        <button type="button" class="btn btn-primary" id="btn-save-both-teams" style="background: #166534; border-color: #166534; font-weight: 800; padding: 0.55rem 1.25rem;">
+          💾 Salvar Confronto
         </button>
       </div>
     </div>
@@ -908,32 +922,36 @@ export function openChangeTeamSlotModal(gameCode, categoryId = 'prof', targetSlo
 
   overlay.classList.add('active');
 
-  const btnSave = document.getElementById('btn-save-slot-team');
+  const btnSave = document.getElementById('btn-save-both-teams');
   if (btnSave) {
     btnSave.addEventListener('click', () => {
-      const select = document.getElementById('modal-select-team-slot');
-      const newTeamId = select ? select.value : '';
+      const teamAId = document.getElementById('modal-edit-team-a')?.value || '';
+      const teamBId = document.getElementById('modal-edit-team-b')?.value || '';
+      const isByeChecked = document.getElementById('modal-edit-is-bye')?.checked || false;
 
-      const res = store.updateMatchTeamSlot(categoryId, gameCode, targetSlot, newTeamId);
-      if (res.success) {
-        overlay.classList.remove('active');
-        toast.show({
-          title: 'Estado Salvo!',
-          message: `Confronto ${gameCode} (${targetSlot === 'A' ? 'Estado A' : 'Estado B'}) atualizado com sucesso!`,
-          type: 'success'
-        });
-        if (window.renderBracket) window.renderBracket();
-        if (window.renderSchedule) window.renderSchedule();
+      if (isFirstRound) {
+        store.updateFirstRoundMatch(categoryId, gameCode, teamAId, isByeChecked ? null : teamBId, isByeChecked, 'B');
       } else {
-        alert(res.message || 'Erro ao salvar estado.');
+        // Para fases além da 1ª: atualiza ambos os lados
+        store.updateMatchTeamSlot(categoryId, gameCode, 'A', teamAId || '');
+        store.updateMatchTeamSlot(categoryId, gameCode, 'B', isByeChecked ? 'BYE' : (teamBId || ''));
       }
+
+      overlay.classList.remove('active');
+      toast.show({
+        title: 'Confronto Salvo!',
+        message: `Confronto ${gameCode} atualizado com sucesso!`,
+        type: 'success'
+      });
+      if (window.renderBracket) window.renderBracket();
+      if (window.renderSchedule) window.renderSchedule();
     });
   }
 }
 
 window.openChangeTeamSlotModal = openChangeTeamSlotModal;
+window.openEditFirstRoundCardModal = openChangeTeamSlotModal;
 window.advanceTeamByBye = advanceTeamByBye;
-window.openEditFirstRoundCardModal = openEditFirstRoundCardModal;
 window.openConfigureFirstRoundModal = openConfigureFirstRoundModal;
 
 
