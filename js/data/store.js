@@ -74,6 +74,62 @@ class AppStore {
                     r17_3.lado_a = null;
                   }
                 }
+
+                // Configurações do bloco 25º-27º para categorias com 27 estados
+                const r25_q1 = gamesList.find(g => g.code === 'R25_Q1');
+                if (r25_q1) {
+                  r25_q1.bye_slot = 'A';
+                  r25_q1.proxima_fase = 'R25_SEMI_1';
+                  r25_q1.proxima_fase_slot = 'A';
+                  if (!r25_q1.resultado_jogo1 && (!r25_q1.vencedor_id || r25_q1.is_bye)) {
+                    r25_q1.lado_a = null;
+                  }
+                }
+
+                const r25_q2 = gamesList.find(g => g.code === 'R25_Q2');
+                if (r25_q2) {
+                  r25_q2.bye_slot = 'B';
+                  r25_q2.proxima_fase = 'R25_SEMI_1';
+                  r25_q2.proxima_fase_slot = 'B';
+                  if (!r25_q2.resultado_jogo1 && (!r25_q2.vencedor_id || r25_q2.is_bye)) {
+                    r25_q2.lado_b = null;
+                  }
+                }
+
+                const r25_q3 = gamesList.find(g => g.code === 'R25_Q3');
+                if (r25_q3) {
+                  r25_q3.is_bye = true;
+                  r25_q3.status = 'encerrado';
+                  r25_q3.vencedor_id = null;
+                  r25_q3.lado_a = null;
+                  r25_q3.lado_b = null;
+                }
+
+                const r25_q4 = gamesList.find(g => g.code === 'R25_Q4');
+                if (r25_q4) {
+                  r25_q4.bye_slot = 'B';
+                  r25_q4.proxima_fase = 'R25_SEMI_2';
+                  r25_q4.proxima_fase_slot = 'B';
+                  if (!r25_q4.resultado_jogo1 && (!r25_q4.vencedor_id || r25_q4.is_bye)) {
+                    r25_q4.lado_b = null;
+                  }
+                }
+
+                const r25_s1 = gamesList.find(g => g.code === 'R25_SEMI_1');
+                if (r25_s1) {
+                  r25_s1.proxima_fase = 'R25_FINAL';
+                  r25_s1.proxima_fase_slot = 'A';
+                }
+
+                const r25_s2 = gamesList.find(g => g.code === 'R25_SEMI_2');
+                if (r25_s2) {
+                  r25_s2.bye_slot = 'A';
+                  r25_s2.proxima_fase = 'R25_FINAL';
+                  r25_s2.proxima_fase_slot = 'B';
+                  if (!r25_s2.resultado_jogo1 && (!r25_s2.vencedor_id || r25_s2.is_bye)) {
+                    r25_s2.lado_a = null;
+                  }
+                }
               }
 
               // Propaga automaticamente confrontos com Vaga Livre (BYE) para a próxima fase

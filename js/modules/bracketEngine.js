@@ -603,6 +603,13 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
 
   // Quartas 25º-27º: R25_Q1 a R25_Q4
   for (let i = 1; i <= 4; i++) {
+    let r25ByeSlot = null;
+    if (numByes === 5) {
+      if (i === 1) r25ByeSlot = 'A';
+      else if (i === 2) r25ByeSlot = 'B';
+      else if (i === 4) r25ByeSlot = 'B';
+    }
+
     games.push({
       id: `g_rev_r25_q${i}`,
       code: `R25_Q${i}`,
@@ -612,8 +619,9 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       descricao: `Quartas 25º-27º (${i})`,
       lado_a: null,
       lado_b: null,
-      is_bye: false,
-      status: 'aguardando',
+      is_bye: (i === 3 && numByes === 5),
+      bye_slot: r25ByeSlot,
+      status: (i === 3 && numByes === 5) ? 'encerrado' : 'aguardando',
       proxima_fase: i <= 2 ? 'R25_SEMI_1' : 'R25_SEMI_2',
       proxima_fase_slot: i % 2 === 1 ? 'A' : 'B'
     });
@@ -683,7 +691,10 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     bracket: 'reversa_17_27',
     fase: 'Semifinais (17º-27º)',
     descricao: 'Semifinal 25º-27º (B)',
-    lado_a: null, lado_b: null, is_bye: false, status: 'aguardando',
+    lado_a: null, lado_b: null,
+    is_bye: false,
+    bye_slot: numByes === 5 ? 'A' : null,
+    status: 'aguardando',
     proxima_fase: 'R25_FINAL', proxima_fase_slot: 'B'
   });
 
@@ -767,9 +778,9 @@ export function isSlotVagaLivre(games, game, slot) {
   }
 
   if (matchLoser) {
-    // Se o jogo de origem encerrou como BYE, ele NÃO produz perdedor.
+    // Se o jogo de origem encerrou como BYE ou já possui bye_slot, ele NÃO produz perdedor.
     // Logo, este slot que aguarda o perdedor é uma VAGA LIVRE (BYE)!
-    if (matchLoser.is_bye) {
+    if (matchLoser.is_bye || matchLoser.bye_slot) {
       return true;
     }
     return false;
@@ -803,9 +814,9 @@ export function propagateAllByes(games) {
     changed = false;
     iterations++;
 
-    // 1. Propaga os vencedores de confrontos marcados como BYE para a sua próxima fase
+    // 1. Propaga os vencedores de confrontos para a sua próxima fase
     for (const g of games) {
-      if (g.is_bye && g.vencedor_id && g.proxima_fase) {
+      if (g.vencedor_id && g.proxima_fase) {
         const nextGame = games.find(tgt => tgt.code === g.proxima_fase);
         if (nextGame) {
           const winTeam = (g.lado_a?.id === g.vencedor_id) ? g.lado_a : g.lado_b;
