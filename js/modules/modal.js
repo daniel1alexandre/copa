@@ -592,13 +592,8 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
   const participatingIds = new Set(participatingFeds.map(f => f.id));
   const isBye = Boolean(game.is_bye);
 
-  // Ordena federações colocando as participantes da categoria primeiro
-  const sortedFeds = [...allFeds].sort((a, b) => {
-    const aPart = participatingIds.has(a.id) ? 1 : 0;
-    const bPart = participatingIds.has(b.id) ? 1 : 0;
-    if (bPart !== aPart) return bPart - aPart;
-    return a.nome.localeCompare(b.nome);
-  });
+  // Ordena federações em ordem alfabética
+  const sortedFeds = [...allFeds].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 
   const isProf = categoryId === 'prof';
   const formatText = isProf

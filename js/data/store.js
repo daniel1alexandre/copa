@@ -329,9 +329,11 @@ class AppStore {
     }
     const ids = this.state.categoryParticipants[categoryId];
     if (Array.isArray(ids)) {
-      return this.state.federations.filter(f => ids.includes(f.id));
+      return this.state.federations
+        .filter(f => ids.includes(f.id))
+        .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
     }
-    return [...this.state.federations];
+    return [...this.state.federations].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   }
 
   setCategoryParticipatingFeds(categoryId, fedIds) {

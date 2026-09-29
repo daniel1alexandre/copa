@@ -201,7 +201,7 @@ export function renderCategoryView() {
 
   const categories = store.getCategories();
   const currentCat = categories.find(c => c.id === selectedCategoryId) || categories[0];
-  const allFeds = [...store.getFederations()].sort((a, b) => a.nome.localeCompare(b.nome));
+  const allFeds = [...store.getFederations()].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   const participatingFeds = store.getCategoryParticipatingFeds(currentCat.id);
   const participatingIds = new Set(participatingFeds.map(f => f.id));
 
