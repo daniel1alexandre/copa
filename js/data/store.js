@@ -202,7 +202,7 @@ class AppStore {
   }
 
   getFederations() {
-    return this.state.federations;
+    return [...this.state.federations].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   }
 
   getFederation(id) {
