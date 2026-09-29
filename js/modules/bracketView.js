@@ -345,42 +345,40 @@ function renderMatchCard(game) {
       </div>
 
       <!-- TIME A -->
-      <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}" style="display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0.3rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderA}; min-height: 32px;">
-        <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
-          ${isFirstRound && game.status === 'aguardando' ? `
-            <select id="inline-edit-a-${game.code}" class="inline-team-select" style="max-width: 170px; font-size: 0.7rem; padding: 0.2rem; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 600; outline: none; cursor: pointer; text-overflow: ellipsis;">
-              ${getFedsOptions(game.is_bye && !game.lado_a ? 'BYE' : game.lado_a?.id)}
-            </select>
-          ` : getTeamName(game.lado_a, slotAIsBye, 'A')}
+      <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}"
+           onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}', 'A')"
+           title="💡 Clique no nome do estado para trocá-lo neste confronto"
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0.35rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderA}; min-height: 32px; cursor: pointer; transition: all 0.15s ease;"
+           onmouseover="this.style.boxShadow='0 0 0 2px #028090'"
+           onmouseout="this.style.boxShadow='none'">
+        <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center; justify-content: space-between;">
+          ${getTeamName(game.lado_a, slotAIsBye, 'A')}
+          <span style="font-size: 0.7rem; color: #64748b; margin-left: 0.25rem; opacity: 0.75;" title="Trocar este estado">✏️</span>
         </div>
-        ${!isFirstRound || game.status !== 'aguardando' ? `
+        ${!isBye && (game.vitorias_a || game.vitorias_b || game.status === 'encerrado') ? `
           <div class="match-team-score-badge" style="font-weight: 800; font-size: 0.85rem; color: ${isWinnerA ? '#166534' : (isWinnerB ? '#991b1b' : '#64748b')}; margin-left: 0.4rem; background: ${isWinnerA ? '#bbf7d0' : (isWinnerB ? '#fecaca' : '#f1f5f9')}; padding: 0.1rem 0.3rem; border-radius: 3px; min-width: 24px; text-align: center;">
-            ${isBye ? '-' : (game.vitorias_a || 0)}
+            ${game.vitorias_a || 0}
           </div>
         ` : ''}
       </div>
 
       <!-- TIME B -->
-      <div class="match-team-row ${isWinnerB ? 'is-winner' : (isWinnerA ? 'is-loser' : '')}" style="display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0.3rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 32px;">
-        <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
-          ${isFirstRound && game.status === 'aguardando' ? `
-             <select id="inline-edit-b-${game.code}" class="inline-team-select" style="max-width: 170px; font-size: 0.7rem; padding: 0.2rem; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 600; outline: none; cursor: pointer; text-overflow: ellipsis;">
-              ${getFedsOptions(game.is_bye && !game.lado_b ? 'BYE' : game.lado_b?.id)}
-            </select>
-          ` : getTeamName(game.lado_b, slotBIsBye, 'B')}
+      <div class="match-team-row ${isWinnerB ? 'is-winner' : (isWinnerA ? 'is-loser' : '')}"
+           onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}', 'B')"
+           title="💡 Clique no nome do estado para trocá-lo neste confronto"
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0.35rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 32px; cursor: pointer; transition: all 0.15s ease;"
+           onmouseover="this.style.boxShadow='0 0 0 2px #028090'"
+           onmouseout="this.style.boxShadow='none'">
+        <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center; justify-content: space-between;">
+          ${getTeamName(game.lado_b, slotBIsBye, 'B')}
+          <span style="font-size: 0.7rem; color: #64748b; margin-left: 0.25rem; opacity: 0.75;" title="Trocar este estado">✏️</span>
         </div>
-        ${!isFirstRound || game.status !== 'aguardando' ? `
+        ${!isBye && (game.vitorias_a || game.vitorias_b || game.status === 'encerrado') ? `
           <div class="match-team-score-badge" style="font-weight: 800; font-size: 0.85rem; color: ${isWinnerB ? '#166534' : (isWinnerA ? '#991b1b' : '#64748b')}; margin-left: 0.4rem; background: ${isWinnerB ? '#bbf7d0' : (isWinnerA ? '#fecaca' : '#f1f5f9')}; padding: 0.1rem 0.3rem; border-radius: 3px; min-width: 24px; text-align: center;">
-            ${isBye ? '-' : (game.vitorias_b || 0)}
+            ${game.vitorias_b || 0}
           </div>
         ` : ''}
       </div>
-
-      ${isFirstRound && game.status === 'aguardando' ? `
-        <div style="display: flex; justify-content: center; margin-top: 0.5rem; padding-bottom: 0.2rem;">
-          <button style="background: #166534; color: white; border: none; padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; cursor: pointer; width: 100%; box-shadow: 0 1px 2px rgba(0,0,0,0.1);" onclick="window.saveInlineCard('${game.code}', '${game.categoria_id}')">💾 Salvar Estados</button>
-        </div>
-      ` : ''}
 
       <!-- DETALHES DE SUBJOGOS (PLACAR) -->
       <div class="match-footer-details" style="margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed #cbd5e1;">

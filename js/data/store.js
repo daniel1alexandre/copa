@@ -523,6 +523,56 @@ class AppStore {
     return res;
   }
 
+  // Atualiza diretamente uma das equipes (lado A ou lado B) de qualquer confronto
+  updateMatchTeamSlot(categoryId, gameCode, slot = 'A', newTeamId = '') {
+    const games = this.getGames(categoryId);
+    const game = games.find(g => g.code === gameCode);
+    if (!game) return { success: false, message: 'Jogo não encontrado.' };
+
+    const isByeChosen = newTeamId === 'BYE' || newTeamId === 'bye';
+    const newTeam = (newTeamId && !isByeChosen) ? this.getFederation(newTeamId) : null;
+
+    if (game.fase === '1ª Fase') {
+      const currentTeamAId = slot === 'A' ? (isByeChosen ? null : (newTeam?.id || null)) : game.lado_a?.id;
+      const currentTeamBId = slot === 'B' ? (isByeChosen ? null : (newTeam?.id || null)) : game.lado_b?.id;
+      const isBye = isByeChosen || (!currentTeamAId && Boolean(currentTeamBId)) || (Boolean(currentTeamAId) && !currentTeamBId);
+      const byeSlot = isByeChosen ? slot : (isBye ? (!currentTeamBId ? 'B' : 'A') : 'B');
+      return this.updateFirstRoundMatch(categoryId, gameCode, currentTeamAId, currentTeamBId, isBye, byeSlot);
+    }
+
+    // Para fases seguintes (Oitavas, Quartas, Semis, Finais, Repescagem)
+    if (slot === 'A') {
+      game.lado_a = isByeChosen ? null : newTeam;
+      if (isByeChosen) {
+        game.is_bye = true;
+        game.bye_slot = 'A';
+        game.vencedor_id = game.lado_b?.id || null;
+        game.status = game.vencedor_id ? 'encerrado' : 'aguardando';
+      }
+    } else {
+      game.lado_b = isByeChosen ? null : newTeam;
+      if (isByeChosen) {
+        game.is_bye = true;
+        game.bye_slot = 'B';
+        game.vencedor_id = game.lado_a?.id || null;
+        game.status = game.vencedor_id ? 'encerrado' : 'aguardando';
+      }
+    }
+
+    if (!isByeChosen && game.is_bye) {
+      if ((slot === 'A' && game.bye_slot === 'A') || (slot === 'B' && game.bye_slot === 'B')) {
+        game.is_bye = false;
+        game.bye_slot = null;
+        game.status = (game.lado_a && game.lado_b) ? 'em espera' : 'aguardando';
+        game.vencedor_id = null;
+      }
+    }
+
+    propagateAllByes(games);
+    this.save();
+    return { success: true, game };
+  }
+
   // Define qualquer confronto (em qualquer fase) como BYE / Vaga Livre e avança a equipe diretamente
   setMatchAsBye(categoryId, gameCode, winningSide = 'A') {
     const games = this.getGames(categoryId);

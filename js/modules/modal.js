@@ -832,7 +832,108 @@ export function advanceTeamByBye(categoryId, gameCode, winningSide = 'A') {
   }
 }
 
+export function openChangeTeamSlotModal(gameCode, categoryId = 'prof', targetSlot = 'A') {
+  const games = store.getGames(categoryId);
+  const game = games.find(g => g.code === gameCode);
+  if (!game) return;
+
+  const overlay = document.getElementById('match-modal-overlay');
+  if (!overlay) return;
+
+  const catObj = store.getCategories().find(c => c.id === categoryId);
+  const allFeds = store.getFederations(); // Sempre em ordem alfabética A-Z
+  const currentTeam = targetSlot === 'A' ? game.lado_a : game.lado_b;
+  const otherTeam = targetSlot === 'A' ? game.lado_b : game.lado_a;
+  const isBye = Boolean(game.is_bye && (game.bye_slot === targetSlot || (!currentTeam && otherTeam)));
+
+  overlay.innerHTML = `
+    <div class="modal-dialog" style="max-width: 520px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #091b2c 0%, #004b57 100%); color: white; border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg); padding: 1.1rem 1.25rem;">
+        <div>
+          <h3 style="color: white; font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+            🔄 Trocar Estado — Confronto ${game.code} (${targetSlot === 'A' ? 'Estado A' : 'Estado B'})
+          </h3>
+          <p style="font-size: 0.8rem; color: rgba(255,255,255,0.85); margin-top: 0.25rem; margin-bottom: 0;">
+            Categoria: <strong>${catObj?.nome || categoryId}</strong> • Fase: <strong>${game.fase}</strong> (${game.descricao || game.code})
+          </p>
+        </div>
+        <button class="modal-close-btn" style="color: white;" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 1.25rem;">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.85rem; color: #166534;">
+          💡 Selecione a nova federação estadual para a posição <strong>${targetSlot === 'A' ? 'Superior (Estado A)' : 'Inferior (Estado B)'}</strong> ou defina como Vaga Livre (BYE).
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label class="form-label" style="font-weight: 700; color: var(--accent-dark-blue); font-size: 0.9rem; margin-bottom: 0.4rem;">
+            🇧🇷 Selecionar Estado (${targetSlot === 'A' ? 'Estado A' : 'Estado B'}):
+          </label>
+          <select id="modal-select-team-slot" class="form-select" style="font-weight: 700; font-size: 0.95rem; padding: 0.6rem 0.75rem; border: 2px solid #028090; border-radius: var(--radius-sm);">
+            <option value="">-- Deixar Vazio / Em Aberto --</option>
+            <option value="BYE" ${isBye ? 'selected' : ''}>⏩ VAGA LIVRE (BYE - Avanço Direto do Adversário)</option>
+            <optgroup label="Federações Estaduais (Ordem Alfabética A-Z)">
+              ${allFeds.map(f => {
+                const isSelected = !isBye && currentTeam?.id === f.id;
+                const isOther = otherTeam?.id === f.id;
+                const otherTag = isOther ? ` (Já no Adversário ${targetSlot === 'A' ? 'B' : 'A'})` : '';
+                return `<option value="${f.id}" ${isSelected ? 'selected' : ''}>${f.nome} (${f.uf})${otherTag}</option>`;
+              }).join('')}
+            </optgroup>
+          </select>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-md); padding: 0.75rem 1rem; font-size: 0.825rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+            <span>Estado Atual na vaga:</span>
+            <strong style="color: var(--accent-dark-blue);">${isBye ? '⏩ BYE (Vaga Livre)' : (currentTeam ? `${currentTeam.nome} (${currentTeam.uf})` : 'Em Aberto')}</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span>Adversário (${targetSlot === 'A' ? 'Estado B' : 'Estado A'}):</span>
+            <strong style="color: var(--accent-dark-blue);">${otherTeam ? `${otherTeam.nome} (${otherTeam.uf})` : 'Em Aberto'}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="padding: 1rem 1.25rem; background: var(--bg-subtle); border-top: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-save-slot-team" style="background: #166534; border-color: #166534; font-weight: 800; padding: 0.55rem 1.25rem;">
+          💾 Salvar Estado
+        </button>
+      </div>
+    </div>
+  `;
+
+  overlay.classList.add('active');
+
+  const btnSave = document.getElementById('btn-save-slot-team');
+  if (btnSave) {
+    btnSave.addEventListener('click', () => {
+      const select = document.getElementById('modal-select-team-slot');
+      const newTeamId = select ? select.value : '';
+
+      const res = store.updateMatchTeamSlot(categoryId, gameCode, targetSlot, newTeamId);
+      if (res.success) {
+        overlay.classList.remove('active');
+        toast.show({
+          title: 'Estado Salvo!',
+          message: `Confronto ${gameCode} (${targetSlot === 'A' ? 'Estado A' : 'Estado B'}) atualizado com sucesso!`,
+          type: 'success'
+        });
+        if (window.renderBracket) window.renderBracket();
+        if (window.renderSchedule) window.renderSchedule();
+      } else {
+        alert(res.message || 'Erro ao salvar estado.');
+      }
+    });
+  }
+}
+
+window.openChangeTeamSlotModal = openChangeTeamSlotModal;
 window.advanceTeamByBye = advanceTeamByBye;
 window.openEditFirstRoundCardModal = openEditFirstRoundCardModal;
 window.openConfigureFirstRoundModal = openConfigureFirstRoundModal;
+
 
