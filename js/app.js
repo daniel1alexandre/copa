@@ -6,6 +6,7 @@ import { initBracketView, renderBracket } from './modules/bracketView.js';
 import { initRankingView, renderRanking } from './modules/rankingView.js';
 import { initTeamsAthletesView, renderTeamsAthletes } from './modules/teamsAthletesView.js';
 import { initConfigView, renderConfig } from './modules/configView.js';
+import { initScheduleView, renderSchedule } from './modules/scheduleView.js';
 import { openMatchModal, openScheduleModal, openConfigureFirstRoundModal, openEditFirstRoundCardModal } from './modules/modal.js';
 
 let activeTab = 'home';
@@ -42,6 +43,7 @@ function renderCurrentView() {
   else if (activeTab === 'categorias') renderCategoryView();
   else if (activeTab === 'chaveamento') renderBracket();
   else if (activeTab === 'ranking') renderRanking();
+  else if (activeTab === 'programacao') renderSchedule();
   else if (activeTab === 'cadastro') renderTeamsAthletes();
   else if (activeTab === 'configuracoes') renderConfig();
 
@@ -73,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initRankingView();
   initTeamsAthletesView();
   initConfigView();
+  initScheduleView();
 
   // Configura cliques nos botões de tabs
   const tabButtons = document.querySelectorAll('.nav-tab');
