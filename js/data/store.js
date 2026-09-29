@@ -40,17 +40,42 @@ class AppStore {
                   g.status = g.vencedor_id ? 'encerrado' : 'aguardando';
                 }
               });
-              // Atualiza o cruzamento de C5 e C7 para R17_3 e R17_4 nos brackets salvos
-              const c5 = gamesList.find(g => g.code === 'C5');
-              const c7 = gamesList.find(g => g.code === 'C7');
-              if (c5 && c5.proxima_fase_perdedor === 'R17_3') {
-                c5.proxima_fase_perdedor = 'R17_4';
-                c5.proxima_fase_perdedor_slot = 'A';
+              // Para categorias com 27 estados (5 BYEs na 1ª fase: C1, C5, C9, C12, C16)
+              const c1To16 = gamesList.filter(g => g.code && /^C([1-9]|1[0-6])$/.test(g.code));
+              const numByes = c1To16.filter(g => g.is_bye).length;
+              if (numByes === 5) {
+                // Atualiza o cruzamento de C5 e C7 para R17_3 e R17_4 nos brackets salvos
+                const c5 = gamesList.find(g => g.code === 'C5');
+                const c7 = gamesList.find(g => g.code === 'C7');
+                if (c5 && c5.proxima_fase_perdedor === 'R17_3') {
+                  c5.proxima_fase_perdedor = 'R17_4';
+                  c5.proxima_fase_perdedor_slot = 'A';
+                }
+                if (c7 && c7.proxima_fase_perdedor === 'R17_4') {
+                  c7.proxima_fase_perdedor = 'R17_3';
+                  c7.proxima_fase_perdedor_slot = 'A';
+                }
+
+                const r17_4 = gamesList.find(g => g.code === 'R17_4');
+                if (r17_4) {
+                  r17_4.bye_slot = 'A';
+                  if (!r17_4.resultado_jogo1 && (!r17_4.vencedor_id || r17_4.is_bye)) {
+                    r17_4.lado_a = null;
+                  }
+                }
+
+                const r17_3 = gamesList.find(g => g.code === 'R17_3');
+                if (r17_3 && !r17_3.resultado_jogo1) {
+                  if (r17_3.is_bye && r17_3.bye_slot === 'A') {
+                    r17_3.is_bye = false;
+                    r17_3.bye_slot = null;
+                    r17_3.status = 'aguardando';
+                    r17_3.vencedor_id = null;
+                    r17_3.lado_a = null;
+                  }
+                }
               }
-              if (c7 && c7.proxima_fase_perdedor === 'R17_4') {
-                c7.proxima_fase_perdedor = 'R17_3';
-                c7.proxima_fase_perdedor_slot = 'A';
-              }
+
               // Propaga automaticamente confrontos com Vaga Livre (BYE) para a próxima fase
               propagateAllByes(gamesList);
             }

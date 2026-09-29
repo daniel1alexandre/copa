@@ -1,6 +1,6 @@
 // Módulo de Visualização e Interação do Chaveamento
 import { store } from '../data/store.js';
-import { calculateCategoryPlacements } from './bracketEngine.js';
+import { calculateCategoryPlacements, isSlotVagaLivre } from './bracketEngine.js';
 import { openMatchModal, openEditFirstRoundCardModal } from './modal.js';
 import { toast } from './toast.js';
 
@@ -256,6 +256,9 @@ function renderMatchCard(game) {
   const feds = s ? s.getFederations() : [];
   const allGames = s ? s.getGames(game.categoria_id) : [];
 
+  const slotAIsBye = game.bye_slot === 'A' || isSlotVagaLivre(allGames, game, 'A') || (isBye && !game.lado_a);
+  const slotBIsBye = game.bye_slot === 'B' || isSlotVagaLivre(allGames, game, 'B') || (isBye && !game.lado_b);
+
   const getFedsOptions = (selectedId) => {
     let opts = '<option value="">-- Em Aberto --</option>';
     opts += '<option value="BYE" ' + (selectedId === 'BYE' ? 'selected' : '') + '>⏩ BYE</option>';
@@ -266,7 +269,7 @@ function renderMatchCard(game) {
   };
 
   const getTeamName = (team, isTeamBye, slot) => {
-    if (isTeamBye) return '<span style="color: #059669; font-weight: 800; font-size: 0.75rem;">⏩ BYE</span>';
+    if (isTeamBye || (game.bye_slot === slot && !team)) return '<span style="color: #059669; font-weight: 800; font-size: 0.75rem;">⏩ BYE</span>';
     if (!team) {
       let sourceStr = 'Aguardando...';
       
@@ -297,7 +300,7 @@ function renderMatchCard(game) {
 
       if (matchGame) {
         if (matchGame.is_bye && (isFromLoser || (!matchGame.vencedor_id && !matchGame.lado_a && !matchGame.lado_b))) {
-          return '<span style="color: #059669; font-weight: 700; font-size: 0.75rem;">⏩ Vaga Livre (BYE ' + matchGame.code + ')</span>';
+          return '<span style="color: #059669; font-weight: 800; font-size: 0.75rem;">⏩ BYE</span>';
         }
         sourceStr = `Aguardando ${isFromLoser ? 'Perd.' : 'Venc.'} ${matchGame.code}`;
       }
@@ -348,7 +351,7 @@ function renderMatchCard(game) {
             <select id="inline-edit-a-${game.code}" class="inline-team-select" style="max-width: 170px; font-size: 0.7rem; padding: 0.2rem; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 600; outline: none; cursor: pointer; text-overflow: ellipsis;">
               ${getFedsOptions(game.is_bye && !game.lado_a ? 'BYE' : game.lado_a?.id)}
             </select>
-          ` : getTeamName(game.lado_a, isBye && !game.lado_a, 'A')}
+          ` : getTeamName(game.lado_a, slotAIsBye, 'A')}
         </div>
         ${!isFirstRound || game.status !== 'aguardando' ? `
           <div class="match-team-score-badge" style="font-weight: 800; font-size: 0.85rem; color: ${isWinnerA ? '#166534' : (isWinnerB ? '#991b1b' : '#64748b')}; margin-left: 0.4rem; background: ${isWinnerA ? '#bbf7d0' : (isWinnerB ? '#fecaca' : '#f1f5f9')}; padding: 0.1rem 0.3rem; border-radius: 3px; min-width: 24px; text-align: center;">
@@ -364,7 +367,7 @@ function renderMatchCard(game) {
              <select id="inline-edit-b-${game.code}" class="inline-team-select" style="max-width: 170px; font-size: 0.7rem; padding: 0.2rem; border-radius: 3px; border: 1px solid #cbd5e1; background: #ffffff; color: #334155; font-weight: 600; outline: none; cursor: pointer; text-overflow: ellipsis;">
               ${getFedsOptions(game.is_bye && !game.lado_b ? 'BYE' : game.lado_b?.id)}
             </select>
-          ` : getTeamName(game.lado_b, isBye && !game.lado_b, 'B')}
+          ` : getTeamName(game.lado_b, slotBIsBye, 'B')}
         </div>
         ${!isFirstRound || game.status !== 'aguardando' ? `
           <div class="match-team-score-badge" style="font-weight: 800; font-size: 0.85rem; color: ${isWinnerB ? '#166534' : (isWinnerA ? '#991b1b' : '#64748b')}; margin-left: 0.4rem; background: ${isWinnerB ? '#bbf7d0' : (isWinnerA ? '#fecaca' : '#f1f5f9')}; padding: 0.1rem 0.3rem; border-radius: 3px; min-width: 24px; text-align: center;">
@@ -450,17 +453,17 @@ function renderTableBracket(games) {
         <tbody>
           ${games.map(g => {
             const isBye = Boolean(g.is_bye);
-            const isByeA = isBye && (!g.lado_a || g.bye_slot === 'A');
-            const isByeB = isBye && (!g.lado_b || g.bye_slot === 'B');
+            const isByeA = g.bye_slot === 'A' || (isBye && !g.lado_a) || isSlotVagaLivre(games, g, 'A');
+            const isByeB = g.bye_slot === 'B' || (isBye && !g.lado_b) || isSlotVagaLivre(games, g, 'B');
 
             const teamA = isByeA
-              ? '<span style="color: #059669; font-weight: 700;">⏩ VAGA LIVRE (BYE)</span>'
+              ? '<span style="color: #059669; font-weight: 800;">⏩ BYE</span>'
               : (g.lado_a 
                   ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${g.lado_a.id}.jpg" alt="${g.lado_a.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${g.lado_a.nome} (${g.lado_a.uf})</strong></div>` 
                   : '<span style="color: var(--text-muted); font-style: italic;">Aguardando</span>');
 
             const teamB = isByeB 
-              ? '<span style="color: #059669; font-weight: 700;">⏩ VAGA LIVRE (BYE)</span>' 
+              ? '<span style="color: #059669; font-weight: 800;">⏩ BYE</span>' 
               : (g.lado_b 
                   ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${g.lado_b.id}.jpg" alt="${g.lado_b.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${g.lado_b.nome} (${g.lado_b.uf})</strong></div>` 
                   : '<span style="color: var(--text-muted); font-style: italic;">Aguardando</span>');

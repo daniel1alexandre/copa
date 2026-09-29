@@ -79,13 +79,15 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     let revSlot = i % 2 === 0 ? 'A' : 'B';
 
     // Regra específica: No confronto R17_3 o primeiro estado é o perdedor de C7 (que vinha para R17_4),
-    // e o perdedor de C5 (BYE) vai para R17_4, fazendo o perdedor de C8 ficar de BYE.
-    if (i === 4) { // C5
-      revGameNum = 4;
-      revSlot = 'A';
-    } else if (i === 6) { // C7
-      revGameNum = 3;
-      revSlot = 'A';
+    // e o perdedor de C5 (BYE) vai para R17_4, fazendo o perdedor de C8 ficar de BYE (em categorias com 27 estados).
+    if (numByes === 5) {
+      if (i === 4) { // C5
+        revGameNum = 4;
+        revSlot = 'A';
+      } else if (i === 6) { // C7
+        revGameNum = 3;
+        revSlot = 'A';
+      }
     }
 
     const game = {
@@ -551,6 +553,15 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     const loserQfNum = Math.floor((i - 1) / 2) + 1;
     const loserSlot = i % 2 === 1 ? 'A' : 'B';
 
+    let r17ByeSlot = null;
+    if (numByes === 5) {
+      if (i === 1) r17ByeSlot = 'A';
+      else if (i === 4) r17ByeSlot = 'A';
+      else if (i === 5) r17ByeSlot = 'A';
+      else if (i === 6) r17ByeSlot = 'B';
+      else if (i === 8) r17ByeSlot = 'B';
+    }
+
     games.push({
       id: `g_rev_r17_${i}`,
       code: `R17_${i}`,
@@ -561,6 +572,7 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       lado_a: null,
       lado_b: null,
       is_bye: false,
+      bye_slot: r17ByeSlot,
       status: 'aguardando',
       proxima_fase: `R17_Q${qfNum}`,
       proxima_fase_slot: qfSlot,
@@ -732,6 +744,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
 
 // Verifica se um determinado slot ('A' ou 'B') de um confronto é uma VAGA LIVRE (BYE)
 export function isSlotVagaLivre(games, game, slot) {
+  if (game.bye_slot === slot) return true;
+
   // 1. Na 1ª Fase (C1 a C16)
   if (game.fase === '1ª Fase') {
     if (game.is_bye) {
@@ -834,35 +848,47 @@ export function propagateAllByes(games) {
           g.perdedor_id = null;
           changed = true;
         }
-      } else if (slotAIsBye && g.lado_b) {
-        // Vaga A é livre (BYE) -> Equipe B passa direto para a próxima fase!
-        if (!g.is_bye || g.vencedor_id !== g.lado_b.id || g.status !== 'encerrado') {
-          g.is_bye = true;
+      } else if (slotAIsBye) {
+        if (g.bye_slot !== 'A') {
           g.bye_slot = 'A';
-          g.status = 'encerrado';
-          g.vencedor_id = g.lado_b.id;
-          g.perdedor_id = null;
-          g.vitorias_a = 0;
-          g.vitorias_b = 0;
-          g.placar_jogo1 = ''; g.resultado_jogo1 = null;
-          g.placar_jogo2 = ''; g.resultado_jogo2 = null;
-          g.placar_jogo3 = ''; g.resultado_jogo3 = null;
           changed = true;
         }
-      } else if (slotBIsBye && g.lado_a) {
-        // Vaga B é livre (BYE) -> Equipe A passa direto para a próxima fase!
-        if (!g.is_bye || g.vencedor_id !== g.lado_a.id || g.status !== 'encerrado') {
-          g.is_bye = true;
+        if (g.lado_b) {
+          // Vaga A é livre (BYE) -> Equipe B passa direto para a próxima fase!
+          if (!g.is_bye || g.vencedor_id !== g.lado_b.id || g.status !== 'encerrado') {
+            g.is_bye = true;
+            g.bye_slot = 'A';
+            g.status = 'encerrado';
+            g.vencedor_id = g.lado_b.id;
+            g.perdedor_id = null;
+            g.vitorias_a = 0;
+            g.vitorias_b = 0;
+            g.placar_jogo1 = ''; g.resultado_jogo1 = null;
+            g.placar_jogo2 = ''; g.resultado_jogo2 = null;
+            g.placar_jogo3 = ''; g.resultado_jogo3 = null;
+            changed = true;
+          }
+        }
+      } else if (slotBIsBye) {
+        if (g.bye_slot !== 'B') {
           g.bye_slot = 'B';
-          g.status = 'encerrado';
-          g.vencedor_id = g.lado_a.id;
-          g.perdedor_id = null;
-          g.vitorias_a = 0;
-          g.vitorias_b = 0;
-          g.placar_jogo1 = ''; g.resultado_jogo1 = null;
-          g.placar_jogo2 = ''; g.resultado_jogo2 = null;
-          g.placar_jogo3 = ''; g.resultado_jogo3 = null;
           changed = true;
+        }
+        if (g.lado_a) {
+          // Vaga B é livre (BYE) -> Equipe A passa direto para a próxima fase!
+          if (!g.is_bye || g.vencedor_id !== g.lado_a.id || g.status !== 'encerrado') {
+            g.is_bye = true;
+            g.bye_slot = 'B';
+            g.status = 'encerrado';
+            g.vencedor_id = g.lado_a.id;
+            g.perdedor_id = null;
+            g.vitorias_a = 0;
+            g.vitorias_b = 0;
+            g.placar_jogo1 = ''; g.resultado_jogo1 = null;
+            g.placar_jogo2 = ''; g.resultado_jogo2 = null;
+            g.placar_jogo3 = ''; g.resultado_jogo3 = null;
+            changed = true;
+          }
         }
       } else if (!slotAIsBye && !slotBIsBye) {
         // Confronto normal com duas equipes definidas
