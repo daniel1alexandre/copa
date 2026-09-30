@@ -49,8 +49,6 @@ export function initBracketView() {
       window.openConfigureFirstRoundModal(currentCategory);
     }
   };
-
-  };
 }
 
 export function renderBracket() {
