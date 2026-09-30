@@ -63,6 +63,7 @@ export const INITIAL_TOURNAMENT = {
   subtitulo: "Campeonato Brasileiro de Beach Tennis por Equipes Estaduais",
   dataInicio: "2026-10-15",
   dataFim: "2026-10-18",
+  horaInicio: "08:00",
   local: "Arena Beach Tennis Brasil - Praia de Copacabana, RJ",
   tempoMedioJogoMin: 50,
   tempoAquecimentoMin: 10,

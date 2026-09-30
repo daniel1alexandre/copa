@@ -175,6 +175,11 @@ class AppStore {
           // Garante que pointsTable sempre contenha todos os 27 lugares com os valores padrão oficiais CBT
           parsed.pointsTable = { ...DEFAULT_POINTS_TABLE, ...(parsed.pointsTable || {}) };
 
+          if (parsed.tournament) {
+            if (!parsed.tournament.horaInicio) parsed.tournament.horaInicio = '08:00';
+            if (!parsed.tournament.dataInicio) parsed.tournament.dataInicio = '2026-10-15';
+          }
+
           return parsed;
         }
       }

@@ -1131,7 +1131,6 @@ export function revertMatchResult(games, gameCode, previousState) {
     game.resultado_jogo2 = null;
     game.placar_jogo2 = '';
     game.resultado_jogo3 = null;
-    game.placar_jogo3 = '';
     game.vitorias_a = 0;
     game.vitorias_b = 0;
     game.vencedor_id = null;
@@ -1166,7 +1165,7 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
     }
   }
 
-  // 1. Equipes participantes iniciam com pontuação base de participação (1 ponto)
+  // 1. Equipes participantes iniciam com pontuação base de participação (1 ponto CBT)
   participatingFeds.forEach(fed => {
     registerPoints(fed, pointsTable[27] || 1, '1ª Fase', 27, 1);
   });
@@ -1177,79 +1176,69 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
     if (g.lado_b) registerPoints(g.lado_b, pointsTable[27] || 1, '1ª Fase', 27, 1);
   });
 
-  // 2. Pontuação por avanço na Chave Principal:
-  // (a) Oitavas de Final (Top 16) - Garantido pelo menos 16º lugar (10 pts)
-  const oitavasGames = games.filter(g => g.fase === 'Oitavas de Final');
+  // 2. Pontuação por avanço na Chave Principal (apenas para jogos REALMENTE jogados e encerrados, NÃO para BYEs):
+  
+  // (a) Vitória na 1ª Fase (jogo real encerrado) garante avanço para Oitavas (Top 16 -> garantido 16º lugar)
+  const r32Games = games.filter(g => g.fase === '1ª Fase' && !g.is_bye && g.status === 'encerrado' && g.vencedor_id);
+  r32Games.forEach(g => {
+    const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
+    if (winner) registerPoints(winner, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
+  });
+
+  // (b) Vitória nas Oitavas de Final garante avanço para Quartas (Top 8 -> garantido 8º lugar)
+  const oitavasGames = games.filter(g => g.fase === 'Oitavas de Final' && g.status === 'encerrado' && g.vencedor_id);
   oitavasGames.forEach(g => {
-    if (g.lado_a) registerPoints(g.lado_a, pointsTable[16] || 10, 'Oitavas de Final (Top 16)', 16, 2);
-    if (g.lado_b) registerPoints(g.lado_b, pointsTable[16] || 10, 'Oitavas de Final (Top 16)', 16, 2);
+    const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
+    if (winner) registerPoints(winner, pointsTable[8] || 26, 'Quartas de Final (Top 8)', 8, 3);
   });
 
-  // (b) Quartas de Final (Top 8) - Garantido pelo menos 8º lugar (27 pts)
-  const quartasGames = games.filter(g => g.fase === 'Quartas de Final');
+  // (c) Vitória nas Quartas de Final garante avanço para Semifinal (Top 4 -> garantido 4º lugar)
+  const quartasGames = games.filter(g => g.fase === 'Quartas de Final' && g.status === 'encerrado' && g.vencedor_id);
   quartasGames.forEach(g => {
-    if (g.lado_a) registerPoints(g.lado_a, pointsTable[8] || 27, 'Quartas de Final (Top 8)', 8, 3);
-    if (g.lado_b) registerPoints(g.lado_b, pointsTable[8] || 27, 'Quartas de Final (Top 8)', 8, 3);
+    const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
+    if (winner) registerPoints(winner, pointsTable[4] || 40, 'Semifinalista (Top 4)', 4, 4);
   });
 
-  // (c) Semifinais (Top 4) - Garantido pelo menos 4º lugar (40 pts)
-  const semisGames = games.filter(g => g.fase === 'Semifinal');
+  // (d) Vitória na Semifinal garante avanço para a Grande Final (Top 2 -> garantido 2º lugar)
+  const semisGames = games.filter(g => g.fase === 'Semifinal' && g.status === 'encerrado' && g.vencedor_id);
   semisGames.forEach(g => {
-    if (g.lado_a) registerPoints(g.lado_a, pointsTable[4] || 40, 'Semifinalista (Top 4)', 4, 4);
-    if (g.lado_b) registerPoints(g.lado_b, pointsTable[4] || 40, 'Semifinalista (Top 4)', 4, 4);
+    const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
+    if (winner) registerPoints(winner, pointsTable[2] || 50, 'Finalista (Top 2)', 2, 5);
   });
 
-  // (d) Grande Final (C31) - Garantido pelo menos 2º lugar (Vice-Campeão, 50 pts)
+  // (e) Grande Final (C31)
   const finalGame = games.find(g => g.code === 'C31');
-  if (finalGame) {
-    if (finalGame.lado_a) registerPoints(finalGame.lado_a, pointsTable[2] || 50, 'Finalista (Top 2)', 2, 5);
-    if (finalGame.lado_b) registerPoints(finalGame.lado_b, pointsTable[2] || 50, 'Finalista (Top 2)', 2, 5);
-
-    if (finalGame.status === 'encerrado' && finalGame.vencedor_id) {
-      const winner = finalGame.lado_a?.id === finalGame.vencedor_id ? finalGame.lado_a : finalGame.lado_b;
-      const runnerUp = finalGame.lado_a?.id === finalGame.vencedor_id ? finalGame.lado_b : finalGame.lado_a;
-      if (winner) registerPoints(winner, pointsTable[1] || 55, '1º Lugar (Campeão 🥇)', 1, 10);
-      if (runnerUp) registerPoints(runnerUp, pointsTable[2] || 50, '2º Lugar (Vice-Campeão 🥈)', 2, 9);
-    }
+  if (finalGame && finalGame.status === 'encerrado' && finalGame.vencedor_id) {
+    const winner = finalGame.lado_a?.id === finalGame.vencedor_id ? finalGame.lado_a : finalGame.lado_b;
+    const runnerUp = finalGame.lado_a?.id === finalGame.vencedor_id ? finalGame.lado_b : finalGame.lado_a;
+    if (winner) registerPoints(winner, pointsTable[1] || 55, '1º Lugar (Campeão 🥇)', 1, 10);
+    if (runnerUp) registerPoints(runnerUp, pointsTable[2] || 50, '2º Lugar (Vice-Campeão 🥈)', 2, 9);
   }
 
-  // (e) Disputa de 3º Lugar (C32)
+  // (f) Disputa de 3º Lugar (C32)
   const bronzeGame = games.find(g => g.code === 'C32');
-  if (bronzeGame) {
-    if (bronzeGame.lado_a) registerPoints(bronzeGame.lado_a, pointsTable[4] || 40, 'Disputa 3º Lugar', 4, 6);
-    if (bronzeGame.lado_b) registerPoints(bronzeGame.lado_b, pointsTable[4] || 40, 'Disputa 3º Lugar', 4, 6);
-
-    if (bronzeGame.status === 'encerrado' && bronzeGame.vencedor_id) {
-      const bronze = bronzeGame.lado_a?.id === bronzeGame.vencedor_id ? bronzeGame.lado_a : bronzeGame.lado_b;
-      const fourth = bronzeGame.lado_a?.id === bronzeGame.vencedor_id ? bronzeGame.lado_b : bronzeGame.lado_a;
-      if (bronze) registerPoints(bronze, pointsTable[3] || 45, '3º Lugar (Bronze 🥉)', 3, 8);
-      if (fourth) registerPoints(fourth, pointsTable[4] || 40, '4º Lugar', 4, 7);
-    }
+  if (bronzeGame && bronzeGame.status === 'encerrado' && bronzeGame.vencedor_id) {
+    const bronze = bronzeGame.lado_a?.id === bronzeGame.vencedor_id ? bronzeGame.lado_a : bronzeGame.lado_b;
+    const fourth = bronzeGame.lado_a?.id === bronzeGame.vencedor_id ? bronzeGame.lado_b : bronzeGame.lado_a;
+    if (bronze) registerPoints(bronze, pointsTable[3] || 45, '3º Lugar (Bronze 🥉)', 3, 8);
+    if (fourth) registerPoints(fourth, pointsTable[4] || 40, '4º Lugar', 4, 7);
   }
 
   // 3. Chave Reversa 5º–8º Lugar
   const r5Final = games.find(g => g.code === 'R5_FINAL');
-  if (r5Final) {
-    if (r5Final.lado_a) registerPoints(r5Final.lado_a, pointsTable[6] || 32, 'Disputa 5º Lugar', 6, 6);
-    if (r5Final.lado_b) registerPoints(r5Final.lado_b, pointsTable[6] || 32, 'Disputa 5º Lugar', 6, 6);
-    if (r5Final.status === 'encerrado' && r5Final.vencedor_id) {
-      const winner = r5Final.lado_a?.id === r5Final.vencedor_id ? r5Final.lado_a : r5Final.lado_b;
-      const loser = r5Final.lado_a?.id === r5Final.vencedor_id ? r5Final.lado_b : r5Final.lado_a;
-      registerPoints(winner, pointsTable[5] || 36, '5º Lugar', 5, 8);
-      registerPoints(loser, pointsTable[6] || 32, '6º Lugar', 6, 7);
-    }
+  if (r5Final && r5Final.status === 'encerrado' && r5Final.vencedor_id) {
+    const winner = r5Final.lado_a?.id === r5Final.vencedor_id ? r5Final.lado_a : r5Final.lado_b;
+    const loser = r5Final.lado_a?.id === r5Final.vencedor_id ? r5Final.lado_b : r5Final.lado_a;
+    registerPoints(winner, pointsTable[5] || 36, '5º Lugar', 5, 8);
+    registerPoints(loser, pointsTable[6] || 32, '6º Lugar', 6, 7);
   }
 
   const r5Seventh = games.find(g => g.code === 'R5_7LUGAR');
-  if (r5Seventh) {
-    if (r5Seventh.lado_a) registerPoints(r5Seventh.lado_a, pointsTable[8] || 26, 'Disputa 7º Lugar', 8, 6);
-    if (r5Seventh.lado_b) registerPoints(r5Seventh.lado_b, pointsTable[8] || 26, 'Disputa 7º Lugar', 8, 6);
-    if (r5Seventh.status === 'encerrado' && r5Seventh.vencedor_id) {
-      const winner = r5Seventh.lado_a?.id === r5Seventh.vencedor_id ? r5Seventh.lado_a : r5Seventh.lado_b;
-      const loser = r5Seventh.lado_a?.id === r5Seventh.vencedor_id ? r5Seventh.lado_b : r5Seventh.lado_a;
-      registerPoints(winner, pointsTable[7] || 29, '7º Lugar', 7, 8);
-      registerPoints(loser, pointsTable[8] || 26, '8º Lugar', 8, 7);
-    }
+  if (r5Seventh && r5Seventh.status === 'encerrado' && r5Seventh.vencedor_id) {
+    const winner = r5Seventh.lado_a?.id === r5Seventh.vencedor_id ? r5Seventh.lado_a : r5Seventh.lado_b;
+    const loser = r5Seventh.lado_a?.id === r5Seventh.vencedor_id ? r5Seventh.lado_b : r5Seventh.lado_a;
+    registerPoints(winner, pointsTable[7] || 29, '7º Lugar', 7, 8);
+    registerPoints(loser, pointsTable[8] || 26, '8º Lugar', 8, 7);
   }
 
   // 4. Chave Reversa 9º–16º Lugar
@@ -1264,7 +1253,7 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   const r9Eleventh = games.find(g => g.code === 'R9_11LUGAR');
   if (r9Eleventh && r9Eleventh.status === 'encerrado' && r9Eleventh.vencedor_id) {
     const winner = r9Eleventh.lado_a?.id === r9Eleventh.vencedor_id ? r9Eleventh.lado_a : r9Eleventh.lado_b;
-    const loser = r9Eleventh.lado_a?.id === r9Eleventh.vencedor_id ? r9Eleventh.lado_a : r9Eleventh.lado_b;
+    const loser = r9Eleventh.lado_a?.id === r9Eleventh.vencedor_id ? r9Eleventh.lado_b : r9Eleventh.lado_a;
     registerPoints(winner, pointsTable[11] || 19, '11º Lugar', 11, 8);
     registerPoints(loser, pointsTable[12] || 17, '12º Lugar', 12, 7);
   }
@@ -1326,11 +1315,24 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
     registerPoints(loser, pointsTable[26] || 2, '26º Lugar', 26, 7);
   }
 
-  // Converte Map para Array e ordena por pontos decrescente
+  const r25Semi1 = games.find(g => g.code === 'R25_SEMI_1');
+  if (r25Semi1 && r25Semi1.status === 'encerrado' && r25Semi1.vencedor_id) {
+    const loser = r25Semi1.lado_a?.id === r25Semi1.vencedor_id ? r25Semi1.lado_b : r25Semi1.lado_a;
+    if (loser) registerPoints(loser, pointsTable[27] || 1, '27º Lugar', 27, 8);
+  }
+
+  const r25Semi2 = games.find(g => g.code === 'R25_SEMI_2');
+  if (r25Semi2 && r25Semi2.status === 'encerrado' && r25Semi2.vencedor_id) {
+    const loser = r25Semi2.lado_a?.id === r25Semi2.vencedor_id ? r25Semi2.lado_b : r25Semi2.lado_a;
+    if (loser) registerPoints(loser, pointsTable[27] || 1, '27º Lugar', 27, 8);
+  }
+
+  // Converte Map para Array e ordena por pontos decrescente, e por nome/colocação em caso de empate
   const list = Array.from(teamMap.values());
   list.sort((a, b) => {
     if (b.pontos !== a.pontos) return b.pontos - a.pontos;
-    return a.colocacao - b.colocacao;
+    if (a.colocacao !== b.colocacao) return a.colocacao - b.colocacao;
+    return a.nome.localeCompare(b.nome, 'pt-BR');
   });
 
   return list;

@@ -9,6 +9,7 @@ export function initConfigView() {
     const nome = document.getElementById('cfg-tourn-nome').value.trim();
     const local = document.getElementById('cfg-tourn-local').value.trim();
     const dataInicio = document.getElementById('cfg-tourn-inicio').value;
+    const horaInicio = document.getElementById('cfg-tourn-hora-inicio')?.value || '08:00';
     const dataFim = document.getElementById('cfg-tourn-fim').value;
     const status = document.getElementById('cfg-tourn-status').value;
     const tempoMedio = parseInt(document.getElementById('cfg-tourn-tempo-jogo').value, 10) || 50;
@@ -18,6 +19,7 @@ export function initConfigView() {
       nome,
       local,
       dataInicio,
+      horaInicio,
       dataFim,
       status,
       tempoMedioJogoMin: tempoMedio,
@@ -150,10 +152,14 @@ export function renderConfig() {
             <input type="text" id="cfg-tourn-local" class="form-control" value="${tournament.local}" required>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;">
             <div class="form-group">
               <label class="form-label">Data Início:</label>
               <input type="date" id="cfg-tourn-inicio" class="form-control" value="${tournament.dataInicio}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Hora Início:</label>
+              <input type="time" id="cfg-tourn-hora-inicio" class="form-control" value="${tournament.horaInicio || '08:00'}">
             </div>
             <div class="form-group">
               <label class="form-label">Data Fim:</label>
