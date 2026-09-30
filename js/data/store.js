@@ -172,6 +172,9 @@ class AppStore {
               }
             });
           }
+          // Garante que pointsTable sempre contenha todos os 27 lugares com os valores padrão oficiais CBT
+          parsed.pointsTable = { ...DEFAULT_POINTS_TABLE, ...(parsed.pointsTable || {}) };
+
           return parsed;
         }
       }
@@ -320,6 +323,18 @@ class AppStore {
   }
 
   getPointsTable() {
+    if (!this.state.pointsTable || Object.keys(this.state.pointsTable).length === 0) {
+      this.state.pointsTable = JSON.parse(JSON.stringify(DEFAULT_POINTS_TABLE));
+    } else {
+      let updated = false;
+      for (let pos = 1; pos <= 27; pos++) {
+        if (this.state.pointsTable[pos] === undefined || this.state.pointsTable[pos] === null) {
+          this.state.pointsTable[pos] = DEFAULT_POINTS_TABLE[pos];
+          updated = true;
+        }
+      }
+      if (updated) this.save();
+    }
     return this.state.pointsTable;
   }
 
@@ -847,8 +862,14 @@ class AppStore {
   }
 
   updatePointsTable(newTable) {
-    this.state.pointsTable = { ...this.state.pointsTable, ...newTable };
+    this.state.pointsTable = { ...DEFAULT_POINTS_TABLE, ...this.state.pointsTable, ...newTable };
     this.save();
+  }
+
+  restoreDefaultPointsTable() {
+    this.state.pointsTable = JSON.parse(JSON.stringify(DEFAULT_POINTS_TABLE));
+    this.save();
+    return this.state.pointsTable;
   }
 
   updateCourts(courts) {

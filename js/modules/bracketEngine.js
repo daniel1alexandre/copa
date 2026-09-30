@@ -1230,25 +1230,25 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   // 3. Chave Reversa 5º–8º Lugar
   const r5Final = games.find(g => g.code === 'R5_FINAL');
   if (r5Final) {
-    if (r5Final.lado_a) registerPoints(r5Final.lado_a, pointsTable[6] || 33, 'Disputa 5º Lugar', 6, 6);
-    if (r5Final.lado_b) registerPoints(r5Final.lado_b, pointsTable[6] || 33, 'Disputa 5º Lugar', 6, 6);
+    if (r5Final.lado_a) registerPoints(r5Final.lado_a, pointsTable[6] || 32, 'Disputa 5º Lugar', 6, 6);
+    if (r5Final.lado_b) registerPoints(r5Final.lado_b, pointsTable[6] || 32, 'Disputa 5º Lugar', 6, 6);
     if (r5Final.status === 'encerrado' && r5Final.vencedor_id) {
       const winner = r5Final.lado_a?.id === r5Final.vencedor_id ? r5Final.lado_a : r5Final.lado_b;
       const loser = r5Final.lado_a?.id === r5Final.vencedor_id ? r5Final.lado_b : r5Final.lado_a;
       registerPoints(winner, pointsTable[5] || 36, '5º Lugar', 5, 8);
-      registerPoints(loser, pointsTable[6] || 33, '6º Lugar', 6, 7);
+      registerPoints(loser, pointsTable[6] || 32, '6º Lugar', 6, 7);
     }
   }
 
   const r5Seventh = games.find(g => g.code === 'R5_7LUGAR');
   if (r5Seventh) {
-    if (r5Seventh.lado_a) registerPoints(r5Seventh.lado_a, pointsTable[8] || 27, 'Disputa 7º Lugar', 8, 6);
-    if (r5Seventh.lado_b) registerPoints(r5Seventh.lado_b, pointsTable[8] || 27, 'Disputa 7º Lugar', 8, 6);
+    if (r5Seventh.lado_a) registerPoints(r5Seventh.lado_a, pointsTable[8] || 26, 'Disputa 7º Lugar', 8, 6);
+    if (r5Seventh.lado_b) registerPoints(r5Seventh.lado_b, pointsTable[8] || 26, 'Disputa 7º Lugar', 8, 6);
     if (r5Seventh.status === 'encerrado' && r5Seventh.vencedor_id) {
       const winner = r5Seventh.lado_a?.id === r5Seventh.vencedor_id ? r5Seventh.lado_a : r5Seventh.lado_b;
       const loser = r5Seventh.lado_a?.id === r5Seventh.vencedor_id ? r5Seventh.lado_b : r5Seventh.lado_a;
-      registerPoints(winner, pointsTable[7] || 30, '7º Lugar', 7, 8);
-      registerPoints(loser, pointsTable[8] || 27, '8º Lugar', 8, 7);
+      registerPoints(winner, pointsTable[7] || 29, '7º Lugar', 7, 8);
+      registerPoints(loser, pointsTable[8] || 26, '8º Lugar', 8, 7);
     }
   }
 
@@ -1257,23 +1257,23 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   if (r9Final && r9Final.status === 'encerrado' && r9Final.vencedor_id) {
     const winner = r9Final.lado_a?.id === r9Final.vencedor_id ? r9Final.lado_a : r9Final.lado_b;
     const loser = r9Final.lado_a?.id === r9Final.vencedor_id ? r9Final.lado_b : r9Final.lado_a;
-    registerPoints(winner, pointsTable[9] || 24, '9º Lugar', 9, 8);
-    registerPoints(loser, pointsTable[10] || 22, '10º Lugar', 10, 7);
+    registerPoints(winner, pointsTable[9] || 23, '9º Lugar', 9, 8);
+    registerPoints(loser, pointsTable[10] || 21, '10º Lugar', 10, 7);
   }
 
   const r9Eleventh = games.find(g => g.code === 'R9_11LUGAR');
   if (r9Eleventh && r9Eleventh.status === 'encerrado' && r9Eleventh.vencedor_id) {
     const winner = r9Eleventh.lado_a?.id === r9Eleventh.vencedor_id ? r9Eleventh.lado_a : r9Eleventh.lado_b;
-    const loser = r9Eleventh.lado_a?.id === r9Eleventh.vencedor_id ? r9Eleventh.lado_b : r9Eleventh.lado_a;
-    registerPoints(winner, pointsTable[11] || 20, '11º Lugar', 11, 8);
-    registerPoints(loser, pointsTable[12] || 18, '12º Lugar', 12, 7);
+    const loser = r9Eleventh.lado_a?.id === r9Eleventh.vencedor_id ? r9Eleventh.lado_a : r9Eleventh.lado_b;
+    registerPoints(winner, pointsTable[11] || 19, '11º Lugar', 11, 8);
+    registerPoints(loser, pointsTable[12] || 17, '12º Lugar', 12, 7);
   }
 
   const r13Final = games.find(g => g.code === 'R13_FINAL');
   if (r13Final && r13Final.status === 'encerrado' && r13Final.vencedor_id) {
     const winner = r13Final.lado_a?.id === r13Final.vencedor_id ? r13Final.lado_a : r13Final.lado_b;
     const loser = r13Final.lado_a?.id === r13Final.vencedor_id ? r13Final.lado_b : r13Final.lado_a;
-    registerPoints(winner, pointsTable[13] || 16, '13º Lugar', 13, 8);
+    registerPoints(winner, pointsTable[13] || 15, '13º Lugar', 13, 8);
     registerPoints(loser, pointsTable[14] || 14, '14º Lugar', 14, 7);
   }
 
@@ -1281,8 +1281,8 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   if (r13Fifteenth && r13Fifteenth.status === 'encerrado' && r13Fifteenth.vencedor_id) {
     const winner = r13Fifteenth.lado_a?.id === r13Fifteenth.vencedor_id ? r13Fifteenth.lado_a : r13Fifteenth.lado_b;
     const loser = r13Fifteenth.lado_a?.id === r13Fifteenth.vencedor_id ? r13Fifteenth.lado_b : r13Fifteenth.lado_a;
-    registerPoints(winner, pointsTable[15] || 12, '15º Lugar', 15, 8);
-    registerPoints(loser, pointsTable[16] || 10, '16º Lugar', 16, 7);
+    registerPoints(winner, pointsTable[15] || 13, '15º Lugar', 15, 8);
+    registerPoints(loser, pointsTable[16] || 12, '16º Lugar', 16, 7);
   }
 
   // 5. Chave Reversa 17º–27º Lugar
@@ -1290,40 +1290,40 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   if (r17Final && r17Final.status === 'encerrado' && r17Final.vencedor_id) {
     const winner = r17Final.lado_a?.id === r17Final.vencedor_id ? r17Final.lado_a : r17Final.lado_b;
     const loser = r17Final.lado_a?.id === r17Final.vencedor_id ? r17Final.lado_b : r17Final.lado_a;
-    registerPoints(winner, pointsTable[17] || 8, '17º Lugar', 17, 8);
-    registerPoints(loser, pointsTable[18] || 7, '18º Lugar', 18, 7);
+    registerPoints(winner, pointsTable[17] || 11, '17º Lugar', 17, 8);
+    registerPoints(loser, pointsTable[18] || 10, '18º Lugar', 18, 7);
   }
 
   const r17Nineteenth = games.find(g => g.code === 'R17_19LUGAR');
   if (r17Nineteenth && r17Nineteenth.status === 'encerrado' && r17Nineteenth.vencedor_id) {
     const winner = r17Nineteenth.lado_a?.id === r17Nineteenth.vencedor_id ? r17Nineteenth.lado_a : r17Nineteenth.lado_b;
     const loser = r17Nineteenth.lado_a?.id === r17Nineteenth.vencedor_id ? r17Nineteenth.lado_b : r17Nineteenth.lado_a;
-    registerPoints(winner, pointsTable[19] || 6, '19º Lugar', 19, 8);
-    registerPoints(loser, pointsTable[20] || 5, '20º Lugar', 20, 7);
+    registerPoints(winner, pointsTable[19] || 9, '19º Lugar', 19, 8);
+    registerPoints(loser, pointsTable[20] || 8, '20º Lugar', 20, 7);
   }
 
   const r21Final = games.find(g => g.code === 'R21_FINAL');
   if (r21Final && r21Final.status === 'encerrado' && r21Final.vencedor_id) {
     const winner = r21Final.lado_a?.id === r21Final.vencedor_id ? r21Final.lado_a : r21Final.lado_b;
     const loser = r21Final.lado_a?.id === r21Final.vencedor_id ? r21Final.lado_b : r21Final.lado_a;
-    registerPoints(winner, pointsTable[21] || 4, '21º Lugar', 21, 8);
-    registerPoints(loser, pointsTable[22] || 3, '22º Lugar', 22, 7);
+    registerPoints(winner, pointsTable[21] || 7, '21º Lugar', 21, 8);
+    registerPoints(loser, pointsTable[22] || 6, '22º Lugar', 22, 7);
   }
 
   const r21Third = games.find(g => g.code === 'R21_23LUGAR');
   if (r21Third && r21Third.status === 'encerrado' && r21Third.vencedor_id) {
     const winner = r21Third.lado_a?.id === r21Third.vencedor_id ? r21Third.lado_a : r21Third.lado_b;
     const loser = r21Third.lado_a?.id === r21Third.vencedor_id ? r21Third.lado_b : r21Third.lado_a;
-    registerPoints(winner, pointsTable[23] || 2, '23º Lugar', 23, 8);
-    registerPoints(loser, pointsTable[24] || 1, '24º Lugar', 24, 7);
+    registerPoints(winner, pointsTable[23] || 5, '23º Lugar', 23, 8);
+    registerPoints(loser, pointsTable[24] || 4, '24º Lugar', 24, 7);
   }
 
   const r25Final = games.find(g => g.code === 'R25_FINAL');
   if (r25Final && r25Final.status === 'encerrado' && r25Final.vencedor_id) {
     const winner = r25Final.lado_a?.id === r25Final.vencedor_id ? r25Final.lado_a : r25Final.lado_b;
     const loser = r25Final.lado_a?.id === r25Final.vencedor_id ? r25Final.lado_b : r25Final.lado_a;
-    registerPoints(winner, pointsTable[25] || 1, '25º Lugar', 25, 8);
-    registerPoints(loser, pointsTable[26] || 1, '26º Lugar', 26, 7);
+    registerPoints(winner, pointsTable[25] || 3, '25º Lugar', 25, 8);
+    registerPoints(loser, pointsTable[26] || 2, '26º Lugar', 26, 7);
   }
 
   // Converte Map para Array e ordena por pontos decrescente

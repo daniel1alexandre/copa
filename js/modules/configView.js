@@ -1,6 +1,7 @@
 // Módulo de Configuração do Torneio, Categorias, Tabela de Pontos e Quadras
 import { store } from '../data/store.js';
 import { toast } from './toast.js';
+import { DEFAULT_POINTS_TABLE } from '../data/categories.js';
 
 export function initConfigView() {
   window.handleSaveTournamentMetadata = (e) => {
@@ -44,8 +45,8 @@ export function initConfigView() {
     const newTable = {};
     inputs.forEach(input => {
       const pos = parseInt(input.dataset.pos, 10);
-      const val = parseInt(input.value, 10) || 0;
-      newTable[pos] = val;
+      const val = parseInt(input.value, 10);
+      newTable[pos] = isNaN(val) ? (DEFAULT_POINTS_TABLE[pos] || 0) : val;
     });
 
     store.updatePointsTable(newTable);
@@ -54,6 +55,16 @@ export function initConfigView() {
       message: 'A pontuação das colocações foi atualizada para o ranking geral.',
       type: 'success'
     });
+  };
+
+  window.handleRestoreDefaultPointsTable = () => {
+    store.restoreDefaultPointsTable();
+    toast.show({
+      title: 'Padrão Oficial CBT Restaurado',
+      message: 'A pontuação padrão oficial (1º ao 27º lugar) foi restaurada com sucesso.',
+      type: 'success'
+    });
+    renderConfig();
   };
 
   window.handleExportBackup = () => {
@@ -176,13 +187,19 @@ export function renderConfig() {
 
       <!-- TABELA DE PONTUAÇÃO CBT EDITÁVEL -->
       <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">🏅 Tabela de Pontos por Colocação</h3>
-          <button class="btn btn-primary btn-sm" onclick="window.handleSavePointsTable()">Salvar Pontos</button>
+        <div class="card-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <h3 class="card-title">🏅 Tabela de Pontos por Colocação</h3>
+            <span style="font-size: 0.75rem; color: var(--accent-emerald); font-weight: 700;">★ Padrão Oficial CBT (1º ao 27º)</span>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-outline btn-sm" onclick="window.handleRestoreDefaultPointsTable()" title="Restaura os valores oficiais padrão CBT (1º: 55 pts até 27º: 1 pt)">Restaurar Padrão Oficial</button>
+            <button class="btn btn-primary btn-sm" onclick="window.handleSavePointsTable()">Salvar Pontos</button>
+          </div>
         </div>
 
         <p style="font-size: 0.825rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-          Pontos atribuídos para cada colocação final na categoria (1º a 27º lugar):
+          Esta pontuação é registrada como <strong>padrão permanente do sistema</strong> (1º: 55 pts até 27º: 1 pt). O ranking geral calcula automaticamente a pontuação das federações com base nestes valores:
         </p>
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; max-height: 380px; overflow-y: auto; padding-right: 0.35rem;">
