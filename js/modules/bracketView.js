@@ -50,24 +50,6 @@ export function initBracketView() {
     }
   };
 
-  window.handleUpdateEventDateTime = (type, value) => {
-    if (type === 'date') {
-      store.updateTournament({ dataInicio: value });
-      toast.show({
-        title: 'Data de Início Salva',
-        message: `Início do evento: ${value ? value.split('-').reverse().join('/') : 'não definida'}.`,
-        type: 'success',
-        duration: 2500
-      });
-    } else if (type === 'time') {
-      store.updateTournament({ horaInicio: value });
-      toast.show({
-        title: 'Horário de Início Salvo',
-        message: `Horário de início: ${value || 'não definido'}.`,
-        type: 'success',
-        duration: 2500
-      });
-    }
   };
 }
 
@@ -197,8 +179,8 @@ export function renderBracket() {
           ${placements.map(p => `
             <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); background: var(--bg-subtle);">
               <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <span class="standings-badge-pos ${p.colocacao <= 3 ? 'pos-' + p.colocacao : 'pos-other'}">
-                  ${p.colocacao}º
+                <span class="standings-badge-pos ${(p.posicao || p.colocacao) <= 3 ? 'pos-' + (p.posicao || p.colocacao) : 'pos-other'}">
+                  ${p.posicao || p.colocacao}º
                 </span>
                 <img src="assets/federations/${p.id}.jpg" alt="${p.uf}" style="width: 26px; height: 18px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
                 <div>
@@ -250,45 +232,18 @@ function renderTreeBracket(games, subtab) {
   return `
     <div class="bracket-tree-container">
       <div class="bracket-rounds-wrapper">
-        ${Array.from(phasesMap.entries()).map(([faseName, phaseGames]) => {
-          const isFirstRound = faseName === '1ª Fase';
-          return `
+        ${Array.from(phasesMap.entries()).map(([faseName, phaseGames]) => `
           <div class="bracket-round-column">
-            <div class="round-header" style="${isFirstRound ? 'padding-bottom: 0.5rem;' : ''}">
-              <div style="display: flex; align-items: center; justify-content: center; gap: 0.45rem; flex-wrap: wrap;">
-                <div class="round-title">${faseName}</div>
-                ${isFirstRound ? `
-                  <div class="first-round-datetime-badge" style="display: inline-flex; align-items: center; gap: 0.25rem; background: var(--bg-subtle, #f8fafc); padding: 0.15rem 0.4rem; border-radius: 6px; border: 1px solid var(--border-light, #cbd5e1); box-shadow: 0 1px 2px rgba(0,0,0,0.04);" title="Data e hora de início do evento">
-                    <span style="font-size: 0.8rem; line-height: 1;" title="Data de início do evento">📅</span>
-                    <input 
-                      type="date" 
-                      id="bracket-start-date"
-                      value="${tournament.dataInicio || '2026-10-15'}" 
-                      style="width: 122px; padding: 0.15rem 0.25rem; font-size: 0.76rem; height: 26px; font-weight: 700; color: #1e293b; background: #ffffff; border: 1px solid #94a3b8; border-radius: 4px; cursor: pointer;"
-                      title="Editar data de início do evento"
-                      onchange="window.handleUpdateEventDateTime('date', this.value)"
-                    />
-                    <span style="font-size: 0.8rem; line-height: 1; margin-left: 0.15rem;" title="Horário de início">⏰</span>
-                    <input 
-                      type="time" 
-                      id="bracket-start-time"
-                      value="${tournament.horaInicio || '08:00'}" 
-                      style="width: 78px; padding: 0.15rem 0.25rem; font-size: 0.76rem; height: 26px; font-weight: 700; color: #1e293b; background: #ffffff; border: 1px solid #94a3b8; border-radius: 4px; cursor: pointer;"
-                      title="Editar horário de início do evento"
-                      onchange="window.handleUpdateEventDateTime('time', this.value)"
-                    />
-                  </div>
-                ` : ''}
-              </div>
-              <div class="round-subtitle" style="margin-top: 0.2rem;">${phaseGames.length} ${phaseGames.length === 1 ? 'confronto' : 'confrontos'}</div>
+            <div class="round-header">
+              <div class="round-title">${faseName}</div>
+              <div class="round-subtitle">${phaseGames.length} ${phaseGames.length === 1 ? 'confronto' : 'confrontos'}</div>
             </div>
 
             <div class="round-matches-list">
               ${phaseGames.map(game => renderMatchCard(game)).join('')}
             </div>
           </div>
-        `;
-        }).join('')}
+        `).join('')}
       </div>
     </div>
   `;

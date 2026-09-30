@@ -1176,43 +1176,41 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
     if (g.lado_b) registerPoints(g.lado_b, pointsTable[27] || 1, '1ª Fase', 27, 1);
   });
 
-  // 2. Pontuação por avanço na Chave Principal (apenas para jogos REALMENTE jogados e encerrados, NÃO para BYEs):
+  // 2. Pontuação por avanço na Chave Principal (jogos que passam de BYE pontuam antecipadamente conforme as fases que avançam):
   
-  // (a) Vitória na 1ª Fase (jogo real encerrado) garante avanço para Oitavas (Top 16 -> garantido 16º lugar)
-  const r32Games = games.filter(g => g.fase === '1ª Fase' && !g.is_bye && g.status === 'encerrado' && g.vencedor_id);
-  r32Games.forEach(g => {
-    const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
-    if (winner) registerPoints(winner, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
-  });
-
-  // (b) Vitória nas Oitavas de Final garante avanço para Quartas (Top 8 -> garantido 8º lugar)
-  const oitavasGames = games.filter(g => g.fase === 'Oitavas de Final' && g.status === 'encerrado' && g.vencedor_id);
+  // (a) Oitavas de Final (Top 16) - Garantido pelo menos 16º lugar (12 pts CBT)
+  const oitavasGames = games.filter(g => g.fase === 'Oitavas de Final');
   oitavasGames.forEach(g => {
-    const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
-    if (winner) registerPoints(winner, pointsTable[8] || 26, 'Quartas de Final (Top 8)', 8, 3);
+    if (g.lado_a) registerPoints(g.lado_a, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
+    if (g.lado_b) registerPoints(g.lado_b, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
   });
 
-  // (c) Vitória nas Quartas de Final garante avanço para Semifinal (Top 4 -> garantido 4º lugar)
-  const quartasGames = games.filter(g => g.fase === 'Quartas de Final' && g.status === 'encerrado' && g.vencedor_id);
+  // (b) Quartas de Final (Top 8) - Garantido pelo menos 8º lugar (26 pts CBT)
+  const quartasGames = games.filter(g => g.fase === 'Quartas de Final');
   quartasGames.forEach(g => {
-    const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
-    if (winner) registerPoints(winner, pointsTable[4] || 40, 'Semifinalista (Top 4)', 4, 4);
+    if (g.lado_a) registerPoints(g.lado_a, pointsTable[8] || 26, 'Quartas de Final (Top 8)', 8, 3);
+    if (g.lado_b) registerPoints(g.lado_b, pointsTable[8] || 26, 'Quartas de Final (Top 8)', 8, 3);
   });
 
-  // (d) Vitória na Semifinal garante avanço para a Grande Final (Top 2 -> garantido 2º lugar)
-  const semisGames = games.filter(g => g.fase === 'Semifinal' && g.status === 'encerrado' && g.vencedor_id);
+  // (c) Semifinais (Top 4) - Garantido pelo menos 4º lugar (40 pts CBT)
+  const semisGames = games.filter(g => g.fase === 'Semifinal');
   semisGames.forEach(g => {
-    const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
-    if (winner) registerPoints(winner, pointsTable[2] || 50, 'Finalista (Top 2)', 2, 5);
+    if (g.lado_a) registerPoints(g.lado_a, pointsTable[4] || 40, 'Semifinalista (Top 4)', 4, 4);
+    if (g.lado_b) registerPoints(g.lado_b, pointsTable[4] || 40, 'Semifinalista (Top 4)', 4, 4);
   });
 
-  // (e) Grande Final (C31)
+  // (d) Finalista (Top 2) - Garantido pelo menos 2º lugar (50 pts CBT)
   const finalGame = games.find(g => g.code === 'C31');
-  if (finalGame && finalGame.status === 'encerrado' && finalGame.vencedor_id) {
-    const winner = finalGame.lado_a?.id === finalGame.vencedor_id ? finalGame.lado_a : finalGame.lado_b;
-    const runnerUp = finalGame.lado_a?.id === finalGame.vencedor_id ? finalGame.lado_b : finalGame.lado_a;
-    if (winner) registerPoints(winner, pointsTable[1] || 55, '1º Lugar (Campeão 🥇)', 1, 10);
-    if (runnerUp) registerPoints(runnerUp, pointsTable[2] || 50, '2º Lugar (Vice-Campeão 🥈)', 2, 9);
+  if (finalGame) {
+    if (finalGame.lado_a) registerPoints(finalGame.lado_a, pointsTable[2] || 50, 'Finalista (Top 2)', 2, 5);
+    if (finalGame.lado_b) registerPoints(finalGame.lado_b, pointsTable[2] || 50, 'Finalista (Top 2)', 2, 5);
+
+    if (finalGame.status === 'encerrado' && finalGame.vencedor_id) {
+      const winner = finalGame.lado_a?.id === finalGame.vencedor_id ? finalGame.lado_a : finalGame.lado_b;
+      const runnerUp = finalGame.lado_a?.id === finalGame.vencedor_id ? finalGame.lado_b : finalGame.lado_a;
+      if (winner) registerPoints(winner, pointsTable[1] || 55, '1º Lugar (Campeão 🥇)', 1, 10);
+      if (runnerUp) registerPoints(runnerUp, pointsTable[2] || 50, '2º Lugar (Vice-Campeão 🥈)', 2, 9);
+    }
   }
 
   // (f) Disputa de 3º Lugar (C32)
@@ -1327,12 +1325,21 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
     if (loser) registerPoints(loser, pointsTable[27] || 1, '27º Lugar', 27, 8);
   }
 
-  // Converte Map para Array e ordena por pontos decrescente, e por nome/colocação em caso de empate
+  // Converte Map para Array e ordena por pontos decrescente, prioridade de colocação e seed oficial CBT
   const list = Array.from(teamMap.values());
   list.sort((a, b) => {
     if (b.pontos !== a.pontos) return b.pontos - a.pontos;
     if (a.colocacao !== b.colocacao) return a.colocacao - b.colocacao;
+    const fedA = participatingFeds.find(f => f.id === a.equipe_id);
+    const fedB = participatingFeds.find(f => f.id === b.equipe_id);
+    const seedA = fedA?.seed || 99;
+    const seedB = fedB?.seed || 99;
+    if (seedA !== seedB) return seedA - seedB;
     return a.nome.localeCompare(b.nome, 'pt-BR');
+  });
+
+  list.forEach((item, idx) => {
+    item.posicao = idx + 1;
   });
 
   return list;
