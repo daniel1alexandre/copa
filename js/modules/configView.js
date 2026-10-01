@@ -174,27 +174,14 @@ export function initConfigView() {
   };
 
   window.handleCopySupabaseSQL = () => {
-    const sql = `-- ============================================================
--- COPA DAS FEDERAÇÕES DE BEACH TENNIS 2026 (CBT)
--- SCRIPT DE CONFIGURAÇÃO DO SUPABASE (BANCO DE DADOS & REALTIME)
--- ============================================================
-CREATE TABLE IF NOT EXISTS public.tournament_state (
+    const sql = `CREATE TABLE IF NOT EXISTS public.tournament_state (
     id TEXT PRIMARY KEY,
     data JSONB NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
-DO $$
-BEGIN
-  IF NOT EXISTS (
-    SELECT 1 FROM pg_publication_tables 
-    WHERE pubname = 'supabase_realtime' 
-      AND schemaname = 'public' 
-      AND tablename = 'tournament_state'
-  ) THEN
-    ALTER PUBLICATION supabase_realtime ADD TABLE public.tournament_state;
-  END IF;
-END $$;
+ALTER PUBLICATION supabase_realtime DROP TABLE IF EXISTS public.tournament_state;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.tournament_state;
 
 ALTER TABLE public.tournament_state ENABLE ROW LEVEL SECURITY;
 
