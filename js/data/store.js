@@ -267,7 +267,7 @@ class AppStore {
     return state;
   }
 
-  save() {
+  save(syncToRemote = true) {
     this.state.lastUpdated = new Date().toISOString();
     try {
       if (typeof localStorage !== 'undefined') {
@@ -277,6 +277,27 @@ class AppStore {
       console.error('Erro ao salvar no localStorage:', e);
     }
     this.notify();
+
+    if (syncToRemote && window.supabaseService && typeof window.supabaseService.pushState === 'function') {
+      window.supabaseService.pushState(this.state);
+    }
+  }
+
+  loadFromRemote(remoteState) {
+    if (!remoteState || !remoteState.brackets) {
+      console.warn('[Store] Estado remoto inválido descartado.');
+      return false;
+    }
+    this.state = remoteState;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+      }
+    } catch (e) {
+      console.warn('Erro ao salvar cache local do Supabase:', e);
+    }
+    this.notify();
+    return true;
   }
 
   subscribe(listener) {

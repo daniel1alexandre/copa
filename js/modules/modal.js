@@ -1,6 +1,7 @@
 // Gerenciador de Modais da Aplicação
 import { store } from '../data/store.js';
 import { toast } from './toast.js';
+import { auth } from './auth.js';
 
 export function openMatchModal(gameCode, categoryId = 'prof') {
   const games = store.getGames(categoryId);
@@ -215,6 +216,15 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
   const btnSaveTeams = document.getElementById('btn-save-match-teams');
   if (btnSaveTeams) {
     btnSaveTeams.addEventListener('click', () => {
+      if (!auth.isAdmin()) {
+        toast.show({
+          title: 'Acesso Restrito',
+          message: 'Apenas o administrador (Baumann) pode alterar os confrontos.',
+          type: 'warning'
+        });
+        window.showLoginPortal();
+        return;
+      }
       const teamAId = document.getElementById('edit-side-a').value || null;
       const teamBId = document.getElementById('edit-side-b').value || null;
       const chkBye = document.getElementById('edit-is-bye').checked;
@@ -238,6 +248,15 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
   const saveBtn = document.getElementById('btn-save-modal-match');
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
+      if (!auth.isAdmin()) {
+        toast.show({
+          title: 'Acesso Restrito',
+          message: 'Apenas o administrador (Baumann) pode lançar ou alterar resultados dos confrontos.',
+          type: 'warning'
+        });
+        window.showLoginPortal();
+        return;
+      }
       const j1 = document.getElementById('modal-vencedor-j1').value || null;
       const p1 = document.getElementById('modal-placar-j1').value.trim();
       const j2 = document.getElementById('modal-vencedor-j2').value || null;
@@ -468,6 +487,16 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
       });
     });
 
+    if (!auth.isAdmin()) {
+      toast.show({
+        title: 'Acesso Restrito',
+        message: 'Apenas o administrador (Baumann) pode salvar o chaveamento da 1ª rodada.',
+        type: 'warning'
+      });
+      window.showLoginPortal();
+      return;
+    }
+
     const res = store.saveAllFirstRoundMatchups(categoryId, matchups);
     if (res.success) {
       toast.show({
@@ -552,6 +581,15 @@ export function openScheduleModal(gameCode, categoryId = 'prof') {
   overlay.classList.add('active');
 
   document.getElementById('btn-save-schedule').addEventListener('click', () => {
+    if (!auth.isAdmin()) {
+      toast.show({
+        title: 'Acesso Restrito',
+        message: 'Apenas o administrador (Baumann) pode agendar quadras e horários.',
+        type: 'warning'
+      });
+      window.showLoginPortal();
+      return;
+    }
     const courtId = document.getElementById('modal-sched-court').value;
     const timeStr = document.getElementById('modal-sched-time').value;
     const statusVal = document.getElementById('modal-sched-status').value;
@@ -763,6 +801,15 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
   const btnSave = document.getElementById('btn-save-card-first-round');
   if (btnSave) {
     btnSave.addEventListener('click', () => {
+      if (!auth.isAdmin()) {
+        toast.show({
+          title: 'Acesso Restrito',
+          message: 'Apenas o administrador (Baumann) pode alterar confrontos e resultados.',
+          type: 'warning'
+        });
+        window.showLoginPortal();
+        return;
+      }
       const selA = document.getElementById('card-edit-side-a');
       const selB = document.getElementById('card-edit-side-b');
       const chkBye = document.getElementById('card-edit-is-bye');

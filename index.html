@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="css/bracket.css">
   <link rel="stylesheet" href="css/schedule.css">
   <link rel="stylesheet" href="css/telao.css">
+  <link rel="stylesheet" href="css/auth.css">
+
+  <!-- Supabase JS Client Oficial para Tempo Real e Nuvem -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -23,7 +27,7 @@
   <header class="topbar">
     <div class="topbar-container">
       <div class="brand-section">
-        <img src="/assets/logo.jpg" alt="Logo Copa das Federações" class="main-logo" style="height: 60px; margin-right: 15px; border-radius: 8px; object-fit: contain;">
+        <img src="assets/logo.jpg" alt="Logo Copa das Federações" class="main-logo" style="height: 60px; margin-right: 15px; border-radius: 8px; object-fit: contain;">
         <div class="brand-titles">
           <h1>
             Copa das Federações 2026
@@ -34,6 +38,12 @@
       </div>
 
       <div class="topbar-actions">
+        <!-- Indicador de Sincronização Supabase Realtime -->
+        <div id="supabase-status-pill" class="pill-supabase disconnected" title="Clique para ver ou configurar a sincronização em nuvem Supabase" onclick="window.switchTab('configuracoes')">
+          <span class="pill-supabase-dot"></span>
+          <span id="supabase-status-text">Supabase Offline</span>
+        </div>
+
         <button class="btn-topbar btn-topbar-ghost" onclick="window.switchTab('categorias')">
           🎾 Categorias
         </button>
@@ -45,6 +55,9 @@
         <button class="btn-topbar btn-topbar-ghost" style="background: rgba(255, 183, 3, 0.2); border-color: rgba(255, 183, 3, 0.4); color: #ffb703;" onclick="window.switchTab('ranking')">
           🏆 Ranking Geral
         </button>
+
+        <!-- Sessão do Usuário (Baumann / Visitante) -->
+        <div id="topbar-user-section"></div>
       </div>
     </div>
   </header>

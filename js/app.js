@@ -1,5 +1,7 @@
 // Aplicação Principal Copa Federações 2026
 import { store } from './data/store.js';
+import { supabaseService } from './data/supabaseClient.js';
+import { initAuthUI, showLoginPortal, hideLoginPortal, auth } from './modules/auth.js';
 import { renderDashboard } from './modules/dashboard.js';
 import { initCategoryView, renderCategoryView } from './modules/categoryView.js';
 import { initBracketView, renderBracket } from './modules/bracketView.js';
@@ -67,12 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openConfigureFirstRoundModal = (catId = 'prof') => openConfigureFirstRoundModal(catId);
   window.openEditFirstRoundCardModal = (code, catId = 'prof') => openEditFirstRoundCardModal(code, catId);
 
+  // Exposição global de autenticação
+  window.showLoginPortal = showLoginPortal;
+  window.hideLoginPortal = hideLoginPortal;
+  window.auth = auth;
+
   // Inicializa submódulos de eventos
   initCategoryView();
   initBracketView();
   initRankingView();
   initTeamsAthletesView();
   initConfigView();
+  initAuthUI();
 
   // Configura cliques nos botões de tabs
   const tabButtons = document.querySelectorAll('.nav-tab');
@@ -86,6 +94,46 @@ document.addEventListener('DOMContentLoaded', () => {
   store.subscribe(() => {
     renderCurrentView();
   });
+
+  // Monitora e atualiza o indicador do Supabase na topbar e no portal de login
+  supabaseService.onStatusChange((status, detail) => {
+    const pill = document.getElementById('supabase-status-pill');
+    const text = document.getElementById('supabase-status-text');
+    const portalStatus = document.getElementById('portal-supabase-status');
+
+    if (pill) {
+      pill.className = `pill-supabase ${status}`;
+      if (status === 'connected') {
+        pill.title = 'Conectado ao Supabase Realtime (Sincronização Ao Vivo Ativa)';
+        if (text) text.textContent = 'Supabase Ao Vivo';
+      } else if (status === 'syncing') {
+        pill.title = 'Enviando alterações para nuvem Supabase...';
+        if (text) text.textContent = 'Sincronizando...';
+      } else if (status === 'connecting') {
+        pill.title = 'Conectando ao canal em tempo real Supabase...';
+        if (text) text.textContent = 'Conectando...';
+      } else {
+        pill.title = 'Modo Local / Supabase Desconectado. Clique para configurar.';
+        if (text) text.textContent = 'Supabase Offline';
+      }
+    }
+
+    if (portalStatus) {
+      if (status === 'connected') {
+        portalStatus.innerHTML = '<span class="sync-dot"></span><span class="sync-label">Sincronização em Nuvem Supabase Ativa</span>';
+        portalStatus.style.color = '#34d399';
+      } else if (status === 'connecting' || status === 'syncing') {
+        portalStatus.innerHTML = '<span class="sync-dot" style="background:#f59e0b;box-shadow:0 0 8px #f59e0b;"></span><span class="sync-label">Sincronizando com a Nuvem...</span>';
+        portalStatus.style.color = '#fbbf24';
+      } else {
+        portalStatus.innerHTML = '<span class="sync-dot" style="background:#94a3b8;box-shadow:none;"></span><span class="sync-label">Modo Local (Banco Pronto para Conectar)</span>';
+        portalStatus.style.color = '#94a3b8';
+      }
+    }
+  });
+
+  // Inicializa o serviço do Supabase
+  supabaseService.init(store);
 
   // Render inicial
   switchTab('home');
