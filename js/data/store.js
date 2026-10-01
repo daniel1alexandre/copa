@@ -9,6 +9,22 @@ class AppStore {
   constructor() {
     this.listeners = [];
     this.undoStack = [];
+    this.broadcastChannel = null;
+
+    if (typeof BroadcastChannel !== 'undefined') {
+      try {
+        this.broadcastChannel = new BroadcastChannel('copa_federacoes_realtime_sync');
+        this.broadcastChannel.onmessage = (event) => {
+          if (event.data && event.data.state) {
+            console.log('[Broadcast] Atualização recebida do administrador:', event.data.summary);
+            this.loadFromRemote(event.data.state, true, event.data.summary);
+          }
+        };
+      } catch (err) {
+        console.warn('BroadcastChannel não suportado:', err);
+      }
+    }
+
     this.state = this.loadState();
   }
 
@@ -267,8 +283,15 @@ class AppStore {
     return state;
   }
 
-  save(syncToRemote = true) {
+  save(syncToRemote = true, actionSummary = '') {
     this.state.lastUpdated = new Date().toISOString();
+    if (actionSummary) {
+      this.state.lastAction = {
+        summary: actionSummary,
+        time: this.state.lastUpdated,
+        author: 'Baumann'
+      };
+    }
     try {
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
@@ -278,25 +301,42 @@ class AppStore {
     }
     this.notify();
 
+    if (this.broadcastChannel && syncToRemote) {
+      try {
+        this.broadcastChannel.postMessage({
+          summary: actionSummary || 'Dados atualizados pelo administrador (Baumann)',
+          state: this.state
+        });
+      } catch (err) {
+        console.warn('Erro ao postar no BroadcastChannel:', err);
+      }
+    }
+
     if (syncToRemote && window.supabaseService && typeof window.supabaseService.pushState === 'function') {
       window.supabaseService.pushState(this.state);
     }
   }
 
-  loadFromRemote(remoteState) {
+  loadFromRemote(remoteState, saveToStorage = true, customSummary = null) {
     if (!remoteState || !remoteState.brackets) {
       console.warn('[Store] Estado remoto inválido descartado.');
       return false;
     }
     this.state = remoteState;
-    try {
-      if (typeof localStorage !== 'undefined') {
+    if (saveToStorage && typeof localStorage !== 'undefined') {
+      try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+      } catch (e) {
+        console.warn('Erro ao salvar cache local:', e);
       }
-    } catch (e) {
-      console.warn('Erro ao salvar cache local do Supabase:', e);
     }
     this.notify();
+
+    // Notifica visualmente todos os usuários sobre a ação do administrador
+    const summary = customSummary || (remoteState.lastAction ? remoteState.lastAction.summary : 'Placares e chaves atualizados pela Arbitragem.');
+    if (window.showLiveUpdateToast && typeof window.showLiveUpdateToast === 'function') {
+      window.showLiveUpdateToast(summary);
+    }
     return true;
   }
 
@@ -513,7 +553,13 @@ class AppStore {
 
     const res = propagateMatchResult(games, gameCode, resultData);
     if (res.success) {
-      this.save();
+      const teamAName = targetGame.lado_a?.uf || 'A';
+      const teamBName = targetGame.lado_b?.uf || 'B';
+      let summary = `Confronto ${gameCode} atualizado (${teamAName} vs ${teamBName})`;
+      if (res.winnerPropagated) {
+        summary += ` • Vencedor ${res.winnerPropagated.team} avançou para ${res.winnerPropagated.code}!`;
+      }
+      this.save(true, summary);
     }
     return res;
   }
@@ -579,7 +625,7 @@ class AppStore {
       if (!this.state.categoryByes) this.state.categoryByes = {};
       this.state.categoryByes[categoryId] = byesList;
 
-      this.save();
+      this.save(true, `Confronto ${gameCode} atualizado pela Arbitragem`);
     }
     return res;
   }
@@ -713,7 +759,7 @@ class AppStore {
     if (!this.state.categoryByes) this.state.categoryByes = {};
     this.state.categoryByes[categoryId] = byesList;
 
-    this.save();
+    this.save(true, 'Chaveamento da 1ª rodada atualizado pela Arbitragem');
     return { success: true, message: 'Chaveamento da 1ª rodada atualizado com sucesso!' };
   }
 
@@ -760,7 +806,7 @@ class AppStore {
       game.status = 'em espera';
     }
 
-    this.save();
+    this.save(true, `Confronto ${gameCode} agendado para ${timeStr || 'horário livre'} na ${this.getCourtName(courtId)}`);
     return { success: true, game };
   }
 

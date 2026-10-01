@@ -301,11 +301,11 @@ function renderAuthPortalElement() {
         <span class="secondary-tag">AO VIVO</span>
       </button>
 
-      <!-- RODAPÉ DO CARD COM STATUS SUPABASE -->
+      <!-- RODAPÉ DO CARD COM STATUS AO VIVO -->
       <div class="portal-footer">
-        <div id="portal-supabase-status" class="portal-sync-status">
+        <div class="portal-sync-status">
           <span class="sync-dot"></span>
-          <span class="sync-label">Sincronização em Nuvem Supabase Ativa</span>
+          <span class="sync-label">Transmissão Oficial de Chaves e Resultados em Tempo Real</span>
         </div>
         <div class="portal-copyright">
           © 2026 Confederação Brasileira de Tênis • Todos os direitos reservados

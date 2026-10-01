@@ -38,10 +38,10 @@
       </div>
 
       <div class="topbar-actions">
-        <!-- Indicador de Sincronização Supabase Realtime -->
-        <div id="supabase-status-pill" class="pill-supabase disconnected" title="Clique para ver ou configurar a sincronização em nuvem Supabase" onclick="window.switchTab('configuracoes')">
-          <span class="pill-supabase-dot"></span>
-          <span id="supabase-status-text">Supabase Offline</span>
+        <!-- Indicador Oficial Ao Vivo -->
+        <div class="pill-badge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; font-weight: 700; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 0.45rem;">
+          <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; animation: pulseDot 2s infinite;"></span>
+          <span id="topbar-live-text">AO VIVO</span>
         </div>
 
         <button class="btn-topbar btn-topbar-ghost" onclick="window.switchTab('categorias')">

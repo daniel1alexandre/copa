@@ -95,39 +95,28 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCurrentView();
   });
 
-  // Monitora e atualiza o indicador do Supabase na topbar e no portal de login
-  supabaseService.onStatusChange((status, detail) => {
-    const pill = document.getElementById('supabase-status-pill');
-    const text = document.getElementById('supabase-status-text');
-    const portalStatus = document.getElementById('portal-supabase-status');
-
-    if (pill) {
-      pill.className = `pill-supabase ${status}`;
-      if (status === 'connected') {
-        pill.title = 'Conectado ao Supabase Realtime (Sincronização Ao Vivo Ativa)';
-        if (text) text.textContent = 'Supabase Ao Vivo';
-      } else if (status === 'syncing') {
-        pill.title = 'Enviando alterações para nuvem Supabase...';
-        if (text) text.textContent = 'Sincronizando...';
-      } else if (status === 'connecting') {
-        pill.title = 'Conectando ao canal em tempo real Supabase...';
-        if (text) text.textContent = 'Conectando...';
-      } else {
-        pill.title = 'Modo Local / Supabase Desconectado. Clique para configurar.';
-        if (text) text.textContent = 'Supabase Offline';
-      }
+  // Notificação global de atualização em tempo real para todos os usuários
+  window.showLiveUpdateToast = (summary) => {
+    if (window.toast && typeof window.toast.show === 'function') {
+      window.toast.show({
+        title: '⚡ Arbitragem CBT (Baumann)',
+        message: summary || 'Placar e chaveamento atualizados em tempo real.',
+        type: 'info',
+        duration: 5000
+      });
     }
+  };
 
-    if (portalStatus) {
+  // Monitora e atualiza o indicador ao vivo na barra de topo
+  supabaseService.onStatusChange((status) => {
+    const liveText = document.getElementById('topbar-live-text');
+    if (liveText) {
       if (status === 'connected') {
-        portalStatus.innerHTML = '<span class="sync-dot"></span><span class="sync-label">Sincronização em Nuvem Supabase Ativa</span>';
-        portalStatus.style.color = '#34d399';
-      } else if (status === 'connecting' || status === 'syncing') {
-        portalStatus.innerHTML = '<span class="sync-dot" style="background:#f59e0b;box-shadow:0 0 8px #f59e0b;"></span><span class="sync-label">Sincronizando com a Nuvem...</span>';
-        portalStatus.style.color = '#fbbf24';
+        liveText.textContent = 'AO VIVO';
+      } else if (status === 'syncing') {
+        liveText.textContent = 'SINCRONIZANDO...';
       } else {
-        portalStatus.innerHTML = '<span class="sync-dot" style="background:#94a3b8;box-shadow:none;"></span><span class="sync-label">Modo Local (Banco Pronto para Conectar)</span>';
-        portalStatus.style.color = '#94a3b8';
+        liveText.textContent = 'AO VIVO';
       }
     }
   });
