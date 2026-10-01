@@ -1,13 +1,17 @@
--- 1. Criar a tabela para armazenar o estado da Copa
+-- 1. Criar a tabela para armazenar o estado da Copa (se ainda não existir)
 CREATE TABLE IF NOT EXISTS public.tournament_state (
     id TEXT PRIMARY KEY,
     data JSONB NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- 2. Habilitar o Supabase Realtime (transmissão ao vivo via WebSocket)
-ALTER PUBLICATION supabase_realtime DROP TABLE IF EXISTS public.tournament_state;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.tournament_state;
+-- 2. Habilitar o Supabase Realtime (se já estiver adicionada, não dá erro)
+DO $$
+BEGIN
+  ALTER PUBLICATION supabase_realtime ADD TABLE public.tournament_state;
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
 
 -- 3. Habilitar Row Level Security (RLS)
 ALTER TABLE public.tournament_state ENABLE ROW LEVEL SECURITY;

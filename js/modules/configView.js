@@ -180,8 +180,12 @@ export function initConfigView() {
     updated_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
-ALTER PUBLICATION supabase_realtime DROP TABLE IF EXISTS public.tournament_state;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.tournament_state;
+DO $$
+BEGIN
+  ALTER PUBLICATION supabase_realtime ADD TABLE public.tournament_state;
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
 
 ALTER TABLE public.tournament_state ENABLE ROW LEVEL SECURITY;
 
