@@ -205,5 +205,7 @@ class SupabaseService {
 }
 
 export const supabaseService = new SupabaseService();
-window.supabaseService = supabaseService;
+if (typeof window !== 'undefined') {
+  window.supabaseService = supabaseService;
+}
 export { saveSupabaseCredentials, getSupabaseCredentials };

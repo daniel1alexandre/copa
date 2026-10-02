@@ -1030,4 +1030,6 @@ class AppStore {
 
 export const store = new AppStore();
 
-window.store = store;
+if (typeof window !== 'undefined') {
+  window.store = store;
+}
