@@ -1,265 +1,202 @@
-// Cliente Supabase — REST API direta + Polling a cada 4s
-// Não depende do SDK window.supabase — usa fetch() nativo do browser
+// Cliente Supabase — REST API + Polling a cada 4s
+// Usa fetch() nativo — compatível com chave sb_publishable_ e JWT
 import { getSupabaseCredentials, saveSupabaseCredentials } from './supabaseConfig.js';
+
+const SUPABASE_URL  = 'https://zcyfnnuvggbfutkpbjtg.supabase.co';
+const SUPABASE_KEY  = 'sb_publishable_xMMqR-d7w1vtHPLqnMqhhA_5CoIFVLN';
+const TABLE         = 'tournament_state';
+const RECORD_ID     = 'copa_2026';
+const POLL_MS       = 4000;
+
+// Cabeçalhos REST do Supabase
+function headers(extra = {}) {
+  return {
+    'apikey':        SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type':  'application/json',
+    ...extra
+  };
+}
+
+// URL da tabela
+const TABLE_URL = `${SUPABASE_URL}/rest/v1/${TABLE}`;
 
 class SupabaseService {
   constructor() {
-    this.status           = 'disconnected';
-    this.statusListeners  = [];
-    this.debounceTimer    = null;
-    this.isUpdatingFromRemote = false;
-    this.store            = null;
-    this.lastPushTime     = null;
-    this.lastUpdatedAt    = null;
-    this.pollingTimer     = null;
-    this.POLL_INTERVAL    = 4000;  // 4 segundos
-    this.initialized      = false;
+    this.store             = null;
+    this.status            = 'disconnected';
+    this.statusListeners   = [];
+    this.debounceTimer     = null;
+    this.pollingTimer      = null;
+    this.lastUpdatedAt     = null;   // updated_at do último registro lido
+    this.lastPushMs        = 0;      // Date.now() da última gravação nossa
+    this.blockRemoteUpdate = false;  // impede loop ao carregar do remoto
   }
 
-  // ── Status ────────────────────────────────────────────────────
+  // ─── Status ────────────────────────────────────────────────────
   onStatusChange(fn) {
     this.statusListeners.push(fn);
     fn(this.status);
     return () => { this.statusListeners = this.statusListeners.filter(l => l !== fn); };
   }
-
-  setStatus(s, detail = '') {
+  setStatus(s) {
     this.status = s;
-    this.statusListeners.forEach(fn => { try { fn(s, detail); } catch(e) {} });
-    if (detail) console.log(`[Supabase] ${s}: ${detail}`);
+    this.statusListeners.forEach(fn => { try { fn(s); } catch (_) {} });
   }
-
   getStatus() { return this.status; }
 
-  isConfigured() {
-    const { url, anonKey } = getSupabaseCredentials();
-    return Boolean(url && anonKey && url.startsWith('https'));
-  }
-
-  // ── Monta os headers da REST API ─────────────────────────────
-  _headers() {
-    const { anonKey } = getSupabaseCredentials();
-    return {
-      'apikey':        anonKey,
-      'Authorization': `Bearer ${anonKey}`,
-      'Content-Type':  'application/json',
-      'Prefer':        'return=minimal'
-    };
-  }
-
-  // ── URL base da tabela ────────────────────────────────────────
-  _tableUrl() {
-    const { url, tableName } = getSupabaseCredentials();
-    return `${url}/rest/v1/${tableName}`;
-  }
-
-  // ── Inicialização ─────────────────────────────────────────────
+  // ─── Inicialização ─────────────────────────────────────────────
   async init(store) {
-    if (this.initialized) return true;
     this.store = store;
+    this.setStatus('connecting');
 
-    if (!this.isConfigured()) {
-      this.setStatus('disconnected', 'Credenciais não configuradas');
-      return false;
-    }
+    // 1. Carrega estado mais recente do banco
+    const remote = await this._fetch();
 
-    this.setStatus('connecting', 'Conectando ao Supabase...');
+    if (remote === null) {
+      // Tabela vazia → sobe o estado local como semente
+      console.log('[Supabase] Banco vazio — enviando estado inicial...');
+      await this._upsert(store.state);
+    } else {
+      // Existe estado no banco → decide qual é mais recente
+      const localTime  = new Date(store.state.lastUpdated || 0).getTime();
+      const remoteTime = new Date(remote.updated_at || 0).getTime();
 
-    // Tenta carregar estado atual do banco
-    const remoteOk = await this._loadRemoteState();
-
-    if (!remoteOk) {
-      // Nenhum dado no banco ainda — envia o estado local como seed
-      console.log('[Supabase] Banco vazio, enviando estado inicial...');
-      const seeded = await this._push(this.store.state);
-      if (!seeded) {
-        this.setStatus('error', 'Falha ao criar registro inicial. Verifique o SQL no Supabase.');
-        // Tenta de novo em 10s
-        setTimeout(() => this.init(store), 10000);
-        return false;
+      if (remoteTime > localTime) {
+        // Banco é mais recente → carrega no store
+        console.log('[Supabase] Estado remoto é mais recente — carregando...');
+        this.blockRemoteUpdate = true;
+        store.loadFromRemote(remote.data);
+        this.blockRemoteUpdate = false;
+      } else {
+        // Local é mais recente → sincroniza o banco
+        console.log('[Supabase] Estado local é mais recente — sincronizando banco...');
+        await this._upsert(store.state);
       }
+      this.lastUpdatedAt = remote.updated_at;
     }
 
-    this.initialized = true;
+    // 2. Inicia o polling
     this._startPolling();
-    this.setStatus('connected', 'Sincronização ativa (a cada 4s)');
-    return true;
+    this.setStatus('connected');
+    console.log('[Supabase] ✅ Inicializado com sucesso. Polling a cada', POLL_MS, 'ms');
   }
 
-  // ── Carrega estado do Supabase e aplica ao store ──────────────
-  async _loadRemoteState() {
-    const { recordId } = getSupabaseCredentials();
-    const url = `${this._tableUrl()}?id=eq.${recordId}&select=data,updated_at&limit=1`;
-
-    try {
-      const resp = await fetch(url, { headers: this._headers() });
-
-      if (!resp.ok) {
-        const txt = await resp.text();
-        console.error('[Supabase] Erro HTTP ao carregar:', resp.status, txt);
-        return false;
-      }
-
-      const rows = await resp.json();
-
-      if (!Array.isArray(rows) || rows.length === 0 || !rows[0].data) {
-        return false; // tabela vazia ou sem registro
-      }
-
-      this.lastUpdatedAt = rows[0].updated_at;
-      this.isUpdatingFromRemote = true;
-      this.store.loadFromRemote(rows[0].data);
-      this.isUpdatingFromRemote = false;
-      console.log('[Supabase] Estado carregado do banco:', this.lastUpdatedAt);
-      return true;
-
-    } catch (e) {
-      console.error('[Supabase] Falha de rede ao carregar:', e.message);
-      return false;
-    }
-  }
-
-  // ── Polling: detecta atualizações do admin em outros devices ──
+  // ─── Polling ───────────────────────────────────────────────────
   _startPolling() {
     if (this.pollingTimer) clearInterval(this.pollingTimer);
+    this.pollingTimer = setInterval(() => this._poll(), POLL_MS);
+  }
 
-    this.pollingTimer = setInterval(async () => {
-      if (this.isUpdatingFromRemote) return;
+  async _poll() {
+    if (this.blockRemoteUpdate) return;
 
-      const { recordId } = getSupabaseCredentials();
-      // Busca só o timestamp — muito rápido e barato
-      const url = `${this._tableUrl()}?id=eq.${recordId}&select=updated_at,data&limit=1`;
+    const remote = await this._fetch();
+    if (!remote) return;
 
-      try {
-        const resp = await fetch(url, { headers: this._headers() });
-        if (!resp.ok) return;
+    // Sem mudança
+    if (remote.updated_at === this.lastUpdatedAt) return;
 
-        const rows = await resp.json();
-        if (!Array.isArray(rows) || rows.length === 0) return;
+    // Foi uma gravação nossa (janela de 4s)
+    if (Date.now() - this.lastPushMs < 4000) {
+      this.lastUpdatedAt = remote.updated_at;
+      return;
+    }
 
-        const remote = rows[0];
+    // ✅ Atualização de outro dispositivo detectada!
+    console.log('[Supabase Polling] 🔄 Nova atualização:', remote.updated_at);
+    this.lastUpdatedAt = remote.updated_at;
 
-        // Nenhuma mudança
-        if (remote.updated_at === this.lastUpdatedAt) return;
+    this.blockRemoteUpdate = true;
+    this.store.loadFromRemote(remote.data);
+    this.blockRemoteUpdate = false;
+  }
 
-        // Ignorar se fomos nós que acabamos de gravar (janela de 3s)
-        const remoteMs = new Date(remote.updated_at).getTime();
-        if (this.lastPushTime && Math.abs(remoteMs - this.lastPushTime) < 3000) {
-          this.lastUpdatedAt = remote.updated_at;
-          return;
-        }
-
-        // ✅ Nova atualização de outro dispositivo detectada!
-        console.log('[Supabase Polling] 🔄 Atualização detectada:', remote.updated_at);
-        this.lastUpdatedAt = remote.updated_at;
-
-        if (remote.data) {
-          this.isUpdatingFromRemote = true;
-          this.store.loadFromRemote(remote.data);
-          this.isUpdatingFromRemote = false;
-        }
-
-      } catch (e) {
-        // Silencioso — não travar o UI por falha de rede temporária
+  // ─── Busca estado do banco ─────────────────────────────────────
+  async _fetch() {
+    try {
+      const url  = `${TABLE_URL}?id=eq.${RECORD_ID}&select=data,updated_at&limit=1`;
+      const resp = await fetch(url, { headers: headers() });
+      if (!resp.ok) {
+        console.error('[Supabase] Erro HTTP ao buscar:', resp.status, await resp.text());
+        return null;
       }
-    }, this.POLL_INTERVAL);
+      const rows = await resp.json();
+      return (Array.isArray(rows) && rows.length > 0 && rows[0].data) ? rows[0] : null;
+    } catch (e) {
+      console.warn('[Supabase] Falha de rede ao buscar:', e.message);
+      return null;
+    }
   }
 
-  // ── Envia estado ao gravar (com debounce de 500ms) ────────────
-  pushState(state) {
-    if (this.isUpdatingFromRemote) return;
-    if (!this.initialized) return;
-
-    if (this.debounceTimer) clearTimeout(this.debounceTimer);
-    this.debounceTimer = setTimeout(() => this._push(state), 500);
-  }
-
-  // ── Grava no banco via REST API ───────────────────────────────
-  async _push(state) {
-    if (!this.isConfigured()) return false;
-
-    const { recordId } = getSupabaseCredentials();
+  // ─── Grava no banco (UPSERT) ───────────────────────────────────
+  async _upsert(state) {
     const nowIso = new Date().toISOString();
-    this.lastPushTime = Date.now();
-
-    const body = JSON.stringify({
-      id: recordId,
-      data: state,
-      updated_at: nowIso
-    });
-
-    // Usa UPSERT via header Prefer: resolution=merge-duplicates
-    const headers = {
-      ...this._headers(),
-      'Prefer': 'resolution=merge-duplicates,return=minimal'
-    };
+    this.lastPushMs = Date.now();
 
     try {
-      this.setStatus('syncing', 'Salvando na nuvem...');
-
-      const resp = await fetch(this._tableUrl(), {
+      this.setStatus('syncing');
+      const resp = await fetch(TABLE_URL, {
         method:  'POST',
-        headers: headers,
-        body:    body
+        headers: headers({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
+        body:    JSON.stringify({ id: RECORD_ID, data: state, updated_at: nowIso })
       });
 
       if (resp.ok || resp.status === 201 || resp.status === 204) {
         this.lastUpdatedAt = nowIso;
-        this.setStatus('connected', 'Sincronizado ✓');
-        console.log('[Supabase] ✅ Dados gravados com sucesso:', nowIso);
+        this.setStatus('connected');
+        console.log('[Supabase] ✅ Gravado com sucesso:', nowIso);
 
         // Toast de confirmação para o admin
-        if (window.toast && typeof window.toast.show === 'function') {
+        if (window.toast?.show) {
           window.toast.show({
-            title: '☁️ Nuvem Atualizada',
-            message: 'Outros aparelhos receberão em até 4 segundos.',
-            type: 'success',
-            duration: 2500
+            title:    '☁️ Sincronizado',
+            message:  'Outros aparelhos receberão em até 4s.',
+            type:     'success',
+            duration: 2000
           });
         }
         return true;
       } else {
         const txt = await resp.text();
         console.error('[Supabase] ❌ Erro HTTP ao gravar:', resp.status, txt);
-        this.setStatus('error', `HTTP ${resp.status}: ${txt.slice(0, 80)}`);
+        this.setStatus('error');
 
-        // Toast de erro visível
-        if (window.toast && typeof window.toast.show === 'function') {
+        if (window.toast?.show) {
           window.toast.show({
-            title: '⚠️ Erro de Sincronização',
-            message: `Código ${resp.status}. Verifique o SQL no Supabase.`,
-            type: 'error',
+            title:    '⚠️ Falha na Sincronização',
+            message:  `Erro ${resp.status}. Verifique o SQL no Supabase.`,
+            type:     'error',
             duration: 5000
           });
         }
         return false;
       }
-
     } catch (e) {
       console.error('[Supabase] ❌ Falha de rede ao gravar:', e.message);
-      this.setStatus('error', e.message);
+      this.setStatus('error');
       return false;
     }
   }
 
-  // ── Testa a conexão (para diagnóstico) ───────────────────────
-  async testConnection(url, anonKey) {
-    const testUrl = `${url}/rest/v1/tournament_state?limit=1`;
-    const headers = {
-      'apikey': anonKey,
-      'Authorization': `Bearer ${anonKey}`
-    };
+  // ─── Chamado pelo store.save() ─────────────────────────────────
+  pushState(state) {
+    if (this.blockRemoteUpdate) return;   // não fazer loop
+    if (!this.store) return;
 
+    // Debounce: aguarda 500ms de inatividade antes de gravar
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => this._upsert(state), 500);
+  }
+
+  // ─── Teste de conexão ──────────────────────────────────────────
+  async testConnection(url, anonKey) {
     try {
-      const resp = await fetch(testUrl, { headers });
-      if (resp.status === 200 || resp.status === 206) {
-        return { success: true, message: 'Conexão OK! Tabela encontrada.' };
-      }
-      if (resp.status === 404 || resp.status === 400) {
-        return { success: false, tableMissing: true, message: 'Tabela não encontrada. Execute o SQL no Supabase!' };
-      }
-      const txt = await resp.text();
-      return { success: false, message: `HTTP ${resp.status}: ${txt.slice(0, 100)}` };
+      const resp = await fetch(`${url}/rest/v1/tournament_state?limit=1`, {
+        headers: { 'apikey': anonKey, 'Authorization': `Bearer ${anonKey}` }
+      });
+      if (resp.ok) return { success: true, message: 'Conexão OK!' };
+      return { success: false, message: `HTTP ${resp.status}` };
     } catch (e) {
       return { success: false, message: e.message };
     }
