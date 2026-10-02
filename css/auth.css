@@ -60,7 +60,7 @@ body.portal-open {
   z-index: 2;
   width: 100%;
   max-width: 480px;
-  background: rgba(15, 28, 48, 0.88);
+  background: rgba(15, 28, 48, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-top: 1px solid rgba(255, 215, 0, 0.4);
   box-shadow: 
@@ -68,13 +68,14 @@ body.portal-open {
     0 0 40px rgba(0, 104, 55, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
   border-radius: 24px;
-  padding: 2.25rem 2rem 1.75rem;
+  padding: 2.75rem 2rem 1.75rem;
   color: #ffffff;
   display: flex;
   flex-direction: column;
   transform: translateY(20px) scale(0.97);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 94vh;
 }
 
 .cbt-portal-overlay.active .cbt-portal-card {
@@ -98,15 +99,18 @@ body.portal-open {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .portal-logo-wrapper {
   position: relative;
-  width: 100px;
-  height: 100px;
-  margin-bottom: 1rem;
+  width: 104px;
+  height: 104px;
+  margin-top: 0.5rem;
+  margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,6 +149,15 @@ body.portal-open {
   100% { transform: scale(1.15); opacity: 1; }
 }
 
+.portal-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
 .portal-confederacao {
   font-size: 0.72rem;
   font-weight: 800;
@@ -154,6 +167,9 @@ body.portal-open {
   margin-bottom: 0.35rem;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
   gap: 0.4rem;
 }
 

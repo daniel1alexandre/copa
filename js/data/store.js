@@ -358,6 +358,49 @@ class AppStore {
   }
 
   // ==========================================
+  // GESTÃO DE USUÁRIOS
+  // ==========================================
+  getUsers() {
+    if (!this.state.users || !Array.isArray(this.state.users) || this.state.users.length === 0) {
+      this.state.users = [
+        { id: 'u_baumann', username: 'Baumann', name: 'Baumann', password: 'Daniel0306', role: 'admin' }
+      ];
+    }
+    return this.state.users;
+  }
+
+  saveUser(userData) {
+    const users = this.getUsers();
+    const existingIndex = users.findIndex(u => u.id === userData.id || u.username.toLowerCase() === userData.username.toLowerCase());
+    if (existingIndex >= 0) {
+      users[existingIndex] = { ...users[existingIndex], ...userData };
+    } else {
+      users.push({
+        id: userData.id || `u_${Date.now()}`,
+        username: userData.username,
+        name: userData.name || userData.username,
+        password: userData.password,
+        role: userData.role || 'admin'
+      });
+    }
+    this.save(true, 'Usuários do sistema atualizados');
+    return true;
+  }
+
+  deleteUser(userId) {
+    const users = this.getUsers();
+    // Impede excluir se for o único admin
+    const admins = users.filter(u => u.role === 'admin');
+    const target = users.find(u => u.id === userId);
+    if (target?.role === 'admin' && admins.length <= 1) {
+      return { success: false, message: 'Não é possível remover o único administrador do sistema.' };
+    }
+    this.state.users = users.filter(u => u.id !== userId);
+    this.save(true, 'Usuário removido do sistema');
+    return { success: true };
+  }
+
+  // ==========================================
   // GETTERS
   // ==========================================
   getTournament() {

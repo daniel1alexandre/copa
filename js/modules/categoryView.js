@@ -12,6 +12,11 @@ export function initCategoryView() {
 
   // Alteração individual de slot de BYE por ranking (1º, 2º, 3º...)
   window.handleByeSlotSelectChange = (slotIndex, fedId) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem alterar os BYEs.', type: 'error' });
+      return;
+    }
+
     const participatingFeds = store.getCategoryParticipatingFeds(selectedCategoryId);
     const numByes = Math.max(0, 32 - participatingFeds.length);
     const validPartIds = participatingFeds.map(f => f.id);
@@ -43,6 +48,11 @@ export function initCategoryView() {
 
   // Preenchimento automático com base nos melhores rankings/seeds
   window.handleAutoFillSeeds = () => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem preencher BYEs.', type: 'error' });
+      return;
+    }
+
     const feds = store.getCategoryParticipatingFeds(selectedCategoryId);
     const numByes = Math.max(0, 32 - feds.length);
     if (numByes === 0) {
@@ -73,6 +83,11 @@ export function initCategoryView() {
 
   // Limpar todas as vagas de BYE da categoria
   window.handleClearAllByes = () => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem limpar BYEs.', type: 'error' });
+      return;
+    }
+
     store.setCategoryByes(selectedCategoryId, []);
     toast.show({
       title: 'BYEs Limpos',
@@ -84,6 +99,12 @@ export function initCategoryView() {
 
   // Toggle de participação de uma federação individual
   window.handleToggleCategoryParticipant = (fedId, isChecked) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem alterar participantes.', type: 'error' });
+      renderCategoryView();
+      return;
+    }
+
     const currentPart = store.getCategoryParticipatingFeds(selectedCategoryId).map(f => f.id);
     let newPart;
     if (isChecked) {
@@ -105,6 +126,9 @@ export function initCategoryView() {
   // Toggle direto de BYE ao clicar no card da federação
   window.handleToggleCategoryBye = (fedId, event) => {
     if (event && event.target && event.target.tagName.toLowerCase() === 'input') return;
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      return;
+    }
 
     const participatingFeds = store.getCategoryParticipatingFeds(selectedCategoryId);
     const validPartIds = participatingFeds.map(f => f.id);
@@ -133,6 +157,12 @@ export function initCategoryView() {
   };
 
   window.handleToggleCategoryActive = (catId, checked) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem ativar/desativar categorias.', type: 'error' });
+      renderCategoryView();
+      return;
+    }
+
     store.toggleCategory(catId, checked);
     toast.show({
       title: 'Categoria Atualizada',
@@ -143,6 +173,11 @@ export function initCategoryView() {
   };
 
   window.handleQuickSelectParticipants = (preset) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem alterar participantes.', type: 'error' });
+      return;
+    }
+
     const feds = store.getFederations();
     let selectedIds = [];
 
@@ -166,6 +201,11 @@ export function initCategoryView() {
   };
 
   window.handleSaveCategoryParticipants = () => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem salvar participantes.', type: 'error' });
+      return;
+    }
+
     const checkboxes = document.querySelectorAll('.cat-fed-checkbox:checked');
     const selectedIds = Array.from(checkboxes).map(cb => cb.value);
 
@@ -202,13 +242,12 @@ export function renderCategoryView() {
   const categories = store.getCategories();
   const currentCat = categories.find(c => c.id === selectedCategoryId) || categories[0];
   const allFeds = [...store.getFederations()].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
-  const participatingFeds = store.getCategoryParticipatingFeds(currentCat.id);
   const participatingIds = new Set(participatingFeds.map(f => f.id));
-
   const totalPart = participatingFeds.length;
   const numByes = Math.max(0, 32 - totalPart);
   const realMatches = Math.max(0, totalPart - 16);
   const byesList = store.getCategoryByes(currentCat.id);
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
 
   container.innerHTML = `
     <!-- HEADER DA GESTÃO DE CATEGORIAS -->
@@ -239,7 +278,7 @@ export function renderCategoryView() {
           🎾 Categorias do Torneio (${categories.length} categorias)
         </h3>
         <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
-          💡 Clique na categoria para selecioná-la e configurar seus participantes e BYEs
+          💡 Clique na categoria para selecioná-la e visualizar participantes e BYEs
         </span>
       </div>
 
@@ -299,8 +338,8 @@ export function renderCategoryView() {
         </div>
 
         <div style="display: flex; align-items: center; gap: 1rem;">
-          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; cursor: pointer;">
-            <input type="checkbox" ${currentCat.ativa ? 'checked' : ''} onchange="window.handleToggleCategoryActive('${currentCat.id}', this.checked)">
+          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; cursor: ${isAdmin ? 'pointer' : 'default'};">
+            <input type="checkbox" ${currentCat.ativa ? 'checked' : ''} ${!isAdmin ? 'disabled' : ''} onchange="window.handleToggleCategoryActive('${currentCat.id}', this.checked)">
             Categoria Ativa no Torneio
           </label>
         </div>
@@ -359,14 +398,16 @@ export function renderCategoryView() {
           </p>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-          <button class="btn btn-sm" onclick="window.handleAutoFillSeeds()" style="background: #028090; color: white; border: none; font-weight: 700; font-size: 0.8rem; padding: 0.45rem 0.85rem; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; gap: 0.35rem; box-shadow: var(--shadow-sm);">
-            ⚡ Preencher por Ranking (Seeds)
-          </button>
-          <button class="btn btn-outline btn-sm" onclick="window.handleClearAllByes()" style="font-size: 0.8rem; font-weight: 700; padding: 0.45rem 0.85rem;">
-            🗑️ Limpar Todos os BYEs
-          </button>
-        </div>
+        ${isAdmin ? `
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-sm" onclick="window.handleAutoFillSeeds()" style="background: #028090; color: white; border: none; font-weight: 700; font-size: 0.8rem; padding: 0.45rem 0.85rem; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; gap: 0.35rem; box-shadow: var(--shadow-sm);">
+              ⚡ Preencher por Ranking (Seeds)
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="window.handleClearAllByes()" style="font-size: 0.8rem; font-weight: 700; padding: 0.45rem 0.85rem;">
+              🗑️ Limpar Todos os BYEs
+            </button>
+          </div>
+        ` : ''}
       </div>
 
       <div style="padding: 1.25rem;">
@@ -397,7 +438,8 @@ export function renderCategoryView() {
 
                     <div style="display: flex; align-items: center; gap: 0.45rem;">
                       <select class="form-select" 
-                              style="width: 100%; font-size: 0.88rem; font-weight: 700; border: 1.5px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background-color: #ffffff; padding: 0.45rem 0.6rem; border-radius: var(--radius-sm);"
+                              style="width: 100%; font-size: 0.88rem; font-weight: 700; border: 1.5px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background-color: ${!isAdmin ? '#f8fafc' : '#ffffff'}; padding: 0.45rem 0.6rem; border-radius: var(--radius-sm); ${!isAdmin ? 'cursor: not-allowed;' : ''}"
+                              ${!isAdmin ? 'disabled' : ''}
                               onchange="window.handleByeSlotSelectChange(${idx}, this.value)">
                         <option value="">-- Selecione o ${rankLabel} Estado --</option>
                         ${participatingFeds.map(f => {
@@ -409,7 +451,7 @@ export function renderCategoryView() {
                         }).join('')}
                       </select>
 
-                      ${selectedFed ? `
+                      ${isAdmin && selectedFed ? `
                         <button title="Limpar ${rankLabel} Ranking" 
                                 onclick="window.handleByeSlotSelectChange(${idx}, '')"
                                 style="background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; width: 34px; height: 34px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;"

@@ -78,6 +78,8 @@ export function renderBracket() {
     filteredGames = allCategoryGames.filter(g => ['reversa_17_27', 'reversa_17_20', 'reversa_21_24', 'reversa_25_27'].includes(g.bracket));
   }
 
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
+
   container.innerHTML = `
     <!-- BARRA DE CONTROLE SUPERIOR -->
     <div class="bracket-controls-bar">
@@ -94,9 +96,11 @@ export function renderBracket() {
       </div>
 
       <div class="bracket-controls-right" style="display: flex; align-items: center; gap: 0.5rem;">
-        <button class="btn btn-outline btn-sm" style="color: #dc2626; border-color: #fca5a5; background: #fef2f2; font-weight: 700; height: 32px;" onclick="window.clearAllResults()">
-          🗑️ Limpar Resultados
-        </button>
+        ${isAdmin ? `
+          <button class="btn btn-outline btn-sm" style="color: #dc2626; border-color: #fca5a5; background: #fef2f2; font-weight: 700; height: 32px;" onclick="window.clearAllResults()">
+            🗑️ Limpar Resultados
+          </button>
+        ` : ''}
         <!-- SELETOR DE MODO (ÁRVORE / TABELA) -->
         <div class="view-mode-toggle">
           <button class="view-mode-btn ${currentViewMode === 'tree' ? 'active' : ''}" onclick="window.switchBracketViewMode('tree')">
@@ -127,11 +131,13 @@ export function renderBracket() {
       </div>
 
       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-        <button class="btn btn-outline btn-sm" onclick="window.handleOpenConfigureFirstRound()">
-          ✏️ Editar 1ª Rodada em Lote
-        </button>
+        ${isAdmin ? `
+          <button class="btn btn-outline btn-sm" onclick="window.handleOpenConfigureFirstRound()">
+            ✏️ Editar 1ª Rodada em Lote
+          </button>
+        ` : ''}
         <button class="btn btn-outline btn-sm" onclick="window.goToCategoryManager('${currentCategory}')">
-          🏷️ Gerenciar Estados Participantes
+          ${isAdmin ? '🏷️ Gerenciar Estados Participantes' : '🏷️ Ver Estados Participantes'}
         </button>
       </div>
     </div>
@@ -343,17 +349,17 @@ function renderMatchCard(game) {
         </div>
         <div style="display: flex; align-items: center; gap: 0.35rem;">
           <span class="badge-status ${isBye ? 'encerrado' : game.status}" style="font-size: 0.62rem; padding: 0.15rem 0.45rem; border-radius: 12px; text-transform: uppercase; font-weight: 800; flex-shrink: 0;">${isBye ? 'BYE' : game.status}</span>
-          <button style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.35rem;" onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="Editar Confronto (Selecionar Estados)">✏️</button>
+          ${isAdmin ? `
+            <button style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.35rem;" onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="Editar Confronto (Selecionar Estados)">✏️</button>
+          ` : ''}
         </div>
       </div>
 
       <!-- TIME A -->
       <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}"
-           onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')"
-           title="💡 Clique para selecionar os dois estados deste confronto"
-           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.3rem; border: 1px solid ${borderA}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
-           onmouseover="this.style.boxShadow='0 0 0 2px #028090'"
-           onmouseout="this.style.boxShadow='none'">
+           ${isAdmin ? `onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="💡 Clique para selecionar os dois estados deste confronto"` : `title="Confronto oficial"`}
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.3rem; border: 1px solid ${borderA}; min-height: 36px; cursor: ${isAdmin ? 'pointer' : 'default'}; transition: all 0.15s ease;"
+           ${isAdmin ? `onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'"` : ''}>
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${getTeamName(game.lado_a, slotAIsBye, 'A')}
         </div>
@@ -366,11 +372,9 @@ function renderMatchCard(game) {
 
       <!-- TIME B -->
       <div class="match-team-row ${isWinnerB ? 'is-winner' : (isWinnerA ? 'is-loser' : '')}"
-           onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')"
-           title="💡 Clique para selecionar os dois estados deste confronto"
-           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
-           onmouseover="this.style.boxShadow='0 0 0 2px #028090'"
-           onmouseout="this.style.boxShadow='none'">
+           ${isAdmin ? `onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="💡 Clique para selecionar os dois estados deste confronto"` : `title="Confronto oficial"`}
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 36px; cursor: ${isAdmin ? 'pointer' : 'default'}; transition: all 0.15s ease;"
+           ${isAdmin ? `onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'"` : ''}>
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${getTeamName(game.lado_b, slotBIsBye, 'B')}
         </div>
@@ -392,8 +396,8 @@ function renderMatchCard(game) {
              <!-- F -->
              <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0;">
                <strong style="color:#64748b; font-size: 0.7rem; width: 14px;">F</strong>
-               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo1 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155;" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'placar', this.value)">
-               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155;" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'vencedor', this.value)">
+               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo1 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
                   <option value="" ${!game.resultado_jogo1 ? 'selected' : ''}>-Venc-</option>
                   <option value="a" ${game.resultado_jogo1 === 'a' ? 'selected' : ''}>Eq. A</option>
                   <option value="b" ${game.resultado_jogo1 === 'b' ? 'selected' : ''}>Eq. B</option>
@@ -403,8 +407,8 @@ function renderMatchCard(game) {
              <!-- M -->
              <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0;">
                <strong style="color:#64748b; font-size: 0.7rem; width: 14px;">M</strong>
-               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo2 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155;" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'placar', this.value)">
-               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155;" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'vencedor', this.value)">
+               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo2 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
                   <option value="" ${!game.resultado_jogo2 ? 'selected' : ''}>-Venc-</option>
                   <option value="a" ${game.resultado_jogo2 === 'a' ? 'selected' : ''}>Eq. A</option>
                   <option value="b" ${game.resultado_jogo2 === 'b' ? 'selected' : ''}>Eq. B</option>
@@ -414,8 +418,8 @@ function renderMatchCard(game) {
              <!-- DX -->
              <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0;">
                <strong style="color:#64748b; font-size: 0.7rem; width: 14px;">DX</strong>
-               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo3 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155;" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'placar', this.value)">
-               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155;" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'vencedor', this.value)">
+               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo3 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
                   <option value="" ${!game.resultado_jogo3 ? 'selected' : ''}>-Venc-</option>
                   <option value="a" ${game.resultado_jogo3 === 'a' ? 'selected' : ''}>Eq. A</option>
                   <option value="b" ${game.resultado_jogo3 === 'b' ? 'selected' : ''}>Eq. B</option>
@@ -430,6 +434,7 @@ function renderMatchCard(game) {
 
 // Renderizador em Tabela de Lista Completa
 function renderTableBracket(games) {
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
   return `
     <div class="bracket-table-wrapper">
       <table class="custom-table">
@@ -518,8 +523,8 @@ function renderTableBracket(games) {
                   </span>
                 </td>
                 <td>
-                  <button class="btn btn-primary btn-sm" onclick="${editAction}">
-                    ✏️ Editar
+                  <button class="btn btn-sm ${isAdmin ? 'btn-primary' : 'btn-outline'}" onclick="${editAction}">
+                    ${isAdmin ? '✏️ Editar' : '👁️ Ver'}
                   </button>
                 </td>
               </tr>
