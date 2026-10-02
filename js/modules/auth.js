@@ -145,6 +145,7 @@ export function showLoginPortal() {
   if (portal) {
     portal.classList.add('active');
     document.body.classList.add('portal-open');
+    document.documentElement.classList.add('portal-open');
     // Campo de usuário sempre limpo ao acessar o endereço
     const userInput = document.getElementById('portal-username');
     if (userInput) {
@@ -163,6 +164,7 @@ export function hideLoginPortal() {
   if (portal) {
     portal.classList.remove('active');
     document.body.classList.remove('portal-open');
+    document.documentElement.classList.remove('portal-open');
   }
 }
 
