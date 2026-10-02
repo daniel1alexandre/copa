@@ -1,33 +1,31 @@
 -- ================================================================
--- COPA DAS FEDERAÇÕES 2026 — SUPABASE SETUP MÍNIMO
--- Execute no SQL Editor do Supabase Dashboard
+-- COPA DAS FEDERAÇÕES 2026 — SETUP LIMPO (DROP + CREATE)
+-- Cole no SQL Editor do Supabase e execute
 -- ================================================================
 
--- 1. Criar tabela (se não existir)
-CREATE TABLE IF NOT EXISTS public.tournament_state (
+-- 1. Remove a tabela antiga completamente (começo do zero)
+DROP TABLE IF EXISTS public.tournament_state CASCADE;
+
+-- 2. Cria a tabela nova
+CREATE TABLE public.tournament_state (
     id TEXT PRIMARY KEY,
     data JSONB NOT NULL,
-    updated_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now()) NOT NULL
+    updated_at TIMESTAMPTZ DEFAULT now() NOT NULL
 );
 
--- 2. ESSENCIAL: REPLICA IDENTITY FULL para o Realtime enviar os dados completos
+-- 3. REPLICA IDENTITY FULL (necessário para o Realtime)
 ALTER TABLE public.tournament_state REPLICA IDENTITY FULL;
 
--- 3. Habilitar Row Level Security
+-- 4. Segurança (RLS)
 ALTER TABLE public.tournament_state ENABLE ROW LEVEL SECURITY;
 
--- 4. Política de leitura pública
-DROP POLICY IF EXISTS "Permitir leitura publica de tournament_state" ON public.tournament_state;
-CREATE POLICY "Permitir leitura publica de tournament_state"
+-- 5. Todos podem ler
+CREATE POLICY "leitura_publica"
 ON public.tournament_state FOR SELECT USING (true);
 
--- 5. Política de escrita pública
-DROP POLICY IF EXISTS "Permitir gravacao de tournament_state" ON public.tournament_state;
-CREATE POLICY "Permitir gravacao de tournament_state"
+-- 6. Todos podem gravar (via anon key)
+CREATE POLICY "escrita_publica"
 ON public.tournament_state FOR ALL USING (true) WITH CHECK (true);
 
--- NOTA: A tabela já está na publicação supabase_realtime (erro 42710 confirmou isso).
--- Não é necessário executar ALTER PUBLICATION novamente.
-
--- 6. Verificação final
-SELECT tablename, rowsecurity FROM pg_tables WHERE tablename = 'tournament_state';
+-- 7. Confirmação final
+SELECT 'Tabela criada com sucesso!' AS resultado;

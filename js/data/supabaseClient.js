@@ -1,229 +1,157 @@
-// Cliente Supabase e Mecanismo de Sincronização em Tempo Real (WebSocket + Polling Fallback)
+// Cliente Supabase — Sincronização via Polling (verifica atualizações a cada 5s)
 import { getSupabaseCredentials, saveSupabaseCredentials } from './supabaseConfig.js';
 
 class SupabaseService {
   constructor() {
-    this.client = null;
-    this.channel = null;
-    this.status = 'disconnected'; // 'disconnected' | 'connecting' | 'connected' | 'syncing' | 'error'
+    this.client       = null;
+    this.status       = 'disconnected';
     this.statusListeners = [];
-    this.debounceTimer = null;
+    this.debounceTimer   = null;
     this.isUpdatingFromRemote = false;
-    this.store = null;
+    this.store        = null;
     this.lastPushTime = null;
-    this.lastKnownUpdatedAt = null;   // Para o polling de fallback
-    this.pollingInterval = null;       // ID do intervalo de polling
-    this.realtimeActive = false;       // Se o WebSocket está funcionando
+    this.lastUpdatedAt = null;   // timestamp do último registro lido do banco
+    this.pollingTimer  = null;
+    this.POLL_INTERVAL = 5000;   // 5 segundos
   }
 
+  // ── Listeners de status ───────────────────────────────────────
   onStatusChange(fn) {
     this.statusListeners.push(fn);
     fn(this.status);
-    return () => {
-      this.statusListeners = this.statusListeners.filter(l => l !== fn);
-    };
+    return () => { this.statusListeners = this.statusListeners.filter(l => l !== fn); };
   }
 
-  setStatus(newStatus, detail = '') {
-    this.status = newStatus;
-    console.log(`[Supabase] Status: ${newStatus}`, detail || '');
-    this.statusListeners.forEach(listener => {
-      try {
-        listener(this.status, detail);
-      } catch (e) {
-        console.error('Erro em listener do Supabase status:', e);
-      }
-    });
+  setStatus(s, detail = '') {
+    this.status = s;
+    this.statusListeners.forEach(fn => { try { fn(s, detail); } catch(e) {} });
   }
 
-  getStatus() {
-    return this.status;
-  }
+  getStatus() { return this.status; }
 
   isConfigured() {
     const { url, anonKey } = getSupabaseCredentials();
     return Boolean(url && anonKey && url.startsWith('http'));
   }
 
+  // ── Inicialização ─────────────────────────────────────────────
   async init(store) {
     this.store = store;
 
     if (!this.isConfigured()) {
-      this.setStatus('disconnected', 'Credenciais não configuradas');
+      this.setStatus('disconnected');
       return false;
     }
 
+    // Aguarda o SDK do Supabase carregar (CDN)
     if (!window.supabase || typeof window.supabase.createClient !== 'function') {
-      console.warn('[Supabase] SDK ainda não carregado. Tentando novamente em 2s...');
-      setTimeout(() => this.init(store), 2000);
+      setTimeout(() => this.init(store), 1500);
       return false;
     }
 
-    const { url, anonKey, tableName, recordId } = getSupabaseCredentials();
+    const { url, anonKey } = getSupabaseCredentials();
+
+    this.client = window.supabase.createClient(url, anonKey, {
+      auth: { persistSession: false }
+    });
+
+    this.setStatus('connecting', 'Conectando...');
+
+    // Tenta carregar o estado inicial do banco
+    const ok = await this._loadRemoteState();
+
+    if (!ok) {
+      // Se não existia nada no banco, envia o estado local como seed
+      await this.pushStateImmediate(this.store.state);
+    }
+
+    // Inicia o polling a cada 5 segundos
+    this._startPolling();
+
+    this.setStatus('connected', 'Sincronizado');
+    return true;
+  }
+
+  // ── Carrega o estado do banco e aplica ao store ───────────────
+  async _loadRemoteState() {
+    const { tableName, recordId } = getSupabaseCredentials();
 
     try {
-      this.setStatus('connecting', 'Conectando ao Supabase...');
-      this.client = window.supabase.createClient(url, anonKey, {
-        auth: { persistSession: false },
-        realtime: { params: { eventsPerSecond: 10 } }
-      });
-
-      // 1. Carrega estado atual do Supabase
       const { data, error } = await this.client
         .from(tableName)
-        .select('*')
+        .select('data, updated_at')
         .eq('id', recordId)
         .maybeSingle();
 
       if (error) {
-        console.error('[Supabase] Erro ao buscar estado:', error);
-        this.setStatus('error', error.message);
-        // Mesmo com erro, inicia polling como fallback
-        this.startPolling(tableName, recordId);
+        console.error('[Supabase] Erro ao carregar estado:', error.message);
         return false;
       }
 
       if (data && data.data) {
-        console.log('[Supabase] Estado carregado com sucesso da nuvem.');
-        this.lastKnownUpdatedAt = data.updated_at;
+        this.lastUpdatedAt = data.updated_at;
         this.isUpdatingFromRemote = true;
         this.store.loadFromRemote(data.data);
         this.isUpdatingFromRemote = false;
-      } else {
-        console.log('[Supabase] Nenhum estado na nuvem. Criando registro inicial...');
-        await this.pushStateImmediate(this.store.state);
+        return true;
       }
 
-      // 2. Conecta WebSocket Realtime
-      this.setupRealtimeChannel(tableName, recordId);
-
-      // 3. Inicia polling de segurança (detecta se o Realtime falhou)
-      this.startPolling(tableName, recordId);
-
-      this.setStatus('connected', 'Sincronização em tempo real ativa');
-      return true;
-    } catch (err) {
-      console.error('[Supabase] Erro na inicialização:', err);
-      this.setStatus('error', err.message);
-      this.startPolling(tableName, recordId);
+      return false; // nenhum registro ainda
+    } catch (e) {
+      console.error('[Supabase] Falha ao carregar:', e.message);
       return false;
     }
   }
 
-  setupRealtimeChannel(tableName, recordId) {
-    if (this.channel) {
-      try { this.client.removeChannel(this.channel); } catch (e) {}
-      this.channel = null;
-    }
+  // ── Polling: verifica se o banco foi atualizado ───────────────
+  _startPolling() {
+    if (this.pollingTimer) clearInterval(this.pollingTimer);
 
-    this.realtimeActive = false;
+    this.pollingTimer = setInterval(async () => {
+      if (!this.client || this.isUpdatingFromRemote) return;
 
-    this.channel = this.client
-      .channel('copa_2026_realtime_sync')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: tableName,
-          filter: `id=eq.${recordId}`
-        },
-        (payload) => {
-          console.log('[Supabase Realtime] Notificação recebida:', payload.eventType);
-          this.realtimeActive = true;
+      const { tableName, recordId } = getSupabaseCredentials();
 
-          // Extrai o estado — pode estar em payload.new.data ou payload.record.data
-          const newRecord = payload.new || payload.record;
-          if (!newRecord) return;
+      try {
+        // Consulta só o timestamp — barato, rápido
+        const { data, error } = await this.client
+          .from(tableName)
+          .select('updated_at, data')
+          .eq('id', recordId)
+          .maybeSingle();
 
-          const newState = newRecord.data;
-          const newUpdatedAt = newRecord.updated_at;
+        if (error || !data) return;
 
-          if (!newState) {
-            console.warn('[Supabase Realtime] Payload sem campo data. Verifique REPLICA IDENTITY FULL.');
-            // Faz polling imediato para buscar o estado
-            this.pollOnce(tableName, recordId);
-            return;
-          }
+        // Nenhuma novidade
+        if (data.updated_at === this.lastUpdatedAt) return;
 
-          // Evita reprocessar nossas próprias atualizações
-          const remoteUpdated = new Date(newUpdatedAt || 0).getTime();
-          if (this.lastPushTime && Math.abs(remoteUpdated - this.lastPushTime) < 1500) {
-            this.lastKnownUpdatedAt = newUpdatedAt;
-            return;
-          }
-
-          if (newUpdatedAt !== this.lastKnownUpdatedAt) {
-            this.lastKnownUpdatedAt = newUpdatedAt;
-            console.log('[Supabase Realtime] Atualizando dados em tempo real!');
-            this.isUpdatingFromRemote = true;
-            this.store.loadFromRemote(newState);
-            this.isUpdatingFromRemote = false;
-          }
-        }
-      )
-      .subscribe((status, err) => {
-        if (status === 'SUBSCRIBED') {
-          console.log('[Supabase Realtime] Inscrito com sucesso!');
-          this.realtimeActive = true;
-          this.setStatus('connected', 'Ao vivo');
-        } else if (status === 'CLOSED' || status === 'CHANNEL_ERROR') {
-          console.warn('[Supabase Realtime] Canal desconectado:', status, err);
-          this.realtimeActive = false;
-          this.setStatus('connecting', 'Reconectando...');
-          // Tenta reconectar após 5s
-          setTimeout(() => this.setupRealtimeChannel(tableName, recordId), 5000);
-        }
-      });
-  }
-
-  // Polling de segurança: verifica atualizações a cada 8s
-  // Garante que os visitantes sempre recebam dados mesmo se o WebSocket falhar
-  startPolling(tableName, recordId) {
-    if (this.pollingInterval) {
-      clearInterval(this.pollingInterval);
-    }
-    this.pollingInterval = setInterval(() => {
-      this.pollOnce(tableName, recordId);
-    }, 8000);
-  }
-
-  async pollOnce(tableName, recordId) {
-    if (!this.client) return;
-    try {
-      const { data, error } = await this.client
-        .from(tableName)
-        .select('updated_at, data')
-        .eq('id', recordId)
-        .maybeSingle();
-
-      if (error || !data) return;
-
-      // Só atualiza se o servidor tem algo mais novo que o que já temos
-      if (data.updated_at && data.updated_at !== this.lastKnownUpdatedAt) {
-        // Verifica se não fomos nós que acabamos de enviar
-        const remoteUpdated = new Date(data.updated_at).getTime();
-        if (this.lastPushTime && Math.abs(remoteUpdated - this.lastPushTime) < 2000) {
-          this.lastKnownUpdatedAt = data.updated_at;
+        // Ignorar se fomos nós que acabamos de gravar (±3s)
+        const remoteMs = new Date(data.updated_at).getTime();
+        if (this.lastPushTime && Math.abs(remoteMs - this.lastPushTime) < 3000) {
+          this.lastUpdatedAt = data.updated_at;
           return;
         }
 
+        // Há uma atualização nova de outro dispositivo!
         console.log('[Supabase Polling] Nova atualização detectada:', data.updated_at);
-        this.lastKnownUpdatedAt = data.updated_at;
+        this.lastUpdatedAt = data.updated_at;
+
         if (data.data) {
           this.isUpdatingFromRemote = true;
           this.store.loadFromRemote(data.data);
           this.isUpdatingFromRemote = false;
         }
+
+      } catch (e) {
+        console.warn('[Supabase Polling] Erro:', e.message);
       }
-    } catch (e) {
-      console.warn('[Supabase Polling] Erro ao verificar atualizações:', e.message);
-    }
+    }, this.POLL_INTERVAL);
   }
 
+  // ── Envia estado com debounce (chamado pelo store ao salvar) ──
   pushState(state) {
     if (this.isUpdatingFromRemote) return;
-    if (!this.client || !this.isConfigured()) return;
+    if (!this.client) return;
 
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
     this.debounceTimer = setTimeout(() => {
@@ -231,15 +159,17 @@ class SupabaseService {
     }, 400);
   }
 
+  // ── Grava imediatamente no banco ──────────────────────────────
   async pushStateImmediate(state) {
-    if (!this.client || !this.isConfigured()) return;
+    if (!this.client) return;
 
     const { tableName, recordId } = getSupabaseCredentials();
     const nowIso = new Date().toISOString();
     this.lastPushTime = Date.now();
 
     try {
-      this.setStatus('syncing', 'Enviando para nuvem...');
+      this.setStatus('syncing', 'Salvando...');
+
       const { error } = await this.client
         .from(tableName)
         .upsert(
@@ -248,43 +178,34 @@ class SupabaseService {
         );
 
       if (error) {
-        console.error('[Supabase] Erro ao sincronizar:', error);
+        console.error('[Supabase] Erro ao gravar:', error.message);
         this.setStatus('error', error.message);
       } else {
-        this.lastKnownUpdatedAt = nowIso;
+        this.lastUpdatedAt = nowIso;
         this.setStatus('connected', 'Sincronizado');
+        console.log('[Supabase] Estado salvo na nuvem com sucesso.');
       }
     } catch (e) {
-      console.error('[Supabase] Falha ao enviar:', e);
+      console.error('[Supabase] Falha ao gravar:', e.message);
       this.setStatus('error', e.message);
     }
   }
 
+  // ── Testa conexão (usado nas configurações) ───────────────────
   async testConnection(url, anonKey) {
-    if (!window.supabase) {
-      return { success: false, message: 'Biblioteca Supabase não carregada.' };
-    }
+    if (!window.supabase) return { success: false, message: 'Biblioteca Supabase não carregada.' };
     try {
-      const testClient = window.supabase.createClient(url, anonKey);
-      const { data, error } = await testClient
-        .from('tournament_state')
-        .select('id, updated_at')
-        .limit(1);
-
+      const c = window.supabase.createClient(url, anonKey);
+      const { error } = await c.from('tournament_state').select('id').limit(1);
       if (error) {
-        if (error.code === '42P01' || error.message.includes('tournament_state')) {
-          return {
-            success: false,
-            tableMissing: true,
-            message: 'Conexão OK, mas a tabela "tournament_state" não foi criada. Execute o script SQL!'
-          };
+        if (error.code === '42P01') {
+          return { success: false, tableMissing: true, message: 'Tabela não criada. Execute o SQL no Supabase!' };
         }
         return { success: false, message: error.message };
       }
-
-      return { success: true, message: 'Conexão com o Supabase realizada com sucesso!' };
-    } catch (err) {
-      return { success: false, message: err.message };
+      return { success: true, message: 'Conexão OK! Tabela encontrada.' };
+    } catch (e) {
+      return { success: false, message: e.message };
     }
   }
 }
