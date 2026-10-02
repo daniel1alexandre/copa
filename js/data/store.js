@@ -322,7 +322,17 @@ class AppStore {
       console.warn('[Store] Estado remoto inválido descartado.');
       return false;
     }
-    this.state = remoteState;
+    const seed = this.createInitialSeed();
+    this.state = {
+      ...seed,
+      ...remoteState,
+      brackets: remoteState.brackets || seed.brackets,
+      categories: (remoteState.categories && remoteState.categories.length > 0) ? remoteState.categories : seed.categories,
+      federations: (remoteState.federations && remoteState.federations.length > 0) ? remoteState.federations : seed.federations,
+      categoryParticipants: remoteState.categoryParticipants || seed.categoryParticipants || {},
+      categoryByes: remoteState.categoryByes || seed.categoryByes || {},
+      users: (remoteState.users && remoteState.users.length > 0) ? remoteState.users : (this.state.users || seed.users)
+    };
     if (saveToStorage && typeof localStorage !== 'undefined') {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));

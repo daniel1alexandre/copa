@@ -40,12 +40,16 @@ function switchTab(tabId) {
 }
 
 function renderCurrentView() {
-  if (activeTab === 'home') renderDashboard();
-  else if (activeTab === 'categorias') renderCategoryView();
-  else if (activeTab === 'chaveamento') renderBracket();
-  else if (activeTab === 'ranking') renderRanking();
-  else if (activeTab === 'cadastro') renderTeamsAthletes();
-  else if (activeTab === 'configuracoes') renderConfig();
+  try {
+    if (activeTab === 'home') renderDashboard();
+    else if (activeTab === 'categorias') renderCategoryView();
+    else if (activeTab === 'chaveamento') renderBracket();
+    else if (activeTab === 'ranking') renderRanking();
+    else if (activeTab === 'cadastro') renderTeamsAthletes();
+    else if (activeTab === 'configuracoes') renderConfig();
+  } catch (err) {
+    console.error(`Erro ao renderizar view ${activeTab}:`, err);
+  }
 
   updateBadges();
 }
