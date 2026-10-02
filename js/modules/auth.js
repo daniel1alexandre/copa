@@ -12,14 +12,7 @@ class AuthService {
   }
 
   loadSession() {
-    try {
-      const local = localStorage.getItem(SESSION_KEY);
-      if (local) return JSON.parse(local);
-      const session = sessionStorage.getItem(SESSION_KEY);
-      if (session) return JSON.parse(session);
-    } catch (e) {
-      console.warn('Erro ao carregar sessão:', e);
-    }
+    // Retorna null sempre, forçando o login toda vez que a página for recarregada
     return null;
   }
 
@@ -272,11 +265,7 @@ function renderAuthPortalElement() {
           </div>
         </div>
 
-        <div class="portal-options-row">
-          <label class="portal-remember-label">
-            <input type="checkbox" id="portal-remember" checked>
-            <span>Lembrar login neste dispositivo</span>
-          </label>
+        <div class="portal-options-row" style="justify-content: flex-end;">
           <span class="portal-security-badge">🛡️ Acesso Seguro CBT</span>
         </div>
 

@@ -115,7 +115,7 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
             ⏩ <strong>Confronto com Vaga Livre (BYE):</strong> A equipe <strong>${(game.lado_a?.id === game.vencedor_id ? game.lado_a?.nome : game.lado_b?.nome) || 'classificada'}</strong> passou direto para a próxima fase (${game.proxima_fase || 'próxima fase'}) sem necessidade de disputa de placar.
           </div>
         ` : `
-          ${game.status !== 'encerrado' ? `
+          ${(game.status !== 'encerrado' && window.auth.isAdmin()) ? `
             <div style="margin-bottom: 1rem; padding: 0.6rem 0.85rem; border: 1px dashed #059669; border-radius: var(--radius-md); background: #f0fdf4; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
               <span style="font-size: 0.8rem; font-weight: 700; color: #065f46;">⏩ Vaga Livre / W.O.:</span>
               <div style="display: flex; gap: 0.4rem;">
@@ -134,11 +134,11 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                 <div>
                   <label class="form-label">Placar do Jogo 1:</label>
-                  <input type="text" id="modal-placar-j1" class="form-control" value="${game.placar_jogo1 || ''}" placeholder="${isProf ? 'Ex: 6/3 6/4' : 'Ex: 4/1 4/2'}" oninput="window.maskScore(this)">
+                  <input type="text" id="modal-placar-j1" class="form-control" value="${game.placar_jogo1 || ''}" placeholder="${isProf ? 'Ex: 6/3 6/4' : 'Ex: 4/1 4/2'}" oninput="window.maskScore(this)" ${!window.auth.isAdmin() ? 'disabled' : ''}>
                 </div>
                 <div>
                   <label class="form-label">Vencedor Jogo 1:</label>
-                  <select id="modal-vencedor-j1" class="form-select">
+                  <select id="modal-vencedor-j1" class="form-select" ${!window.auth.isAdmin() ? 'disabled' : ''}>
                     <option value="" ${!game.resultado_jogo1 ? 'selected' : ''}>-- Em Aberto --</option>
                     <option value="a" ${game.resultado_jogo1 === 'a' ? 'selected' : ''}>Equipe A (${game.lado_a?.uf || 'A'})</option>
                     <option value="b" ${game.resultado_jogo1 === 'b' ? 'selected' : ''}>Equipe B (${game.lado_b?.uf || 'B'})</option>
@@ -156,11 +156,11 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                 <div>
                   <label class="form-label">Placar do Jogo 2:</label>
-                  <input type="text" id="modal-placar-j2" class="form-control" value="${game.placar_jogo2 || ''}" placeholder="${isProf ? 'Ex: 6/4 7/5' : 'Ex: 4/2 4/1'}" oninput="window.maskScore(this)">
+                  <input type="text" id="modal-placar-j2" class="form-control" value="${game.placar_jogo2 || ''}" placeholder="${isProf ? 'Ex: 6/4 7/5' : 'Ex: 4/2 4/1'}" oninput="window.maskScore(this)" ${!window.auth.isAdmin() ? 'disabled' : ''}>
                 </div>
                 <div>
                   <label class="form-label">Vencedor Jogo 2:</label>
-                  <select id="modal-vencedor-j2" class="form-select">
+                  <select id="modal-vencedor-j2" class="form-select" ${!window.auth.isAdmin() ? 'disabled' : ''}>
                     <option value="" ${!game.resultado_jogo2 ? 'selected' : ''}>-- Em Aberto --</option>
                     <option value="a" ${game.resultado_jogo2 === 'a' ? 'selected' : ''}>Equipe A (${game.lado_a?.uf || 'A'})</option>
                     <option value="b" ${game.resultado_jogo2 === 'b' ? 'selected' : ''}>Equipe B (${game.lado_b?.uf || 'B'})</option>
@@ -178,11 +178,11 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                 <div>
                   <label class="form-label">Placar Jogo 3 (Decisivo):</label>
-                  <input type="text" id="modal-placar-j3" class="form-control" value="${game.placar_jogo3 || ''}" placeholder="Ex: 10/8 Super TB" oninput="window.maskScore(this)">
+                  <input type="text" id="modal-placar-j3" class="form-control" value="${game.placar_jogo3 || ''}" placeholder="Ex: 10/8 Super TB" oninput="window.maskScore(this)" ${!window.auth.isAdmin() ? 'disabled' : ''}>
                 </div>
                 <div>
                   <label class="form-label">Vencedor Jogo 3:</label>
-                  <select id="modal-vencedor-j3" class="form-select">
+                  <select id="modal-vencedor-j3" class="form-select" ${!window.auth.isAdmin() ? 'disabled' : ''}>
                     <option value="" ${!game.resultado_jogo3 ? 'selected' : ''}>-- Não disputado / Em aberto --</option>
                     <option value="a" ${game.resultado_jogo3 === 'a' ? 'selected' : ''}>Equipe A (${game.lado_a?.uf || 'A'})</option>
                     <option value="b" ${game.resultado_jogo3 === 'b' ? 'selected' : ''}>Equipe B (${game.lado_b?.uf || 'B'})</option>
@@ -202,7 +202,7 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
 
       <div class="modal-footer">
         <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">Fechar</button>
-        ${!game.is_bye ? `
+        ${(!game.is_bye && window.auth.isAdmin()) ? `
           <button type="button" class="btn btn-primary" id="btn-save-modal-match">Salvar e Propagar Resultado</button>
         ` : ''}
       </div>
@@ -399,9 +399,11 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
         </button>
         <div style="display: flex; gap: 0.5rem;">
           <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">Cancelar</button>
+          ${window.auth.isAdmin() ? `
           <button type="button" class="btn btn-primary" id="btn-save-all-first-round">
             💾 Salvar Chaveamento Completo
           </button>
+          ` : ''}
         </div>
       </div>
     </div>
@@ -543,7 +545,7 @@ export function openScheduleModal(gameCode, categoryId = 'prof') {
 
         <div class="form-group">
           <label class="form-label">Selecione a Quadra:</label>
-          <select id="modal-sched-court" class="form-select">
+          <select id="modal-sched-court" class="form-select" ${!window.auth.isAdmin() ? 'disabled' : ''}>
             <option value="">-- Sem quadra definida --</option>
             ${courts.map(c => `
               <option value="${c.id}" ${game.quadra_id === c.id ? 'selected' : ''}>${c.nome} (${c.tipo})</option>
@@ -553,7 +555,7 @@ export function openScheduleModal(gameCode, categoryId = 'prof') {
 
         <div class="form-group">
           <label class="form-label">Selecione o Horário:</label>
-          <select id="modal-sched-time" class="form-select">
+          <select id="modal-sched-time" class="form-select" ${!window.auth.isAdmin() ? 'disabled' : ''}>
             <option value="">-- Sem horário definido --</option>
             ${times.map(t => `
               <option value="${t}" ${game.horario === t ? 'selected' : ''}>${t}</option>
@@ -563,7 +565,7 @@ export function openScheduleModal(gameCode, categoryId = 'prof') {
 
         <div class="form-group">
           <label class="form-label">Status do Jogo:</label>
-          <select id="modal-sched-status" class="form-select">
+          <select id="modal-sched-status" class="form-select" ${!window.auth.isAdmin() ? 'disabled' : ''}>
             <option value="em espera" ${game.status === 'em espera' ? 'selected' : ''}>🟡 Em Espera (Aguardando chamada)</option>
             <option value="em andamento" ${game.status === 'em andamento' ? 'selected' : ''}>🔵 Em Andamento (Em quadra)</option>
             <option value="encerrado" ${game.status === 'encerrado' ? 'selected' : ''}>✅ Encerrado</option>
@@ -572,7 +574,9 @@ export function openScheduleModal(gameCode, categoryId = 'prof') {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">Cancelar</button>
+        ${window.auth.isAdmin() ? `
         <button type="button" class="btn btn-primary" id="btn-save-schedule">Confirmar Agendamento</button>
+        ` : ''}
       </div>
     </div>
   `;
@@ -659,6 +663,7 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
         </div>
 
         <form id="edit-first-round-card-form" onsubmit="event.preventDefault();">
+          <fieldset style="border: none; padding: 0; margin: 0;" ${!window.auth.isAdmin() ? 'disabled' : ''}>
           <!-- SELEÇÃO DE EQUIPES -->
           <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.1rem; margin-bottom: 1rem; background: var(--bg-subtle);">
             
@@ -766,12 +771,15 @@ export function openEditFirstRoundCardModal(gameCode, categoryId = 'prof') {
               </div>
             </div>
           </div>
+          </fieldset>
         </form>
       </div>
 
       <div class="modal-footer">
         <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">Cancelar</button>
+        ${window.auth.isAdmin() ? `
         <button type="button" class="btn btn-primary" id="btn-save-card-first-round">💾 Salvar Alterações do Confronto</button>
+        ` : ''}
       </div>
     </div>
   `;

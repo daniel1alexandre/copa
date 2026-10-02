@@ -158,9 +158,11 @@ export function renderConfig() {
       </div>
 
       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        ${auth.isAdmin() ? `
         <button class="btn btn-outline btn-sm" onclick="window.handleExportBackup()">💾 Exportar Backup</button>
         <button class="btn btn-outline btn-sm" onclick="window.handleImportBackup()">📥 Importar Backup</button>
         <button class="btn btn-danger btn-sm" onclick="window.handleResetAllData()" style="color: #ef4444; border-color: #fca5a5;">⚠️ Redefinir Dados</button>
+        ` : ''}
       </div>
     </div>
 
@@ -172,6 +174,8 @@ export function renderConfig() {
           <h3 class="card-title">🏆 Dados Oficiais do Torneio</h3>
         </div>
         <form onsubmit="window.handleSaveTournamentMetadata(event)">
+          <fieldset style="border: none; padding: 0; margin: 0;" ${!auth.isAdmin() ? 'disabled' : ''}>
+          <fieldset style="border: none; padding: 0; margin: 0;" ${!auth.isAdmin() ? 'disabled' : ''}>
           <div class="form-group">
             <label class="form-label">Nome Oficial do Torneio:</label>
             <input type="text" id="cfg-tourn-nome" class="form-control" value="${tournament.nome}" required>
@@ -217,7 +221,8 @@ export function renderConfig() {
             </select>
           </div>
 
-          <button type="submit" class="btn btn-primary mt-2">Salvar Informações</button>
+          ${auth.isAdmin() ? `<button type="submit" class="btn btn-primary mt-2">Salvar Informações</button>` : ''}
+          </fieldset>
         </form>
       </div>
 
@@ -229,8 +234,10 @@ export function renderConfig() {
             <span style="font-size: 0.75rem; color: #059669; font-weight: 700;">★ Padrão Oficial CBT (1º ao 27º)</span>
           </div>
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            ${auth.isAdmin() ? `
             <button class="btn btn-outline btn-sm" onclick="window.handleRestoreDefaultPointsTable()" title="Restaura os valores oficiais padrão CBT (1º: 55 pts até 27º: 1 pt)">Restaurar Padrão Oficial</button>
             <button class="btn btn-primary btn-sm" onclick="window.handleSavePointsTable()">Salvar Pontos</button>
+            ` : ''}
           </div>
         </div>
 
@@ -239,12 +246,14 @@ export function renderConfig() {
         </p>
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; max-height: 380px; overflow-y: auto; padding-right: 0.35rem;">
+          <fieldset style="display: contents;" ${!auth.isAdmin() ? 'disabled' : ''}>
           ${Array.from({ length: 27 }, (_, i) => i + 1).map(pos => `
             <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-subtle); padding: 0.4rem 0.6rem; border-radius: var(--radius-xs);">
               <span style="font-weight: 700; font-size: 0.8rem;">${pos}º lugar:</span>
               <input type="number" class="form-control points-table-input" style="width: 65px; padding: 0.2rem 0.4rem; font-size: 0.85rem; text-align: center;" data-pos="${pos}" value="${pointsTable[pos] || 0}">
             </div>
           `).join('')}
+          </fieldset>
         </div>
       </div>
     </div>
@@ -269,7 +278,7 @@ export function renderConfig() {
             </div>
 
             <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; cursor: pointer; font-weight: 600;">
-              <input type="checkbox" ${cat.ativa ? 'checked' : ''} onchange="window.handleToggleCategory('${cat.id}', this.checked)">
+              <input type="checkbox" ${cat.ativa ? 'checked' : ''} onchange="window.handleToggleCategory('${cat.id}', this.checked)" ${!auth.isAdmin() ? 'disabled' : ''}>
               ${cat.ativa ? 'Ativa' : 'Desativada'}
             </label>
           </div>
