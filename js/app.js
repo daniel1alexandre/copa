@@ -107,19 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Monitora e atualiza o indicador ao vivo na barra de topo
-  supabaseService.onStatusChange((status) => {
-    const liveText = document.getElementById('topbar-live-text');
-    if (liveText) {
-      if (status === 'connected') {
-        liveText.textContent = 'AO VIVO';
-      } else if (status === 'syncing') {
-        liveText.textContent = 'SINCRONIZANDO...';
-      } else {
-        liveText.textContent = 'AO VIVO';
-      }
-    }
-  });
 
   // Inicializa o serviço do Supabase
   supabaseService.init(store);
