@@ -75,30 +75,49 @@ body.portal-open::-webkit-scrollbar {
   -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
 }
 
-/* Card Central de Login Glassmorphism */
+/* Card Central de Login com Imagem da CBT em Destaque no Fundo */
 .cbt-portal-card {
   position: relative;
   z-index: 2;
   width: 100%;
   max-width: 460px;
-  background: rgba(15, 28, 48, 0.94);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-top: 1px solid rgba(255, 215, 0, 0.4);
+  background: 
+    linear-gradient(180deg, rgba(8, 20, 36, 0.82) 0%, rgba(11, 25, 45, 0.88) 45%, rgba(5, 14, 26, 0.94) 100%),
+    url('../assets/logo.jpg') center top / cover no-repeat;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-top: 2px solid #ffb703;
   box-shadow: 
-    0 25px 60px -15px rgba(0, 0, 0, 0.7),
-    0 0 40px rgba(0, 104, 55, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  border-radius: 22px;
-  padding: 1.6rem 1.85rem 1.15rem;
+    0 25px 60px -15px rgba(0, 0, 0, 0.85),
+    0 0 50px rgba(0, 104, 55, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 1.85rem 2rem 1.6rem;
   color: #ffffff;
   display: flex;
   flex-direction: column;
   transform: translateY(20px) scale(0.97);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow-y: auto;
+  overflow: hidden;
   max-height: 96vh;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+/* Marca d'água / Destaque visual da Logo CBT no fundo do card */
+.cbt-portal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('../assets/logo.jpg') center 20% / 280px no-repeat;
+  opacity: 0.22;
+  filter: drop-shadow(0 0 30px rgba(255, 183, 3, 0.5)) contrast(1.2) saturate(1.25);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cbt-portal-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .cbt-portal-card::-webkit-scrollbar {
@@ -464,45 +483,7 @@ body.portal-open::-webkit-scrollbar {
   50% { opacity: 0.6; }
 }
 
-/* Rodapé do Card */
-.portal-footer {
-  margin-top: 0.85rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-  text-align: center;
-}
 
-.portal-sync-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-size: 0.75rem;
-  color: #34d399;
-  font-weight: 600;
-}
-
-.sync-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 8px #10b981;
-  animation: pulseDot 2s infinite;
-}
-
-@keyframes pulseDot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.3); opacity: 0.6; }
-}
-
-.portal-copyright {
-  font-size: 0.68rem;
-  color: rgba(255, 255, 255, 0.4);
-}
 
 /* ============================================================
    ESTILOS DOS ELEMENTOS NA TOPBAR (Usuário & Supabase Realtime)
