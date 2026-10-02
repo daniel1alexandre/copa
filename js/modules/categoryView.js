@@ -275,10 +275,10 @@ export function renderCategoryView() {
     <!-- GRADE DE TODAS AS CATEGORIAS -->
     <div style="margin-bottom: 1.5rem;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
-        <h3 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: var(--accent-dark-blue);">
+        <h3 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: #ffffff; text-shadow: 0 2px 6px rgba(0,0,0,0.6);">
           🎾 Categorias do Torneio (${categories.length} categorias)
         </h3>
-        <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+        <span style="font-size: 0.8rem; color: #cbd5e1; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,0.4);">
           💡 Clique na categoria para selecioná-la e visualizar participantes e BYEs
         </span>
       </div>

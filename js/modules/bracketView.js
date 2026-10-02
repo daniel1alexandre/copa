@@ -114,29 +114,29 @@ export function renderBracket() {
     </div>
 
     <!-- BANNER INFORMATIVO: IMPACTO DA QUANTIDADE DE ESTADOS PARTICIPANTES E BYES -->
-    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-md); padding: 0.85rem 1.25rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+    <div style="background: rgba(15, 28, 48, 0.92); border: 1px solid rgba(16, 185, 129, 0.45); backdrop-filter: blur(10px); border-radius: var(--radius-md); padding: 0.85rem 1.25rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
       <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-        <span style="font-weight: 800; color: #166534; font-size: 0.95rem;">
+        <span style="font-weight: 800; color: #ffb703; font-size: 0.95rem;">
           📊 Categoria ${currentCatObj?.nome}:
         </span>
-        <span style="background: #ffffff; padding: 0.25rem 0.65rem; border-radius: var(--radius-xs); border: 1px solid #bbf7d0; font-size: 0.85rem; font-weight: 700; color: #15803d;">
+        <span style="background: rgba(255, 255, 255, 0.12); padding: 0.25rem 0.65rem; border-radius: var(--radius-xs); border: 1px solid rgba(255, 255, 255, 0.2); font-size: 0.85rem; font-weight: 700; color: #ffffff;">
           🏛️ ${totalPart} estados participantes
         </span>
-        <span style="background: #ffffff; padding: 0.25rem 0.65rem; border-radius: var(--radius-xs); border: 1px solid #bbf7d0; font-size: 0.85rem; font-weight: 700; color: #047857;">
+        <span style="background: rgba(16, 185, 129, 0.2); padding: 0.25rem 0.65rem; border-radius: var(--radius-xs); border: 1px solid rgba(16, 185, 129, 0.4); font-size: 0.85rem; font-weight: 700; color: #34d399;">
           ⏩ ${numByes} vagas livres (BYEs para Oitavas)
         </span>
-        <span style="background: #ffffff; padding: 0.25rem 0.65rem; border-radius: var(--radius-xs); border: 1px solid #bbf7d0; font-size: 0.85rem; font-weight: 700; color: #1e40af;">
+        <span style="background: rgba(56, 189, 248, 0.2); padding: 0.25rem 0.65rem; border-radius: var(--radius-xs); border: 1px solid rgba(56, 189, 248, 0.4); font-size: 0.85rem; font-weight: 700; color: #38bdf8;">
           ⚔️ ${realMatches} confrontos na 1ª fase
         </span>
       </div>
 
       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
         ${isAdmin ? `
-          <button class="btn btn-outline btn-sm" onclick="window.handleOpenConfigureFirstRound()">
+          <button class="btn btn-sm" style="background: #028090; color: #ffffff; border: none; font-weight: 700; padding: 0.4rem 0.8rem;" onclick="window.handleOpenConfigureFirstRound()">
             ✏️ Editar 1ª Rodada em Lote
           </button>
         ` : ''}
-        <button class="btn btn-outline btn-sm" onclick="window.goToCategoryManager('${currentCategory}')">
+        <button class="btn btn-outline btn-sm" style="color: #ffffff; border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.08);" onclick="window.goToCategoryManager('${currentCategory}')">
           ${isAdmin ? '🏷️ Gerenciar Estados Participantes' : '🏷️ Ver Estados Participantes'}
         </button>
       </div>

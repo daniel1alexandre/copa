@@ -87,17 +87,17 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
     <!-- HEADER DO RANKING -->
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
       <div>
-        <h2 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--accent-dark-blue);">
+        <h2 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
           🏆 Ranking Geral das Federações — Copa Federações 2026
         </h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
+        <p style="color: #cbd5e1; font-size: 0.9rem; text-shadow: 0 1px 4px rgba(0,0,0,0.4);">
           Somatório oficial de pontos obtidos em todas as ${categories.length} categorias estaduais de Beach Tennis
         </p>
       </div>
 
       ${showPrintBtn ? `
         <div style="display: flex; gap: 0.75rem;">
-          <button class="btn btn-outline" onclick="window.handlePrintRanking()">
+          <button class="btn btn-outline" style="color: #ffffff; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1);" onclick="window.handlePrintRanking()">
             🖨️ Imprimir / Salvar PDF
           </button>
         </div>

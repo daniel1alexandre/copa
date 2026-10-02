@@ -149,19 +149,19 @@ export function renderConfig() {
   container.innerHTML = `
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
       <div>
-        <h2 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--accent-dark-blue);">
+        <h2 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
           ⚙️ Configuração Oficial do Torneio
         </h2>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
+        <p style="color: #cbd5e1; font-size: 0.9rem; text-shadow: 0 1px 4px rgba(0,0,0,0.4);">
           Gerencie regras oficiais CBT, arena, datas, categorias ativas e pontuação do ranking
         </p>
       </div>
 
       <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
         ${auth.isAdmin() ? `
-        <button class="btn btn-outline btn-sm" onclick="window.handleExportBackup()">💾 Exportar Backup</button>
-        <button class="btn btn-outline btn-sm" onclick="window.handleImportBackup()">📥 Importar Backup</button>
-        <button class="btn btn-danger btn-sm" onclick="window.handleResetAllData()" style="color: #ef4444; border-color: #fca5a5;">⚠️ Redefinir Dados</button>
+        <button class="btn btn-outline btn-sm" style="color: #ffffff; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1);" onclick="window.handleExportBackup()">💾 Exportar Backup</button>
+        <button class="btn btn-outline btn-sm" style="color: #ffffff; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1);" onclick="window.handleImportBackup()">📥 Importar Backup</button>
+        <button class="btn btn-danger btn-sm" onclick="window.handleResetAllData()" style="color: #ffffff; background: #ef4444; border-color: #ef4444;">⚠️ Redefinir Dados</button>
         ` : ''}
       </div>
     </div>
