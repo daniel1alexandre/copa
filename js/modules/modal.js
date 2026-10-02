@@ -98,7 +98,7 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
 
               <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem;">
                 <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; color: #065f46;">
-                  <input type="checkbox" id="edit-is-bye" ${game.is_bye ? 'checked' : ''}>
+                  <input type="checkbox" id="edit-is-bye" ${game.is_bye ? 'checked' : ''} ${!window.auth.isAdmin() ? 'disabled' : ''}>
                   BYE — Equipe A avança automaticamente
                 </label>
 
@@ -339,7 +339,7 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" id="r32-matchup-list">
+        <fieldset style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border: none; padding: 0; margin: 0;" id="r32-matchup-list" ${!window.auth.isAdmin() ? 'disabled' : ''}>
           ${r32Games.map((g, idx) => {
             return `
               <div class="card" style="padding: 0.85rem; border: 1px solid var(--border-strong); background: #ffffff;" data-match-code="${g.code}">
@@ -390,7 +390,7 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
               </div>
             `;
           }).join('')}
-        </div>
+        </fieldset>
       </div>
 
       <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
