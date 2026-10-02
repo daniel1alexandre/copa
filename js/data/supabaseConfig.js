@@ -1,11 +1,8 @@
-// Configuração do Supabase para a Copa das Federações 2026
-// As credenciais podem ser definidas aqui ou diretamente pela tela de Configurações no navegador.
+// Configuração oficial do Supabase para a Copa das Federações 2026
 
 export const DEFAULT_SUPABASE_CONFIG = {
-  // Substitua pela URL do seu projeto Supabase, ou configure na aba 'Configurações' do sistema:
-  url: localStorage.getItem('copa_supabase_url') || '',
-  // Substitua pela Chave Anon Pública do seu projeto Supabase:
-  anonKey: localStorage.getItem('copa_supabase_key') || '',
+  url: 'https://zcyfnnuvggbfutkpbjtg.supabase.co',
+  anonKey: 'sb_publishable_xMMqR-d7w1vtHPLqnMqhhA_5CoIFVLN',
   tableName: 'tournament_state',
   recordId: 'copa_2026'
 };
