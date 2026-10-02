@@ -269,7 +269,7 @@ class AppStore {
       athletes,
       brackets,
       pointsTable,
-      lastUpdated: new Date().toISOString()
+      lastUpdated: '1970-01-01T00:00:00.000Z'
     };
 
     try {
@@ -399,7 +399,7 @@ class AppStore {
           updated = true;
         }
       }
-      if (updated) this.save();
+      if (updated) this.save(false);
     }
     return this.state.pointsTable;
   }
@@ -477,7 +477,7 @@ class AppStore {
     if (!this.state.brackets[categoryId]) {
       const feds = this.getCategoryParticipatingFeds(categoryId);
       this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, this.getCategoryByes(categoryId));
-      this.save();
+      this.save(false);
     }
     return this.state.brackets[categoryId];
   }

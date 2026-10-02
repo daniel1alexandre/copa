@@ -6,7 +6,7 @@ const SUPABASE_URL  = 'https://zcyfnnuvggbfutkpbjtg.supabase.co';
 const SUPABASE_KEY  = 'sb_publishable_xMMqR-d7w1vtHPLqnMqhhA_5CoIFVLN';
 const TABLE         = 'tournament_state';
 const RECORD_ID     = 'copa_2026';
-const POLL_MS       = 4000;
+const POLL_MS       = 3000;
 
 // Cabeçalhos REST do Supabase
 function headers(extra = {}) {
@@ -50,36 +50,32 @@ class SupabaseService {
     this.store = store;
     this.setStatus('connecting');
 
-    // 1. Carrega estado mais recente do banco
-    const remote = await this._fetch();
+    try {
+      // 1. Carrega sempre o estado oficial da nuvem
+      const remote = await this._fetch();
 
-    if (remote === null) {
-      // Tabela vazia → sobe o estado local como semente
-      console.log('[Supabase] Banco vazio — enviando estado inicial...');
-      await this._upsert(store.state);
-    } else {
-      // Existe estado no banco → decide qual é mais recente
-      const localTime  = new Date(store.state.lastUpdated || 0).getTime();
-      const remoteTime = new Date(remote.updated_at || 0).getTime();
-
-      if (remoteTime > localTime) {
-        // Banco é mais recente → carrega no store
-        console.log('[Supabase] Estado remoto é mais recente — carregando...');
+      if (remote && remote.data && remote.data.brackets) {
+        console.log('[Supabase] ✅ Carregando dados oficiais da nuvem:', remote.updated_at);
         this.blockRemoteUpdate = true;
-        store.loadFromRemote(remote.data);
+        this.store.loadFromRemote(remote.data, true);
         this.blockRemoteUpdate = false;
+        this.lastUpdatedAt = remote.updated_at;
       } else {
-        // Local é mais recente → sincroniza o banco
-        console.log('[Supabase] Estado local é mais recente — sincronizando banco...');
-        await this._upsert(store.state);
+        console.log('[Supabase] Banco vazio ou sem dados na nuvem.');
+        if (window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin()) {
+          console.log('[Supabase] Admin conectado — enviando semente inicial...');
+          await this._upsert(store.state);
+        }
       }
-      this.lastUpdatedAt = remote.updated_at;
-    }
 
-    // 2. Inicia o polling
-    this._startPolling();
-    this.setStatus('connected');
-    console.log('[Supabase] ✅ Inicializado com sucesso. Polling a cada', POLL_MS, 'ms');
+      // 2. Inicia o polling contínuo
+      this._startPolling();
+      this.setStatus('connected');
+      console.log('[Supabase] ✅ Inicializado com sucesso. Polling a cada', POLL_MS, 'ms');
+    } catch (e) {
+      console.warn('[Supabase] Falha ao inicializar:', e);
+      this.setStatus('error');
+    }
   }
 
   // ─── Polling ───────────────────────────────────────────────────
@@ -184,9 +180,14 @@ class SupabaseService {
     if (this.blockRemoteUpdate) return;   // não fazer loop
     if (!this.store) return;
 
-    // Debounce: aguarda 500ms de inatividade antes de gravar
+    // Apenas administrador autenticado pode gravar no Supabase
+    if (window.auth && typeof window.auth.isAdmin === 'function' && !window.auth.isAdmin()) {
+      return;
+    }
+
+    // Debounce: aguarda 300ms de inatividade antes de gravar
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
-    this.debounceTimer = setTimeout(() => this._upsert(state), 500);
+    this.debounceTimer = setTimeout(() => this._upsert(state), 300);
   }
 
   // ─── Teste de conexão ──────────────────────────────────────────
