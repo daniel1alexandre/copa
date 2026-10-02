@@ -255,6 +255,7 @@ function renderTreeBracket(games, subtab) {
 
 // Card de Jogo individual na Árvore
 function renderMatchCard(game) {
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
   const isWinnerA = game.vencedor_id && game.lado_a?.id === game.vencedor_id;
   const isWinnerB = game.vencedor_id && game.lado_b?.id === game.vencedor_id;
   const isBye = Boolean(game.is_bye);
