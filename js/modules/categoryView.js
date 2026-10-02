@@ -290,33 +290,35 @@ export function renderCategoryView() {
           const isSelected = cat.id === currentCat.id;
 
           return `
-            <div class="category-select-card"
+            <div class="category-select-card ${isSelected ? 'selected' : ''}"
                  onclick="window.selectCategoryTab('${cat.id}')"
-                 style="cursor: pointer; padding: 0.85rem 1rem; border-radius: var(--radius-md); border: 2px solid ${isSelected ? 'var(--primary)' : 'var(--border-light)'}; background: ${isSelected ? 'linear-gradient(135deg, #f0fdfa 0%, #ffffff 100%)' : '#ffffff'}; box-shadow: ${isSelected ? '0 4px 14px rgba(2, 128, 144, 0.18)' : 'var(--shadow-sm)'}; transition: all var(--transition-fast); display: flex; flex-direction: column; justify-content: space-between; min-height: 95px; position: relative;">
+                 style="cursor: pointer; padding: 0.9rem 1rem; border-radius: var(--radius-md); border: 2px solid ${isSelected ? '#028090' : '#cbd5e1'}; background: ${isSelected ? 'linear-gradient(135deg, #f0fdfa 0%, #ffffff 100%)' : '#ffffff'}; box-shadow: ${isSelected ? '0 4px 14px rgba(2, 128, 144, 0.22)' : '0 2px 6px rgba(0,0,0,0.06)'}; transition: all var(--transition-fast); display: flex; flex-direction: column; justify-content: space-between; min-height: 105px; position: relative;">
               
               <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.4rem;">
-                <span style="font-weight: 800; font-size: 0.95rem; color: ${isSelected ? 'var(--primary)' : 'var(--accent-dark-blue)'};">
+                <span class="cat-title" style="font-weight: 800; font-size: 1rem; color: ${isSelected ? '#028090' : '#0f172a'};">
                   ${cat.nome}
                 </span>
                 ${isSelected ? `
-                  <span style="background: var(--primary); color: white; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs); text-transform: uppercase;">
-                    Selecionada
+                  <span style="background: #028090; color: #ffffff; font-size: 0.68rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em;">
+                    Ativa
                   </span>
                 ` : `
-                  <span style="background: var(--bg-subtle); color: var(--text-muted); font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
+                  <span style="background: ${cat.ativa ? '#e0f2fe' : '#f1f5f9'}; color: ${cat.ativa ? '#0369a1' : '#64748b'}; font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 4px;">
                     ${cat.ativa ? 'Ativa' : 'Inativa'}
                   </span>
                 `}
               </div>
 
-              <div style="margin-top: 0.5rem; border-top: 1px dashed ${isSelected ? '#99f6e4' : 'var(--border-light)'}; padding-top: 0.4rem;">
-                <div style="font-size: 0.78rem; font-weight: 700; color: ${byesCount > 0 ? '#047857' : 'var(--accent-dark-blue)'}; display: flex; align-items: center; justify-content: space-between;">
-                  <span>🇧🇷 ${fedsCount} Estados</span>
-                  <span style="background: ${byesCount > 0 ? '#ecfdf5' : '#f1f5f9'}; color: ${byesCount > 0 ? '#065f46' : 'var(--text-muted)'}; padding: 0.1rem 0.4rem; border-radius: var(--radius-xs); font-size: 0.72rem;">
-                    ${byesCount} BYEs
+              <div style="margin-top: 0.6rem; border-top: 1px dashed ${isSelected ? '#99f6e4' : '#cbd5e1'}; padding-top: 0.45rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem;">
+                  <span class="cat-feds-highlight" style="font-size: 0.85rem; font-weight: 800; color: #004b57; display: inline-flex; align-items: center; gap: 0.25rem;">
+                    🏛️ <strong>${fedsCount} Estados</strong>
+                  </span>
+                  <span class="cat-byes-highlight ${byesCount > 0 ? 'has-byes' : 'no-byes'}" style="font-weight: 800; padding: 0.12rem 0.45rem; border-radius: 4px; font-size: 0.72rem; background: ${byesCount > 0 ? '#dcfce7' : '#f1f5f9'}; color: ${byesCount > 0 ? '#15803d' : '#475569'}; border: 1px solid ${byesCount > 0 ? '#86efac' : '#cbd5e1'};">
+                    ${byesCount > 0 ? `⏩ ${byesCount} BYEs` : 'Sem BYEs'}
                   </span>
                 </div>
-                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <div style="font-size: 0.72rem; color: #475569; font-weight: 600; margin-top: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                   ${cat.formato}
                 </div>
               </div>
@@ -327,49 +329,49 @@ export function renderCategoryView() {
     </div>
 
     <!-- DETALHES DA CATEGORIA SELECIONADA -->
-    <div class="card" style="margin-bottom: 1.5rem; border-left: 5px solid var(--primary);">
+    <div class="card" style="margin-bottom: 1.5rem; border-left: 5px solid #028090; background: #ffffff;">
       <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
         <div>
-          <h3 style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: var(--accent-dark-blue);">
+          <h3 style="font-family: var(--font-display); font-size: 1.45rem; font-weight: 800; color: #0b1a30; margin-bottom: 0.2rem;">
             Categoria: ${currentCat.nome}
           </h3>
-          <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">
-            Formato: <strong>${currentCat.formato}</strong>
+          <p style="color: #475569; font-size: 0.88rem; font-weight: 600;">
+            Formato de disputa: <strong style="color: #028090;">${currentCat.formato}</strong>
           </p>
         </div>
 
         <div style="display: flex; align-items: center; gap: 1rem;">
-          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; cursor: ${isAdmin ? 'pointer' : 'default'};">
+          <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: #0f172a; cursor: ${isAdmin ? 'pointer' : 'default'};">
             <input type="checkbox" ${currentCat.ativa ? 'checked' : ''} ${!isAdmin ? 'disabled' : ''} onchange="window.handleToggleCategoryActive('${currentCat.id}', this.checked)">
             Categoria Ativa no Torneio
           </label>
         </div>
       </div>
 
-      <!-- CARDS DE MÉTRICAS E IMPACTO DE BYES -->
+      <!-- CARDS DE MÉTRICAS E IMPACTO DE BYES COM CORES VIVAS E ALTO CONTRASTE -->
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-bottom: 1.25rem;">
-        <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
-          <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted);">Estados Participantes</div>
-          <div id="stat-participants" style="font-size: 1.8rem; font-weight: 800; color: var(--accent-dark-blue); font-family: var(--font-display);">
-            ${totalPart} / 27
+        <div style="background: #f8fafc; padding: 1.15rem; border-radius: var(--radius-md); border: 2px solid #028090; box-shadow: 0 2px 8px rgba(2, 128, 144, 0.12);">
+          <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: #004b57; letter-spacing: 0.04em;">🏛️ Estados Participantes</div>
+          <div id="stat-participants" style="font-size: 2.2rem; font-weight: 900; color: #091b2c; font-family: var(--font-display); line-height: 1.2; margin: 0.25rem 0;">
+            ${totalPart} <span style="font-size: 1.15rem; color: #64748b; font-weight: 700;">/ 27</span>
           </div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">Federações estaduais inscritas</div>
+          <div style="font-size: 0.78rem; font-weight: 600; color: #334155;">Federações estaduais inscritas nesta categoria</div>
         </div>
 
-        <div style="background: #ecfdf5; padding: 1rem; border-radius: var(--radius-md); border: 1px solid #a7f3d0;">
-          <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #047857;">Vagas Livres (BYEs)</div>
-          <div id="stat-byes" style="font-size: 1.8rem; font-weight: 800; color: #065f46; font-family: var(--font-display);">
-            ${numByes} BYEs
+        <div style="background: #f0fdf4; padding: 1.15rem; border-radius: var(--radius-md); border: 2px solid #10b981; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);">
+          <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: #047857; letter-spacing: 0.04em;">⏩ Vagas Livres (BYEs)</div>
+          <div id="stat-byes" style="font-size: 2.2rem; font-weight: 900; color: #065f46; font-family: var(--font-display); line-height: 1.2; margin: 0.25rem 0;">
+            ${numByes} <span style="font-size: 1.15rem; font-weight: 700;">BYEs</span>
           </div>
-          <div style="font-size: 0.75rem; color: #047857;">Avançam direto para as Oitavas</div>
+          <div style="font-size: 0.78rem; font-weight: 600; color: #047857;">Avançam direto para as Oitavas de Final</div>
         </div>
 
-        <div style="background: #eff6ff; padding: 1rem; border-radius: var(--radius-md); border: 1px solid #bfdbfe;">
-          <div style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #1d4ed8;">Confrontos 1ª Fase</div>
-          <div id="stat-matches" style="font-size: 1.8rem; font-weight: 800; color: #1e40af; font-family: var(--font-display);">
-            ${realMatches} Jogos
+        <div style="background: #eff6ff; padding: 1.15rem; border-radius: var(--radius-md); border: 2px solid #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);">
+          <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: #1d4ed8; letter-spacing: 0.04em;">⚔️ Confrontos 1ª Fase</div>
+          <div id="stat-matches" style="font-size: 2.2rem; font-weight: 900; color: #1e40af; font-family: var(--font-display); line-height: 1.2; margin: 0.25rem 0;">
+            ${realMatches} <span style="font-size: 1.15rem; font-weight: 700;">Jogos</span>
           </div>
-          <div style="font-size: 0.75rem; color: #1d4ed8;">${realMatches * 2} estados disputando a 1ª fase</div>
+          <div style="font-size: 0.78rem; font-weight: 600; color: #1d4ed8;">${realMatches * 2} estados disputam a 1ª fase de mata-mata</div>
         </div>
       </div>
 
