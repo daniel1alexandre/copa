@@ -77,13 +77,28 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--bg-page);
+  background: 
+    linear-gradient(180deg, rgba(8, 20, 36, 0.84) 0%, rgba(11, 25, 45, 0.90) 35%, rgba(5, 14, 26, 0.95) 100%),
+    url('../assets/logo.jpg') center top / cover no-repeat fixed;
   color: var(--text-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Marca d'água oficial da CBT fixa no fundo de todas as telas */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url('../assets/logo.jpg') center 30% / 540px no-repeat;
+  opacity: 0.10;
+  filter: drop-shadow(0 0 60px rgba(255, 183, 3, 0.45)) contrast(1.15) saturate(1.25);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* ============================================================
@@ -229,9 +244,11 @@ body {
    NAVEGAÇÃO PRINCIPAL (TABS)
    ============================================================ */
 .nav-bar {
-  background: #ffffff;
-  border-bottom: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   position: sticky;
   top: 61px;
   z-index: 90;
@@ -300,6 +317,8 @@ body {
   width: 100%;
   margin: 0 auto;
   padding: 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .app-view {
@@ -320,10 +339,12 @@ body {
    COMPONENTES GERAIS (BUTTONS, CARDS, INPUTS)
    ============================================================ */
 .card {
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
   padding: 1.25rem;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
@@ -514,11 +535,13 @@ body {
 }
 
 .kpi-card {
-  background: linear-gradient(145deg, #ffffff, #fbfcfe);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-lg);
   padding: 1.25rem;
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   gap: 1.15rem;
