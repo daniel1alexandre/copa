@@ -485,42 +485,80 @@ function renderMatchCard(game) {
           <div style="text-align: center; font-size: 0.7rem; color: #047857; font-weight: 700; background: #ecfdf5; padding: 0.2rem; border-radius: 3px;">
             ✅ Vencedor avança direto para ${game.proxima_fase || 'próxima'}
           </div>
-        ` : `
-          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
-             <!-- F -->
-             <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0;">
-               <strong style="color:#64748b; font-size: 0.7rem; width: 14px;">F</strong>
-               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo1 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                  <option value="" ${!game.resultado_jogo1 ? 'selected' : ''}>-Venc-</option>
-                  <option value="a" ${game.resultado_jogo1 === 'a' ? 'selected' : ''}>Eq. A</option>
-                  <option value="b" ${game.resultado_jogo1 === 'b' ? 'selected' : ''}>Eq. B</option>
-               </select>
-             </div>
-             
-             <!-- M -->
-             <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0;">
-               <strong style="color:#64748b; font-size: 0.7rem; width: 14px;">M</strong>
-               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo2 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                  <option value="" ${!game.resultado_jogo2 ? 'selected' : ''}>-Venc-</option>
-                  <option value="a" ${game.resultado_jogo2 === 'a' ? 'selected' : ''}>Eq. A</option>
-                  <option value="b" ${game.resultado_jogo2 === 'b' ? 'selected' : ''}>Eq. B</option>
-               </select>
-             </div>
-             
-             <!-- DX -->
-             <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0;">
-               <strong style="color:#64748b; font-size: 0.7rem; width: 14px;">DX</strong>
-               <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo3 || ''}" style="width: 90px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-               <select style="width: 70px; font-size:0.65rem; padding:0.15rem; border:1px solid #cbd5e1; border-radius:2px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                  <option value="" ${!game.resultado_jogo3 ? 'selected' : ''}>-Venc-</option>
-                  <option value="a" ${game.resultado_jogo3 === 'a' ? 'selected' : ''}>Eq. A</option>
-                  <option value="b" ${game.resultado_jogo3 === 'b' ? 'selected' : ''}>Eq. B</option>
-               </select>
-             </div>
-          </div>
-        `}
+        ` : (() => {
+          const getSubTeam = (resVal) => {
+            if (!resVal) return null;
+            const norm = String(resVal).toLowerCase();
+            if (norm === 'a') return game.lado_a;
+            if (norm === 'b') return game.lado_b;
+            if (game.lado_a && (game.lado_a.id === resVal || game.lado_a === resVal)) return game.lado_a;
+            if (game.lado_b && (game.lado_b.id === resVal || game.lado_b === resVal)) return game.lado_b;
+            return feds.find(f => f.id === norm) || null;
+          };
+          const getSubImg = (team) => {
+            if (!team) return '';
+            const tid = (typeof team === 'string' ? team : team.id || '').toLowerCase();
+            return (tid && tid !== 'bye') ? `assets/federations/${tid}.jpg` : '';
+          };
+          const w1 = getSubTeam(game.resultado_jogo1);
+          const img1 = getSubImg(w1);
+          const w2 = getSubTeam(game.resultado_jogo2);
+          const img2 = getSubImg(w2);
+          const w3 = getSubTeam(game.resultado_jogo3);
+          const img3 = getSubImg(w3);
+
+          return `
+            <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+               <!-- F -->
+               <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.12rem 0; gap: 4px;">
+                 <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Feminino">F</strong>
+                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo1 || ''}" style="width: 78px; font-size:0.65rem; padding:0.18rem 0.15rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <div style="display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                   <select style="width: 66px; font-size:0.65rem; padding:0.18rem 0.1rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                      <option value="" ${!game.resultado_jogo1 ? 'selected' : ''}>-Venc-</option>
+                      <option value="a" ${String(game.resultado_jogo1).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
+                      <option value="b" ${String(game.resultado_jogo1).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
+                   </select>
+                   <div style="width: 22px; height: 16px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                     ${img1 ? `<img src="${img1}" alt="${w1?.uf || ''}" title="Vencedor F: ${w1?.nome || ''}" style="width: 20px; height: 14px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.25); border: 1px solid rgba(0,0,0,0.12);">` : `<span style="font-size: 0.65rem; color: #cbd5e1;">—</span>`}
+                   </div>
+                 </div>
+               </div>
+               
+               <!-- M -->
+               <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.12rem 0; gap: 4px;">
+                 <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Masculino">M</strong>
+                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo2 || ''}" style="width: 78px; font-size:0.65rem; padding:0.18rem 0.15rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <div style="display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                   <select style="width: 66px; font-size:0.65rem; padding:0.18rem 0.1rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                      <option value="" ${!game.resultado_jogo2 ? 'selected' : ''}>-Venc-</option>
+                      <option value="a" ${String(game.resultado_jogo2).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
+                      <option value="b" ${String(game.resultado_jogo2).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
+                   </select>
+                   <div style="width: 22px; height: 16px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                     ${img2 ? `<img src="${img2}" alt="${w2?.uf || ''}" title="Vencedor M: ${w2?.nome || ''}" style="width: 20px; height: 14px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.25); border: 1px solid rgba(0,0,0,0.12);">` : `<span style="font-size: 0.65rem; color: #cbd5e1;">—</span>`}
+                   </div>
+                 </div>
+               </div>
+               
+               <!-- DX -->
+               <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.12rem 0; gap: 4px;">
+                 <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Dupla Mista">DX</strong>
+                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo3 || ''}" style="width: 78px; font-size:0.65rem; padding:0.18rem 0.15rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <div style="display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                   <select style="width: 66px; font-size:0.65rem; padding:0.18rem 0.1rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                      <option value="" ${!game.resultado_jogo3 ? 'selected' : ''}>-Venc-</option>
+                      <option value="a" ${String(game.resultado_jogo3).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
+                      <option value="b" ${String(game.resultado_jogo3).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
+                   </select>
+                   <div style="width: 22px; height: 16px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                     ${img3 ? `<img src="${img3}" alt="${w3?.uf || ''}" title="Vencedor DX: ${w3?.nome || ''}" style="width: 20px; height: 14px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.25); border: 1px solid rgba(0,0,0,0.12);">` : `<span style="font-size: 0.65rem; color: #cbd5e1;">—</span>`}
+                   </div>
+                 </div>
+               </div>
+            </div>
+          `;
+        })()}
       </div>
     </div>
   `;

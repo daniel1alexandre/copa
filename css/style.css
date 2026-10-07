@@ -1075,3 +1075,113 @@ body::before {
   box-shadow: var(--shadow-sm);
 }
 
+/* ============================================================
+   RESPONSIVIDADE MOBILE GERAL DO APP
+   ============================================================ */
+@media (max-width: 768px) {
+  html {
+    font-size: 13.5px;
+    zoom: 1 !important; /* Escala nítida e natural em smartphones */
+  }
+
+  .topbar {
+    padding: 0.35rem 0.65rem;
+  }
+
+  .topbar-container {
+    padding: 0;
+    gap: 0.4rem;
+  }
+
+  .brand-section .main-logo {
+    height: 30px !important;
+    margin-right: 6px !important;
+  }
+
+  .brand-titles h1 {
+    font-size: 0.92rem;
+    gap: 0.3rem;
+  }
+
+  .brand-tag {
+    display: none !important;
+  }
+
+  .brand-titles p {
+    display: none !important;
+  }
+
+  .topbar-actions {
+    gap: 0.35rem;
+  }
+
+  /* Oculta botões redundantes na barra de topo no mobile (já acessíveis na nav-bar abaixo) */
+  .topbar-actions > .btn-topbar {
+    display: none !important;
+  }
+
+  .zoom-controls-wrapper {
+    padding: 1px 4px;
+    gap: 2px;
+  }
+
+  .btn-zoom-step,
+  .btn-zoom-reset {
+    padding: 1px 4px;
+    font-size: 0.68rem;
+  }
+
+  .zoom-level-text {
+    font-size: 0.68rem;
+    min-width: 26px;
+  }
+
+  /* Barra de navegação de abas principal */
+  .nav-bar {
+    top: 42px;
+  }
+
+  .nav-container {
+    padding: 0 0.35rem;
+    gap: 0.15rem;
+  }
+
+  .nav-tab {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.78rem;
+    gap: 0.3rem;
+  }
+
+  /* Área de Conteúdo Principal */
+  .main-content {
+    padding: 0.5rem 0.35rem;
+  }
+
+  /* Painel Inicial e Dashboard */
+  .dashboard-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+  }
+
+  .stats-summary-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Cards e Modais */
+  .card {
+    padding: 0.85rem;
+    border-radius: var(--radius-md);
+  }
+
+  .modal-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    margin: 0.5rem auto !important;
+    padding: 1rem !important;
+    max-height: 92vh !important;
+    border-radius: var(--radius-md) !important;
+  }
+}
+
+
