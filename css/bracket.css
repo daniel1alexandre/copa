@@ -128,17 +128,6 @@
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
 }
 
-/* Marca d'água CBT ampliada no fundo da grade de confrontos */
-.bracket-tree-container::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('../assets/logo.jpg') center 40% / 820px no-repeat;
-  opacity: 0.25; /* Transparência de 75% */
-  pointer-events: none;
-  z-index: 0;
-  filter: contrast(1.1) saturate(1.2);
-}
 
 .bracket-rounds-wrapper {
   position: relative;
@@ -203,21 +192,23 @@
   transition: all var(--transition-fast);
 }
 
-/* Marca d'água da logo do estado vencedor no fundo do card com 75% de transparência */
+/* Brasão do estado vencedor no fundo do card com 75% de transparência (opacity: 0.25) */
 .match-winner-watermark {
-  position: absolute;
-  inset: 0;
-  background-position: center center;
-  background-size: 85px auto;
-  background-repeat: no-repeat;
-  opacity: 0.25; /* Transparência de 75% */
-  pointer-events: none;
-  z-index: 0;
-  filter: contrast(1.15) saturate(1.2);
-  transition: opacity var(--transition-fast);
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-position: center right 12px !important;
+  background-size: 85px auto !important;
+  background-repeat: no-repeat !important;
+  opacity: 0.25 !important; /* 75% de transparência */
+  pointer-events: none !important;
+  z-index: 0 !important;
+  filter: contrast(1.15) saturate(1.25) !important;
+  transition: opacity var(--transition-fast) !important;
 }
 
-.bracket-match-card > * {
+.bracket-match-card > *:not(.match-winner-watermark) {
   position: relative;
   z-index: 1;
 }
@@ -229,7 +220,7 @@
 }
 
 .bracket-match-card:hover .match-winner-watermark {
-  opacity: 0.38;
+  opacity: 0.45 !important;
 }
 
 .bracket-match-card.is-live {

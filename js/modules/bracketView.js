@@ -318,15 +318,34 @@ function renderTreeBracket(games, subtab) {
 // Card de Jogo individual na Árvore
 function renderMatchCard(game) {
   const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
-  const isWinnerA = game.vencedor_id && game.lado_a?.id === game.vencedor_id;
-  const isWinnerB = game.vencedor_id && game.lado_b?.id === game.vencedor_id;
-  const winnerTeam = isWinnerA ? game.lado_a : (isWinnerB ? game.lado_b : null);
   const isBye = Boolean(game.is_bye);
   const isFirstRound = game.fase === '1ª Fase';
 
   const s = typeof store !== 'undefined' ? store : (window.store ? window.store : null);
   const feds = s ? s.getFederations() : [];
   const allGames = s ? s.getGames(game.categoria_id) : [];
+
+  // Identificação robusta do vencedor da partida
+  let winnerId = game.vencedor_id;
+  if (!winnerId) {
+    if (game.status === 'encerrado' || (game.vitorias_a || 0) >= 2 || (game.vitorias_b || 0) >= 2) {
+      if ((game.vitorias_a || 0) > (game.vitorias_b || 0)) {
+        winnerId = game.lado_a?.id || game.lado_a;
+      } else if ((game.vitorias_b || 0) > (game.vitorias_a || 0)) {
+        winnerId = game.lado_b?.id || game.lado_b;
+      }
+    }
+  }
+  if (winnerId && typeof winnerId === 'object' && winnerId.id) {
+    winnerId = winnerId.id;
+  }
+
+  const isWinnerA = Boolean(winnerId && (game.lado_a?.id === winnerId || game.lado_a === winnerId));
+  const isWinnerB = Boolean(winnerId && (game.lado_b?.id === winnerId || game.lado_b === winnerId));
+
+  const winnerFedId = (typeof winnerId === 'string' ? winnerId : '').toLowerCase();
+  const winnerTeam = isWinnerA ? game.lado_a : (isWinnerB ? game.lado_b : feds.find(f => f.id === winnerFedId));
+  const winnerImg = (winnerFedId && winnerFedId !== 'bye') ? `assets/federations/${winnerFedId}.jpg` : '';
 
   const slotAIsBye = game.bye_slot === 'A' || isSlotVagaLivre(allGames, game, 'A') || (isBye && !game.lado_a);
   const slotBIsBye = game.bye_slot === 'B' || isSlotVagaLivre(allGames, game, 'B') || (isBye && !game.lado_b);
@@ -396,19 +415,19 @@ function renderMatchCard(game) {
     `;
   };
 
-  // Cores de Vencedor (Verde) e Perdedor (Vermelho)
-  const bgA = isWinnerA ? '#dcfce7' : (isWinnerB ? '#fee2e2' : '#ffffff');
+  // Cores de Vencedor (Verde) e Perdedor (Vermelho) translúcidas para exibir a marca d'água no fundo
+  const bgA = isWinnerA ? 'rgba(220, 252, 231, 0.84)' : (isWinnerB ? 'rgba(254, 226, 226, 0.78)' : 'rgba(255, 255, 255, 0.88)');
   const borderA = isWinnerA ? '#166534' : (isWinnerB ? '#991b1b' : '#e2e8f0');
   
-  const bgB = isWinnerB ? '#dcfce7' : (isWinnerA ? '#fee2e2' : '#ffffff');
+  const bgB = isWinnerB ? 'rgba(220, 252, 231, 0.84)' : (isWinnerA ? 'rgba(254, 226, 226, 0.78)' : 'rgba(255, 255, 255, 0.88)');
   const borderB = isWinnerB ? '#166534' : (isWinnerA ? '#991b1b' : '#e2e8f0');
 
   return `
     <div class="bracket-match-card ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; background: #ffffff; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
       
-      ${winnerTeam ? `
-        <!-- Marca d'água da logo do estado vencedor no fundo do card com 75% de transparência -->
-        <div class="match-winner-watermark" style="background-image: url('assets/federations/${winnerTeam.id}.jpg');" title="Vencedor da partida: ${winnerTeam.nome} (${winnerTeam.uf})"></div>
+      ${winnerImg ? `
+        <!-- Brasão do estado vencedor no fundo do card com 75% de transparência (opacity 0.25) -->
+        <div class="match-winner-watermark" style="background-image: url('${winnerImg}');" title="Vencedor da partida: ${winnerTeam?.nome || winnerFedId.toUpperCase()}"></div>
       ` : ''}
 
       <div class="match-card-header" style="margin-bottom: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
@@ -417,6 +436,12 @@ function renderMatchCard(game) {
           ${(game.descricao || (game.code === 'C31' ? 'Grande Final (1º e 2º)' : (game.code === 'C32' ? 'Disputa 3º e 4º' : ''))) ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 170px;" title="${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}">${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}</span>` : ''}
         </div>
         <div style="display: flex; align-items: center; gap: 0.35rem;">
+          ${winnerImg ? `
+            <span style="display:inline-flex; align-items:center; gap:3px; font-size:0.62rem; font-weight:800; color:#15803d; background:rgba(220, 252, 231, 0.95); border:1px solid #86efac; padding:1px 5px; border-radius:4px; text-transform:uppercase;" title="Vencedor do confronto">
+              <img src="${winnerImg}" alt="${winnerTeam?.uf || ''}" style="width:13px; height:9px; border-radius:2px; object-fit:contain;">
+              ${winnerTeam?.uf || winnerFedId.toUpperCase()}
+            </span>
+          ` : ''}
           <span class="badge-status ${isBye ? 'encerrado' : game.status}" style="font-size: 0.62rem; padding: 0.15rem 0.45rem; border-radius: 12px; text-transform: uppercase; font-weight: 800; flex-shrink: 0;">${isBye ? 'BYE' : game.status}</span>
           ${isAdmin ? `
             <button style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.35rem;" onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="Editar Confronto (Selecionar Estados)">✏️</button>
