@@ -360,7 +360,26 @@ function renderMatchCard(game) {
   };
 
   const getTeamName = (team, isTeamBye, slot) => {
-    if (isTeamBye || (game.bye_slot === slot && !team)) return '<span style="color: #059669; font-weight: 800; font-size: 0.75rem;">⏩ BYE</span>';
+    if (isTeamBye || (game.bye_slot === slot && !team)) {
+      const advancing = slot === 'A' ? (game.lado_b || game.lado_a) : (game.lado_a || game.lado_b);
+      const advFedId = (advancing?.id || '').toLowerCase();
+      const advImg = (advFedId && advFedId !== 'bye') ? `assets/federations/${advFedId}.jpg` : '';
+
+      return `
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-width: 0;">
+          <span style="color: #047857; font-weight: 800; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;">
+            ⏩ BYE
+          </span>
+          ${advImg ? `
+            <div style="display: inline-flex; align-items: center; gap: 5px; background: #ecfdf5; border: 1.5px solid #86efac; padding: 2px 7px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" title="Avança de BYE: ${advancing.nome} (${advancing.uf})">
+              <span style="font-size: 0.64rem; font-weight: 800; color: #047857;">Avança:</span>
+              <img src="${advImg}" alt="${advancing.uf}" style="width: 30px; height: 20px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); background: #ffffff;">
+              <strong style="font-size: 0.78rem; color: #166534;">${advancing.uf}</strong>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
     if (!team) {
       if (isFirstRound) {
         return `<span style="color: #94a3b8; font-style: italic; font-size: 0.8rem; font-weight: 600;">-- Em Aberto (Clique para definir) --</span>`;
@@ -408,27 +427,26 @@ function renderMatchCard(game) {
 
     return `
       <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%; min-width: 0;">
-        <img src="assets/federations/${team.id}.jpg" alt="${team.uf}" style="width: 24px; height: 16px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); flex-shrink: 0;">
+        <img src="assets/federations/${team.id}.jpg" alt="${team.uf}" style="width: ${seedText ? '28px' : '24px'}; height: ${seedText ? '19px' : '16px'}; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); flex-shrink: 0; background: #ffffff;">
         <span style="font-weight: 700; font-size: 0.86rem; color: #1e293b; white-space: normal; word-break: break-word; line-height: 1.25;" title="${team.nome}">${team.uf} - ${team.nome}</span>
-        ${seedText ? `<span style="font-size: 0.68rem; color: #b45309; font-weight: 800; background: #fef3c7; padding: 0.15rem 0.35rem; border-radius: 3px; flex-shrink: 0; margin-left: auto;">${seedText}</span>` : ''}
+        ${seedText ? `<span style="font-size: 0.68rem; color: #047857; font-weight: 800; background: #dcfce7; border: 1px solid #86efac; padding: 0.15rem 0.35rem; border-radius: 3px; flex-shrink: 0; margin-left: auto;">${seedText}</span>` : ''}
       </div>
     `;
   };
 
-  // Cores de Vencedor (Verde) e Perdedor (Vermelho) translúcidas para exibir a marca d'água no fundo
-  const bgA = isWinnerA ? 'rgba(220, 252, 231, 0.84)' : (isWinnerB ? 'rgba(254, 226, 226, 0.78)' : 'rgba(255, 255, 255, 0.88)');
+  // Cores de Vencedor (Verde) e Perdedor (Vermelho) limpas
+  const bgA = isWinnerA ? '#dcfce7' : (isWinnerB ? '#fee2e2' : '#ffffff');
   const borderA = isWinnerA ? '#166534' : (isWinnerB ? '#991b1b' : '#e2e8f0');
   
-  const bgB = isWinnerB ? 'rgba(220, 252, 231, 0.84)' : (isWinnerA ? 'rgba(254, 226, 226, 0.78)' : 'rgba(255, 255, 255, 0.88)');
+  const bgB = isWinnerB ? '#dcfce7' : (isWinnerA ? '#fee2e2' : '#ffffff');
   const borderB = isWinnerB ? '#166534' : (isWinnerA ? '#991b1b' : '#e2e8f0');
+
+  const byeClassifiedTeam = (isBye || slotAIsBye || slotBIsBye) ? (game.lado_a || game.lado_b) : null;
+  const byeClassifiedFedId = (byeClassifiedTeam?.id || '').toLowerCase();
+  const byeClassifiedImg = (byeClassifiedFedId && byeClassifiedFedId !== 'bye') ? `assets/federations/${byeClassifiedFedId}.jpg` : '';
 
   return `
     <div class="bracket-match-card ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; background: #ffffff; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
-      
-      ${winnerImg ? `
-        <!-- Brasão do estado vencedor no fundo do card com 75% de transparência (opacity 0.25) -->
-        <div class="match-winner-watermark" style="background-image: url('${winnerImg}');" title="Vencedor da partida: ${winnerTeam?.nome || winnerFedId.toUpperCase()}"></div>
-      ` : ''}
 
       <div class="match-card-header" style="margin-bottom: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 0.35rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
@@ -436,12 +454,6 @@ function renderMatchCard(game) {
           ${(game.descricao || (game.code === 'C31' ? 'Grande Final (1º e 2º)' : (game.code === 'C32' ? 'Disputa 3º e 4º' : ''))) ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 170px;" title="${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}">${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}</span>` : ''}
         </div>
         <div style="display: flex; align-items: center; gap: 0.35rem;">
-          ${winnerImg ? `
-            <span style="display:inline-flex; align-items:center; gap:3px; font-size:0.62rem; font-weight:800; color:#15803d; background:rgba(220, 252, 231, 0.95); border:1px solid #86efac; padding:1px 5px; border-radius:4px; text-transform:uppercase;" title="Vencedor do confronto">
-              <img src="${winnerImg}" alt="${winnerTeam?.uf || ''}" style="width:13px; height:9px; border-radius:2px; object-fit:contain;">
-              ${winnerTeam?.uf || winnerFedId.toUpperCase()}
-            </span>
-          ` : ''}
           <span class="badge-status ${isBye ? 'encerrado' : game.status}" style="font-size: 0.62rem; padding: 0.15rem 0.45rem; border-radius: 12px; text-transform: uppercase; font-weight: 800; flex-shrink: 0;">${isBye ? 'BYE' : game.status}</span>
           ${isAdmin ? `
             <button style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.35rem;" onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="Editar Confronto (Selecionar Estados)">✏️</button>
@@ -482,8 +494,17 @@ function renderMatchCard(game) {
       <!-- DETALHES DE SUBJOGOS (PLACAR) -->
       <div class="match-footer-details" style="margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed #cbd5e1;">
         ${isBye ? `
-          <div style="text-align: center; font-size: 0.7rem; color: #047857; font-weight: 700; background: #ecfdf5; padding: 0.2rem; border-radius: 3px;">
-            ✅ Vencedor avança direto para ${game.proxima_fase || 'próxima'}
+          <div style="display: flex; align-items: center; justify-content: space-between; background: #ecfdf5; border: 1.5px solid #a7f3d0; padding: 0.4rem 0.65rem; border-radius: 6px;">
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 0.72rem; color: #047857; font-weight: 800;">⏩ CLASSIFICADO DE BYE</span>
+              <span style="font-size: 0.65rem; color: #065f46; font-weight: 600;">Avança direto para ${game.proxima_fase || 'próxima fase'}</span>
+            </div>
+            ${byeClassifiedImg ? `
+              <div style="display: flex; align-items: center; gap: 6px; background: #ffffff; padding: 2px 8px; border-radius: 4px; border: 1px solid #86efac; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" title="Classificado: ${byeClassifiedTeam?.nome || ''}">
+                <img src="${byeClassifiedImg}" alt="${byeClassifiedTeam?.uf || ''}" style="width: 44px; height: 30px; border-radius: 3px; object-fit: contain; box-shadow: 0 2px 4px rgba(0,0,0,0.2); background: #ffffff;">
+                <strong style="font-size: 0.82rem; color: #166534;">${byeClassifiedTeam?.uf || ''}</strong>
+              </div>
+            ` : ''}
           </div>
         ` : `
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">

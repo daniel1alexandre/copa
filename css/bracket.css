@@ -192,23 +192,7 @@
   transition: all var(--transition-fast);
 }
 
-/* Brasão do estado vencedor no fundo do card com 75% de transparência (opacity: 0.25) */
-.match-winner-watermark {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  background-position: center right 12px !important;
-  background-size: 85px auto !important;
-  background-repeat: no-repeat !important;
-  opacity: 0.25 !important; /* 75% de transparência */
-  pointer-events: none !important;
-  z-index: 0 !important;
-  filter: contrast(1.15) saturate(1.25) !important;
-  transition: opacity var(--transition-fast) !important;
-}
-
-.bracket-match-card > *:not(.match-winner-watermark) {
+.bracket-match-card > * {
   position: relative;
   z-index: 1;
 }
@@ -217,10 +201,6 @@
   border-color: var(--primary);
   box-shadow: 0 4px 12px var(--primary-glow);
   transform: translateY(-2px);
-}
-
-.bracket-match-card:hover .match-winner-watermark {
-  opacity: 0.45 !important;
 }
 
 .bracket-match-card.is-live {
