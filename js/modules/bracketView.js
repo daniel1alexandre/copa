@@ -320,6 +320,7 @@ function renderMatchCard(game) {
   const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
   const isWinnerA = game.vencedor_id && game.lado_a?.id === game.vencedor_id;
   const isWinnerB = game.vencedor_id && game.lado_b?.id === game.vencedor_id;
+  const winnerTeam = isWinnerA ? game.lado_a : (isWinnerB ? game.lado_b : null);
   const isBye = Boolean(game.is_bye);
   const isFirstRound = game.fase === '1ª Fase';
 
@@ -403,8 +404,13 @@ function renderMatchCard(game) {
   const borderB = isWinnerB ? '#166534' : (isWinnerA ? '#991b1b' : '#e2e8f0');
 
   return `
-    <div class="bracket-match-card ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; background: #ffffff; cursor: default; display: flex; flex-direction: column;">
+    <div class="bracket-match-card ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; background: #ffffff; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
       
+      ${winnerTeam ? `
+        <!-- Marca d'água da logo do estado vencedor no fundo do card com 75% de transparência -->
+        <div class="match-winner-watermark" style="background-image: url('assets/federations/${winnerTeam.id}.jpg');" title="Vencedor da partida: ${winnerTeam.nome} (${winnerTeam.uf})"></div>
+      ` : ''}
+
       <div class="match-card-header" style="margin-bottom: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 0.35rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
           <span class="match-code-tag" style="background: #334155; color: white; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800;">${game.code}</span>
