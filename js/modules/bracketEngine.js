@@ -542,7 +542,7 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
   });
 
   // ==========================================
-  // 4. CHAVE REVERSA 17º–27º LUGAR (R17)
+  // 4. CHAVE REVERSA 17º–24º LUGAR (R17)
   // ==========================================
   // 1ª Rodada: R17_1 a R17_8
   for (let i = 1; i <= 8; i++) {
@@ -564,9 +564,9 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       id: `g_rev_r17_${i}`,
       code: `R17_${i}`,
       categoria_id: categoryId,
-      bracket: 'reversa_17_27',
-      fase: '1ª Rodada (17º-27º)',
-      descricao: `1ª Rodada 17º-27º (${i})`,
+      bracket: 'reversa_17_24',
+      fase: '1ª Rodada (17º-24º)',
+      descricao: `1ª Rodada 17º-24º (${i})`,
       lado_a: null,
       lado_b: null,
       is_bye: false,
@@ -585,8 +585,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       id: `g_rev_r17_q${i}`,
       code: `R17_Q${i}`,
       categoria_id: categoryId,
-      bracket: 'reversa_17_27',
-      fase: 'Quartas de Final (17º-27º)',
+      bracket: 'reversa_17_24',
+      fase: 'Quartas de Final (17º-24º)',
       descricao: `Quartas 17º-24º (${i})`,
       lado_a: null,
       lado_b: null,
@@ -599,6 +599,9 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     });
   }
 
+  // ==========================================
+  // 5. CHAVE REVERSA 25º–27º LUGAR (R25)
+  // ==========================================
   // Quartas 25º-27º: R25_Q1 a R25_Q4
   for (let i = 1; i <= 4; i++) {
     let r25ByeSlot = null;
@@ -612,8 +615,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       id: `g_rev_r25_q${i}`,
       code: `R25_Q${i}`,
       categoria_id: categoryId,
-      bracket: 'reversa_17_27',
-      fase: 'Quartas de Final (17º-27º)',
+      bracket: 'reversa_25_27',
+      fase: 'Quartas de Final (25º-27º)',
       descricao: `Quartas 25º-27º (${i})`,
       lado_a: null,
       lado_b: null,
@@ -625,13 +628,13 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     });
   }
 
-  // Semifinais 17º-20º, 21º-24º, 25º-27º
+  // Semifinais 17º-20º e 21º-24º
   games.push({
     id: 'g_rev_r17_s1',
     code: 'R17_SEMI_1',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Semifinais (17º-27º)',
+    bracket: 'reversa_17_24',
+    fase: 'Semifinais (17º-24º)',
     descricao: 'Semifinal 17º-20º (A)',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando',
     proxima_fase: 'R17_FINAL', proxima_fase_slot: 'A',
@@ -641,8 +644,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     id: 'g_rev_r17_s2',
     code: 'R17_SEMI_2',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Semifinais (17º-27º)',
+    bracket: 'reversa_17_24',
+    fase: 'Semifinais (17º-24º)',
     descricao: 'Semifinal 17º-20º (B)',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando',
     proxima_fase: 'R17_FINAL', proxima_fase_slot: 'B',
@@ -653,8 +656,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     id: 'g_rev_r21_s1',
     code: 'R21_SEMI_1',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Semifinais (17º-27º)',
+    bracket: 'reversa_17_24',
+    fase: 'Semifinais (17º-24º)',
     descricao: 'Semifinal 21º-24º (A)',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando',
     proxima_fase: 'R21_FINAL', proxima_fase_slot: 'A',
@@ -664,20 +667,21 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     id: 'g_rev_r21_s2',
     code: 'R21_SEMI_2',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Semifinais (17º-27º)',
+    bracket: 'reversa_17_24',
+    fase: 'Semifinais (17º-24º)',
     descricao: 'Semifinal 21º-24º (B)',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando',
     proxima_fase: 'R21_FINAL', proxima_fase_slot: 'B',
     proxima_fase_perdedor: 'R21_23LUGAR', proxima_fase_perdedor_slot: 'B'
   });
 
+  // Semifinais 25º-27º
   games.push({
     id: 'g_rev_r25_s1',
     code: 'R25_SEMI_1',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Semifinais (17º-27º)',
+    bracket: 'reversa_25_27',
+    fase: 'Semifinais (25º-27º)',
     descricao: 'Semifinal 25º-27º (A)',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando',
     proxima_fase: 'R25_FINAL', proxima_fase_slot: 'A'
@@ -686,8 +690,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     id: 'g_rev_r25_s2',
     code: 'R25_SEMI_2',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Semifinais (17º-27º)',
+    bracket: 'reversa_25_27',
+    fase: 'Semifinais (25º-27º)',
     descricao: 'Semifinal 25º-27º (B)',
     lado_a: null, lado_b: null,
     is_bye: false,
@@ -696,13 +700,13 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     proxima_fase: 'R25_FINAL', proxima_fase_slot: 'B'
   });
 
-  // Finais 17º a 27º
+  // Finais 17º a 24º
   games.push({
     id: 'g_rev_r17_final',
     code: 'R17_FINAL',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Finais (17º-27º)',
+    bracket: 'reversa_17_24',
+    fase: 'Finais (17º ao 24º)',
     descricao: 'Disputa 17º Lugar',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando'
   });
@@ -710,8 +714,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     id: 'g_rev_r17_19',
     code: 'R17_19LUGAR',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Finais (17º-27º)',
+    bracket: 'reversa_17_24',
+    fase: 'Finais (17º ao 24º)',
     descricao: 'Disputa 19º Lugar',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando'
   });
@@ -719,8 +723,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     id: 'g_rev_r21_final',
     code: 'R21_FINAL',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Finais (17º-27º)',
+    bracket: 'reversa_17_24',
+    fase: 'Finais (17º ao 24º)',
     descricao: 'Disputa 21º Lugar',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando'
   });
@@ -728,17 +732,19 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     id: 'g_rev_r21_23',
     code: 'R21_23LUGAR',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Finais (17º-27º)',
+    bracket: 'reversa_17_24',
+    fase: 'Finais (17º ao 24º)',
     descricao: 'Disputa 23º Lugar',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando'
   });
+
+  // Final 25º Lugar (25º e 26º)
   games.push({
     id: 'g_rev_r25_final',
     code: 'R25_FINAL',
     categoria_id: categoryId,
-    bracket: 'reversa_17_27',
-    fase: 'Finais (17º-27º)',
+    bracket: 'reversa_25_27',
+    fase: 'Final (25º e 26º Lugar)',
     descricao: 'Disputa 25º Lugar',
     lado_a: null, lado_b: null, is_bye: false, status: 'aguardando'
   });

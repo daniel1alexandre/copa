@@ -115,6 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializa o serviço do Supabase
   supabaseService.init(store);
 
+  // Inicializa o controle de zoom da aplicação (Padrão 85%)
+  initZoomController();
+
   // Render inicial
   switchTab('home');
 
@@ -126,3 +129,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+function initZoomController() {
+  const DEFAULT_ZOOM = 85;
+  const MIN_ZOOM = 70;
+  const MAX_ZOOM = 110;
+  const STEP = 5;
+
+  let currentZoom = parseInt(localStorage.getItem('copa_zoom_level'), 10);
+  if (isNaN(currentZoom) || currentZoom < MIN_ZOOM || currentZoom > MAX_ZOOM) {
+    currentZoom = DEFAULT_ZOOM;
+  }
+
+  const zoomText = document.getElementById('zoom-level-display');
+  const btnOut = document.getElementById('btn-zoom-out');
+  const btnIn = document.getElementById('btn-zoom-in');
+  const btnReset = document.getElementById('btn-zoom-reset');
+
+  function applyZoom(zoom) {
+    currentZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
+    document.documentElement.style.zoom = (currentZoom / 100).toString();
+    if (zoomText) zoomText.textContent = `${currentZoom}%`;
+    localStorage.setItem('copa_zoom_level', currentZoom.toString());
+  }
+
+  if (btnOut) {
+    btnOut.addEventListener('click', () => applyZoom(currentZoom - STEP));
+  }
+  if (btnIn) {
+    btnIn.addEventListener('click', () => applyZoom(currentZoom + STEP));
+  }
+  if (btnReset) {
+    btnReset.addEventListener('click', () => applyZoom(DEFAULT_ZOOM));
+  }
+
+  // Aplica imediatamente
+  applyZoom(currentZoom);
+
+  window.setAppZoom = applyZoom;
+}

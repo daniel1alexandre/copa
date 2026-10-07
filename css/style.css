@@ -68,20 +68,27 @@
   --transition-normal: 0.25s ease;
 }
 
-/* Reset Básico */
+/* Reset Básico e Escala Global Reduzida */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  font-size: 14px;
+  zoom: 0.85;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   font-family: var(--font-family);
+  font-size: 0.92rem;
   background: 
     linear-gradient(180deg, rgba(8, 20, 36, 0.84) 0%, rgba(11, 25, 45, 0.90) 35%, rgba(5, 14, 26, 0.95) 100%),
     url('../assets/logo.jpg') center top / cover no-repeat fixed;
   color: var(--text-main);
-  line-height: 1.5;
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   display: flex;
@@ -107,7 +114,7 @@ body::before {
 .topbar {
   background: linear-gradient(135deg, #091b2c 0%, #004b57 60%, #028090 100%);
   color: var(--text-inverse);
-  padding: 0.75rem 1.5rem;
+  padding: 0.45rem 1.25rem;
   box-shadow: 0 4px 20px rgba(2, 128, 144, 0.25);
   position: sticky;
   top: 0;
@@ -115,46 +122,48 @@ body::before {
 }
 
 .topbar-container {
-  max-width: 1600px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 1.2rem;
+  padding: 0 0.5rem;
 }
 
 .brand-section {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.75rem;
 }
 
 .brand-logo-icon {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   background: linear-gradient(135deg, #ffb703, #f4a261, #e76f51);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   box-shadow: 0 4px 12px rgba(244, 162, 97, 0.4);
 }
 
 .brand-titles h1 {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 1.18rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   color: #ffffff;
 }
 
 .brand-tag {
-  font-size: 0.68rem;
-  padding: 0.15rem 0.5rem;
+  font-size: 0.65rem;
+  padding: 0.12rem 0.45rem;
   border-radius: var(--radius-full);
   background: rgba(255, 183, 3, 0.2);
   color: #ffb703;
@@ -164,14 +173,55 @@ body::before {
 }
 
 .brand-titles p {
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   color: rgba(255, 255, 255, 0.75);
 }
 
 .topbar-actions {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
+}
+
+/* Controle Rápido de Zoom */
+.zoom-controls-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  backdrop-filter: blur(6px);
+}
+
+.btn-zoom-step,
+.btn-zoom-reset {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+  line-height: 1.2;
+}
+
+.btn-zoom-step:hover,
+.btn-zoom-reset:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffb703;
+}
+
+.zoom-level-text {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffb703;
+  min-width: 32px;
+  text-align: center;
+  user-select: none;
 }
 
 .pill-badge {
@@ -250,18 +300,19 @@ body::before {
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   position: sticky;
-  top: 61px;
+  top: 52px;
   z-index: 90;
 }
 
 .nav-container {
-  max-width: 1600px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   display: flex;
   overflow-x: auto;
   scrollbar-width: none;
   gap: 0.25rem;
-  padding: 0 1.5rem;
+  padding: 0 0.85rem;
 }
 
 .nav-container::-webkit-scrollbar {
@@ -271,9 +322,9 @@ body::before {
 .nav-tab {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.15rem;
-  font-size: 0.9rem;
+  gap: 0.45rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-muted);
   border: none;
@@ -296,8 +347,8 @@ body::before {
 }
 
 .nav-tab-badge {
-  font-size: 0.7rem;
-  padding: 0.15rem 0.45rem;
+  font-size: 0.68rem;
+  padding: 0.12rem 0.4rem;
   border-radius: var(--radius-full);
   background: var(--bg-subtle);
   color: var(--text-muted);
@@ -313,10 +364,10 @@ body::before {
    ============================================================ */
 .main-content {
   flex: 1;
-  max-width: 1600px;
   width: 100%;
-  margin: 0 auto;
-  padding: 1.5rem;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.85rem 1rem;
   position: relative;
   z-index: 1;
 }
@@ -345,7 +396,7 @@ body::before {
   border-radius: var(--radius-lg);
   border: 1px solid rgba(226, 232, 240, 0.85);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-  padding: 1.25rem;
+  padding: 1rem;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -357,21 +408,21 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
 }
 
 .card-title {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--accent-dark-blue);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .card-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
 }
 
@@ -529,9 +580,9 @@ body::before {
    ============================================================ */
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 1.25rem;
-  margin-bottom: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .kpi-card {
@@ -539,12 +590,12 @@ body::before {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-lg);
-  padding: 1.25rem;
+  padding: 1rem;
   border: 1px solid rgba(226, 232, 240, 0.85);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  gap: 1.15rem;
+  gap: 0.9rem;
   position: relative;
   overflow: hidden;
 }
@@ -565,15 +616,15 @@ body::before {
 .kpi-card.kpi-green::after { background: #10b981; }
 
 .kpi-icon-wrap {
-  width: 52px;
-  height: 52px;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-md);
   background: var(--primary-light);
   color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
+  font-size: 1.35rem;
   flex-shrink: 0;
 }
 
@@ -584,7 +635,7 @@ body::before {
 
 .kpi-value {
   font-family: var(--font-display);
-  font-size: 1.85rem;
+  font-size: 1.55rem;
   font-weight: 800;
   color: var(--accent-dark-blue);
   line-height: 1.1;

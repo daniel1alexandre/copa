@@ -26,7 +26,7 @@
   <header class="topbar">
     <div class="topbar-container">
       <div class="brand-section">
-        <img src="assets/logo.jpg" alt="Logo Copa das Federações" class="main-logo" style="height: 60px; margin-right: 15px; border-radius: 8px; object-fit: contain;">
+        <img src="assets/logo.jpg" alt="Logo Copa das Federações" class="main-logo" style="height: 42px; margin-right: 12px; border-radius: 6px; object-fit: contain;">
         <div class="brand-titles">
           <h1>
             Copa das Federações 2026
@@ -37,7 +37,13 @@
       </div>
 
       <div class="topbar-actions">
-
+        <!-- Controle de Zoom da Aplicação -->
+        <div class="zoom-controls-wrapper" title="Ajustar zoom das telas e letras">
+          <button type="button" class="btn-zoom-step" id="btn-zoom-out" title="Diminuir visual (Zoom -)">A−</button>
+          <span class="zoom-level-text" id="zoom-level-display">85%</span>
+          <button type="button" class="btn-zoom-step" id="btn-zoom-in" title="Aumentar visual (Zoom +)">A+</button>
+          <button type="button" class="btn-zoom-reset" id="btn-zoom-reset" title="Restaurar padrão (85%)">↺</button>
+        </div>
 
         <button class="btn-topbar btn-topbar-ghost" onclick="window.switchTab('categorias')">
           🎾 Categorias

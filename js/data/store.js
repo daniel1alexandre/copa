@@ -148,6 +148,27 @@ class AppStore {
                 }
               }
 
+              // Garante que jogos de 25º a 27º fiquem na chave reversa_25_27 e 17º a 24º em reversa_17_24
+              gamesList.forEach(g => {
+                if (g.code && g.code.startsWith('R25_')) {
+                  g.bracket = 'reversa_25_27';
+                  if (g.code.startsWith('R25_Q')) g.fase = 'Quartas de Final (25º-27º)';
+                  else if (g.code.startsWith('R25_SEMI')) g.fase = 'Semifinais (25º-27º)';
+                  else if (g.code === 'R25_FINAL') g.fase = 'Final (25º e 26º Lugar)';
+                } else if (g.bracket === 'reversa_17_27') {
+                  g.bracket = 'reversa_17_24';
+                  if (g.code && g.code.startsWith('R17_') && !g.code.includes('_Q') && !g.code.includes('_SEMI') && !g.code.includes('_FINAL') && !g.code.includes('_19')) {
+                    g.fase = '1ª Rodada (17º-24º)';
+                  } else if (g.code && g.code.startsWith('R17_Q')) {
+                    g.fase = 'Quartas de Final (17º-24º)';
+                  } else if (g.code && (g.code.includes('_SEMI'))) {
+                    g.fase = 'Semifinais (17º-24º)';
+                  } else if (g.code && (g.code.includes('_FINAL') || g.code.includes('_19LUGAR') || g.code.includes('_23LUGAR'))) {
+                    g.fase = 'Finais (17º ao 24º)';
+                  }
+                }
+              });
+
               // Propaga automaticamente confrontos com Vaga Livre (BYE) para a próxima fase
               propagateAllByes(gamesList);
             }

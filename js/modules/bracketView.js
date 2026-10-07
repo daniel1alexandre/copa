@@ -5,7 +5,7 @@ import { openMatchModal, openEditFirstRoundCardModal } from './modal.js';
 import { toast } from './toast.js';
 
 let currentCategory = 'prof';
-let currentSubtab = 'principal'; // principal | reversa_5_8 | reversa_9_16 | reversa_17_27
+let currentSubtab = 'principal'; // principal | reversa_5_8 | reversa_9_16 | reversa_17_24 | reversa_25_27
 let currentViewMode = 'tree'; // tree | table
 
 export function initBracketView() {
@@ -74,8 +74,15 @@ export function renderBracket() {
     filteredGames = allCategoryGames.filter(g => g.bracket === 'reversa_5_8');
   } else if (currentSubtab === 'reversa_9_16') {
     filteredGames = allCategoryGames.filter(g => ['reversa_9_16', 'reversa_9_12', 'reversa_13_16'].includes(g.bracket));
-  } else if (currentSubtab === 'reversa_17_27') {
-    filteredGames = allCategoryGames.filter(g => ['reversa_17_27', 'reversa_17_20', 'reversa_21_24', 'reversa_25_27'].includes(g.bracket));
+  } else if (currentSubtab === 'reversa_17_24' || currentSubtab === 'reversa_17_27') {
+    filteredGames = allCategoryGames.filter(g => 
+      ['reversa_17_24', 'reversa_17_27', 'reversa_17_20', 'reversa_21_24'].includes(g.bracket) &&
+      !(g.code && g.code.startsWith('R25_'))
+    );
+  } else if (currentSubtab === 'reversa_25_27') {
+    filteredGames = allCategoryGames.filter(g => 
+      g.bracket === 'reversa_25_27' || (g.code && g.code.startsWith('R25_'))
+    );
   }
 
   const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
@@ -153,8 +160,11 @@ export function renderBracket() {
       <button class="bracket-subtab-btn ${currentSubtab === 'reversa_9_16' ? 'active' : ''}" onclick="window.switchBracketSubtab('reversa_9_16')">
         🔄 Chave Reversa 9º–16º (9º-12º e 13º-16º)
       </button>
-      <button class="bracket-subtab-btn ${currentSubtab === 'reversa_17_27' ? 'active' : ''}" onclick="window.switchBracketSubtab('reversa_17_27')">
-        🔄 Chave Reversa 17º–27º (17º-20º, 21º-24º, 25º-27º)
+      <button class="bracket-subtab-btn ${(currentSubtab === 'reversa_17_24' || currentSubtab === 'reversa_17_27') ? 'active' : ''}" onclick="window.switchBracketSubtab('reversa_17_24')">
+        🔄 Chave Reversa 17º–24º (17º-20º e 21º-24º)
+      </button>
+      <button class="bracket-subtab-btn ${currentSubtab === 'reversa_25_27' ? 'active' : ''}" onclick="window.switchBracketSubtab('reversa_25_27')">
+        🔄 Chave Reversa 25º–27º Lugar
       </button>
     </div>
 
@@ -211,18 +221,33 @@ function renderTreeBracket(games, subtab) {
   // Agrupa jogos por fase
   const phasesMap = new Map();
   games.forEach(g => {
-    // Normaliza fase para que a Disputa de 3º e 4º (C32) fique sempre na mesma coluna da Final (abaixo da final C31)
     let faseKey = g.fase;
+    // Normaliza fase para que a Disputa de 3º e 4º (C32) fique sempre na mesma coluna da Final (abaixo da final C31)
     if (['Grande Final (1º e 2º)', 'Disputa 3º Lugar', 'Finais'].includes(g.fase) || g.code === 'C31' || g.code === 'C32') {
       faseKey = 'Finais';
+    } else if (subtab === 'reversa_25_27' || (g.code && g.code.startsWith('R25_'))) {
+      if (g.code.startsWith('R25_Q')) faseKey = 'Quartas de Final (25º-27º)';
+      else if (g.code.startsWith('R25_SEMI')) faseKey = 'Semifinais (25º-27º)';
+      else if (g.code === 'R25_FINAL') faseKey = 'Final (25º e 26º Lugar)';
+    } else if (subtab === 'reversa_17_24' || subtab === 'reversa_17_27') {
+      if (g.code.startsWith('R17_') && !g.code.includes('_Q') && !g.code.includes('_SEMI') && !g.code.includes('_FINAL') && !g.code.includes('_19')) {
+        faseKey = '1ª Rodada (17º-24º)';
+      } else if (g.code.startsWith('R17_Q')) {
+        faseKey = 'Quartas de Final (17º-24º)';
+      } else if (g.code.includes('_SEMI')) {
+        faseKey = 'Semifinais (17º-24º)';
+      } else if (g.code.includes('_FINAL') || g.code.includes('_19LUGAR') || g.code.includes('_23LUGAR')) {
+        faseKey = 'Finais (17º ao 24º)';
+      }
     }
+
     if (!phasesMap.has(faseKey)) {
       phasesMap.set(faseKey, []);
     }
     phasesMap.get(faseKey).push(g);
   });
 
-  // Garante que dentro de 'Finais', a Grande Final (C31) venha primeiro (topo) e a Disputa de 3º e 4º (C32) venha logo abaixo
+  // Garante ordenação das Finais na Chave Principal: Grande Final (C31) no topo e Disputa de 3º e 4º (C32) abaixo
   if (phasesMap.has('Finais')) {
     phasesMap.get('Finais').sort((a, b) => {
       if (a.code === 'C31') return -1;
@@ -233,10 +258,47 @@ function renderTreeBracket(games, subtab) {
     });
   }
 
+  // Garante ordenação das Finais de 17º ao 24º: R17_FINAL (17º), R17_19LUGAR (19º), R21_FINAL (21º), R21_23LUGAR (23º)
+  if (phasesMap.has('Finais (17º ao 24º)')) {
+    const orderFinals = ['R17_FINAL', 'R17_19LUGAR', 'R21_FINAL', 'R21_23LUGAR'];
+    phasesMap.get('Finais (17º ao 24º)').sort((a, b) => {
+      return orderFinals.indexOf(a.code) - orderFinals.indexOf(b.code);
+    });
+  }
+
+  // Ordena as colunas de fases na sequência cronológica do torneio
+  const PHASE_ORDER = [
+    '1ª Fase',
+    'Oitavas de Final',
+    '1ª Rodada (17º-24º)',
+    '1ª Rodada (17º-27º)',
+    'Quartas de Final',
+    'Quartas de Final (17º-24º)',
+    'Quartas de Final (17º-27º)',
+    'Quartas de Final (25º-27º)',
+    'Semifinais',
+    'Semifinais (17º-24º)',
+    'Semifinais (17º-27º)',
+    'Semifinais (25º-27º)',
+    'Finais',
+    'Finais (17º ao 24º)',
+    'Finais (17º-27º)',
+    'Final (25º e 26º Lugar)'
+  ];
+
+  const sortedEntries = Array.from(phasesMap.entries()).sort(([a], [b]) => {
+    const idxA = PHASE_ORDER.indexOf(a);
+    const idxB = PHASE_ORDER.indexOf(b);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return 0;
+  });
+
   return `
     <div class="bracket-tree-container">
       <div class="bracket-rounds-wrapper">
-        ${Array.from(phasesMap.entries()).map(([faseName, phaseGames]) => `
+        ${sortedEntries.map(([faseName, phaseGames]) => `
           <div class="bracket-round-column">
             <div class="round-header">
               <div class="round-title">${faseName}</div>
