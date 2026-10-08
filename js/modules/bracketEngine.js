@@ -1159,6 +1159,7 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
     const existing = teamMap.get(team.id);
     if (!existing || points > existing.pontos || (points === existing.pontos && prioridade > existing.prioridade)) {
       teamMap.set(team.id, {
+        id: team.id,
         equipe_id: team.id,
         nome: team.nome,
         sigla: team.sigla,

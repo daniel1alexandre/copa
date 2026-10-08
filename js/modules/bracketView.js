@@ -190,24 +190,27 @@ export function renderBracket() {
         </p>
       ` : `
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
-          ${placements.map(p => `
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); background: var(--bg-subtle);">
-              <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <span class="standings-badge-pos ${(p.posicao || p.colocacao) <= 3 ? 'pos-' + (p.posicao || p.colocacao) : 'pos-other'}">
-                  ${p.posicao || p.colocacao}º
-                </span>
-                <img src="assets/federations/${p.id}.jpg" alt="${p.uf}" style="width: 26px; height: 18px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
-                <div>
-                  <strong style="color: var(--accent-dark-blue); font-size: 0.95rem;">${p.nome} (${p.uf})</strong>
-                  <div style="font-size: 0.72rem; color: #047857; font-weight: 600;">${p.faseAtual || p.nome}</div>
+          ${placements.map(p => {
+            const fedId = (p.id || p.equipe_id || p.uf || '').toLowerCase();
+            return `
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); background: var(--bg-subtle);">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="standings-badge-pos ${(p.posicao || p.colocacao) <= 3 ? 'pos-' + (p.posicao || p.colocacao) : 'pos-other'}">
+                    ${p.posicao || p.colocacao}º
+                  </span>
+                  <img src="assets/federations/${fedId}.jpg" alt="${p.uf || ''}" onerror="this.onerror=null; this.src='assets/logo.jpg';" style="width: 32px; height: 22px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.25); border: 1px solid rgba(0,0,0,0.1); background: #ffffff;">
+                  <div>
+                    <strong style="color: var(--accent-dark-blue); font-size: 0.95rem;">${p.nome} (${p.uf})</strong>
+                    <div style="font-size: 0.72rem; color: #047857; font-weight: 600;">${p.faseAtual || p.nome}</div>
+                  </div>
+                </div>
+                <div style="text-align: right;">
+                  <strong style="font-size: 1.2rem; color: var(--primary);">${p.pontos}</strong>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">pts</span>
                 </div>
               </div>
-              <div style="text-align: right;">
-                <strong style="font-size: 1.2rem; color: var(--primary);">${p.pontos}</strong>
-                <span style="font-size: 0.75rem; color: var(--text-muted);">pts</span>
-              </div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       `}
     </div>
