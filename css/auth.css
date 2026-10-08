@@ -62,18 +62,6 @@ body.portal-open::-webkit-scrollbar {
   z-index: 1;
 }
 
-/* Linhas sutis de quadra de tênis decorativas ao fundo */
-.cbt-portal-backdrop::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
-}
 
 /* Card Central de Login com Imagem da CBT em Destaque no Fundo */
 .cbt-portal-card {
