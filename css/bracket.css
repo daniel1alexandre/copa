@@ -115,19 +115,24 @@
 
 /* ============================================================
    ÁRVORE VISUAL DO CHAVEAMENTO (BRACKET TREE)
+   Fundo com textura e gradiente verde-petróleo da quadra oficial
    ============================================================ */
 .bracket-tree-container {
   position: relative;
   overflow-x: auto;
   padding: 1.5rem 0.5rem;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: #0b2e36;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    url('../assets/bracket-bg.png');
+  background-size: 32px 32px, 32px 32px, cover;
+  background-position: 0 0, 0 0, center center;
+  background-repeat: repeat, repeat, no-repeat;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
-
 
 .bracket-rounds-wrapper {
   position: relative;
@@ -151,22 +156,26 @@
 .round-header {
   text-align: center;
   margin-bottom: 1rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 0.45rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.22);
 }
 
 .round-title {
   font-family: var(--font-display);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  color: var(--accent-dark-blue);
+  color: #ffffff;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .round-subtitle {
-  font-size: 0.72rem;
-  color: var(--text-muted);
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  margin-top: 0.15rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .round-matches-list {
