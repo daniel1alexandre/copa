@@ -220,6 +220,10 @@ export function renderBracket() {
 // Mapeamento de posições em disputa para os cabeçalhos das colunas
 function getColumnDisputeBadge(faseName) {
   if (!faseName) return null;
+  // 1ª Fase, Oitavas e Quartas não possuem badge de disputa de posições no topo da coluna
+  if (/1[ªa]\s*fase/i.test(faseName) || /oitavas/i.test(faseName) || /quartas/i.test(faseName)) {
+    return null;
+  }
   if (faseName === 'Semifinais') {
     return '⚔️ Valendo 1º ao 4º Lugar';
   }
@@ -251,6 +255,22 @@ export function getMatchDisputeInfo(game) {
   const code = game.code || '';
   const fase = game.fase || '';
   const desc = game.descricao || '';
+
+  // 1ª Fase, Oitavas de Final e Quartas de Final NUNCA recebem destaque de semifinal ou final (devem voltar às cores e estilo padrão da 1ª fase)
+  const isExcludedPhase = 
+    /1[ªa]\s*fase/i.test(fase) ||
+    /oitavas/i.test(fase) || /oitavas/i.test(desc) ||
+    /quartas/i.test(fase) || /quartas/i.test(desc) ||
+    /^C(1[0-6]|[1-9])$/.test(code) || // C1 a C16 (1ª Fase)
+    /^C(1[7-9]|2[0-4])$/.test(code) || // C17 a C24 (Oitavas de Final)
+    /^C(2[5-8])$/.test(code) || // C25 a C28 (Quartas de Final)
+    /^R9_[1-4]$/.test(code) || // R9_1 a R9_4 (Quartas 9º-16º)
+    /^R17_Q[1-4]$/.test(code) || // R17_Q1 a R17_Q4 (Quartas 17º-24º)
+    /^R25_Q[1-4]$/.test(code); // R25_Q1 a R25_Q4 (Quartas 25º-27º)
+
+  if (isExcludedPhase) {
+    return null;
+  }
 
   // 1. CHAVE PRINCIPAL (1º ao 4º Lugar)
   if (code === 'C31' || /grande final/i.test(fase) || /grande final/i.test(desc)) {
@@ -531,7 +551,7 @@ export function getMatchDisputeInfo(game) {
     };
   }
 
-  if (/final/i.test(fase) || /final/i.test(desc) || code.includes('FINAL') || code.includes('LUGAR')) {
+  if ((/final/i.test(fase) && !/oitavas|quartas/i.test(fase)) || (/final/i.test(desc) && !/oitavas|quartas/i.test(desc)) || code.includes('FINAL') || code.includes('LUGAR')) {
     return {
       type: 'final-placement',
       bannerClass: 'banner-placement-final',
@@ -819,7 +839,19 @@ function renderMatchCard(game) {
   const byeClassifiedImg = (byeClassifiedFedId && byeClassifiedFedId !== 'bye') ? `assets/federations/${byeClassifiedFedId}.jpg` : '';
 
   // Determina se o confronto é Semifinal ou Final para destaque visual premium e posições em disputa
-  const disputeInfo = getMatchDisputeInfo(game);
+  // 1ª Fase, Oitavas de Final e Quartas de Final NUNCA recebem destaque visual (devem ter o card branco padrão da 1ª fase)
+  const isExcludedCard = 
+    isFirstRound ||
+    /oitavas/i.test(game.fase || '') || /oitavas/i.test(game.descricao || '') ||
+    /quartas/i.test(game.fase || '') || /quartas/i.test(game.descricao || '') ||
+    /^C(1[0-6]|[1-9])$/.test(game.code || '') ||
+    /^C(1[7-9]|2[0-4])$/.test(game.code || '') ||
+    /^C(2[5-8])$/.test(game.code || '') ||
+    /^R9_[1-4]$/.test(game.code || '') ||
+    /^R17_Q[1-4]$/.test(game.code || '') ||
+    /^R25_Q[1-4]$/.test(game.code || '');
+
+  const disputeInfo = isExcludedCard ? null : getMatchDisputeInfo(game);
   const isFinalGold = disputeInfo?.type === 'final-gold';
   const isFinalBronze = disputeInfo?.type === 'final-bronze';
   const isPlacementFinal = disputeInfo?.type === 'final-placement';
@@ -834,42 +866,44 @@ function renderMatchCard(game) {
   let codeTagBg = '#334155';
   let phasePill = '';
 
-  if (isFinalGold) {
-    phaseCardClass = 'is-final-gold';
-    cardBg = 'linear-gradient(145deg, #fffdf0 0%, #fef3c7 45%, #fef9c3 100%)';
-    cardBorder = '2px solid #f59e0b';
-    cardShadow = '0 6px 20px rgba(245, 158, 11, 0.35)';
-    headerBorderColor = 'rgba(245, 158, 11, 0.35)';
-    footerBorderColor = 'rgba(245, 158, 11, 0.35)';
-    codeTagBg = 'linear-gradient(135deg, #d97706, #92400e)';
-    phasePill = `<span style="background: #fef08a; color: #854d0e; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #eab308; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
-  } else if (isFinalBronze) {
-    phaseCardClass = 'is-final-bronze';
-    cardBg = 'linear-gradient(145deg, #fffaf5 0%, #fed7aa 45%, #ffedd5 100%)';
-    cardBorder = '1.5px solid #f97316';
-    cardShadow = '0 5px 16px rgba(249, 115, 22, 0.25)';
-    headerBorderColor = 'rgba(249, 115, 22, 0.3)';
-    footerBorderColor = 'rgba(249, 115, 22, 0.3)';
-    codeTagBg = 'linear-gradient(135deg, #c2410c, #7c2d12)';
-    phasePill = `<span style="background: #ffedd5; color: #9a3412; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #fdba74; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
-  } else if (isPlacementFinal) {
-    phaseCardClass = 'is-final-placement';
-    cardBg = 'linear-gradient(145deg, #fefce8 0%, #fef08a 45%, #ffffff 100%)';
-    cardBorder = '1.5px solid #eab308';
-    cardShadow = '0 4px 14px rgba(234, 179, 8, 0.22)';
-    headerBorderColor = 'rgba(234, 179, 8, 0.3)';
-    footerBorderColor = 'rgba(234, 179, 8, 0.3)';
-    codeTagBg = 'linear-gradient(135deg, #ca8a04, #854d0e)';
-    phasePill = `<span style="background: #fef9c3; color: #713f12; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #facc15; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
-  } else if (isSemi) {
-    phaseCardClass = 'is-semifinal';
-    cardBg = 'linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 55%, #f8fafc 100%)';
-    cardBorder = '1.5px solid #38bdf8';
-    cardShadow = '0 4px 14px rgba(14, 165, 233, 0.22)';
-    headerBorderColor = 'rgba(56, 189, 248, 0.35)';
-    footerBorderColor = 'rgba(56, 189, 248, 0.35)';
-    codeTagBg = 'linear-gradient(135deg, #0284c7, #0369a1)';
-    phasePill = `<span style="background: #e0f2fe; color: #0369a1; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #7dd3fc; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
+  if (!isExcludedCard && disputeInfo) {
+    if (isFinalGold) {
+      phaseCardClass = 'is-final-gold';
+      cardBg = 'linear-gradient(145deg, #fffdf0 0%, #fef3c7 45%, #fef9c3 100%)';
+      cardBorder = '2px solid #f59e0b';
+      cardShadow = '0 6px 20px rgba(245, 158, 11, 0.35)';
+      headerBorderColor = 'rgba(245, 158, 11, 0.35)';
+      footerBorderColor = 'rgba(245, 158, 11, 0.35)';
+      codeTagBg = 'linear-gradient(135deg, #d97706, #92400e)';
+      phasePill = `<span style="background: #fef08a; color: #854d0e; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #eab308; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
+    } else if (isFinalBronze) {
+      phaseCardClass = 'is-final-bronze';
+      cardBg = 'linear-gradient(145deg, #fffaf5 0%, #fed7aa 45%, #ffedd5 100%)';
+      cardBorder = '1.5px solid #f97316';
+      cardShadow = '0 5px 16px rgba(249, 115, 22, 0.25)';
+      headerBorderColor = 'rgba(249, 115, 22, 0.3)';
+      footerBorderColor = 'rgba(249, 115, 22, 0.3)';
+      codeTagBg = 'linear-gradient(135deg, #c2410c, #7c2d12)';
+      phasePill = `<span style="background: #ffedd5; color: #9a3412; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #fdba74; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
+    } else if (isPlacementFinal) {
+      phaseCardClass = 'is-final-placement';
+      cardBg = 'linear-gradient(145deg, #fefce8 0%, #fef08a 45%, #ffffff 100%)';
+      cardBorder = '1.5px solid #eab308';
+      cardShadow = '0 4px 14px rgba(234, 179, 8, 0.22)';
+      headerBorderColor = 'rgba(234, 179, 8, 0.3)';
+      footerBorderColor = 'rgba(234, 179, 8, 0.3)';
+      codeTagBg = 'linear-gradient(135deg, #ca8a04, #854d0e)';
+      phasePill = `<span style="background: #fef9c3; color: #713f12; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #facc15; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
+    } else if (isSemi) {
+      phaseCardClass = 'is-semifinal';
+      cardBg = 'linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 55%, #f8fafc 100%)';
+      cardBorder = '1.5px solid #38bdf8';
+      cardShadow = '0 4px 14px rgba(14, 165, 233, 0.22)';
+      headerBorderColor = 'rgba(56, 189, 248, 0.35)';
+      footerBorderColor = 'rgba(56, 189, 248, 0.35)';
+      codeTagBg = 'linear-gradient(135deg, #0284c7, #0369a1)';
+      phasePill = `<span style="background: #e0f2fe; color: #0369a1; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #7dd3fc; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
+    }
   }
 
   return `
