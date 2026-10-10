@@ -1,6 +1,6 @@
 // Aplicação Principal Copa Federações 2026
 import { store } from './data/store.js';
-import { supabaseService } from './data/supabaseClient.js';
+import { firebaseService } from './data/firebaseClient.js';
 import { initAuthUI, showLoginPortal, hideLoginPortal, auth } from './modules/auth.js';
 import { renderDashboard } from './modules/dashboard.js';
 import { initCategoryView, renderCategoryView } from './modules/categoryView.js';
@@ -112,8 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
 
-  // Inicializa o serviço do Supabase
-  supabaseService.init(store);
+  // Inicializa o serviço do Firebase e vincula status visual na Topbar
+  firebaseService.onStatusChange((status, msg) => {
+    updateSyncPill(status, msg);
+  });
+  firebaseService.init(store);
 
   // Inicializa o controle de zoom da aplicação (Padrão 85%)
   initZoomController();
@@ -167,4 +170,42 @@ function initZoomController() {
   applyZoom(currentZoom);
 
   window.setAppZoom = applyZoom;
+}
+
+function updateSyncPill(status, message) {
+  const container = document.getElementById('topbar-sync-status');
+  if (!container) return;
+
+  let label = 'Firebase Conectado';
+  let cssClass = 'connected';
+  let tooltip = 'Sincronização em tempo real ativa com o Firebase Realtime Database.';
+
+  if (status === 'connected') {
+    label = 'Firebase Conectado';
+    cssClass = 'connected';
+    tooltip = 'Sincronização em tempo real ativa. Atualizações instantâneas entre todos os aparelhos.';
+  } else if (status === 'syncing') {
+    label = 'Sincronizando...';
+    cssClass = 'syncing';
+    tooltip = 'Enviando alterações para o Firebase...';
+  } else if (status === 'connecting') {
+    label = 'Conectando...';
+    cssClass = 'connecting';
+    tooltip = 'Conectando ao Firebase Realtime Database...';
+  } else if (status === 'error') {
+    label = 'Firebase Desconectado';
+    cssClass = 'error';
+    tooltip = message ? `Erro: ${message}. Clique para configurar.` : 'Falha na conexão com o Firebase. Clique para configurar.';
+  } else {
+    label = 'Firebase Offline';
+    cssClass = 'disconnected';
+    tooltip = 'Firebase não configurado. Clique para configurar.';
+  }
+
+  container.innerHTML = `
+    <div class="pill-supabase ${cssClass}" onclick="window.switchTab('configuracoes')" title="${tooltip}">
+      <span class="pill-supabase-dot"></span>
+      <span>${label}</span>
+    </div>
+  `;
 }

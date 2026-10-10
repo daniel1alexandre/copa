@@ -12,18 +12,20 @@ class AuthService {
   }
 
   loadSession() {
-    // Retorna null sempre, forçando o login toda vez que a página for recarregada
+    try {
+      const saved = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (_) {}
     return null;
   }
 
-  saveSession(sessionData, remember = false) {
+  saveSession(sessionData, remember = true) {
     this.session = sessionData;
     const json = JSON.stringify(sessionData);
-    if (remember) {
-      localStorage.setItem(SESSION_KEY, json);
-    } else {
-      sessionStorage.setItem(SESSION_KEY, json);
-    }
+    localStorage.setItem(SESSION_KEY, json);
+    sessionStorage.setItem(SESSION_KEY, json);
     this.notify();
   }
 

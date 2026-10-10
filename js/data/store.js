@@ -333,8 +333,9 @@ class AppStore {
       }
     }
 
-    if (syncToRemote && window.supabaseService && typeof window.supabaseService.pushState === 'function') {
-      window.supabaseService.pushState(this.state);
+    const cloud = window.firebaseService || window.supabaseService;
+    if (syncToRemote && cloud && typeof cloud.pushState === 'function') {
+      cloud.pushState(this.state);
     }
   }
 

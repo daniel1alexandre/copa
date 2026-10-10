@@ -1,10 +1,19 @@
-// Módulo de Configuração do Torneio, Categorias, Tabela de Pontos e Quadras
+// Módulo de Configuração do Torneio, Categorias, Tabela de Pontos e Firebase Realtime
 import { store } from '../data/store.js';
 import { toast } from './toast.js';
 import { DEFAULT_POINTS_TABLE } from '../data/categories.js';
 import { auth } from './auth.js';
+import { firebaseService, getFirebaseCredentials, saveFirebaseCredentials, clearFirebaseCredentials } from '../data/firebaseClient.js';
+
+const FIREBASE_RULES_JSON = `{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}`;
 
 export function initConfigView() {
+  // Salvar Metadados do Torneio
   window.handleSaveTournamentMetadata = (e) => {
     e.preventDefault();
     if (!auth.isAdmin()) {
@@ -38,6 +47,7 @@ export function initConfigView() {
     });
   };
 
+  // Ativar/Desativar Categorias
   window.handleToggleCategory = (catId, checked) => {
     if (!auth.isAdmin()) {
       toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador (Baumann) pode ativar/desativar categorias.', type: 'warning' });
@@ -52,6 +62,7 @@ export function initConfigView() {
     });
   };
 
+  // Salvar Tabela de Pontos
   window.handleSavePointsTable = () => {
     if (!auth.isAdmin()) {
       toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador (Baumann) pode alterar a tabela de pontos.', type: 'warning' });
@@ -73,6 +84,7 @@ export function initConfigView() {
     });
   };
 
+  // Restaurar Tabela de Pontos Padrão CBT
   window.handleRestoreDefaultPointsTable = () => {
     if (!auth.isAdmin()) {
       toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador (Baumann) pode restaurar configurações oficiais.', type: 'warning' });
@@ -87,6 +99,7 @@ export function initConfigView() {
     renderConfig();
   };
 
+  // Exportar Backup JSON
   window.handleExportBackup = () => {
     const jsonStr = store.exportJSON();
     const blob = new Blob([jsonStr], { type: 'application/json' });
@@ -99,6 +112,7 @@ export function initConfigView() {
     toast.show({ title: 'Backup Gerado', message: 'O arquivo JSON foi baixado.', type: 'success' });
   };
 
+  // Importar Backup JSON
   window.handleImportBackup = () => {
     if (!auth.isAdmin()) {
       toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador (Baumann) pode restaurar backups.', type: 'warning' });
@@ -125,6 +139,7 @@ export function initConfigView() {
     input.click();
   };
 
+  // Redefinir Dados Locais
   window.handleResetAllData = () => {
     if (!auth.isAdmin()) {
       toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador (Baumann) pode reiniciar os dados.', type: 'warning' });
@@ -133,6 +148,135 @@ export function initConfigView() {
     if (confirm('ATENÇÃO: Deseja redefinir todos os dados para o estado inicial da Copa Federações 2026? Todos os resultados preenchidos serão resetados.')) {
       store.resetAllData();
       toast.show({ title: 'Dados Reiniciados', message: 'As chaves e 27 federações foram restauradas.', type: 'warning' });
+      renderConfig();
+    }
+  };
+
+  // ─── HANDLERS DO FIREBASE ──────────────────────────────────────
+  // Salvar Credenciais do Firebase
+  window.handleSaveFirebaseConfig = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador pode alterar a URL da nuvem.', type: 'warning' });
+      return;
+    }
+
+    const urlInput = document.getElementById('cfg-firebase-url');
+    if (!urlInput) return;
+
+    const url = urlInput.value.trim();
+    if (!url) {
+      toast.show({ title: 'Campo Obrigatório', message: 'Informe a URL do Realtime Database.', type: 'warning' });
+      return;
+    }
+
+    saveFirebaseCredentials(url);
+    toast.show({ title: 'URL Salva', message: 'Conectando ao Firebase...', type: 'info' });
+
+    await firebaseService.reconnect();
+    renderConfig();
+  };
+
+  // Testar Conexão com o Firebase
+  window.handleTestFirebaseConnection = async () => {
+    const urlInput = document.getElementById('cfg-firebase-url');
+    const statusBox = document.getElementById('firebase-test-feedback');
+    const btnTest = document.getElementById('btn-test-firebase');
+
+    const url = urlInput ? urlInput.value.trim() : '';
+
+    if (!url) {
+      if (statusBox) {
+        statusBox.style.display = 'block';
+        statusBox.innerHTML = '<span style="color: #ef4444;">⚠️ Digite a URL do Realtime Database antes de testar.</span>';
+      }
+      return;
+    }
+
+    if (btnTest) {
+      btnTest.disabled = true;
+      btnTest.textContent = '⏳ Testando...';
+    }
+
+    if (statusBox) {
+      statusBox.style.display = 'block';
+      statusBox.innerHTML = '<span style="color: #3b82f6;">🔄 Conectando ao Firebase Realtime Database...</span>';
+    }
+
+    const result = await firebaseService.testConnection(url);
+
+    if (btnTest) {
+      btnTest.disabled = false;
+      btnTest.textContent = '🔍 Testar Conexão';
+    }
+
+    if (statusBox) {
+      statusBox.style.display = 'block';
+      if (result.normalizedUrl && urlInput && urlInput.value.trim() !== result.normalizedUrl) {
+        urlInput.value = result.normalizedUrl;
+      }
+      if (result.success) {
+        statusBox.innerHTML = `<span style="color: #10b981; font-weight: 700;">${result.message}</span>`;
+        toast.show({ title: 'Firebase Conectado!', message: 'Comunicação validada com sucesso!', type: 'success' });
+      } else {
+        statusBox.innerHTML = `<span style="color: #ef4444; font-weight: 600;">${result.message}</span>`;
+        toast.show({ title: 'Atenção', message: result.message, type: 'error', duration: 6000 });
+      }
+    }
+  };
+
+  // Forçar envio local para o Firebase
+  window.handleForcePushFirebase = async () => {
+    if (!auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador pode enviar dados para a nuvem.', type: 'warning' });
+      return;
+    }
+
+    toast.show({ title: 'Enviando...', message: 'Subindo estado atual para o Firebase...', type: 'info' });
+    const res = await firebaseService.forcePush();
+    if (res.success) {
+      toast.show({ title: '🔥 Sucesso', message: res.message, type: 'success' });
+    } else {
+      toast.show({ title: 'Erro de Envio', message: res.message, type: 'error', duration: 5000 });
+    }
+  };
+
+  // Forçar download do Firebase para o aparelho
+  window.handleForcePullFirebase = async () => {
+    toast.show({ title: 'Buscando...', message: 'Consultando versão mais recente no Firebase...', type: 'info' });
+    const res = await firebaseService.forcePull();
+    if (res.success) {
+      toast.show({ title: 'Firebase Carregado', message: res.message, type: 'success' });
+      renderConfig();
+    } else {
+      toast.show({ title: 'Não foi possível baixar', message: res.message, type: 'warning' });
+    }
+  };
+
+  // Copiar Regras do Firebase
+  window.handleCopyFirebaseRules = () => {
+    navigator.clipboard.writeText(FIREBASE_RULES_JSON).then(() => {
+      toast.show({
+        title: '📋 Regras do Firebase Copiadas!',
+        message: 'Cole na aba "Rules" do Realtime Database e clique em Publish.',
+        type: 'success',
+        duration: 4000
+      });
+    }).catch(() => {
+      prompt('Copie o JSON de regras abaixo:', FIREBASE_RULES_JSON);
+    });
+  };
+
+  // Restaurar URL padrão do Firebase
+  window.handleResetFirebaseConfig = async () => {
+    if (!auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador pode redefinir configurações.', type: 'warning' });
+      return;
+    }
+    if (confirm('Deseja limpar a URL salva e restaurar a configuração padrão?')) {
+      clearFirebaseCredentials();
+      toast.show({ title: 'Padrão Restaurado', message: 'Reconectando...', type: 'info' });
+      await firebaseService.reconnect();
       renderConfig();
     }
   };
@@ -145,6 +289,20 @@ export function renderConfig() {
   const tournament = store.getTournament();
   const categories = store.getCategories();
   const pointsTable = store.getPointsTable();
+  const fbCreds = getFirebaseCredentials();
+  const fbStatus = firebaseService.getStatus();
+
+  // Status visual
+  let statusBadgeHtml = '';
+  if (fbStatus.status === 'connected') {
+    statusBadgeHtml = `<span style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #10b981; padding: 0.3rem 0.75rem; border-radius: 9999px; font-size: 0.825rem; font-weight: 700;">🟢 Firebase Conectado em Tempo Real</span>`;
+  } else if (fbStatus.status === 'syncing') {
+    statusBadgeHtml = `<span style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #f59e0b; padding: 0.3rem 0.75rem; border-radius: 9999px; font-size: 0.825rem; font-weight: 700;">🟡 Sincronizando...</span>`;
+  } else if (fbStatus.status === 'connecting') {
+    statusBadgeHtml = `<span style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #f59e0b; padding: 0.3rem 0.75rem; border-radius: 9999px; font-size: 0.825rem; font-weight: 700;">🟡 Conectando...</span>`;
+  } else {
+    statusBadgeHtml = `<span style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #ef4444; padding: 0.3rem 0.75rem; border-radius: 9999px; font-size: 0.825rem; font-weight: 700;">🔴 Desconectado / Erro</span>`;
+  }
 
   container.innerHTML = `
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
@@ -153,7 +311,7 @@ export function renderConfig() {
           ⚙️ Configuração Oficial do Torneio
         </h2>
         <p style="color: #cbd5e1; font-size: 0.9rem; text-shadow: 0 1px 4px rgba(0,0,0,0.4);">
-          Gerencie regras oficiais CBT, arena, datas, categorias ativas e pontuação do ranking
+          Gerencie a sincronização em nuvem Firebase, regras CBT, categorias ativas e pontuação oficial
         </p>
       </div>
 
@@ -166,6 +324,84 @@ export function renderConfig() {
       </div>
     </div>
 
+    <!-- CARD PRINCIPAL: SINCRONIZAÇÃO EM NUVEM (FIREBASE REALTIME DATABASE) -->
+    <div class="card" style="margin-bottom: 1.5rem; border-left: 4px solid #f59e0b; background: #ffffff;">
+      <div class="card-header" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <h3 class="card-title" style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>🔥</span> Sincronização em Tempo Real — Firebase (Google)
+          </h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+            <strong>100% Gratuito e Nunca Pausa por Inatividade.</strong> Atualizações instantâneas entre o computador central, celulares e telões.
+          </p>
+        </div>
+        <div>
+          ${statusBadgeHtml}
+        </div>
+      </div>
+
+      <form onsubmit="window.handleSaveFirebaseConfig(event)">
+        <fieldset style="border: none; padding: 0; margin: 0;" ${!auth.isAdmin() ? 'disabled' : ''}>
+          <div style="margin-bottom: 1rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" style="font-weight: 700;">
+                🌐 URL do Firebase Realtime Database:
+              </label>
+              <input 
+                type="url" 
+                id="cfg-firebase-url" 
+                class="form-control" 
+                placeholder="Ex: https://meu-projeto-default-rtdb.firebaseio.com" 
+                value="${fbCreds.databaseURL}" 
+                required
+              >
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Encontrada no topo da página de Realtime Database no Firebase Console.</span>
+            </div>
+          </div>
+
+          <div id="firebase-test-feedback" style="display: none; padding: 0.6rem 0.9rem; border-radius: var(--radius-xs); background: #f8fafc; border: 1px solid var(--border-light); font-size: 0.85rem; margin-bottom: 1rem;"></div>
+
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              ${auth.isAdmin() ? `
+              <button type="submit" class="btn btn-primary btn-sm">💾 Salvar e Conectar</button>
+              <button type="button" id="btn-test-firebase" class="btn btn-outline btn-sm" onclick="window.handleTestFirebaseConnection()">🔍 Testar Conexão</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="window.handleForcePushFirebase()" title="Envia todos os dados locais atuais deste aparelho para o Firebase">⬆️ Forçar Envio para Nuvem</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="window.handleForcePullFirebase()" title="Baixa a versão oficial mais recente salva no Firebase">⬇️ Baixar da Nuvem</button>
+              ` : `
+              <button type="button" id="btn-test-firebase" class="btn btn-outline btn-sm" onclick="window.handleTestFirebaseConnection()">🔍 Testar Conexão</button>
+              <button type="button" class="btn btn-outline btn-sm" onclick="window.handleForcePullFirebase()">⬇️ Atualizar Agora da Nuvem</button>
+              `}
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" class="btn btn-outline btn-sm" onclick="window.handleCopyFirebaseRules()" style="border-color: #f59e0b; color: #b45309; font-weight: 700;">
+                📋 Copiar Regras de Acesso (JSON)
+              </button>
+              ${auth.isAdmin() && fbCreds.isCustom ? `
+              <button type="button" class="btn btn-outline btn-sm" onclick="window.handleResetFirebaseConfig()" style="color: #64748b;" title="Restaura a URL padrão">
+                ↺ Restaurar Padrão
+              </button>
+              ` : ''}
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- PASSO A PASSO ILUSTRADO FIREBASE -->
+      <div style="margin-top: 1.25rem; background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-sm); padding: 1rem;">
+        <strong style="color: #92400e; font-size: 0.875rem; display: block; margin-bottom: 0.5rem;">
+          📖 Como criar e conectar seu banco de dados Firebase em 3 minutos:
+        </strong>
+        <ol style="font-size: 0.825rem; color: #78350f; padding-left: 1.25rem; line-height: 1.7; margin: 0;">
+          <li>Acesse o <a href="https://console.firebase.google.com" target="_blank" style="color: #b45309; font-weight: 700; text-decoration: underline;">Firebase Console</a> com sua conta Google e clique em <strong>"Adicionar projeto"</strong> (ex: <code>copa-federacoes-2026</code>).</li>
+          <li>No menu lateral esquerdo, vá em <strong>Build (Construção) → Realtime Database</strong> → clique em <strong>Criar banco de dados</strong> (escolha qualquer localidade, ex: Estados Unidos <code>us-central1</code>).</li>
+          <li>Após criar, clique na aba <strong>Rules (Regras)</strong>, clique no botão <strong>"📋 Copiar Regras de Acesso (JSON)"</strong> acima, cole lá substituindo tudo e clique em <strong>Publish (Publicar)</strong>.</li>
+          <li>Pronto! Copie a URL que aparece no topo da aba <em>Data</em> (algo como <code>https://seu-projeto-default-rtdb.firebaseio.com</code>), cole no campo acima e clique em <strong>"Salvar e Conectar"</strong>!</li>
+        </ol>
+      </div>
+    </div>
+
     <!-- GRADE DE CONFIGURAÇÕES DO TORNEIO -->
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
       <!-- FORMULÁRIO DADOS DO TORNEIO -->
@@ -174,7 +410,6 @@ export function renderConfig() {
           <h3 class="card-title">🏆 Dados Oficiais do Torneio</h3>
         </div>
         <form onsubmit="window.handleSaveTournamentMetadata(event)">
-          <fieldset style="border: none; padding: 0; margin: 0;" ${!auth.isAdmin() ? 'disabled' : ''}>
           <fieldset style="border: none; padding: 0; margin: 0;" ${!auth.isAdmin() ? 'disabled' : ''}>
           <div class="form-group">
             <label class="form-label">Nome Oficial do Torneio:</label>

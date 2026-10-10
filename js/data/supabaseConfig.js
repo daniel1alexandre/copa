@@ -1,4 +1,5 @@
-// Configuração oficial do Supabase para a Copa das Federações 2026
+// Configuração do Supabase para a Copa das Federações 2026
+// As credenciais podem vir do localStorage (configurado pelo painel) ou do padrão abaixo.
 
 export const DEFAULT_SUPABASE_CONFIG = {
   url: 'https://zcyfnnuvggbfutkpbjtg.supabase.co',
@@ -10,18 +11,35 @@ export const DEFAULT_SUPABASE_CONFIG = {
 export function getSupabaseCredentials() {
   const localUrl = localStorage.getItem('copa_supabase_url');
   const localKey = localStorage.getItem('copa_supabase_key');
+  
+  const rawUrl = (localUrl !== null ? localUrl : DEFAULT_SUPABASE_CONFIG.url) || '';
+  const cleanUrl = rawUrl.trim().replace(/\/+$/, '');
+  const cleanKey = ((localKey !== null ? localKey : DEFAULT_SUPABASE_CONFIG.anonKey) || '').trim();
+
   return {
-    url: (localUrl || DEFAULT_SUPABASE_CONFIG.url || '').trim(),
-    anonKey: (localKey || DEFAULT_SUPABASE_CONFIG.anonKey || '').trim(),
+    url: cleanUrl,
+    anonKey: cleanKey,
     tableName: DEFAULT_SUPABASE_CONFIG.tableName,
-    recordId: DEFAULT_SUPABASE_CONFIG.recordId
+    recordId: DEFAULT_SUPABASE_CONFIG.recordId,
+    isCustom: Boolean(localUrl || localKey)
   };
 }
 
 export function saveSupabaseCredentials(url, anonKey) {
-  if (url) localStorage.setItem('copa_supabase_url', url.trim());
-  else localStorage.removeItem('copa_supabase_url');
+  if (typeof url === 'string' && url.trim()) {
+    localStorage.setItem('copa_supabase_url', url.trim().replace(/\/+$/, ''));
+  } else {
+    localStorage.removeItem('copa_supabase_url');
+  }
 
-  if (anonKey) localStorage.setItem('copa_supabase_key', anonKey.trim());
-  else localStorage.removeItem('copa_supabase_key');
+  if (typeof anonKey === 'string' && anonKey.trim()) {
+    localStorage.setItem('copa_supabase_key', anonKey.trim());
+  } else {
+    localStorage.removeItem('copa_supabase_key');
+  }
+}
+
+export function clearSupabaseCredentials() {
+  localStorage.removeItem('copa_supabase_url');
+  localStorage.removeItem('copa_supabase_key');
 }
