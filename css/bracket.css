@@ -221,6 +221,83 @@
   border-style: dashed;
 }
 
+/* ============================================================
+   DESTAQUES VISUAIS: SEMIFINAIS E FINAIS (QUALIDADE PREMIUM CBT)
+   ============================================================ */
+
+/* Semifinal: Azul Celeste / Safira Esportivo Nobre */
+.bracket-match-card.is-semifinal {
+  background: linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 55%, #f8fafc 100%) !important;
+  border: 1.5px solid #38bdf8 !important;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.22) !important;
+}
+
+.bracket-match-card.is-semifinal:hover {
+  border-color: #0284c7 !important;
+  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35) !important;
+  transform: translateY(-2px);
+}
+
+.bracket-match-card.is-semifinal .match-code-tag {
+  background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+  color: #ffffff !important;
+}
+
+/* Grande Final: Ouro Radiante / Decisão do Campeonato */
+.bracket-match-card.is-final-gold {
+  background: linear-gradient(145deg, #fffdf0 0%, #fef3c7 45%, #fef9c3 100%) !important;
+  border: 2px solid #f59e0b !important;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35), 0 0 0 1px rgba(251, 191, 36, 0.4) !important;
+}
+
+.bracket-match-card.is-final-gold:hover {
+  border-color: #d97706 !important;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.48), 0 0 0 2px rgba(245, 158, 11, 0.6) !important;
+  transform: translateY(-2px);
+}
+
+.bracket-match-card.is-final-gold .match-code-tag {
+  background: linear-gradient(135deg, #d97706, #92400e) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 4px rgba(146, 64, 14, 0.3);
+}
+
+/* Disputa 3º e 4º Lugar: Bronze / Pódio Nobre */
+.bracket-match-card.is-final-bronze {
+  background: linear-gradient(145deg, #fffaf5 0%, #fed7aa 45%, #ffedd5 100%) !important;
+  border: 1.5px solid #f97316 !important;
+  box-shadow: 0 5px 16px rgba(249, 115, 22, 0.25) !important;
+}
+
+.bracket-match-card.is-final-bronze:hover {
+  border-color: #ea580c !important;
+  box-shadow: 0 7px 20px rgba(249, 115, 22, 0.38) !important;
+  transform: translateY(-2px);
+}
+
+.bracket-match-card.is-final-bronze .match-code-tag {
+  background: linear-gradient(135deg, #c2410c, #7c2d12) !important;
+  color: #ffffff !important;
+}
+
+/* Finais de Colocação (5º, 7º, 9º, etc.): Dourado Suave */
+.bracket-match-card.is-final-placement {
+  background: linear-gradient(145deg, #fefce8 0%, #fef08a 45%, #ffffff 100%) !important;
+  border: 1.5px solid #eab308 !important;
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.22) !important;
+}
+
+.bracket-match-card.is-final-placement:hover {
+  border-color: #ca8a04 !important;
+  box-shadow: 0 6px 18px rgba(234, 179, 8, 0.35) !important;
+  transform: translateY(-2px);
+}
+
+.bracket-match-card.is-final-placement .match-code-tag {
+  background: linear-gradient(135deg, #ca8a04, #854d0e) !important;
+  color: #ffffff !important;
+}
+
 .match-card-header {
   display: flex;
   align-items: center;

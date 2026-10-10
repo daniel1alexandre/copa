@@ -448,13 +448,79 @@ function renderMatchCard(game) {
   const byeClassifiedFedId = (byeClassifiedTeam?.id || '').toLowerCase();
   const byeClassifiedImg = (byeClassifiedFedId && byeClassifiedFedId !== 'bye') ? `assets/federations/${byeClassifiedFedId}.jpg` : '';
 
-  return `
-    <div class="bracket-match-card ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; background: #ffffff; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+  // Determina se o confronto é Semifinal ou Final para destaque visual premium
+  const isFinalGold = game.code === 'C31' || (game.descricao && /grande final/i.test(game.descricao)) || game.fase === 'Grande Final (1º e 2º)';
+  const isFinalBronze = game.code === 'C32' || (game.descricao && /disputa 3[º°]/i.test(game.descricao)) || game.fase === 'Disputa 3º Lugar';
+  const isPlacementFinal = !isFinalGold && !isFinalBronze && (
+    game.code?.includes('_FINAL') || 
+    game.code?.includes('LUGAR') || 
+    game.fase === 'Finais' || 
+    game.fase === 'Final (25º e 26º Lugar)' ||
+    (game.descricao && /disputa.*lugar|final \(/i.test(game.descricao))
+  );
+  const isSemi = !isFinalGold && !isFinalBronze && !isPlacementFinal && (
+    game.code === 'C29' || 
+    game.code === 'C30' || 
+    game.code?.includes('_SEMI') || 
+    game.fase === 'Semifinal' || 
+    game.fase === 'Semifinais' || 
+    /semifinal/i.test(game.descricao || '')
+  );
 
-      <div class="match-card-header" style="margin-bottom: 0.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
+  let phaseCardClass = '';
+  let cardBg = '#ffffff';
+  let cardBorder = '1px solid #e2e8f0';
+  let cardShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+  let headerBorderColor = '#f1f5f9';
+  let footerBorderColor = '#cbd5e1';
+  let codeTagBg = '#334155';
+  let phasePill = '';
+
+  if (isFinalGold) {
+    phaseCardClass = 'is-final-gold';
+    cardBg = 'linear-gradient(145deg, #fffdf0 0%, #fef3c7 45%, #fef9c3 100%)';
+    cardBorder = '2px solid #f59e0b';
+    cardShadow = '0 6px 20px rgba(245, 158, 11, 0.35)';
+    headerBorderColor = 'rgba(245, 158, 11, 0.35)';
+    footerBorderColor = 'rgba(245, 158, 11, 0.35)';
+    codeTagBg = 'linear-gradient(135deg, #d97706, #92400e)';
+    phasePill = '<span style="background: #fef08a; color: #854d0e; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #eab308; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: inline-flex; align-items: center; gap: 3px;">🏆 GRANDE FINAL</span>';
+  } else if (isFinalBronze) {
+    phaseCardClass = 'is-final-bronze';
+    cardBg = 'linear-gradient(145deg, #fffaf5 0%, #fed7aa 45%, #ffedd5 100%)';
+    cardBorder = '1.5px solid #f97316';
+    cardShadow = '0 5px 16px rgba(249, 115, 22, 0.25)';
+    headerBorderColor = 'rgba(249, 115, 22, 0.3)';
+    footerBorderColor = 'rgba(249, 115, 22, 0.3)';
+    codeTagBg = 'linear-gradient(135deg, #c2410c, #7c2d12)';
+    phasePill = '<span style="background: #ffedd5; color: #9a3412; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #fdba74; display: inline-flex; align-items: center; gap: 3px;">🥉 3º E 4º LUGAR</span>';
+  } else if (isPlacementFinal) {
+    phaseCardClass = 'is-final-placement';
+    cardBg = 'linear-gradient(145deg, #fefce8 0%, #fef08a 45%, #ffffff 100%)';
+    cardBorder = '1.5px solid #eab308';
+    cardShadow = '0 4px 14px rgba(234, 179, 8, 0.22)';
+    headerBorderColor = 'rgba(234, 179, 8, 0.3)';
+    footerBorderColor = 'rgba(234, 179, 8, 0.3)';
+    codeTagBg = 'linear-gradient(135deg, #ca8a04, #854d0e)';
+    phasePill = '<span style="background: #fef9c3; color: #713f12; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #facc15; display: inline-flex; align-items: center; gap: 3px;">🏅 FINAL</span>';
+  } else if (isSemi) {
+    phaseCardClass = 'is-semifinal';
+    cardBg = 'linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 55%, #f8fafc 100%)';
+    cardBorder = '1.5px solid #38bdf8';
+    cardShadow = '0 4px 14px rgba(14, 165, 233, 0.22)';
+    headerBorderColor = 'rgba(56, 189, 248, 0.35)';
+    footerBorderColor = 'rgba(56, 189, 248, 0.35)';
+    codeTagBg = 'linear-gradient(135deg, #0284c7, #0369a1)';
+    phasePill = '<span style="background: #e0f2fe; color: #0369a1; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #7dd3fc; display: inline-flex; align-items: center; gap: 3px;">⚔️ SEMIFINAL</span>';
+  }
+
+  return `
+    <div class="bracket-match-card ${phaseCardClass} ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: ${cardShadow}; border: ${cardBorder}; background: ${cardBg}; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+
+      <div class="match-card-header" style="margin-bottom: 0.5rem; border-bottom: 1px solid ${headerBorderColor}; padding-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 0.35rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-          <span class="match-code-tag" style="background: #334155; color: white; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800;">${game.code}</span>
-          ${(game.descricao || (game.code === 'C31' ? 'Grande Final (1º e 2º)' : (game.code === 'C32' ? 'Disputa 3º e 4º' : ''))) ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 170px;" title="${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}">${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}</span>` : ''}
+          <span class="match-code-tag" style="background: ${codeTagBg}; color: white; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800;">${game.code}</span>
+          ${phasePill || ((game.descricao || (game.code === 'C31' ? 'Grande Final (1º e 2º)' : (game.code === 'C32' ? 'Disputa 3º e 4º' : ''))) ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 170px;" title="${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}">${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}</span>` : '')}
         </div>
         <div style="display: flex; align-items: center; gap: 0.35rem;">
           <span class="badge-status ${isBye ? 'encerrado' : game.status}" style="font-size: 0.62rem; padding: 0.15rem 0.45rem; border-radius: 12px; text-transform: uppercase; font-weight: 800; flex-shrink: 0;">${isBye ? 'BYE' : game.status}</span>
@@ -495,7 +561,7 @@ function renderMatchCard(game) {
       </div>
 
       <!-- DETALHES DE SUBJOGOS (PLACAR) -->
-      <div class="match-footer-details" style="margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed #cbd5e1;">
+      <div class="match-footer-details" style="margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed ${footerBorderColor};">
         ${isBye ? `
           <div style="display: flex; align-items: center; justify-content: space-between; background: #ecfdf5; border: 1.5px solid #a7f3d0; padding: 0.4rem 0.65rem; border-radius: 6px;">
             <div style="display: flex; flex-direction: column;">
