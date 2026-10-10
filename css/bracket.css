@@ -298,6 +298,138 @@
   color: #ffffff !important;
 }
 
+/* Badge no cabeçalho da coluna de rodada */
+.round-dispute-pill {
+  display: inline-block;
+  background: rgba(15, 23, 42, 0.85);
+  color: #fde047;
+  border: 1px solid rgba(250, 204, 21, 0.45);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.18rem 0.6rem;
+  border-radius: 9999px;
+  margin-top: 0.35rem;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* Banner de Posição em Disputa nos Cards de Semifinal e Final */
+.match-dispute-banner {
+  margin-bottom: 0.45rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  line-height: 1.25;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.match-dispute-banner .dispute-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.match-dispute-banner .dispute-target-badge {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.match-dispute-banner .dispute-badge-pill {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 0.08rem 0.4rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.match-dispute-banner .dispute-rules {
+  font-size: 0.66rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Banner: Grande Final (Ouro) */
+.match-dispute-banner.banner-final-gold {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border: 1px solid #f59e0b;
+  color: #78350f;
+}
+.match-dispute-banner.banner-final-gold .dispute-target-badge {
+  color: #92400e;
+}
+.match-dispute-banner.banner-final-gold .dispute-badge-pill {
+  background: #fef08a;
+  color: #854d0e;
+  border: 1px solid #eab308;
+}
+.match-dispute-banner.banner-final-gold .dispute-rules {
+  color: #92400e;
+}
+
+/* Banner: Disputa 3º e 4º Lugar (Bronze) */
+.match-dispute-banner.banner-final-bronze {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #f97316;
+  color: #7c2d12;
+}
+.match-dispute-banner.banner-final-bronze .dispute-target-badge {
+  color: #9a3412;
+}
+.match-dispute-banner.banner-final-bronze .dispute-badge-pill {
+  background: #ffedd5;
+  color: #9a3412;
+  border: 1px solid #fdba74;
+}
+.match-dispute-banner.banner-final-bronze .dispute-rules {
+  color: #7c2d12;
+}
+
+/* Banner: Semifinais */
+.match-dispute-banner.banner-semi {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #38bdf8;
+  color: #0369a1;
+}
+.match-dispute-banner.banner-semi .dispute-target-badge {
+  color: #0369a1;
+}
+.match-dispute-banner.banner-semi .dispute-badge-pill {
+  background: #bae6fd;
+  color: #0284c7;
+  border: 1px solid #7dd3fc;
+}
+.match-dispute-banner.banner-semi .dispute-rules {
+  color: #075985;
+}
+
+/* Banner: Finais de Colocação (5º, 7º, 9º, 11º, etc.) */
+.match-dispute-banner.banner-placement-final {
+  background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+  border: 1px solid #eab308;
+  color: #713f12;
+}
+.match-dispute-banner.banner-placement-final .dispute-target-badge {
+  color: #854d0e;
+}
+.match-dispute-banner.banner-placement-final .dispute-badge-pill {
+  background: #fef08a;
+  color: #854d0e;
+  border: 1px solid #facc15;
+}
+.match-dispute-banner.banner-placement-final .dispute-rules {
+  color: #713f12;
+}
+
 .match-card-header {
   display: flex;
   align-items: center;

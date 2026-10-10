@@ -217,6 +217,336 @@ export function renderBracket() {
   `;
 }
 
+// Mapeamento de posições em disputa para os cabeçalhos das colunas
+function getColumnDisputeBadge(faseName) {
+  if (!faseName) return null;
+  if (faseName === 'Semifinais') {
+    return '⚔️ Valendo 1º ao 4º Lugar';
+  }
+  if (faseName === 'Finais') {
+    return '🏆 Disputa de 1º a 4º (Ouro, Prata e Bronze)';
+  }
+  if (faseName.includes('5º-8º')) {
+    if (/semi/i.test(faseName)) return '⚔️ Valendo 5º ao 8º Lugar';
+    if (/final/i.test(faseName)) return '🎯 Disputas de 5º/6º e 7º/8º Lugar';
+  }
+  if (faseName.includes('9º-16º')) {
+    if (/semi/i.test(faseName)) return '⚔️ Valendo 9º ao 16º Lugar (9º-12º e 13º-16º)';
+    if (/final/i.test(faseName)) return '🎯 Disputas de 9º ao 16º Lugar';
+  }
+  if (faseName.includes('17º') || faseName.includes('24º')) {
+    if (/semi/i.test(faseName)) return '⚔️ Valendo 17º ao 24º Lugar (17º-20º e 21º-24º)';
+    if (/final/i.test(faseName)) return '🎯 Disputas de 17º ao 24º Lugar';
+  }
+  if (faseName.includes('25º') || faseName.includes('27º')) {
+    if (/semi/i.test(faseName)) return '⚔️ Valendo 25º ao 27º Lugar';
+    if (/final/i.test(faseName)) return '🎯 Disputa de 25º e 26º Lugar';
+  }
+  return null;
+}
+
+// Mapeamento detalhado das posições em disputa para cada confronto de Semifinal e Final
+export function getMatchDisputeInfo(game) {
+  if (!game) return null;
+  const code = game.code || '';
+  const fase = game.fase || '';
+  const desc = game.descricao || '';
+
+  // 1. CHAVE PRINCIPAL (1º ao 4º Lugar)
+  if (code === 'C31' || /grande final/i.test(fase) || /grande final/i.test(desc)) {
+    return {
+      type: 'final-gold',
+      bannerClass: 'banner-final-gold',
+      badge: '🏆 GRANDE FINAL',
+      posDisputa: 'Disputa de 1º e 2º Lugar',
+      posSubtitle: 'Decisão do Título Brasileiro CBT',
+      posLabel: '🥇 Venc: Campeão Brasileiro CBT | 🥈 Perd: Vice-Campeão',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'C32' || /disputa 3[º°]/i.test(fase) || /disputa 3[º°]/i.test(desc)) {
+    return {
+      type: 'final-bronze',
+      bannerClass: 'banner-final-bronze',
+      badge: '🥉 MEDALHA DE BRONZE',
+      posDisputa: 'Disputa de 3º e 4º Lugar',
+      posSubtitle: 'Pódio do Torneio',
+      posLabel: '🥉 Venc: 3º Lugar (Bronze) | Perd: 4º Lugar',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'C29' || code === 'C30' || (fase === 'Semifinais' && game.bracket === 'principal') || (fase === 'Semifinal' && game.bracket === 'principal')) {
+    return {
+      type: 'semi',
+      bannerClass: 'banner-semi',
+      badge: '⚔️ SEMIFINAL',
+      posDisputa: 'Valendo 1º ao 4º Lugar',
+      posSubtitle: 'Vaga na Grande Final e Pódio',
+      posLabel: 'Venc: Avança para Grande Final (1º/2º) | Perd: Disputa 3º/4º',
+      isSemi: true,
+      isFinal: false
+    };
+  }
+
+  // 2. CHAVE REVERSA 5º–8º LUGAR
+  if (code === 'R5_FINAL' || (/disputa 5[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 5º LUGAR',
+      posDisputa: 'Disputa de 5º e 6º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 5º Lugar CBT | Perd: 6º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R5_7LUGAR' || (/disputa 7[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 7º LUGAR',
+      posDisputa: 'Disputa de 7º e 8º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 7º Lugar CBT | Perd: 8º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R5_1' || code === 'R5_2' || (fase.includes('5º-8º') && /semi/i.test(fase))) {
+    return {
+      type: 'semi',
+      bannerClass: 'banner-semi',
+      badge: '⚔️ SEMIFINAL (5º-8º)',
+      posDisputa: 'Valendo 5º ao 8º Lugar',
+      posSubtitle: 'Definição de Vaga 5º/6º ou 7º/8º',
+      posLabel: 'Venc: Avança para Final 5º/6º | Perd: Disputa 7º/8º',
+      isSemi: true,
+      isFinal: false
+    };
+  }
+
+  // 3. CHAVE REVERSA 9º–16º LUGAR
+  if (code === 'R9_FINAL' || (/disputa 9[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 9º LUGAR',
+      posDisputa: 'Disputa de 9º e 10º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 9º Lugar CBT | Perd: 10º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R9_11LUGAR' || (/disputa 11[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 11º LUGAR',
+      posDisputa: 'Disputa de 11º e 12º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 11º Lugar CBT | Perd: 12º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R13_FINAL' || (/disputa 13[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 13º LUGAR',
+      posDisputa: 'Disputa de 13º e 14º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 13º Lugar CBT | Perd: 14º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R13_15LUGAR' || (/disputa 15[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 15º LUGAR',
+      posDisputa: 'Disputa de 15º e 16º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 15º Lugar CBT | Perd: 16º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R9_SEMI_1' || code === 'R9_SEMI_2' || (/9[º°].*12[º°]/i.test(desc) && /semi/i.test(desc))) {
+    return {
+      type: 'semi',
+      bannerClass: 'banner-semi',
+      badge: '⚔️ SEMIFINAL (9º-12º)',
+      posDisputa: 'Valendo 9º ao 12º Lugar',
+      posSubtitle: 'Definição de Vaga 9º/10º ou 11º/12º',
+      posLabel: 'Venc: Avança para Final 9º/10º | Perd: Disputa 11º/12º',
+      isSemi: true,
+      isFinal: false
+    };
+  }
+
+  if (code === 'R13_SEMI_1' || code === 'R13_SEMI_2' || (/13[º°].*16[º°]/i.test(desc) && /semi/i.test(desc))) {
+    return {
+      type: 'semi',
+      bannerClass: 'banner-semi',
+      badge: '⚔️ SEMIFINAL (13º-16º)',
+      posDisputa: 'Valendo 13º ao 16º Lugar',
+      posSubtitle: 'Definição de Vaga 13º/14º ou 15º/16º',
+      posLabel: 'Venc: Avança para Final 13º/14º | Perd: Disputa 15º/16º',
+      isSemi: true,
+      isFinal: false
+    };
+  }
+
+  // 4. CHAVE REVERSA 17º–24º LUGAR
+  if (code === 'R17_FINAL' || (/disputa 17[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 17º LUGAR',
+      posDisputa: 'Disputa de 17º e 18º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 17º Lugar CBT | Perd: 18º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R17_19LUGAR' || (/disputa 19[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 19º LUGAR',
+      posDisputa: 'Disputa de 19º e 20º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 19º Lugar CBT | Perd: 20º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R21_FINAL' || (/disputa 21[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 21º LUGAR',
+      posDisputa: 'Disputa de 21º e 22º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 21º Lugar CBT | Perd: 22º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R21_23LUGAR' || (/disputa 23[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 23º LUGAR',
+      posDisputa: 'Disputa de 23º e 24º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 23º Lugar CBT | Perd: 24º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R17_SEMI_1' || code === 'R17_SEMI_2' || (/17[º°].*20[º°]/i.test(desc) && /semi/i.test(desc))) {
+    return {
+      type: 'semi',
+      bannerClass: 'banner-semi',
+      badge: '⚔️ SEMIFINAL (17º-20º)',
+      posDisputa: 'Valendo 17º ao 20º Lugar',
+      posSubtitle: 'Definição de Vaga 17º/18º ou 19º/20º',
+      posLabel: 'Venc: Avança para Final 17º/18º | Perd: Disputa 19º/20º',
+      isSemi: true,
+      isFinal: false
+    };
+  }
+
+  if (code === 'R21_SEMI_1' || code === 'R21_SEMI_2' || (/21[º°].*24[º°]/i.test(desc) && /semi/i.test(desc))) {
+    return {
+      type: 'semi',
+      bannerClass: 'banner-semi',
+      badge: '⚔️ SEMIFINAL (21º-24º)',
+      posDisputa: 'Valendo 21º ao 24º Lugar',
+      posSubtitle: 'Definição de Vaga 21º/22º ou 23º/24º',
+      posLabel: 'Venc: Avança para Final 21º/22º | Perd: Disputa 23º/24º',
+      isSemi: true,
+      isFinal: false
+    };
+  }
+
+  // 5. CHAVE REVERSA 25º–27º LUGAR
+  if (code === 'R25_FINAL' || (/disputa 25[º°]/i.test(desc))) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL 25º LUGAR',
+      posDisputa: 'Disputa de 25º e 26º Lugar',
+      posSubtitle: 'Classificação Geral CBT',
+      posLabel: 'Venc: 25º Lugar CBT | Perd: 26º Lugar CBT',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  if (code === 'R25_SEMI_1' || code === 'R25_SEMI_2' || (/25[º°].*27[º°]/i.test(desc) && /semi/i.test(desc))) {
+    return {
+      type: 'semi',
+      bannerClass: 'banner-semi',
+      badge: '⚔️ SEMIFINAL (25º-27º)',
+      posDisputa: 'Valendo 25º ao 27º Lugar',
+      posSubtitle: 'Definição de Vaga 25º/26º ou 27º Lugar',
+      posLabel: 'Venc: Avança para Final 25º/26º | Perd: Define 27º Lugar',
+      isSemi: true,
+      isFinal: false
+    };
+  }
+
+  // Fallbacks genéricos para semifinais e finais
+  if (/semifina/i.test(fase) || /semifina/i.test(desc) || code.includes('_SEMI')) {
+    return {
+      type: 'semi',
+      bannerClass: 'banner-semi',
+      badge: '⚔️ SEMIFINAL',
+      posDisputa: 'Fase Semifinal',
+      posSubtitle: 'Valendo Vaga na Decisão',
+      posLabel: 'Vencedor avança para a Final da fase',
+      isSemi: true,
+      isFinal: false
+    };
+  }
+
+  if (/final/i.test(fase) || /final/i.test(desc) || code.includes('FINAL') || code.includes('LUGAR')) {
+    return {
+      type: 'final-placement',
+      bannerClass: 'banner-placement-final',
+      badge: '🏅 FINAL',
+      posDisputa: 'Fase Final',
+      posSubtitle: 'Decisão de Colocação',
+      posLabel: 'Definição das posições finais do torneio',
+      isSemi: false,
+      isFinal: true
+    };
+  }
+
+  return null;
+}
+
 // Renderizador da Árvore de Jogos
 function renderTreeBracket(games, subtab) {
   const tournament = store.getTournament() || {};
@@ -261,7 +591,38 @@ function renderTreeBracket(games, subtab) {
     });
   }
 
-  // Garante ordenação das Finais de 17º ao 24º: R17_FINAL (17º), R17_19LUGAR (19º), R21_FINAL (21º), R21_23LUGAR (23º)
+  // Garante ordenação das Finais de 5º ao 8º: R5_FINAL (5º) no topo e R5_7LUGAR (7º) abaixo
+  if (phasesMap.has('Finais (5º-8º)')) {
+    phasesMap.get('Finais (5º-8º)').sort((a, b) => {
+      if (a.code === 'R5_FINAL') return -1;
+      if (b.code === 'R5_FINAL') return 1;
+      return 0;
+    });
+  }
+
+  // Garante ordenação das Semifinais e Finais de 9º ao 16º
+  if (phasesMap.has('Semifinais (9º-16º)')) {
+    const orderSemi = ['R9_SEMI_1', 'R9_SEMI_2', 'R13_SEMI_1', 'R13_SEMI_2'];
+    phasesMap.get('Semifinais (9º-16º)').sort((a, b) => {
+      return orderSemi.indexOf(a.code) - orderSemi.indexOf(b.code);
+    });
+  }
+
+  if (phasesMap.has('Finais (9º-16º)')) {
+    const orderFinals = ['R9_FINAL', 'R9_11LUGAR', 'R13_FINAL', 'R13_15LUGAR'];
+    phasesMap.get('Finais (9º-16º)').sort((a, b) => {
+      return orderFinals.indexOf(a.code) - orderFinals.indexOf(b.code);
+    });
+  }
+
+  // Garante ordenação das Semifinais e Finais de 17º ao 24º
+  if (phasesMap.has('Semifinais (17º-24º)')) {
+    const orderSemi = ['R17_SEMI_1', 'R17_SEMI_2', 'R21_SEMI_1', 'R21_SEMI_2'];
+    phasesMap.get('Semifinais (17º-24º)').sort((a, b) => {
+      return orderSemi.indexOf(a.code) - orderSemi.indexOf(b.code);
+    });
+  }
+
   if (phasesMap.has('Finais (17º ao 24º)')) {
     const orderFinals = ['R17_FINAL', 'R17_19LUGAR', 'R21_FINAL', 'R21_23LUGAR'];
     phasesMap.get('Finais (17º ao 24º)').sort((a, b) => {
@@ -276,14 +637,19 @@ function renderTreeBracket(games, subtab) {
     '1ª Rodada (17º-24º)',
     '1ª Rodada (17º-27º)',
     'Quartas de Final',
+    'Quartas de Final (9º-16º)',
     'Quartas de Final (17º-24º)',
     'Quartas de Final (17º-27º)',
     'Quartas de Final (25º-27º)',
     'Semifinais',
+    'Semifinais (5º-8º)',
+    'Semifinais (9º-16º)',
     'Semifinais (17º-24º)',
     'Semifinais (17º-27º)',
     'Semifinais (25º-27º)',
     'Finais',
+    'Finais (5º-8º)',
+    'Finais (9º-16º)',
     'Finais (17º ao 24º)',
     'Finais (17º-27º)',
     'Final (25º e 26º Lugar)'
@@ -301,10 +667,13 @@ function renderTreeBracket(games, subtab) {
   return `
     <div class="bracket-tree-container">
       <div class="bracket-rounds-wrapper">
-        ${sortedEntries.map(([faseName, phaseGames]) => `
+        ${sortedEntries.map(([faseName, phaseGames]) => {
+          const colDispute = getColumnDisputeBadge(faseName);
+          return `
           <div class="bracket-round-column">
             <div class="round-header">
               <div class="round-title">${faseName}</div>
+              ${colDispute ? `<div class="round-dispute-pill">${colDispute}</div>` : ''}
               <div class="round-subtitle">${phaseGames.length} ${phaseGames.length === 1 ? 'confronto' : 'confrontos'}</div>
             </div>
 
@@ -312,7 +681,8 @@ function renderTreeBracket(games, subtab) {
               ${phaseGames.map(game => renderMatchCard(game)).join('')}
             </div>
           </div>
-        `).join('')}
+        `;
+        }).join('')}
       </div>
     </div>
   `;
@@ -448,24 +818,12 @@ function renderMatchCard(game) {
   const byeClassifiedFedId = (byeClassifiedTeam?.id || '').toLowerCase();
   const byeClassifiedImg = (byeClassifiedFedId && byeClassifiedFedId !== 'bye') ? `assets/federations/${byeClassifiedFedId}.jpg` : '';
 
-  // Determina se o confronto é Semifinal ou Final para destaque visual premium
-  const isFinalGold = game.code === 'C31' || (game.descricao && /grande final/i.test(game.descricao)) || game.fase === 'Grande Final (1º e 2º)';
-  const isFinalBronze = game.code === 'C32' || (game.descricao && /disputa 3[º°]/i.test(game.descricao)) || game.fase === 'Disputa 3º Lugar';
-  const isPlacementFinal = !isFinalGold && !isFinalBronze && (
-    game.code?.includes('_FINAL') || 
-    game.code?.includes('LUGAR') || 
-    game.fase === 'Finais' || 
-    game.fase === 'Final (25º e 26º Lugar)' ||
-    (game.descricao && /disputa.*lugar|final \(/i.test(game.descricao))
-  );
-  const isSemi = !isFinalGold && !isFinalBronze && !isPlacementFinal && (
-    game.code === 'C29' || 
-    game.code === 'C30' || 
-    game.code?.includes('_SEMI') || 
-    game.fase === 'Semifinal' || 
-    game.fase === 'Semifinais' || 
-    /semifinal/i.test(game.descricao || '')
-  );
+  // Determina se o confronto é Semifinal ou Final para destaque visual premium e posições em disputa
+  const disputeInfo = getMatchDisputeInfo(game);
+  const isFinalGold = disputeInfo?.type === 'final-gold';
+  const isFinalBronze = disputeInfo?.type === 'final-bronze';
+  const isPlacementFinal = disputeInfo?.type === 'final-placement';
+  const isSemi = disputeInfo?.type === 'semi';
 
   let phaseCardClass = '';
   let cardBg = '#ffffff';
@@ -484,7 +842,7 @@ function renderMatchCard(game) {
     headerBorderColor = 'rgba(245, 158, 11, 0.35)';
     footerBorderColor = 'rgba(245, 158, 11, 0.35)';
     codeTagBg = 'linear-gradient(135deg, #d97706, #92400e)';
-    phasePill = '<span style="background: #fef08a; color: #854d0e; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #eab308; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: inline-flex; align-items: center; gap: 3px;">🏆 GRANDE FINAL</span>';
+    phasePill = `<span style="background: #fef08a; color: #854d0e; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #eab308; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
   } else if (isFinalBronze) {
     phaseCardClass = 'is-final-bronze';
     cardBg = 'linear-gradient(145deg, #fffaf5 0%, #fed7aa 45%, #ffedd5 100%)';
@@ -493,7 +851,7 @@ function renderMatchCard(game) {
     headerBorderColor = 'rgba(249, 115, 22, 0.3)';
     footerBorderColor = 'rgba(249, 115, 22, 0.3)';
     codeTagBg = 'linear-gradient(135deg, #c2410c, #7c2d12)';
-    phasePill = '<span style="background: #ffedd5; color: #9a3412; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #fdba74; display: inline-flex; align-items: center; gap: 3px;">🥉 3º E 4º LUGAR</span>';
+    phasePill = `<span style="background: #ffedd5; color: #9a3412; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #fdba74; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
   } else if (isPlacementFinal) {
     phaseCardClass = 'is-final-placement';
     cardBg = 'linear-gradient(145deg, #fefce8 0%, #fef08a 45%, #ffffff 100%)';
@@ -502,7 +860,7 @@ function renderMatchCard(game) {
     headerBorderColor = 'rgba(234, 179, 8, 0.3)';
     footerBorderColor = 'rgba(234, 179, 8, 0.3)';
     codeTagBg = 'linear-gradient(135deg, #ca8a04, #854d0e)';
-    phasePill = '<span style="background: #fef9c3; color: #713f12; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #facc15; display: inline-flex; align-items: center; gap: 3px;">🏅 FINAL</span>';
+    phasePill = `<span style="background: #fef9c3; color: #713f12; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #facc15; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
   } else if (isSemi) {
     phaseCardClass = 'is-semifinal';
     cardBg = 'linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 55%, #f8fafc 100%)';
@@ -511,13 +869,13 @@ function renderMatchCard(game) {
     headerBorderColor = 'rgba(56, 189, 248, 0.35)';
     footerBorderColor = 'rgba(56, 189, 248, 0.35)';
     codeTagBg = 'linear-gradient(135deg, #0284c7, #0369a1)';
-    phasePill = '<span style="background: #e0f2fe; color: #0369a1; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #7dd3fc; display: inline-flex; align-items: center; gap: 3px;">⚔️ SEMIFINAL</span>';
+    phasePill = `<span style="background: #e0f2fe; color: #0369a1; font-weight: 800; font-size: 0.68rem; padding: 0.12rem 0.45rem; border-radius: 4px; border: 1px solid #7dd3fc; display: inline-flex; align-items: center; gap: 3px;">${disputeInfo.badge}</span>`;
   }
 
   return `
     <div class="bracket-match-card ${phaseCardClass} ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: ${cardShadow}; border: ${cardBorder}; background: ${cardBg}; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
 
-      <div class="match-card-header" style="margin-bottom: 0.5rem; border-bottom: 1px solid ${headerBorderColor}; padding-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
+      <div class="match-card-header" style="margin-bottom: 0.4rem; border-bottom: 1px solid ${headerBorderColor}; padding-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
         <div style="display: flex; align-items: center; gap: 0.35rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
           <span class="match-code-tag" style="background: ${codeTagBg}; color: white; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800;">${game.code}</span>
           ${phasePill || ((game.descricao || (game.code === 'C31' ? 'Grande Final (1º e 2º)' : (game.code === 'C32' ? 'Disputa 3º e 4º' : ''))) ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 170px;" title="${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}">${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}</span>` : '')}
@@ -529,6 +887,19 @@ function renderMatchCard(game) {
           ` : ''}
         </div>
       </div>
+
+      <!-- BANNER DE POSIÇÃO EM DISPUTA (SEMIFINAIS E FINAIS) -->
+      ${disputeInfo ? `
+        <div class="match-dispute-banner ${disputeInfo.bannerClass}">
+          <div class="dispute-main">
+            <span class="dispute-target-badge">${disputeInfo.posDisputa}</span>
+            <span class="dispute-badge-pill">${disputeInfo.badge}</span>
+          </div>
+          <div class="dispute-rules">
+            <span>${disputeInfo.posLabel}</span>
+          </div>
+        </div>
+      ` : ''}
 
       <!-- TIME A -->
       <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}"
@@ -707,10 +1078,15 @@ function renderTableBracket(games) {
               ? `window.openEditFirstRoundCardModal('${g.code}', '${g.categoria_id}')`
               : `window.openMatchScore('${g.code}', '${g.categoria_id}')`;
 
+            const disputeInfo = getMatchDisputeInfo(g);
+
             return `
               <tr>
                 <td><strong>${g.code}</strong></td>
-                <td><span style="font-size: 0.8rem; font-weight: 600;">${g.fase}</span></td>
+                <td>
+                  <span style="font-size: 0.8rem; font-weight: 700;">${g.fase}</span>
+                  ${disputeInfo ? `<div style="font-size: 0.68rem; font-weight: 700; color: #b45309; margin-top: 2px;">${disputeInfo.posDisputa}</div>` : ''}
+                </td>
                 <td>${teamA}</td>
                 <td>${teamB}</td>
                 <td style="text-align: center;">${j1Display}</td>
