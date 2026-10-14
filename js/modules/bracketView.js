@@ -51,6 +51,51 @@ export function initBracketView() {
   };
 }
 
+export function getBracketSubtabHeaderInfo(subtab) {
+  if (subtab === 'principal') {
+    return {
+      title: '1º a 4º',
+      tag: 'Chave Principal',
+      badge: '🏆',
+      desc: 'Confrontos da Chave Principal — Disputa pelo Título de Campeão Brasileiro CBT e Pódio (Ouro, Prata e Bronze)'
+    };
+  } else if (subtab === 'reversa_5_8') {
+    return {
+      title: 'Perdedor P3',
+      tag: 'Chave Reversa 5º–8º Lugar',
+      badge: '🔄',
+      desc: 'Confrontos dos Perdedores da 3ª Rodada da Chave Principal / Quartas de Final (P3) — Disputas de 5º/6º e 7º/8º Lugar'
+    };
+  } else if (subtab === 'reversa_9_16') {
+    return {
+      title: 'Perdedor P2',
+      tag: 'Chave Reversa 9º–16º Lugar',
+      badge: '🔄',
+      desc: 'Confrontos dos Perdedores da 2ª Rodada da Chave Principal / Oitavas de Final (P2) — Disputas de 9º ao 16º Lugar (9º-12º e 13º-16º)'
+    };
+  } else if (subtab === 'reversa_17_24' || subtab === 'reversa_17_27') {
+    return {
+      title: 'Perdedor P1',
+      tag: 'Chave Reversa 17º–24º Lugar',
+      badge: '🔄',
+      desc: 'Confrontos dos Perdedores da 1ª Rodada da Chave Principal / 1ª Fase (P1) — Disputas de 17º ao 24º Lugar (17º-20º e 21º-24º)'
+    };
+  } else if (subtab === 'reversa_25_27') {
+    return {
+      title: '25º a 27º',
+      tag: 'Chave Reversa 25º–27º Lugar',
+      badge: '🔄',
+      desc: 'Confrontos dos Perdedores da 1ª Rodada da Chave Principal / 1ª Fase (P1) — Disputa pelas posições de 25º a 27º Lugar'
+    };
+  }
+  return {
+    title: '1º a 4º',
+    tag: 'Chave Principal',
+    badge: '🏆',
+    desc: 'Confrontos do Torneio'
+  };
+}
+
 export function renderBracket() {
   const container = document.getElementById('view-chaveamento');
   if (!container) return;
@@ -156,23 +201,49 @@ export function renderBracket() {
       </div>
     </div>
 
-    <!-- SUB-ABAS DE CHAVES REVERSAS -->
+    <!-- SUB-ABAS DE CHAVES COM OS TÍTULOS 1º A 4º, PERDEDOR P3, PERDEDOR P2, PERDEDOR P1 -->
     <div class="bracket-subtabs">
       <button class="bracket-subtab-btn ${currentSubtab === 'principal' ? 'active' : ''}" onclick="window.switchBracketSubtab('principal')">
-        🏆 Chave Principal (1º ao 4º)
+        🏆 1º a 4º (Chave Principal)
       </button>
       <button class="bracket-subtab-btn ${currentSubtab === 'reversa_5_8' ? 'active' : ''}" onclick="window.switchBracketSubtab('reversa_5_8')">
-        🔄 Chave Reversa 5º–8º Lugar
+        🔄 Perdedor P3 (5º–8º Lugar)
       </button>
       <button class="bracket-subtab-btn ${currentSubtab === 'reversa_9_16' ? 'active' : ''}" onclick="window.switchBracketSubtab('reversa_9_16')">
-        🔄 Chave Reversa 9º–16º (9º-12º e 13º-16º)
+        🔄 Perdedor P2 (9º–16º Lugar)
       </button>
       <button class="bracket-subtab-btn ${(currentSubtab === 'reversa_17_24' || currentSubtab === 'reversa_17_27') ? 'active' : ''}" onclick="window.switchBracketSubtab('reversa_17_24')">
-        🔄 Chave Reversa 17º–24º (17º-20º e 21º-24º)
+        🔄 Perdedor P1 (17º–24º Lugar)
       </button>
       <button class="bracket-subtab-btn ${currentSubtab === 'reversa_25_27' ? 'active' : ''}" onclick="window.switchBracketSubtab('reversa_25_27')">
-        🔄 Chave Reversa 25º–27º Lugar
+        🔄 25º a 27º (Chave Reversa)
       </button>
+    </div>
+
+    <!-- TÍTULO OFICIAL EM CIMA DOS CONFRONTOS -->
+    <div class="bracket-bracket-title-banner" style="background: linear-gradient(135deg, #091b2c 0%, #004b57 100%); color: white; padding: 0.95rem 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; box-shadow: 0 4px 14px rgba(0,0,0,0.18); border-left: 6px solid #ffb703;">
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <span style="font-size: 1.8rem; background: rgba(255,255,255,0.12); width: 48px; height: 48px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; box-shadow: inset 0 1px 2px rgba(255,255,255,0.2);">
+          ${getBracketSubtabHeaderInfo(currentSubtab).badge}
+        </span>
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+            <h2 style="font-size: 1.55rem; font-weight: 900; margin: 0; color: #ffffff; letter-spacing: -0.02em; font-family: var(--font-display); line-height: 1.15;">
+              ${getBracketSubtabHeaderInfo(currentSubtab).title}
+            </h2>
+            <span style="background: rgba(255, 183, 3, 0.25); color: #ffb703; font-weight: 800; font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.03em; border: 1px solid rgba(255, 183, 3, 0.4);">
+              ${getBracketSubtabHeaderInfo(currentSubtab).tag}
+            </span>
+          </div>
+          <p style="margin: 0.25rem 0 0 0; font-size: 0.85rem; color: rgba(255,255,255,0.85); font-weight: 500;">
+            ${getBracketSubtabHeaderInfo(currentSubtab).desc}
+          </p>
+        </div>
+      </div>
+
+      <div style="font-size: 0.82rem; background: rgba(255,255,255,0.1); padding: 0.4rem 0.85rem; border-radius: var(--radius-sm); color: #e2e8f0; font-weight: 700; border: 1px solid rgba(255,255,255,0.15);">
+        ⚔️ ${filteredGames.length} ${filteredGames.length === 1 ? 'confronto' : 'confrontos'}
+      </div>
     </div>
 
     <!-- VISUALIZAÇÃO PRINCIPAL -->
