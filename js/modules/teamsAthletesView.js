@@ -139,7 +139,7 @@ function renderAthletesTable(athletes, feds, categories) {
                 <td><strong>${ath.nome}</strong></td>
                 <td>
                   <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    ${fed ? `<img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">` : ''}
+                    ${fed ? `<img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 28px; height: 20px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.18); background: #ffffff; padding: 1px; flex-shrink: 0;">` : ''}
                     <span>${fed ? `${fed.nome} (${fed.uf})` : '-'}</span>
                   </div>
                 </td>
@@ -185,7 +185,7 @@ function renderFederationsGrid(feds) {
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem;">
       ${list.map(f => `
         <div class="card" style="display: flex; align-items: flex-start; gap: 1rem;">
-          <img src="assets/federations/${f.id}.jpg" alt="${f.uf}" style="width: 52px; height: 36px; border-radius: var(--radius-xs); object-fit: contain; box-shadow: 0 2px 6px rgba(0,0,0,0.2); border: 1px solid var(--border-light); flex-shrink: 0;">
+          <img src="assets/federations/${f.id}.jpg" alt="${f.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${f.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${f.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 52px; height: 38px; border-radius: var(--radius-xs); object-fit: contain; box-shadow: 0 2px 6px rgba(0,0,0,0.2); border: 1px solid var(--border-light); flex-shrink: 0; background: #ffffff; padding: 2px;">
           <div style="flex: 1;">
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <strong style="font-size: 1rem; color: var(--accent-dark-blue);">${f.nome} (${f.uf})</strong>

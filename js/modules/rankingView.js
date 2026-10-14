@@ -35,7 +35,7 @@ export function getRankedData(col = sortColumn, asc = sortAscending) {
       uf: f.uf,
       cor: f.cor,
       regiao: f.regiao,
-      imagem: f.imagem || `assets/federations/${top2.id}.jpg`,
+      imagem: f.imagem || `assets/federations/${f.id}.jpg`,
       total: 0
     };
     categories.forEach(cat => {
@@ -112,7 +112,7 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
         <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em;">Vice-Campeão Geral</span>
         <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem;">
           ${top2 ? `
-            <img src="assets/federations/${top2.id}.jpg" alt="${top2.uf}" style="width: 36px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+            <img src="assets/federations/${top2.id}.jpg" alt="${top2.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${top2.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${top2.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 44px; height: 32px; border-radius: 4px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2); background: #ffffff; padding: 2px;">
             <span style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; color: var(--accent-dark-blue);">${top2.nome} (${top2.uf})</span>
           ` : '-'}
         </div>
@@ -127,7 +127,7 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
         <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #d97706; letter-spacing: 0.05em;">Campeão Brasileiro Geral</span>
         <div style="display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-top: 0.5rem;">
           ${top1 ? `
-            <img src="assets/federations/${top1.id}.jpg" alt="${top1.uf}" style="width: 44px; height: 30px; border-radius: 4px; object-fit: contain; box-shadow: 0 2px 6px rgba(0,0,0,0.25);">
+            <img src="assets/federations/${top1.id}.jpg" alt="${top1.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${top1.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${top1.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 52px; height: 38px; border-radius: 4px; object-fit: contain; box-shadow: 0 2px 6px rgba(0,0,0,0.25); background: #ffffff; padding: 2px;">
             <span style="font-family: var(--font-display); font-size: 1.45rem; font-weight: 800; color: #0b1a30;">${top1.nome} (${top1.uf})</span>
           ` : '-'}
         </div>
@@ -142,7 +142,7 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
         <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #c2410c; letter-spacing: 0.05em;">3º Colocado Geral</span>
         <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 0.5rem;">
           ${top3 ? `
-            <img src="assets/federations/${top3.id}.jpg" alt="${top3.uf}" style="width: 36px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+            <img src="assets/federations/${top3.id}.jpg" alt="${top3.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${top3.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${top3.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 44px; height: 32px; border-radius: 4px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2); background: #ffffff; padding: 2px;">
             <span style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; color: var(--accent-dark-blue);">${top3.nome} (${top3.uf})</span>
           ` : '-'}
         </div>
@@ -189,7 +189,7 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
                 </td>
                 <td>
                   <div style="display: flex; align-items: center; gap: 0.65rem;">
-                    <img src="assets/federations/${item.id}.jpg" alt="${item.uf}" style="width: 28px; height: 19px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);">
+                    <img src="assets/federations/${item.id}.jpg" alt="${item.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${item.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${item.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.18); background: #ffffff; padding: 1px; flex-shrink: 0;">
                     <div>
                       <strong style="color: var(--accent-dark-blue); font-size: 0.9rem; white-space: nowrap;">${item.nome}</strong>
                       <div style="font-size: 0.7rem; color: var(--text-muted);">${item.uf} • Região ${item.regiao}</div>

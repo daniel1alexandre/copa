@@ -70,6 +70,13 @@ export function renderBracket() {
   let filteredGames = [];
   if (currentSubtab === 'principal') {
     filteredGames = allCategoryGames.filter(g => g.bracket === 'principal');
+    // Garante que os confrontos da Chave Principal estejam na ordem correta de fases:
+    // 1ª Fase (C1-C16) -> Oitavas (C17-C24) -> Quartas (C25-C28) -> Semifinais (C29-C30) -> Finais (C31 Grande Final, C32 3º Lugar)
+    filteredGames.sort((a, b) => {
+      const numA = parseInt((a.code || '').replace(/\D/g, ''), 10) || 0;
+      const numB = parseInt((b.code || '').replace(/\D/g, ''), 10) || 0;
+      return numA - numB;
+    });
   } else if (currentSubtab === 'reversa_5_8') {
     filteredGames = allCategoryGames.filter(g => g.bracket === 'reversa_5_8');
   } else if (currentSubtab === 'reversa_9_16') {
@@ -198,7 +205,7 @@ export function renderBracket() {
                   <span class="standings-badge-pos ${(p.posicao || p.colocacao) <= 3 ? 'pos-' + (p.posicao || p.colocacao) : 'pos-other'}">
                     ${p.posicao || p.colocacao}º
                   </span>
-                  <img src="assets/federations/${fedId}.jpg" alt="${p.uf || ''}" onerror="this.onerror=null; this.src='assets/logo.jpg';" style="width: 32px; height: 22px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.25); border: 1px solid rgba(0,0,0,0.1); background: #ffffff;">
+                  <img src="assets/federations/${fedId}.jpg" alt="${p.uf || ''}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fedId}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fedId}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 36px; height: 30px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2); border: 1px solid rgba(0,0,0,0.1); background: #ffffff; padding: 1px;">
                   <div>
                     <strong style="color: var(--accent-dark-blue); font-size: 0.95rem;">${p.nome} (${p.uf})</strong>
                     <div style="font-size: 0.72rem; color: #047857; font-weight: 600;">${p.faseAtual || p.nome}</div>
@@ -224,7 +231,7 @@ function getColumnDisputeBadge(faseName) {
   if (/1[ªa]\s*fase/i.test(faseName) || /oitavas/i.test(faseName) || /quartas/i.test(faseName)) {
     return null;
   }
-  if (faseName === 'Semifinais') {
+  if (faseName === 'Semifinais' || faseName === 'Semifinal') {
     return '⚔️ Valendo 1º ao 4º Lugar';
   }
   if (faseName === 'Finais') {
@@ -578,6 +585,8 @@ function renderTreeBracket(games, subtab) {
     // Normaliza fase para que a Disputa de 3º e 4º (C32) fique sempre na mesma coluna da Final (abaixo da final C31)
     if (['Grande Final (1º e 2º)', 'Disputa 3º Lugar', 'Finais'].includes(g.fase) || g.code === 'C31' || g.code === 'C32') {
       faseKey = 'Finais';
+    } else if (['Semifinal', 'Semifinais'].includes(g.fase) || g.code === 'C29' || g.code === 'C30') {
+      faseKey = 'Semifinais';
     } else if (subtab === 'reversa_25_27' || (g.code && g.code.startsWith('R25_'))) {
       if (g.code.startsWith('R25_Q')) faseKey = 'Quartas de Final (25º-27º)';
       else if (g.code.startsWith('R25_SEMI')) faseKey = 'Semifinais (25º-27º)';
@@ -599,6 +608,26 @@ function renderTreeBracket(games, subtab) {
     }
     phasesMap.get(faseKey).push(g);
   });
+
+  // Garante ordenação das Semifinais na Chave Principal: Semifinal A (C29) no topo e Semifinal B (C30) abaixo
+  if (phasesMap.has('Semifinais')) {
+    phasesMap.get('Semifinais').sort((a, b) => {
+      if (a.code === 'C29') return -1;
+      if (b.code === 'C29') return 1;
+      if (a.code === 'C30') return 1;
+      if (b.code === 'C30') return -1;
+      return (a.code || '').localeCompare(b.code || '');
+    });
+  }
+  if (phasesMap.has('Semifinal')) {
+    phasesMap.get('Semifinal').sort((a, b) => {
+      if (a.code === 'C29') return -1;
+      if (b.code === 'C29') return 1;
+      if (a.code === 'C30') return 1;
+      if (b.code === 'C30') return -1;
+      return (a.code || '').localeCompare(b.code || '');
+    });
+  }
 
   // Garante ordenação das Finais na Chave Principal: Grande Final (C31) no topo e Disputa de 3º e 4º (C32) abaixo
   if (phasesMap.has('Finais')) {
@@ -662,6 +691,7 @@ function renderTreeBracket(games, subtab) {
     'Quartas de Final (17º-27º)',
     'Quartas de Final (25º-27º)',
     'Semifinais',
+    'Semifinal',
     'Semifinais (5º-8º)',
     'Semifinais (9º-16º)',
     'Semifinais (17º-24º)',
@@ -681,7 +711,7 @@ function renderTreeBracket(games, subtab) {
     if (idxA !== -1 && idxB !== -1) return idxA - idxB;
     if (idxA !== -1) return -1;
     if (idxB !== -1) return 1;
-    return 0;
+    return a.localeCompare(b);
   });
 
   return `
@@ -760,14 +790,14 @@ function renderMatchCard(game) {
 
       return `
         <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; min-width: 0;">
-          <span style="color: #047857; font-weight: 800; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px;">
+          <span style="color: #047857; font-weight: 800; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 4px;">
             ⏩ BYE
           </span>
           ${advImg ? `
             <div style="display: inline-flex; align-items: center; gap: 5px; background: #ecfdf5; border: 1.5px solid #86efac; padding: 2px 7px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" title="Avança de BYE: ${advancing.nome} (${advancing.uf})">
-              <span style="font-size: 0.64rem; font-weight: 800; color: #047857;">Avança:</span>
-              <img src="${advImg}" alt="${advancing.uf}" style="width: 30px; height: 20px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); background: #ffffff;">
-              <strong style="font-size: 0.78rem; color: #166534;">${advancing.uf}</strong>
+              <span style="font-size: 0.65rem; font-weight: 800; color: #047857;">Avança:</span>
+              <img src="${advImg}" alt="${advancing.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${advFedId}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${advFedId}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); background: #ffffff; padding: 1px;">
+              <strong style="font-size: 0.82rem; color: #166534;">${advancing.uf}</strong>
             </div>
           ` : ''}
         </div>
@@ -817,11 +847,13 @@ function renderMatchCard(game) {
     const byesList = s ? s.getCategoryByes(game.categoria_id) : [];
     const byeRank = byesList.indexOf(team.id) + 1;
     const seedText = byeRank > 0 ? `#${byeRank} BYE` : '';
+    const fedId = (team.id || '').toLowerCase();
+    const fedImg = `assets/federations/${fedId}.jpg`;
 
     return `
-      <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%; min-width: 0;">
-        <img src="assets/federations/${team.id}.jpg" alt="${team.uf}" style="width: ${seedText ? '28px' : '24px'}; height: ${seedText ? '19px' : '16px'}; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); flex-shrink: 0; background: #ffffff;">
-        <span style="font-weight: 700; font-size: 0.86rem; color: #1e293b; white-space: normal; word-break: break-word; line-height: 1.25;" title="${team.nome}">${team.uf} - ${team.nome}</span>
+      <div style="display: flex; align-items: center; gap: 0.55rem; width: 100%; min-width: 0;">
+        <img src="${fedImg}" alt="${team.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fedId}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fedId}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 26px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.18); border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0; background: #ffffff; padding: 1px;">
+        <span style="font-weight: 700; font-size: 0.88rem; color: #0f172a; white-space: normal; word-break: break-word; line-height: 1.25;" title="${team.nome}">${team.uf} - ${team.nome}</span>
         ${seedText ? `<span style="font-size: 0.68rem; color: #047857; font-weight: 800; background: #dcfce7; border: 1px solid #86efac; padding: 0.15rem 0.35rem; border-radius: 3px; flex-shrink: 0; margin-left: auto;">${seedText}</span>` : ''}
       </div>
     `;
@@ -906,20 +938,80 @@ function renderMatchCard(game) {
     }
   }
 
+  const fullMatchDesc = game.descricao || (
+    game.code === 'C31' ? 'Grande Final (1º e 2º Lugar)' :
+    game.code === 'C32' ? 'Disputa de 3º e 4º Lugar' :
+    game.fase || 'Confronto'
+  );
+
+  const courtName = game.quadra_id ? (s && typeof s.getCourtName === 'function' ? s.getCourtName(game.quadra_id) : game.quadra_id) : '';
+  const hasCourtOrTime = Boolean(courtName || game.horario);
+
+  const statusBadgeHtml = isBye ? `
+    <span class="badge-status encerrado" style="font-size: 0.65rem; padding: 0.18rem 0.5rem; border-radius: 12px; font-weight: 800; background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; white-space: nowrap;">
+      ⏩ BYE
+    </span>
+  ` : game.status === 'encerrado' ? `
+    <span class="badge-status encerrado" style="font-size: 0.65rem; padding: 0.18rem 0.5rem; border-radius: 12px; font-weight: 800; background: #dcfce7; color: #15803d; border: 1px solid #86efac; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+      ✓ ENCERRADO
+    </span>
+  ` : game.status === 'em andamento' ? `
+    <span class="badge-status em_andamento" style="font-size: 0.65rem; padding: 0.18rem 0.5rem; border-radius: 12px; font-weight: 800; background: #e0f2fe; color: #0284c7; border: 1px solid #7dd3fc; white-space: nowrap;">
+      🔵 AO VIVO
+    </span>
+  ` : `
+    <span class="badge-status aguardando" style="font-size: 0.65rem; padding: 0.18rem 0.5rem; border-radius: 12px; font-weight: 800; background: #f8fafc; color: #64748b; border: 1px solid #cbd5e1; white-space: nowrap;">
+      AGUARDANDO
+    </span>
+  `;
+
   return `
     <div class="bracket-match-card ${phaseCardClass} ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: ${cardShadow}; border: ${cardBorder}; background: ${cardBg}; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
 
-      <div class="match-card-header" style="margin-bottom: 0.4rem; border-bottom: 1px solid ${headerBorderColor}; padding-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
-        <div style="display: flex; align-items: center; gap: 0.35rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-          <span class="match-code-tag" style="background: ${codeTagBg}; color: white; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800;">${game.code}</span>
-          ${phasePill || ((game.descricao || (game.code === 'C31' ? 'Grande Final (1º e 2º)' : (game.code === 'C32' ? 'Disputa 3º e 4º' : ''))) ? `<span style="font-size: 0.7rem; color: #64748b; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 170px;" title="${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}">${game.descricao || (game.code === 'C31' ? 'Grande Final' : 'Disputa 3º e 4º')}</span>` : '')}
+      <!-- CABEÇALHO DO CARD COM TODAS AS INFORMAÇÕES VISÍVEIS -->
+      <div class="match-card-header" style="margin-bottom: 0.45rem; border-bottom: 1px solid ${headerBorderColor}; padding-bottom: 0.4rem; display: flex; flex-direction: column; gap: 0.25rem;">
+        
+        <!-- Linha 1: Código, Título Completo e Badge de Status -->
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 0.45rem; width: 100%;">
+          <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; flex: 1; min-width: 0;">
+            <span class="match-code-tag" style="background: ${codeTagBg}; color: white; padding: 0.18rem 0.5rem; border-radius: 4px; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.02em; flex-shrink: 0;">
+              ${game.code}
+            </span>
+            <span style="font-size: 0.78rem; color: #1e293b; font-weight: 800; line-height: 1.25; word-break: break-word;" title="${fullMatchDesc}">
+              ${fullMatchDesc}
+            </span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.35rem; flex-shrink: 0;">
+            ${statusBadgeHtml}
+            ${isAdmin ? `
+              <button style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.35rem; box-shadow: 0 1px 2px rgba(0,0,0,0.06);" onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="Editar Confronto (Selecionar Estados)">✏️</button>
+            ` : ''}
+          </div>
         </div>
-        <div style="display: flex; align-items: center; gap: 0.35rem;">
-          <span class="badge-status ${isBye ? 'encerrado' : game.status}" style="font-size: 0.62rem; padding: 0.15rem 0.45rem; border-radius: 12px; text-transform: uppercase; font-weight: 800; flex-shrink: 0;">${isBye ? 'BYE' : game.status}</span>
-          ${isAdmin ? `
-            <button style="background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.35rem;" onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="Editar Confronto (Selecionar Estados)">✏️</button>
-          ` : ''}
-        </div>
+
+        <!-- Linha 2: Local/Horário e/ou Destino e Avanço -->
+        ${(hasCourtOrTime || game.proxima_fase || (game.status === 'encerrado' && winnerFedId)) ? `
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.2rem 0.5rem; font-size: 0.68rem; padding-top: 0.1rem; color: #64748b;">
+            ${hasCourtOrTime ? `
+              <span style="font-weight: 700; color: #0284c7; display: inline-flex; align-items: center; gap: 3px;" title="Local e Horário da Partida">
+                🏟️ ${courtName || 'Quadra'} ${game.horario ? `• ⏰ ${game.horario}` : ''}
+              </span>
+            ` : ''}
+
+            ${game.status === 'encerrado' ? `
+              <span style="font-weight: 700; color: #166534; display: inline-flex; align-items: center; gap: 3px; margin-left: auto;">
+                🏆 Avançou: <strong>${winnerTeam?.uf || (typeof winnerId === 'string' ? winnerId.toUpperCase() : '')}</strong>
+                ${game.proxima_fase ? `<span style="color: #64748b; font-weight: 600;">(p/ ${game.proxima_fase})</span>` : ''}
+              </span>
+            ` : (game.proxima_fase ? `
+              <span style="color: #64748b; font-weight: 600; margin-left: auto;" title="Próxima Fase do Vencedor">
+                Avança p/: <strong style="color: #0f172a;">${game.proxima_fase}</strong>
+                ${game.proxima_fase_perdedor ? `• Perd: <strong>${game.proxima_fase_perdedor}</strong>` : ''}
+              </span>
+            ` : '')}
+          </div>
+        ` : ''}
       </div>
 
       <!-- BANNER DE POSIÇÃO EM DISPUTA (SEMIFINAIS E FINAIS) -->
@@ -975,7 +1067,7 @@ function renderMatchCard(game) {
             </div>
             ${byeClassifiedImg ? `
               <div style="display: flex; align-items: center; gap: 6px; background: #ffffff; padding: 2px 8px; border-radius: 4px; border: 1px solid #86efac; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" title="Classificado: ${byeClassifiedTeam?.nome || ''}">
-                <img src="${byeClassifiedImg}" alt="${byeClassifiedTeam?.uf || ''}" style="width: 44px; height: 30px; border-radius: 3px; object-fit: contain; box-shadow: 0 2px 4px rgba(0,0,0,0.2); background: #ffffff;">
+                <img src="${byeClassifiedImg}" alt="${byeClassifiedTeam?.uf || ''}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${byeClassifiedFedId}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${byeClassifiedFedId}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 44px; height: 34px; border-radius: 3px; object-fit: contain; box-shadow: 0 2px 4px rgba(0,0,0,0.2); background: #ffffff; padding: 2px;">
                 <strong style="font-size: 0.82rem; color: #166534;">${byeClassifiedTeam?.uf || ''}</strong>
               </div>
             ` : ''}
@@ -1022,11 +1114,11 @@ function renderMatchCard(game) {
             <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 62px; padding: 0.2rem 0.25rem 0.2rem 0.45rem; border-left: 1px dashed #cbd5e1; flex-shrink: 0; text-align: center;">
               ${winnerImg ? `
                 <span style="font-size: 0.58rem; font-weight: 800; color: #15803d; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 0.02em;">VENCEDOR</span>
-                <img src="${winnerImg}" alt="${winnerTeam?.uf || ''}" title="Equipe Vencedora do Confronto: ${winnerTeam?.nome || winnerFedId.toUpperCase()}" style="width: 48px; height: 34px; border-radius: 4px; object-fit: contain; box-shadow: 0 2px 6px rgba(0,0,0,0.18); border: 1px solid rgba(0,0,0,0.12); background: #ffffff;">
+                <img src="${winnerImg}" alt="${winnerTeam?.uf || ''}" title="Equipe Vencedora do Confronto: ${winnerTeam?.nome || winnerFedId.toUpperCase()}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${winnerFedId}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${winnerFedId}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 48px; height: 38px; border-radius: 4px; object-fit: contain; box-shadow: 0 2px 6px rgba(0,0,0,0.2); border: 1px solid rgba(0,0,0,0.14); background: #ffffff; padding: 2px;">
                 <span style="font-size: 0.68rem; font-weight: 800; color: #0f172a; margin-top: 2px;">${winnerTeam?.uf || winnerFedId.toUpperCase()}</span>
               ` : `
                 <span style="font-size: 0.56rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 2px;">VENCEDOR</span>
-                <div style="width: 48px; height: 34px; border-radius: 4px; border: 1.5px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; color: #94a3b8; background: #f8fafc;" title="Aguardando vencedor da partida">
+                <div style="width: 48px; height: 38px; border-radius: 4px; border: 1.5px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; color: #94a3b8; background: #f8fafc;" title="Aguardando vencedor da partida">
                   🏆
                 </div>
                 <span style="font-size: 0.62rem; font-weight: 600; color: #94a3b8; margin-top: 2px;">Aguardando</span>
@@ -1070,13 +1162,13 @@ function renderTableBracket(games) {
             const teamA = isByeA
               ? '<span style="color: #059669; font-weight: 800;">⏩ BYE</span>'
               : (g.lado_a 
-                  ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${g.lado_a.id}.jpg" alt="${g.lado_a.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${g.lado_a.nome} (${g.lado_a.uf})</strong></div>` 
+                  ? `<div style="display: inline-flex; align-items: center; gap: 0.5rem;"><img src="assets/federations/${(g.lado_a.id || '').toLowerCase()}.jpg" alt="${g.lado_a.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${(g.lado_a.id || '').toLowerCase()}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${(g.lado_a.id || '').toLowerCase()}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 30px; height: 22px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle; background: #ffffff; padding: 1px;"> <strong>${g.lado_a.nome} (${g.lado_a.uf})</strong></div>` 
                   : '<span style="color: var(--text-muted); font-style: italic;">Aguardando</span>');
 
             const teamB = isByeB 
               ? '<span style="color: #059669; font-weight: 800;">⏩ BYE</span>' 
               : (g.lado_b 
-                  ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${g.lado_b.id}.jpg" alt="${g.lado_b.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${g.lado_b.nome} (${g.lado_b.uf})</strong></div>` 
+                  ? `<div style="display: inline-flex; align-items: center; gap: 0.5rem;"><img src="assets/federations/${(g.lado_b.id || '').toLowerCase()}.jpg" alt="${g.lado_b.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${(g.lado_b.id || '').toLowerCase()}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${(g.lado_b.id || '').toLowerCase()}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 30px; height: 22px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle; background: #ffffff; padding: 1px;"> <strong>${g.lado_b.nome} (${g.lado_b.uf})</strong></div>` 
                   : '<span style="color: var(--text-muted); font-style: italic;">Aguardando</span>');
             
             // Regra explícita: "quando um estado passa de bye o placar não recebe nenhum resultado e o estado passa como vencedor."
@@ -1094,8 +1186,9 @@ function renderTableBracket(games) {
               placarGeral = '-';
               // Estado passa como vencedor direto
               const winningTeamObj = g.vencedor_id ? (g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b) : (g.lado_a || g.lado_b);
+              const winFedId = (winningTeamObj?.id || '').toLowerCase();
               winner = winningTeamObj
-                ? `<div style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${winningTeamObj.id}.jpg" alt="${winningTeamObj.uf}" style="width: 22px; height: 15px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle;"> <strong>${winningTeamObj.nome} (${winningTeamObj.uf})</strong> <span style="font-size: 0.65rem; color: #059669; background: #ecfdf5; padding: 0.1rem 0.3rem; border-radius: 2px; border: 1px solid #a7f3d0;">BYE</span></div>`
+                ? `<div style="display: inline-flex; align-items: center; gap: 0.5rem;"><img src="assets/federations/${winFedId}.jpg" alt="${winningTeamObj.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${winFedId}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${winFedId}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 30px; height: 22px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); vertical-align: middle; background: #ffffff; padding: 1px;"> <strong>${winningTeamObj.nome} (${winningTeamObj.uf})</strong> <span style="font-size: 0.65rem; color: #059669; background: #ecfdf5; padding: 0.1rem 0.3rem; border-radius: 2px; border: 1px solid #a7f3d0;">BYE</span></div>`
                 : '-';
               loser = '-';
             } else {

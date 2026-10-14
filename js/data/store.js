@@ -177,8 +177,8 @@ class AppStore {
           // Garante que todas as federações tenham a propriedade imagem
           if (Array.isArray(parsed.federations)) {
             parsed.federations.forEach(f => {
-              if (!f.imagem) {
-                f.imagem = `assets/federations/${f.id}.svg`;
+              if (!f.imagem || f.imagem.endsWith('.svg')) {
+                f.imagem = `assets/federations/${f.id}.jpg`;
               }
             });
           }

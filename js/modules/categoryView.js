@@ -469,7 +469,7 @@ export function renderCategoryView() {
                   <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed ${selectedFed ? '#99f6e4' : '#e2e8f0'}; min-height: 28px; display: flex; align-items: center;">
                     ${selectedFed ? `
                       <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
-                        <img src="assets/federations/${selectedFed.id}.jpg" alt="${selectedFed.uf}" style="width: 26px; height: 18px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.15);">
+                        <img src="assets/federations/${selectedFed.id}.jpg" alt="${selectedFed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${selectedFed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${selectedFed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.18); background: #ffffff; padding: 1px; flex-shrink: 0;">
                         <span style="font-size: 0.8rem; font-weight: 700; color: #0f766e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                           ${selectedFed.nome} (${selectedFed.uf})
                         </span>
@@ -530,7 +530,7 @@ export function renderCategoryView() {
             <div onclick="window.handleToggleCategoryBye('${fed.id}', event)"
                  style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; border: 2px solid ${isBye ? '#10b981' : (isChecked ? 'var(--primary-light)' : 'var(--border-light)')}; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s ease; background: ${isBye ? '#ecfdf5' : (isChecked ? '#f8fafc' : '#ffffff')};">
               <div style="display: flex; align-items: center; gap: 0.65rem;">
-                <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" style="width: 28px; height: 20px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+                <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 36px; height: 26px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2); background: #ffffff; padding: 1px; flex-shrink: 0;">
                 <div>
                   <strong style="color: ${isBye ? '#065f46' : 'var(--accent-dark-blue)'}; font-size: 0.9rem;">
                     ${fed.nome} (${fed.uf})

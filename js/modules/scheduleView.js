@@ -1,4 +1,4 @@
-﻿// Módulo de Programação — 4 Dias × 20 Quadras
+// Módulo de Programação — 4 Dias × 20 Quadras
 import { store } from '../data/store.js';
 
 // ─── Configurações editáveis (defaults) ───────────────────────────────────────
@@ -18,13 +18,15 @@ const FASE_DAY_MAP = {
   'Repescagem R3':          2,
   'Repescagem R4':          2,
   'Semifinal':              2,
+  'Semifinais':             2,
   'Repescagem R5':          3,
   'Disputa 5º Lugar':       3,
   'Disputa 3º e 4º':        3,
   'Grande Final (1º e 2º)': 3,
+  'Finais':                 3,
 };
 
-const PHASE_ORDER = ['1ª Fase','Oitavas de Final','Repescagem R2','Quartas de Final','Repescagem R3','Repescagem R4','Semifinal','Repescagem R5','Disputa 5º Lugar','Disputa 3º e 4º','Grande Final (1º e 2º)'];
+const PHASE_ORDER = ['1ª Fase','Oitavas de Final','Repescagem R2','Quartas de Final','Repescagem R3','Repescagem R4','Semifinal','Semifinais','Repescagem R5','Disputa 5º Lugar','Disputa 3º e 4º','Grande Final (1º e 2º)','Finais'];
 
 // Categorias prioritárias (primeiros horários)
 const PRIORITY_CATS = new Set(['sub12','sub14','master50','master60']);

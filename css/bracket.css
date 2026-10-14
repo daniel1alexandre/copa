@@ -139,10 +139,10 @@
 }
 
 .bracket-round-column {
-  width: 310px;
-  min-width: 310px;
-  max-width: 310px;
-  flex: 0 0 310px;
+  width: 325px;
+  min-width: 325px;
+  max-width: 325px;
+  flex: 0 0 325px;
   display: flex;
   flex-direction: column;
 }

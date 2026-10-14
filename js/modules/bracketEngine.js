@@ -218,7 +218,7 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       code: code,
       categoria_id: categoryId,
       bracket: 'principal',
-      fase: 'Semifinal',
+      fase: 'Semifinais',
       descricao: `Semifinal ${i === 0 ? 'A' : 'B'}`,
       lado_a: null,
       lado_b: null,
@@ -1200,7 +1200,7 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   });
 
   // (c) Semifinais (Top 4) - Garantido pelo menos 4º lugar (40 pts CBT)
-  const semisGames = games.filter(g => g.fase === 'Semifinal');
+  const semisGames = games.filter(g => g.fase === 'Semifinal' || g.fase === 'Semifinais' || g.code === 'C29' || g.code === 'C30');
   semisGames.forEach(g => {
     if (g.lado_a) registerPoints(g.lado_a, pointsTable[4] || 40, 'Semifinalista (Top 4)', 4, 4);
     if (g.lado_b) registerPoints(g.lado_b, pointsTable[4] || 40, 'Semifinalista (Top 4)', 4, 4);

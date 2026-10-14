@@ -22,12 +22,12 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
   const teamAName = isByeA
     ? '<span style="color: #059669; font-weight: 700;">⏩ BYE</span>'
     : (game.lado_a 
-      ? `<span style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${game.lado_a.id}.jpg" alt="${game.lado_a.uf}" style="width: 24px; height: 16px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);"> <strong>${game.lado_a.nome} (${game.lado_a.uf})</strong></span>` 
+      ? `<span style="display: inline-flex; align-items: center; gap: 0.5rem;"><img src="assets/federations/${game.lado_a.id}.jpg" alt="${game.lado_a.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${game.lado_a.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${game.lado_a.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); background: #ffffff; padding: 1px;"> <strong>${game.lado_a.nome} (${game.lado_a.uf})</strong></span>` 
       : 'Aguardando definição');
   const teamBName = isByeB
     ? '<span style="color: #059669; font-weight: 700;">⏩ BYE</span>'
     : (game.lado_b 
-      ? `<span style="display: inline-flex; align-items: center; gap: 0.4rem;"><img src="assets/federations/${game.lado_b.id}.jpg" alt="${game.lado_b.uf}" style="width: 24px; height: 16px; border-radius: 2px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2);"> <strong>${game.lado_b.nome} (${game.lado_b.uf})</strong></span>` 
+      ? `<span style="display: inline-flex; align-items: center; gap: 0.5rem;"><img src="assets/federations/${game.lado_b.id}.jpg" alt="${game.lado_b.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${game.lado_b.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${game.lado_b.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,0.2); background: #ffffff; padding: 1px;"> <strong>${game.lado_b.nome} (${game.lado_b.uf})</strong></span>` 
       : 'Aguardando definição');
 
   const content = `
