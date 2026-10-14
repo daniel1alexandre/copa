@@ -710,3 +710,269 @@
   }
 }
 
+/* ============================================================
+   SELEÇÃO DE ESTADOS PARA CONFRONTOS (LISTA, CLAREADOS E CHECKS)
+   ============================================================ */
+
+.first-round-modal-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .first-round-modal-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.state-selection-panel {
+  background: #ffffff;
+  border: 2px solid #028090;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  max-height: calc(82vh - 100px);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 16px rgba(2, 128, 144, 0.1);
+}
+
+.state-selection-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.state-selection-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #004b57;
+  margin: 0 0 0.4rem 0;
+}
+
+.state-selection-search {
+  width: 100%;
+  padding: 0.45rem 0.65rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  background: #f8fafc;
+  color: #1e293b;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.state-selection-search:focus {
+  border-color: #028090;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(2, 128, 144, 0.15);
+}
+
+.state-selection-list {
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 200px;
+}
+
+.state-selection-list::-webkit-scrollbar {
+  width: 6px;
+}
+.state-selection-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+/* Item de Estado na Lista de Seleção */
+.state-select-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  gap: 0.5rem;
+  user-select: none;
+}
+
+/* ESTADO SELECIONADO: Clareado com check */
+.state-select-item.is-selected {
+  opacity: 0.45;
+  filter: grayscale(20%);
+  background: #f8fafc;
+  border: 1.5px dashed #94a3b8;
+}
+
+.state-select-item.is-selected:hover {
+  opacity: 0.85;
+  filter: none;
+  background: #f1f5f9;
+  border-color: #64748b;
+}
+
+/* ESTADO DISPONÍVEL */
+.state-select-item.is-available {
+  opacity: 1;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  cursor: pointer;
+}
+
+.state-select-item.is-available:hover {
+  border-color: #028090;
+  background: #f0fdfa;
+  transform: translateX(2px);
+  box-shadow: 0 2px 6px rgba(2, 128, 144, 0.12);
+}
+
+.state-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.state-item-flag {
+  width: 26px;
+  height: 20px;
+  border-radius: 3px;
+  object-fit: contain;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+  padding: 1px;
+}
+
+.state-item-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.state-select-item.is-selected .state-item-name {
+  color: #475569;
+}
+
+.state-item-seed {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  margin-left: 0.25rem;
+  flex-shrink: 0;
+}
+
+/* Botão de Check que desmarca e reabilita o estado */
+.btn-state-unselect-check {
+  background: #10b981;
+  color: #ffffff;
+  border: 1px solid #059669;
+  border-radius: 6px;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
+}
+
+.btn-state-unselect-check .check-symbol {
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.btn-state-unselect-check .check-slot-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: rgba(0, 0, 0, 0.18);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.btn-state-unselect-check:hover {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+  border-color: #f87171 !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25) !important;
+  transform: scale(1.04);
+}
+
+.btn-state-unselect-check:hover .check-symbol::before {
+  content: "✕ ";
+}
+
+/* Botão para alocar estado livre */
+.btn-state-assign-quick {
+  background: #f0fdfa;
+  color: #0f766e;
+  border: 1px solid #99f6e4;
+  border-radius: 5px;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-state-assign-quick:hover {
+  background: #028090;
+  color: #ffffff;
+  border-color: #028090;
+}
+
+/* Slot de confronto com foco ativo para receber seleção */
+.slot-focus-active {
+  box-shadow: 0 0 0 2.5px #028090 !important;
+  background: #f0fdfa !important;
+  border-color: #028090 !important;
+}
+
+.btn-clear-slot {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.btn-clear-slot:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+

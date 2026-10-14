@@ -63,51 +63,19 @@ export function openMatchModal(gameCode, categoryId = 'prof') {
 
         ${game.fase === '1ª Fase' ? `
           <!-- SEÇÃO DE EDIÇÃO DE EQUIPES E BYE PARA 1ª FASE -->
-          <details style="margin-bottom: 1.25rem; border: 1px solid #cbd5e1; border-radius: var(--radius-md); background: #ffffff; padding: 0.75rem;" open>
-            <summary style="font-weight: 700; color: var(--primary); cursor: pointer; display: flex; align-items: center; justify-content: space-between;">
-              <span>⚙️ Editar Equipes do Confronto / Definir BYE</span>
-              <span style="font-size: 0.75rem; background: var(--primary-light); padding: 0.2rem 0.5rem; border-radius: var(--radius-xs);">1ª Rodada</span>
-            </summary>
-            <div style="margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px dashed var(--border-light);">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                <div>
-                  <label class="form-label">Equipe A (ou BYE):</label>
-                  <select id="edit-side-a" class="form-select">
-                    <option value="">-- Nenhuma / Em Aberto --</option>
-                    ${store.getFederations().map(f => {
-                      const byesList = store.getCategoryByes(categoryId);
-                      const byeRank = byesList.indexOf(f.id) + 1;
-                      const lbl = byeRank > 0 ? ` [#${byeRank}]` : '';
-                      return `<option value="${f.id}" ${game.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf})${lbl}</option>`;
-                    }).join('')}
-                  </select>
-                </div>
-                <div>
-                  <label class="form-label">Equipe B (ou BYE):</label>
-                  <select id="edit-side-b" class="form-select">
-                    <option value="">-- Nenhuma / Em Aberto --</option>
-                    ${store.getFederations().map(f => {
-                      const byesList = store.getCategoryByes(categoryId);
-                      const byeRank = byesList.indexOf(f.id) + 1;
-                      const lbl = byeRank > 0 ? ` [#${byeRank}]` : '';
-                      return `<option value="${f.id}" ${(game.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf})${lbl}</option>`;
-                    }).join('')}
-                  </select>
-                </div>
-              </div>
-
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; color: #065f46;">
-                  <input type="checkbox" id="edit-is-bye" ${game.is_bye ? 'checked' : ''} ${!window.auth.isAdmin() ? 'disabled' : ''}>
-                  BYE — Equipe A avança automaticamente
-                </label>
-
-                <button type="button" class="btn btn-secondary btn-sm" id="btn-save-match-teams">
-                  Salvar Equipes
-                </button>
-              </div>
+          <div style="margin-bottom: 1.25rem; border: 1.5px solid #bfdbfe; border-radius: var(--radius-md); background: #eff6ff; padding: 0.85rem 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+            <div>
+              <strong style="color: #1e40af; font-size: 0.9rem;">⚙️ Estados deste Confronto (${game.code}):</strong>
+              <p style="margin: 0.2rem 0 0 0; font-size: 0.8rem; color: #1e3a8a;">
+                Defina os estados ou BYE deste jogo com a lista de seleção, estados clareados e checks.
+              </p>
             </div>
-          </details>
+            ${window.auth.isAdmin() ? `
+              <button type="button" class="btn btn-primary btn-sm" onclick="window.openChangeTeamSlotModal('${game.code}', '${categoryId}')" style="background: #028090; border-color: #028090; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem;">
+                ✏️ Editar Estados do Confronto
+              </button>
+            ` : ''}
+          </div>
         ` : ''}
 
         ${game.is_bye ? `
@@ -314,86 +282,128 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
   const overlay = document.getElementById('match-modal-overlay');
   if (!overlay) return;
 
+  // Track currently active slot to pick states into { code, slot }
+  window.firstRoundActiveSlot = null;
+
   const content = `
-    <div class="modal-dialog" style="max-width: 900px;">
+    <div class="modal-dialog" style="max-width: 1240px; width: 96vw; max-height: 92vh;">
       <div class="modal-header">
         <div>
-          <h3>⚙️ Editar Confrontos da 1ª Rodada & BYEs</h3>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <h3>⚙️ Configuração dos Confrontos da 1ª Rodada & BYEs</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; margin-bottom: 0;">
             Categoria: <strong>${catObj?.nome || categoryId}</strong> • Defina quem joga contra quem e quais são os confrontos livres (BYEs).
           </p>
         </div>
         <button class="modal-close-btn" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">&times;</button>
       </div>
 
-      <div class="modal-body" style="max-height: 75vh; overflow-y: auto;">
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 0.85rem 1.15rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+      <div class="modal-body" style="max-height: calc(92vh - 140px); overflow-y: auto; padding: 1.15rem;">
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 0.75rem 1.15rem; border-radius: var(--radius-md); margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
           <div>
             <strong style="color: #1e40af;">Regras da Categoria:</strong>
             <span style="font-size: 0.85rem; color: #1e3a8a; margin-left: 0.5rem;">
               Com <strong>${totalFeds} federações participantes</strong> nesta categoria, exatamente <strong>${targetByes} vagas são BYEs</strong> (avanço direto às Oitavas).
             </span>
           </div>
-          <div id="first-round-summary-badge" style="font-size: 0.8rem; font-weight: 700; color: #1e40af;">
+          <div id="first-round-summary-badge" style="font-size: 0.82rem; font-weight: 700; color: #1e40af;">
             Carregando contagem...
           </div>
         </div>
 
-        <fieldset style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border: none; padding: 0; margin: 0;" id="r32-matchup-list" ${!window.auth.isAdmin() ? 'disabled' : ''}>
-          ${r32Games.map((g, idx) => {
-            return `
-              <div class="card" style="padding: 0.85rem; border: 1px solid var(--border-strong); background: #ffffff;" data-match-code="${g.code}">
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                  <span class="state-badge" style="background: var(--primary); font-size: 0.75rem; width: 26px; height: 26px;">
-                    ${g.code}
-                  </span>
-                  <span style="font-size: 0.75rem; color: var(--text-muted);">
-                    Destino: <strong>${g.proxima_fase} (${g.proxima_fase_slot})</strong>
-                  </span>
-                  <label style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: #065f46; cursor: pointer;">
-                    <input type="checkbox" class="cfg-is-bye" data-code="${g.code}" ${g.is_bye ? 'checked' : ''} onchange="window.toggleFirstRoundBye('${g.code}', this.checked)">
-                    É BYE
-                  </label>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 0.4rem;">
-                  <div>
-                    <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Equipe A:</label>
-                    <select class="form-select cfg-team-a" data-code="${g.code}" style="padding: 0.35rem 0.5rem; font-size: 0.825rem;" onchange="window.updateFirstRoundCounters()">
-                      <option value="">-- Selecionar Federação --</option>
-                      ${federations.map(f => {
-                        const byesList = store.getCategoryByes(categoryId);
-                        const byeRank = byesList.indexOf(f.id) + 1;
-                        const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
-                        return `
-                        <option value="${f.id}" ${g.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
-                        `;
-                      }).join('')}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted);">Equipe B:</label>
-                    <select class="form-select cfg-team-b" data-code="${g.code}" style="padding: 0.35rem 0.5rem; font-size: 0.825rem;" ${g.is_bye ? 'disabled' : ''} onchange="window.updateFirstRoundCounters()">
-                      <option value="">-- VAGA LIVRE (BYE) --</option>
-                      ${federations.map(f => {
-                        const byesList = store.getCategoryByes(categoryId);
-                        const byeRank = byesList.indexOf(f.id) + 1;
-                        const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
-                        return `
-                        <option value="${f.id}" ${(!g.is_bye && g.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
-                        `;
-                      }).join('')}
-                    </select>
-                  </div>
-                </div>
+        <div class="first-round-modal-layout">
+          <!-- COLUNA 1: LISTA DE SELEÇÃO DOS ESTADOS -->
+          <div class="state-selection-panel" id="first-round-state-panel">
+            <div class="state-selection-header">
+              <div class="state-selection-title">
+                <span>📋 Lista de Seleção dos Estados</span>
+                <span id="state-list-counter" style="font-size: 0.72rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.15rem 0.5rem; border-radius: 4px;">
+                  ${totalFeds} Estados
+                </span>
               </div>
-            `;
-          }).join('')}
-        </fieldset>
+              <input type="text" id="state-selection-filter" class="state-selection-search" placeholder="🔍 Filtrar estado (ex: SP, RJ, Minas)..." oninput="window.filterFirstRoundStateList(this.value)">
+              <div style="font-size: 0.72rem; color: #475569; line-height: 1.35; margin-top: 0.25rem;">
+                💡 <strong>Estados escalados:</strong> Ficam clareados com <strong>check (✓)</strong>. Clique no <strong>check (✓)</strong> para <strong>desmarcar e reabilitar</strong> o estado!
+              </div>
+            </div>
+            <div class="state-selection-list" id="first-round-state-items-container">
+              <!-- Renderizado dinamicamente -->
+            </div>
+          </div>
+
+          <!-- COLUNA 2: CONFRONTOS DA 1ª RODADA (C1 a C16) -->
+          <div style="min-width: 0;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h4 style="font-family: var(--font-display); font-size: 1.05rem; font-weight: 800; color: #004b57; margin: 0;">
+                ⚔️ 16 Confrontos da 1ª Rodada (Chave Principal)
+              </h4>
+              <span id="active-slot-hint" style="font-size: 0.78rem; color: #028090; font-weight: 700; background: #f0fdfa; padding: 0.2rem 0.55rem; border-radius: 4px; border: 1px solid #99f6e4;">
+                Dica: Selecione pelos menus ou clique na lista de estados
+              </span>
+            </div>
+
+            <fieldset style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.85rem; border: none; padding: 0; margin: 0;" id="r32-matchup-list" ${!window.auth.isAdmin() ? 'disabled' : ''}>
+              ${r32Games.map((g, idx) => {
+                return `
+                  <div class="card" style="padding: 0.8rem; border: 1.5px solid var(--border-strong); background: #ffffff; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm);" data-match-code="${g.code}">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                      <span class="state-badge" style="background: var(--primary); font-size: 0.75rem; width: 26px; height: 26px; font-weight: 800; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; color: white;">
+                        ${g.code}
+                      </span>
+                      <span style="font-size: 0.72rem; color: var(--text-muted);">
+                        Destino: <strong>${g.proxima_fase} (${g.proxima_fase_slot})</strong>
+                      </span>
+                      <label style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: #065f46; cursor: pointer;">
+                        <input type="checkbox" class="cfg-is-bye" data-code="${g.code}" ${g.is_bye ? 'checked' : ''} onchange="window.toggleFirstRoundBye('${g.code}', this.checked)">
+                        É BYE
+                      </label>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+                      <div class="slot-wrap" id="slot-wrap-${g.code}-A" style="padding: 0.25rem 0.35rem; border-radius: 4px; border: 1px solid transparent; transition: all 0.15s ease;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem;">
+                          <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin: 0;">Equipe A:</label>
+                          <button type="button" class="btn-clear-slot btn-clear-${g.code}-A" style="display: ${g.lado_a?.id ? 'inline-flex' : 'none'}; width: 17px; height: 17px; font-size: 0.65rem;" title="Limpar Equipe A" onclick="window.clearMatchSlot('${g.code}', 'A')">✕</button>
+                        </div>
+                        <select class="form-select cfg-team-a" data-code="${g.code}" style="padding: 0.35rem 0.5rem; font-size: 0.825rem; font-weight: 600;" onfocus="window.setActiveMatchSlot('${g.code}', 'A')" onchange="window.updateFirstRoundStateSelection()">
+                          <option value="">-- Selecionar Federação --</option>
+                          ${federations.map(f => {
+                            const byesList = store.getCategoryByes(categoryId);
+                            const byeRank = byesList.indexOf(f.id) + 1;
+                            const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
+                            return `
+                            <option value="${f.id}" ${g.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
+                            `;
+                          }).join('')}
+                        </select>
+                      </div>
+
+                      <div class="slot-wrap" id="slot-wrap-${g.code}-B" style="padding: 0.25rem 0.35rem; border-radius: 4px; border: 1px solid transparent; transition: all 0.15s ease;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem;">
+                          <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin: 0;">Equipe B:</label>
+                          <button type="button" class="btn-clear-slot btn-clear-${g.code}-B" style="display: ${(!g.is_bye && g.lado_b?.id) ? 'inline-flex' : 'none'}; width: 17px; height: 17px; font-size: 0.65rem;" title="Limpar Equipe B" onclick="window.clearMatchSlot('${g.code}', 'B')">✕</button>
+                        </div>
+                        <select class="form-select cfg-team-b" data-code="${g.code}" style="padding: 0.35rem 0.5rem; font-size: 0.825rem; font-weight: 600;" ${g.is_bye ? 'disabled' : ''} onfocus="window.setActiveMatchSlot('${g.code}', 'B')" onchange="window.updateFirstRoundStateSelection()">
+                          <option value="">-- VAGA LIVRE (BYE) --</option>
+                          ${federations.map(f => {
+                            const byesList = store.getCategoryByes(categoryId);
+                            const byeRank = byesList.indexOf(f.id) + 1;
+                            const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
+                            return `
+                            <option value="${f.id}" ${(!g.is_bye && g.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
+                            `;
+                          }).join('')}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </fieldset>
+          </div>
+        </div>
       </div>
 
-      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem;">
         <button type="button" class="btn btn-outline btn-sm" onclick="window.handleResetDefaultSeeds('${categoryId}')">
           🎲 Restaurar Sorteio por Cabeças de Chave
         </button>
@@ -412,41 +422,264 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
   overlay.innerHTML = content;
   overlay.classList.add('active');
 
-  // Funções de apoio da tela
+  // Controla o slot focado atualmente
+  window.setActiveMatchSlot = (code, slot) => {
+    window.firstRoundActiveSlot = { code, slot };
+    document.querySelectorAll('.slot-wrap').forEach(el => el.classList.remove('slot-focus-active'));
+    const targetWrap = document.getElementById(`slot-wrap-${code}-${slot}`);
+    if (targetWrap) targetWrap.classList.add('slot-focus-active');
+    const hint = document.getElementById('active-slot-hint');
+    if (hint) {
+      hint.innerHTML = `👉 Slot ativo: <strong>${code} (Equipe ${slot})</strong>. Clique em qualquer estado livre na lista para alocar!`;
+    }
+  };
+
+  // Limpa um slot específico
+  window.clearMatchSlot = (code, slot) => {
+    const sel = document.querySelector(`.cfg-team-${slot.toLowerCase()}[data-code="${code}"]`);
+    if (sel) {
+      sel.value = '';
+    }
+    window.updateFirstRoundStateSelection();
+  };
+
+  // Desmarca um estado pelo check e o reabilita na lista
+  window.unselectStateFromFirstRound = (fedId) => {
+    document.querySelectorAll('#r32-matchup-list .card').forEach(card => {
+      const selA = card.querySelector('.cfg-team-a');
+      const selB = card.querySelector('.cfg-team-b');
+      if (selA && selA.value === fedId) {
+        selA.value = '';
+      }
+      if (selB && selB.value === fedId) {
+        selB.value = '';
+      }
+    });
+
+    const catByes = store.getCategoryByes(categoryId) || [];
+    if (catByes.includes(fedId)) {
+      store.setCategoryByes(categoryId, catByes.filter(id => id !== fedId));
+    }
+
+    const fed = federations.find(f => f.id === fedId);
+    toast.show({
+      title: 'Estado Habilitado',
+      message: `${fed ? fed.nome : fedId} desmarcado e habilitado novamente para seleção!`,
+      type: 'info',
+      duration: 2500
+    });
+
+    window.updateFirstRoundStateSelection();
+  };
+
+  // Escala um estado livre no slot ativo ou no primeiro disponível
+  window.pickStateForFirstRound = (fedId) => {
+    let targetSelect = null;
+    let targetCode = '';
+    let targetSlot = '';
+
+    // Se há um slot ativo selecionado pelo usuário
+    if (window.firstRoundActiveSlot) {
+      const { code, slot } = window.firstRoundActiveSlot;
+      const sel = document.querySelector(`.cfg-team-${slot.toLowerCase()}[data-code="${code}"]`);
+      if (sel && !sel.disabled) {
+        targetSelect = sel;
+        targetCode = code;
+        targetSlot = slot;
+      }
+    }
+
+    // Se não há slot ativo, encontra o primeiro slot vazio
+    if (!targetSelect) {
+      const cards = document.querySelectorAll('#r32-matchup-list .card');
+      for (const card of cards) {
+        const code = card.dataset.matchCode;
+        const selA = card.querySelector('.cfg-team-a');
+        const selB = card.querySelector('.cfg-team-b');
+        const isBye = card.querySelector('.cfg-is-bye')?.checked;
+
+        if (selA && !selA.value) {
+          targetSelect = selA;
+          targetCode = code;
+          targetSlot = 'A';
+          break;
+        } else if (selB && !selB.disabled && !isBye && !selB.value) {
+          targetSelect = selB;
+          targetCode = code;
+          targetSlot = 'B';
+          break;
+        }
+      }
+    }
+
+    if (targetSelect) {
+      targetSelect.value = fedId;
+      const fed = federations.find(f => f.id === fedId);
+      toast.show({
+        title: 'Estado Escalado',
+        message: `${fed?.uf || fedId} definido para ${targetCode} (Equipe ${targetSlot})!`,
+        type: 'success',
+        duration: 2500
+      });
+
+      // Avança foco para o próximo slot
+      window.advanceActiveSlotToNext(targetCode, targetSlot);
+      window.updateFirstRoundStateSelection();
+    } else {
+      toast.show({
+        title: 'Todos os Slots Preenchidos',
+        message: 'Não há mais slots livres na 1ª rodada. Desmarque um estado existente para liberar uma vaga.',
+        type: 'warning'
+      });
+    }
+  };
+
+  window.advanceActiveSlotToNext = (currentCode, currentSlot) => {
+    const cards = Array.from(document.querySelectorAll('#r32-matchup-list .card'));
+    let foundCurrent = false;
+    for (const card of cards) {
+      const code = card.dataset.matchCode;
+      const isBye = card.querySelector('.cfg-is-bye')?.checked;
+
+      if (code === currentCode && currentSlot === 'A') {
+        const selB = card.querySelector('.cfg-team-b');
+        if (selB && !selB.disabled && !isBye && !selB.value) {
+          window.setActiveMatchSlot(code, 'B');
+          return;
+        }
+      }
+
+      if (foundCurrent) {
+        const selA = card.querySelector('.cfg-team-a');
+        const selB = card.querySelector('.cfg-team-b');
+        if (selA && !selA.value) {
+          window.setActiveMatchSlot(code, 'A');
+          return;
+        }
+        if (selB && !selB.disabled && !isBye && !selB.value) {
+          window.setActiveMatchSlot(code, 'B');
+          return;
+        }
+      }
+
+      if (code === currentCode) {
+        foundCurrent = true;
+      }
+    }
+  };
+
   window.toggleFirstRoundBye = (code, isChecked) => {
     const selB = document.querySelector(`.cfg-team-b[data-code="${code}"]`);
     if (selB) {
       selB.disabled = isChecked;
       if (isChecked) selB.value = '';
     }
-    window.updateFirstRoundCounters();
+    window.updateFirstRoundStateSelection();
   };
 
-  window.updateFirstRoundCounters = () => {
-    const selectAs = document.querySelectorAll('.cfg-team-a');
-    const selectBs = document.querySelectorAll('.cfg-team-b');
-    const byeCheckboxes = document.querySelectorAll('.cfg-is-bye');
-
-    const chosenTeams = new Set();
+  // Atualiza contadores, clareamento e checks na lista de seleção
+  window.updateFirstRoundStateSelection = () => {
+    const cards = document.querySelectorAll('#r32-matchup-list .card');
+    const assignedMap = {}; // fedId => { code, slot, label }
     const duplicates = new Set();
-
+    const chosenTeams = new Set();
     let byesCount = 0;
-    byeCheckboxes.forEach(cb => { if (cb.checked) byesCount++; });
 
-    selectAs.forEach(s => {
-      if (s.value) {
-        if (chosenTeams.has(s.value)) duplicates.add(s.value);
-        chosenTeams.add(s.value);
+    cards.forEach(card => {
+      const code = card.dataset.matchCode;
+      const isBye = card.querySelector('.cfg-is-bye')?.checked || false;
+      if (isBye) byesCount++;
+
+      const selA = card.querySelector('.cfg-team-a');
+      const valA = selA ? selA.value : '';
+      const clearBtnA = card.querySelector(`.btn-clear-${code}-A`);
+      if (clearBtnA) clearBtnA.style.display = valA ? 'inline-flex' : 'none';
+
+      if (valA) {
+        if (chosenTeams.has(valA)) duplicates.add(valA);
+        chosenTeams.add(valA);
+        assignedMap[valA] = { code, slot: 'A', label: 'Equipe A' };
+      }
+
+      const selB = card.querySelector('.cfg-team-b');
+      const valB = (!isBye && selB) ? selB.value : '';
+      const clearBtnB = card.querySelector(`.btn-clear-${code}-B`);
+      if (clearBtnB) clearBtnB.style.display = (valB && !isBye) ? 'inline-flex' : 'none';
+
+      if (valB) {
+        if (chosenTeams.has(valB)) duplicates.add(valB);
+        chosenTeams.add(valB);
+        assignedMap[valB] = { code, slot: 'B', label: 'Equipe B' };
       }
     });
 
-    selectBs.forEach(s => {
-      if (!s.disabled && s.value) {
-        if (chosenTeams.has(s.value)) duplicates.add(s.value);
-        chosenTeams.add(s.value);
+    // Rastreia estados selecionados nas categorias como BYE
+    const catByesList = store.getCategoryByes(categoryId) || [];
+    catByesList.forEach((byeId, idx) => {
+      if (byeId && !assignedMap[byeId]) {
+        assignedMap[byeId] = {
+          code: 'BYE',
+          slot: 'BYE',
+          label: `BYE (${idx + 1}º Rank)`,
+          isCategoryBye: true,
+          byeIndex: idx
+        };
       }
     });
 
+    // Atualiza opções dos dropdowns de todos os 16 confrontos para impossibilitar seleção dupla
+    cards.forEach(card => {
+      const code = card.dataset.matchCode;
+      const isBye = card.querySelector('.cfg-is-bye')?.checked || false;
+      const selA = card.querySelector('.cfg-team-a');
+      const selB = card.querySelector('.cfg-team-b');
+      const curValA = selA ? selA.value : '';
+      const curValB = (!isBye && selB) ? selB.value : '';
+
+      if (selA) {
+        Array.from(selA.options).forEach(opt => {
+          if (!opt.value) return;
+          const assigned = assignedMap[opt.value];
+          const isSelf = opt.value === curValA;
+          const isOtherSide = opt.value === curValB;
+          if (assigned && !isSelf) {
+            opt.disabled = true;
+            opt.style.color = '#94a3b8';
+            opt.style.background = '#f8fafc';
+          } else if (isOtherSide && !isSelf) {
+            opt.disabled = true;
+            opt.style.color = '#94a3b8';
+          } else {
+            opt.disabled = false;
+            opt.style.color = '';
+            opt.style.background = '';
+          }
+        });
+      }
+
+      if (selB) {
+        Array.from(selB.options).forEach(opt => {
+          if (!opt.value) return;
+          const assigned = assignedMap[opt.value];
+          const isSelf = opt.value === curValB;
+          const isOtherSide = opt.value === curValA;
+          if (assigned && !isSelf) {
+            opt.disabled = true;
+            opt.style.color = '#94a3b8';
+            opt.style.background = '#f8fafc';
+          } else if (isOtherSide && !isSelf) {
+            opt.disabled = true;
+            opt.style.color = '#94a3b8';
+          } else {
+            opt.disabled = false;
+            opt.style.color = '';
+            opt.style.background = '';
+          }
+        });
+      }
+    });
+
+    // Atualiza badge de contagem
     const badge = document.getElementById('first-round-summary-badge');
     if (badge) {
       if (duplicates.size > 0) {
@@ -455,6 +688,93 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
         badge.innerHTML = `<span>Equipes escaladas: <strong>${chosenTeams.size} / ${totalFeds}</strong> • BYEs: <strong>${byesCount} / ${targetByes}</strong></span>`;
       }
     }
+
+    // Renderiza a lista de estados com clareamento e checks
+    window.renderFirstRoundStateList(assignedMap);
+  };
+
+  window.renderFirstRoundStateList = (assignedMapParam) => {
+    const container = document.getElementById('first-round-state-items-container');
+    if (!container) return;
+
+    let assignedMap = assignedMapParam;
+    if (!assignedMap) {
+      assignedMap = {};
+      document.querySelectorAll('#r32-matchup-list .card').forEach(card => {
+        const code = card.dataset.matchCode;
+        const isBye = card.querySelector('.cfg-is-bye')?.checked;
+        const valA = card.querySelector('.cfg-team-a')?.value;
+        const valB = !isBye ? card.querySelector('.cfg-team-b')?.value : '';
+        if (valA) assignedMap[valA] = { code, slot: 'A', label: 'Equipe A' };
+        if (valB) assignedMap[valB] = { code, slot: 'B', label: 'Equipe B' };
+      });
+    }
+
+    const searchTerm = (document.getElementById('state-selection-filter')?.value || '').toLowerCase().trim();
+    const byesList = store.getCategoryByes(categoryId);
+
+    // Ordena federações alfabeticamente
+    const sortedFeds = [...federations].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
+    const filteredFeds = sortedFeds.filter(f => {
+      if (!searchTerm) return true;
+      return f.nome.toLowerCase().includes(searchTerm) || f.uf.toLowerCase().includes(searchTerm);
+    });
+
+    const totalSelected = Object.keys(assignedMap).length;
+    const counterBadge = document.getElementById('state-list-counter');
+    if (counterBadge) {
+      counterBadge.innerText = `${totalSelected}/${totalFeds} Escalados`;
+    }
+
+    container.innerHTML = filteredFeds.map(fed => {
+      const assigned = assignedMap[fed.id];
+      const byeRank = byesList.indexOf(fed.id) + 1;
+      const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
+
+      if (assigned) {
+        // ESTADO SELECIONADO: Clareado com check
+        return `
+          <div class="state-select-item is-selected" data-fed-id="${fed.id}" title="${fed.nome} (${fed.uf}) está escalado em ${assigned.code} (${assigned.label}). Clique no check para desmarcar!">
+            <div class="state-item-left">
+              <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
+              <span class="state-item-name">${fed.nome} (${fed.uf})</span>
+              ${seedLabel ? `<span class="state-item-seed">${seedLabel}</span>` : ''}
+            </div>
+
+            <button type="button" 
+                    class="btn-state-unselect-check" 
+                    title="Escalado em ${assigned.code} (${assigned.label}). Clique para desmarcar e habilitar novamente!" 
+                    onclick="event.stopPropagation(); window.unselectStateFromFirstRound('${fed.id}')">
+              <span class="check-symbol">✓</span>
+              <span class="check-slot-tag">${assigned.code} (${assigned.slot})</span>
+            </button>
+          </div>
+        `;
+      } else {
+        // ESTADO DISPONÍVEL: Ativo, cores normais
+        return `
+          <div class="state-select-item is-available" data-fed-id="${fed.id}" onclick="window.pickStateForFirstRound('${fed.id}')" title="Clique para escalar ${fed.nome} (${fed.uf})">
+            <div class="state-item-left">
+              <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
+              <span class="state-item-name">${fed.nome} (${fed.uf})</span>
+              ${seedLabel ? `<span class="state-item-seed">${seedLabel}</span>` : ''}
+            </div>
+
+            <button type="button" 
+                    class="btn-state-assign-quick" 
+                    title="Clique para escalar" 
+                    onclick="event.stopPropagation(); window.pickStateForFirstRound('${fed.id}')">
+              + Escalar
+            </button>
+          </div>
+        `;
+      }
+    }).join('');
+  };
+
+  window.filterFirstRoundStateList = () => {
+    window.renderFirstRoundStateList();
   };
 
   window.handleResetDefaultSeeds = (catId) => {
@@ -465,7 +785,7 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
     }
   };
 
-  window.updateFirstRoundCounters();
+  window.updateFirstRoundStateSelection();
 
   document.getElementById('btn-save-all-first-round').addEventListener('click', () => {
     const cards = document.querySelectorAll('#r32-matchup-list .card');
@@ -902,8 +1222,47 @@ export function openChangeTeamSlotModal(gameCode, categoryId = 'prof') {
   const isBye = Boolean(game.is_bye);
   const isFirstRound = game.fase === '1ª Fase';
 
+  // Coleta estados já escalados em outros confrontos da 1ª Fase (C1..C16, exceto este)
+  const otherMatchAssignments = {}; // fedId => { gameCode, slot, label, isCategoryBye }
+  if (isFirstRound) {
+    const r32Games = games.filter(g => g.fase === '1ª Fase' && g.code !== gameCode);
+    r32Games.forEach(otherG => {
+      if (otherG.lado_a?.id) {
+        otherMatchAssignments[otherG.lado_a.id] = {
+          gameCode: otherG.code,
+          slot: 'A',
+          label: otherG.is_bye ? `${otherG.code} (BYE)` : `${otherG.code} (A)`
+        };
+      }
+      if (otherG.lado_b?.id) {
+        otherMatchAssignments[otherG.lado_b.id] = {
+          gameCode: otherG.code,
+          slot: 'B',
+          label: otherG.is_bye ? `${otherG.code} (BYE)` : `${otherG.code} (B)`
+        };
+      }
+    });
+
+    // Rastreia também estados selecionados nas categorias como BYE
+    const catByesList = store.getCategoryByes(categoryId) || [];
+    catByesList.forEach((byeId, idx) => {
+      if (byeId && !otherMatchAssignments[byeId]) {
+        const isCurrentMatch = (game.lado_a?.id === byeId || game.lado_b?.id === byeId);
+        if (!isCurrentMatch) {
+          otherMatchAssignments[byeId] = {
+            gameCode: 'BYE',
+            slot: 'BYE',
+            label: `BYE (${idx + 1}º Rank)`,
+            isCategoryBye: true,
+            byeIndex: idx
+          };
+        }
+      }
+    });
+  }
+
   overlay.innerHTML = `
-    <div class="modal-dialog" style="max-width: 600px;">
+    <div class="modal-dialog" style="max-width: 960px; width: 95vw; max-height: 92vh;">
       <div class="modal-header" style="background: linear-gradient(135deg, #091b2c 0%, #004b57 100%); color: white; border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg); padding: 1.1rem 1.25rem;">
         <div>
           <h3 style="color: white; font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
@@ -916,51 +1275,69 @@ export function openChangeTeamSlotModal(gameCode, categoryId = 'prof') {
         <button class="modal-close-btn" style="color: white;" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">&times;</button>
       </div>
 
-      <div class="modal-body" style="padding: 1.25rem;">
-        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.85rem; color: #166534;">
-          💡 <strong>Definição do Confronto:</strong> Escolha os dois estados para este jogo. Se marcar <strong>BYE</strong>, o Estado A avança direto para a próxima fase.
+      <div class="modal-body" style="padding: 1.25rem; max-height: calc(92vh - 140px); overflow-y: auto;">
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.15rem; font-size: 0.85rem; color: #166534;">
+          💡 <strong>Definição do Confronto:</strong> Escolha os estados para este jogo. Estados já escalados anteriormente em outros confrontos ficam <strong>clareados com um check (✓)</strong> e <strong>impossibilitados de seleção dupla</strong>. Clique no check de qualquer estado para <strong>desmarcar e reabilitá-lo</strong>!
         </div>
 
-        <!-- ESTADO A -->
-        <div style="margin-bottom: 1rem;">
-          <label class="form-label" style="font-weight: 700; color: var(--accent-dark-blue); font-size: 0.9rem; margin-bottom: 0.35rem;">
-            🇧🇷 Estado A (Superior):
-          </label>
-          <select id="modal-edit-team-a" class="form-select" style="font-weight: 700; font-size: 0.92rem; padding: 0.55rem 0.7rem; border: 2px solid #028090; border-radius: var(--radius-sm); width: 100%;">
-            <option value="">-- Em Aberto / Vazio --</option>
-            ${allFeds.map(f => {
-              const sel = game.lado_a?.id === f.id ? 'selected' : '';
-              const notPart = !partIds.has(f.id) ? ' (não inscrito)' : '';
-              return `<option value="${f.id}" ${sel}>${f.nome} (${f.uf})${notPart}</option>`;
-            }).join('')}
-          </select>
-        </div>
+        <div class="first-round-modal-layout" style="grid-template-columns: 1fr 350px;">
+          <!-- COLUNA 1: DEFINIÇÃO DOS DOIS ESTADOS DO CONFRONTO -->
+          <div>
+            <!-- ESTADO A -->
+            <div style="margin-bottom: 1rem; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); padding: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <label class="form-label" style="font-weight: 700; color: var(--accent-dark-blue); font-size: 0.9rem; margin: 0;">
+                  🇧🇷 Estado A (Superior):
+                </label>
+                <button type="button" class="btn-clear-slot" id="btn-clear-slot-a" style="display: ${game.lado_a?.id ? 'inline-flex' : 'none'}; width: 22px; height: 22px; font-size: 0.72rem;" title="Limpar Estado A" onclick="window.clearSingleMatchSide('A')">✕</button>
+              </div>
+              <select id="modal-edit-team-a" class="form-select" style="font-weight: 700; font-size: 0.92rem; padding: 0.55rem 0.7rem; border: 2px solid #028090; border-radius: var(--radius-sm); width: 100%;" onchange="window.updateSingleMatchStateList()">
+                <!-- Preenchido dinamicamente com opções desabilitadas para quem já foi escalado -->
+              </select>
+            </div>
 
-        <!-- OPÇÃO BYE -->
-        <div style="background: #ffffff; border: 2px solid ${isBye ? '#10b981' : '#cbd5e1'}; border-radius: var(--radius-sm); padding: 0.7rem 0.85rem; margin-bottom: 1rem; transition: all 0.2s ease;">
-          <label style="display: flex; align-items: center; gap: 0.65rem; font-weight: 700; cursor: pointer; color: #047857; font-size: 0.9rem;">
-            <input type="checkbox" id="modal-edit-is-bye" ${isBye ? 'checked' : ''} style="width: 18px; height: 18px; accent-color: #10b981;"
-              onchange="document.getElementById('modal-edit-team-b-wrap').style.display = this.checked ? 'none' : 'block'">
-            ⏩ Confronto com Vaga Livre (BYE) — Estado A avança direto às Oitavas / Próxima fase
-          </label>
-        </div>
+            <!-- OPÇÃO BYE -->
+            <div style="background: #ffffff; border: 2px solid ${isBye ? '#10b981' : '#cbd5e1'}; border-radius: var(--radius-sm); padding: 0.75rem 0.85rem; margin-bottom: 1rem; transition: all 0.2s ease;">
+              <label style="display: flex; align-items: center; gap: 0.65rem; font-weight: 700; cursor: pointer; color: #047857; font-size: 0.9rem;">
+                <input type="checkbox" id="modal-edit-is-bye" ${isBye ? 'checked' : ''} style="width: 18px; height: 18px; accent-color: #10b981;"
+                  onchange="document.getElementById('modal-edit-team-b-wrap').style.display = this.checked ? 'none' : 'block'; window.updateSingleMatchStateList();">
+                ⏩ Confronto com Vaga Livre (BYE) — Estado A avança direto às Oitavas / Próxima fase
+              </label>
+            </div>
 
-        <!-- ESTADO B -->
-        <div id="modal-edit-team-b-wrap" style="${isBye ? 'display: none;' : ''}">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem;">
-            <label class="form-label" style="font-weight: 700; color: var(--accent-dark-blue); font-size: 0.9rem; margin: 0;">
-              🇧🇷 Estado B (Inferior):
-            </label>
-            <button type="button" class="btn btn-outline btn-xs" onclick="(function(){var a=document.getElementById('modal-edit-team-a'),b=document.getElementById('modal-edit-team-b');if(a&&b){var t=a.value;a.value=b.value;b.value=t;}})()">⇄ Inverter A e B</button>
+            <!-- ESTADO B -->
+            <div id="modal-edit-team-b-wrap" style="${isBye ? 'display: none;' : ''}; margin-bottom: 1rem; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); padding: 0.85rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem;">
+                <label class="form-label" style="font-weight: 700; color: var(--accent-dark-blue); font-size: 0.9rem; margin: 0;">
+                  🇧🇷 Estado B (Inferior):
+                </label>
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <button type="button" class="btn btn-outline btn-xs" onclick="window.swapSingleMatchSides()">⇄ Inverter A e B</button>
+                  <button type="button" class="btn-clear-slot" id="btn-clear-slot-b" style="display: ${(!isBye && game.lado_b?.id) ? 'inline-flex' : 'none'}; width: 22px; height: 22px; font-size: 0.72rem;" title="Limpar Estado B" onclick="window.clearSingleMatchSide('B')">✕</button>
+                </div>
+              </div>
+              <select id="modal-edit-team-b" class="form-select" style="font-weight: 700; font-size: 0.92rem; padding: 0.55rem 0.7rem; border: 2px solid #028090; border-radius: var(--radius-sm); width: 100%;" onchange="window.updateSingleMatchStateList()">
+                <!-- Preenchido dinamicamente com opções desabilitadas para quem já foi escalado -->
+              </select>
+            </div>
           </div>
-          <select id="modal-edit-team-b" class="form-select" style="font-weight: 700; font-size: 0.92rem; padding: 0.55rem 0.7rem; border: 2px solid #028090; border-radius: var(--radius-sm); width: 100%;">
-            <option value="">-- Em Aberto / Vazio --</option>
-            ${allFeds.map(f => {
-              const sel = (!isBye && game.lado_b?.id === f.id) ? 'selected' : '';
-              const notPart = !partIds.has(f.id) ? ' (não inscrito)' : '';
-              return `<option value="${f.id}" ${sel}>${f.nome} (${f.uf})${notPart}</option>`;
-            }).join('')}
-          </select>
+
+          <!-- COLUNA 2: LISTA DE SELEÇÃO DOS ESTADOS -->
+          <div class="state-selection-panel" style="max-height: 480px;">
+            <div class="state-selection-header">
+              <div class="state-selection-title">
+                <span>📋 Lista de Seleção</span>
+                <span id="single-state-list-counter" style="font-size: 0.72rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.15rem 0.45rem; border-radius: 4px;"></span>
+              </div>
+              <input type="text" id="single-state-filter" class="state-selection-search" placeholder="🔍 Filtrar estado (ex: SP, RJ)..." oninput="window.renderSingleMatchStateList()">
+              <div style="font-size: 0.7rem; color: #64748b; line-height: 1.35; margin-top: 0.25rem;">
+                Estados escalados ficam clareados com <strong>check (✓)</strong>. Clique no check para <strong>desmarcar e reabilitar</strong>!
+              </div>
+            </div>
+            <div class="state-selection-list" id="single-state-items-container">
+              <!-- Renderizado dinamicamente -->
+            </div>
+          </div>
         </div>
       </div>
 
@@ -976,6 +1353,255 @@ export function openChangeTeamSlotModal(gameCode, categoryId = 'prof') {
   `;
 
   overlay.classList.add('active');
+
+  const initialValA = game.lado_a?.id || '';
+  const initialValB = (!isBye && game.lado_b?.id) ? game.lado_b.id : '';
+
+  window.updateSingleMatchDropdownOptions = () => {
+    const selA = document.getElementById('modal-edit-team-a');
+    const selB = document.getElementById('modal-edit-team-b');
+    const chkBye = document.getElementById('modal-edit-is-bye');
+    const isByeChecked = chkBye?.checked || false;
+
+    const valA = selA ? selA.value : initialValA;
+    const valB = (!isByeChecked && selB) ? selB.value : initialValB;
+
+    const sortedFeds = [...allFeds].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
+    if (selA) {
+      selA.innerHTML = `
+        <option value="">-- Em Aberto / Vazio --</option>
+        ${sortedFeds.map(f => {
+          const assignedOther = otherMatchAssignments[f.id];
+          const isOtherSide = (!isByeChecked && f.id === valB);
+          const isSelf = f.id === valA;
+          const notPart = !partIds.has(f.id) ? ' (não inscrito)' : '';
+
+          if (assignedOther && !isSelf) {
+            return `<option value="${f.id}" disabled style="color: #94a3b8; background: #f8fafc;">${f.nome} (${f.uf}) — 🔒 Já escalado em ${assignedOther.gameCode}</option>`;
+          } else if (isOtherSide && !isSelf) {
+            return `<option value="${f.id}" disabled style="color: #94a3b8; background: #f8fafc;">${f.nome} (${f.uf}) — 🔒 Já como Estado B</option>`;
+          } else {
+            return `<option value="${f.id}" ${isSelf ? 'selected' : ''}>${f.nome} (${f.uf})${notPart}</option>`;
+          }
+        }).join('')}
+      `;
+    }
+
+    if (selB) {
+      selB.innerHTML = `
+        <option value="">-- Em Aberto / Vazio --</option>
+        ${sortedFeds.map(f => {
+          const assignedOther = otherMatchAssignments[f.id];
+          const isOtherSide = (f.id === valA);
+          const isSelf = f.id === valB;
+          const notPart = !partIds.has(f.id) ? ' (não inscrito)' : '';
+
+          if (assignedOther && !isSelf) {
+            return `<option value="${f.id}" disabled style="color: #94a3b8; background: #f8fafc;">${f.nome} (${f.uf}) — 🔒 Já escalado em ${assignedOther.gameCode}</option>`;
+          } else if (isOtherSide && !isSelf) {
+            return `<option value="${f.id}" disabled style="color: #94a3b8; background: #f8fafc;">${f.nome} (${f.uf}) — 🔒 Já como Estado A</option>`;
+          } else {
+            return `<option value="${f.id}" ${isSelf ? 'selected' : ''}>${f.nome} (${f.uf})${notPart}</option>`;
+          }
+        }).join('')}
+      `;
+    }
+  };
+
+  window.clearSingleMatchSide = (side) => {
+    const sel = document.getElementById(side === 'A' ? 'modal-edit-team-a' : 'modal-edit-team-b');
+    if (sel) sel.value = '';
+    window.updateSingleMatchStateList();
+  };
+
+  window.swapSingleMatchSides = () => {
+    const a = document.getElementById('modal-edit-team-a');
+    const b = document.getElementById('modal-edit-team-b');
+    if (a && b) {
+      const temp = a.value;
+      a.value = b.value;
+      b.value = temp;
+      window.updateSingleMatchStateList();
+    }
+  };
+
+  window.unselectStateFromSingleMatch = (fedId) => {
+    const selA = document.getElementById('modal-edit-team-a');
+    const selB = document.getElementById('modal-edit-team-b');
+
+    if (selA && selA.value === fedId) selA.value = '';
+    if (selB && selB.value === fedId) selB.value = '';
+
+    // Se estava escalado em outro confronto da 1ª fase ou como BYE da categoria, limpa de lá no store
+    if (otherMatchAssignments[fedId]) {
+      const other = otherMatchAssignments[fedId];
+      if (other.isCategoryBye) {
+        const currentByes = (store.getCategoryByes(categoryId) || []).filter(id => id !== fedId);
+        store.setCategoryByes(categoryId, currentByes);
+      } else if (other.slot === 'A') {
+        store.updateMatchTeamSlot(categoryId, other.gameCode, 'A', '');
+      } else if (other.slot === 'B') {
+        store.updateMatchTeamSlot(categoryId, other.gameCode, 'B', '');
+      }
+      delete otherMatchAssignments[fedId];
+      if (window.renderBracket) window.renderBracket();
+    }
+
+    const fed = allFeds.find(f => f.id === fedId);
+    toast.show({
+      title: 'Estado Habilitado',
+      message: `${fed?.nome || fedId} desmarcado e habilitado novamente para seleção!`,
+      type: 'info',
+      duration: 2500
+    });
+
+    window.updateSingleMatchStateList();
+  };
+
+  window.pickStateForSingleMatch = (fedId) => {
+    if (otherMatchAssignments[fedId]) {
+      toast.show({
+        title: 'Estado Já Escalado',
+        message: `Este estado já está no confronto ${otherMatchAssignments[fedId].gameCode}. Clique no check (✓) dele para desmarcar e poder usá-lo aqui.`,
+        type: 'warning',
+        duration: 3500
+      });
+      return;
+    }
+
+    const selA = document.getElementById('modal-edit-team-a');
+    const selB = document.getElementById('modal-edit-team-b');
+    const chkBye = document.getElementById('modal-edit-is-bye');
+    const isByeChecked = chkBye?.checked;
+
+    if (selA && selA.value === fedId) return;
+    if (selB && selB.value === fedId) return;
+
+    if (selA && !selA.value) {
+      selA.value = fedId;
+    } else if (selB && !isByeChecked && !selB.value) {
+      selB.value = fedId;
+    } else if (selA) {
+      selA.value = fedId;
+    }
+
+    const fed = allFeds.find(f => f.id === fedId);
+    toast.show({
+      title: 'Estado Selecionado',
+      message: `${fed?.uf || fedId} definido para o confronto ${gameCode}!`,
+      type: 'success',
+      duration: 2000
+    });
+
+    window.updateSingleMatchStateList();
+  };
+
+  window.renderSingleMatchStateList = () => {
+    const container = document.getElementById('single-state-items-container');
+    if (!container) return;
+
+    const selA = document.getElementById('modal-edit-team-a');
+    const selB = document.getElementById('modal-edit-team-b');
+    const chkBye = document.getElementById('modal-edit-is-bye');
+    const isByeChecked = chkBye?.checked;
+
+    const valA = selA ? selA.value : '';
+    const valB = (!isByeChecked && selB) ? selB.value : '';
+
+    const btnClearA = document.getElementById('btn-clear-slot-a');
+    const btnClearB = document.getElementById('btn-clear-slot-b');
+    if (btnClearA) btnClearA.style.display = valA ? 'inline-flex' : 'none';
+    if (btnClearB) btnClearB.style.display = valB ? 'inline-flex' : 'none';
+
+    // Atualiza opções dos dropdowns para bloquear quem já está escalado
+    window.updateSingleMatchDropdownOptions();
+
+    const currentMap = {};
+    if (valA) currentMap[valA] = 'Estado A';
+    if (valB) currentMap[valB] = 'Estado B';
+
+    const searchTerm = (document.getElementById('single-state-filter')?.value || '').toLowerCase().trim();
+    const sortedFeds = [...allFeds].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
+    const filteredFeds = sortedFeds.filter(f => {
+      if (!searchTerm) return true;
+      return f.nome.toLowerCase().includes(searchTerm) || f.uf.toLowerCase().includes(searchTerm);
+    });
+
+    const totalAssigned = Object.keys(currentMap).length + Object.keys(otherMatchAssignments).length;
+    const counterBadge = document.getElementById('single-state-list-counter');
+    if (counterBadge) {
+      counterBadge.innerText = `${totalAssigned}/${partIds.size || allFeds.length} Escalados`;
+    }
+
+    container.innerHTML = filteredFeds.map(fed => {
+      const isSelectedInThisGame = currentMap[fed.id];
+      const isSelectedInOther = otherMatchAssignments[fed.id];
+
+      if (isSelectedInThisGame) {
+        // ESTADO SELECIONADO NESTE CONFRONTO: Clareado com check
+        return `
+          <div class="state-select-item is-selected" data-fed-id="${fed.id}" title="${fed.nome} (${fed.uf}) está selecionado como ${isSelectedInThisGame}. Clique no check para desmarcar!">
+            <div class="state-item-left">
+              <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
+              <span class="state-item-name">${fed.nome} (${fed.uf})</span>
+            </div>
+
+            <button type="button" 
+                    class="btn-state-unselect-check" 
+                    title="Selecionado como ${isSelectedInThisGame}. Clique para desmarcar e habilitar novamente!" 
+                    onclick="event.stopPropagation(); window.unselectStateFromSingleMatch('${fed.id}')">
+              <span class="check-symbol">✓</span>
+              <span class="check-slot-tag">${isSelectedInThisGame}</span>
+            </button>
+          </div>
+        `;
+      } else if (isSelectedInOther) {
+        // ESTADO JÁ SELECIONADO ANTERIORMENTE EM OUTRO CONFRONTO: Clareado, com check e IMPOSSIBILITADO DE SELEÇÃO
+        return `
+          <div class="state-select-item is-selected" data-fed-id="${fed.id}" style="cursor: not-allowed;" title="${fed.nome} (${fed.uf}) já está escalado no confronto ${isSelectedInOther.gameCode} (${isSelectedInOther.slot}). Clique no check para desmarcar de lá e habilitar para este confronto!">
+            <div class="state-item-left">
+              <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
+              <span class="state-item-name">${fed.nome} (${fed.uf})</span>
+            </div>
+
+            <button type="button" 
+                    class="btn-state-unselect-check" 
+                    title="Escalado em ${isSelectedInOther.gameCode} (${isSelectedInOther.slot}). Clique para desmarcar de lá e habilitar novamente!" 
+                    onclick="event.stopPropagation(); window.unselectStateFromSingleMatch('${fed.id}')">
+              <span class="check-symbol">✓</span>
+              <span class="check-slot-tag">${isSelectedInOther.label}</span>
+            </button>
+          </div>
+        `;
+      } else {
+        // ESTADO DISPONÍVEL: Ativo, cores normais
+        return `
+          <div class="state-select-item is-available" data-fed-id="${fed.id}" onclick="window.pickStateForSingleMatch('${fed.id}')" title="Clique para selecionar ${fed.nome} (${fed.uf})">
+            <div class="state-item-left">
+              <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
+              <span class="state-item-name">${fed.nome} (${fed.uf})</span>
+            </div>
+
+            <button type="button" 
+                    class="btn-state-assign-quick" 
+                    title="Clique para selecionar" 
+                    onclick="event.stopPropagation(); window.pickStateForSingleMatch('${fed.id}')">
+              + Selecionar
+            </button>
+          </div>
+        `;
+      }
+    }).join('');
+  };
+
+  window.updateSingleMatchStateList = () => {
+    window.renderSingleMatchStateList();
+  };
+
+  // Primeira renderização
+  window.updateSingleMatchStateList();
 
   const btnSave = document.getElementById('btn-save-both-teams');
   if (btnSave) {

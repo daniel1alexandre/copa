@@ -46,6 +46,64 @@ export function initCategoryView() {
     renderCategoryView();
   };
 
+  // Desmarcar e reabilitar um estado do BYE da categoria
+  window.handleUnselectCategoryBye = (fedId) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem alterar os BYEs.', type: 'error' });
+      return;
+    }
+
+    const byes = [...store.getCategoryByes(selectedCategoryId)];
+    const idx = byes.indexOf(fedId);
+    if (idx !== -1) {
+      byes.splice(idx, 1);
+      store.setCategoryByes(selectedCategoryId, byes);
+      const fed = store.getFederations().find(f => f.id === fedId);
+      toast.show({
+        title: 'Estado Habilitado',
+        message: `${fed?.nome || fedId} desmarcado do BYE e reabilitado para seleção!`,
+        type: 'info',
+        duration: 2500
+      });
+      renderCategoryView();
+    }
+  };
+
+  // Selecionar um estado disponível para o próximo slot livre de BYE
+  window.handlePickCategoryBye = (fedId) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem alterar os BYEs.', type: 'error' });
+      return;
+    }
+
+    const participatingFeds = store.getCategoryParticipatingFeds(selectedCategoryId);
+    const numByes = Math.max(0, 32 - participatingFeds.length);
+    const byes = [...store.getCategoryByes(selectedCategoryId)];
+
+    if (byes.includes(fedId)) return;
+
+    if (byes.length >= numByes) {
+      toast.show({
+        title: 'Todas as Vagas Preenchidas',
+        message: `Todas as ${numByes} vagas de BYE desta categoria já estão ocupadas. Clique no check (✓) de um estado para desmarcar e liberar vaga.`,
+        type: 'warning',
+        duration: 3500
+      });
+      return;
+    }
+
+    byes.push(fedId);
+    store.setCategoryByes(selectedCategoryId, byes);
+    const fed = store.getFederations().find(f => f.id === fedId);
+    toast.show({
+      title: 'BYE Definido',
+      message: `${fed?.nome || fedId} alocado como ${byes.length}º Ranking (Passa de BYE)!`,
+      type: 'success',
+      duration: 2500
+    });
+    renderCategoryView();
+  };
+
   // Preenchimento automático com base nos melhores rankings/seeds
   window.handleAutoFillSeeds = () => {
     if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
@@ -248,6 +306,16 @@ export function renderCategoryView() {
   const numByes = Math.max(0, 32 - totalPart);
   const realMatches = Math.max(0, totalPart - 16);
   const byesList = store.getCategoryByes(currentCat.id);
+  window.filterCategoryByeList = () => {
+    const input = document.getElementById('cat-bye-state-filter');
+    const term = (input?.value || '').toLowerCase().trim();
+    const items = document.querySelectorAll('#cat-bye-state-items-container .state-select-item');
+    items.forEach(el => {
+      const name = el.querySelector('.state-item-name')?.textContent?.toLowerCase() || '';
+      el.style.display = (!term || name.includes(term)) ? 'flex' : 'none';
+    });
+  };
+
   const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
 
   container.innerHTML = `
@@ -415,74 +483,127 @@ export function renderCategoryView() {
 
       <div style="padding: 1.25rem;">
         ${numByes > 0 ? `
-          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem;">
-            ${Array.from({ length: numByes }).map((_, idx) => {
-              const rankNum = idx + 1;
-              const rankLabel = `${rankNum}º`;
-              const selectedFedId = byesList[idx] || '';
-              const selectedFed = participatingFeds.find(f => f.id === selectedFedId);
+          <div class="first-round-modal-layout" style="grid-template-columns: 1fr 340px; gap: 1.25rem; align-items: start;">
+            <!-- COLUNA 1: CASAS DE BYE POR RANKING -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0.85rem;">
+              ${Array.from({ length: numByes }).map((_, idx) => {
+                const rankNum = idx + 1;
+                const rankLabel = `${rankNum}º`;
+                const selectedFedId = byesList[idx] || '';
+                const selectedFed = participatingFeds.find(f => f.id === selectedFedId);
 
-              return `
-                <div class="bye-slot-card" style="border: 2px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background: ${selectedFed ? '#f0fdfa' : '#f8fafc'}; border-radius: var(--radius-md); padding: 0.85rem 1rem; box-shadow: var(--shadow-sm); transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between;">
-                  
-                  <div>
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
-                      <span style="background: ${selectedFed ? '#0f766e' : '#475569'}; color: white; font-weight: 800; font-size: 0.85rem; padding: 0.2rem 0.65rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
-                        🎖️ ${rankLabel} Ranking ${rankNum <= 4 ? `(Cabeça ${rankNum})` : ''}
-                      </span>
-                      <span style="font-size: 0.72rem; font-weight: 800; color: ${selectedFed ? '#047857' : '#94a3b8'}; background: ${selectedFed ? '#ecfdf5' : '#f1f5f9'}; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
-                        ${selectedFed ? '✅ Vaga Definida' : '⚪ Vaga Aberta'}
-                      </span>
-                    </div>
-
-                    <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--accent-dark-blue); margin-bottom: 0.35rem;">
-                      Estado do <strong>${rankLabel} Ranking</strong> (Passa de BYE):
-                    </label>
-
-                    <div style="display: flex; align-items: center; gap: 0.45rem;">
-                      <select class="form-select" 
-                              style="width: 100%; font-size: 0.88rem; font-weight: 700; border: 1.5px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background-color: ${!isAdmin ? '#f8fafc' : '#ffffff'}; padding: 0.45rem 0.6rem; border-radius: var(--radius-sm); ${!isAdmin ? 'cursor: not-allowed;' : ''}"
-                              ${!isAdmin ? 'disabled' : ''}
-                              onchange="window.handleByeSlotSelectChange(${idx}, this.value)">
-                        <option value="">-- Selecione o ${rankLabel} Estado --</option>
-                        ${participatingFeds.map(f => {
-                          const otherIdx = byesList.indexOf(f.id);
-                          const isCurrent = f.id === selectedFedId;
-                          const alreadyInOther = otherIdx !== -1 && otherIdx !== idx;
-                          const tag = alreadyInOther ? ` (no ${otherIdx + 1}º Ranking)` : '';
-                          return `<option value="${f.id}" ${isCurrent ? 'selected' : ''}>${f.nome} (${f.uf})${tag}</option>`;
-                        }).join('')}
-                      </select>
-
-                      ${isAdmin && selectedFed ? `
-                        <button title="Limpar ${rankLabel} Ranking" 
-                                onclick="window.handleByeSlotSelectChange(${idx}, '')"
-                                style="background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; width: 34px; height: 34px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;"
-                                onmouseover="this.style.background='#fecaca'"
-                                onmouseout="this.style.background='#fee2e2'">
-                          ✕
-                        </button>
-                      ` : ''}
-                    </div>
-                  </div>
-
-                  <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed ${selectedFed ? '#99f6e4' : '#e2e8f0'}; min-height: 28px; display: flex; align-items: center;">
-                    ${selectedFed ? `
-                      <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
-                        <img src="assets/federations/${selectedFed.id}.jpg" alt="${selectedFed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${selectedFed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${selectedFed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.18); background: #ffffff; padding: 1px; flex-shrink: 0;">
-                        <span style="font-size: 0.8rem; font-weight: 700; color: #0f766e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                          ${selectedFed.nome} (${selectedFed.uf})
+                return `
+                  <div class="bye-slot-card" style="border: 2px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background: ${selectedFed ? '#f0fdfa' : '#f8fafc'}; border-radius: var(--radius-md); padding: 0.85rem 1rem; box-shadow: var(--shadow-sm); transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between;">
+                    
+                    <div>
+                      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+                        <span style="background: ${selectedFed ? '#0f766e' : '#475569'}; color: white; font-weight: 800; font-size: 0.85rem; padding: 0.2rem 0.65rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
+                          🎖️ ${rankLabel} Ranking ${rankNum <= 4 ? `(Cabeça ${rankNum})` : ''}
+                        </span>
+                        <span style="font-size: 0.72rem; font-weight: 800; color: ${selectedFed ? '#047857' : '#94a3b8'}; background: ${selectedFed ? '#ecfdf5' : '#f1f5f9'}; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
+                          ${selectedFed ? '✅ Vaga Definida' : '⚪ Vaga Aberta'}
                         </span>
                       </div>
-                    ` : `
-                      <span style="font-size: 0.72rem; color: #94a3b8; font-style: italic;">
-                        Nenhum estado selecionado para esta vaga.
-                      </span>
-                    `}
+
+                      <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--accent-dark-blue); margin-bottom: 0.35rem;">
+                        Estado do <strong>${rankLabel} Ranking</strong> (Passa de BYE):
+                      </label>
+
+                      <div style="display: flex; align-items: center; gap: 0.45rem;">
+                        <select class="form-select" 
+                                style="width: 100%; font-size: 0.88rem; font-weight: 700; border: 1.5px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background-color: ${!isAdmin ? '#f8fafc' : '#ffffff'}; padding: 0.45rem 0.6rem; border-radius: var(--radius-sm); ${!isAdmin ? 'cursor: not-allowed;' : ''}"
+                                ${!isAdmin ? 'disabled' : ''}
+                                onchange="window.handleByeSlotSelectChange(${idx}, this.value)">
+                          <option value="">-- Selecione o ${rankLabel} Estado --</option>
+                          ${participatingFeds.map(f => {
+                            const otherIdx = byesList.indexOf(f.id);
+                            const isCurrent = f.id === selectedFedId;
+                            const alreadyInOther = otherIdx !== -1 && otherIdx !== idx;
+                            if (alreadyInOther) {
+                              return `<option value="${f.id}" disabled style="color: #94a3b8; background: #f8fafc;">${f.nome} (${f.uf}) — 🔒 Já no ${otherIdx + 1}º Ranking</option>`;
+                            }
+                            return `<option value="${f.id}" ${isCurrent ? 'selected' : ''}>${f.nome} (${f.uf})</option>`;
+                          }).join('')}
+                        </select>
+
+                        ${isAdmin && selectedFed ? `
+                          <button title="Desmarcar ${rankLabel} Ranking e reabilitar estado" 
+                                  onclick="window.handleUnselectCategoryBye('${selectedFed.id}')"
+                                  style="background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; width: 34px; height: 34px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;"
+                                  onmouseover="this.style.background='#fecaca'"
+                                  onmouseout="this.style.background='#fee2e2'">
+                            ✕
+                          </button>
+                        ` : ''}
+                      </div>
+                    </div>
+
+                    <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed ${selectedFed ? '#99f6e4' : '#e2e8f0'}; min-height: 28px; display: flex; align-items: center;">
+                      ${selectedFed ? `
+                        <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
+                          <img src="assets/federations/${selectedFed.id}.jpg" alt="${selectedFed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${selectedFed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${selectedFed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.18); background: #ffffff; padding: 1px; flex-shrink: 0;">
+                          <span style="font-size: 0.8rem; font-weight: 700; color: #0f766e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            ${selectedFed.nome} (${selectedFed.uf})
+                          </span>
+                        </div>
+                      ` : `
+                        <span style="font-size: 0.72rem; color: #94a3b8; font-style: italic;">
+                          Nenhum estado selecionado para esta vaga.
+                        </span>
+                      `}
+                    </div>
                   </div>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- COLUNA 2: RELAÇÃO DOS ESTADOS JÁ SELECIONADOS E DISPONÍVEIS -->
+            <div class="state-selection-panel" style="max-height: 520px;">
+              <div class="state-selection-header">
+                <div class="state-selection-title">
+                  <span>📋 Relação dos Estados</span>
+                  <span style="font-size: 0.72rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.15rem 0.45rem; border-radius: 4px;">
+                    ${byesList.length}/${numByes} BYEs
+                  </span>
                 </div>
-              `;
-            }).join('')}
+                <input type="text" id="cat-bye-state-filter" class="state-selection-search" placeholder="🔍 Filtrar estado (ex: SP, RJ)..." oninput="window.filterCategoryByeList()">
+                <div style="font-size: 0.7rem; color: #64748b; line-height: 1.35; margin-top: 0.25rem;">
+                  Estados de BYE ficam <strong>clareados com check (✓)</strong>. Clique no check para <strong>desmarcar e reabilitar</strong>!
+                </div>
+              </div>
+              <div class="state-selection-list" id="cat-bye-state-items-container">
+                ${participatingFeds.map(f => {
+                  const isBye = byesList.includes(f.id);
+                  const byeRank = byesList.indexOf(f.id) + 1;
+                  if (isBye) {
+                    return `
+                      <div class="state-select-item is-selected" data-fed-id="${f.id}" style="cursor: not-allowed;" title="${f.nome} (${f.uf}) é ${byeRank}º Ranking (Passa de BYE). Clique no check para desmarcar!">
+                        <div class="state-item-left">
+                          <img src="assets/federations/${f.id}.jpg" alt="${f.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${f.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${f.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
+                          <span class="state-item-name">${f.nome} (${f.uf})</span>
+                        </div>
+                        <button type="button" class="btn-state-unselect-check" title="Clique para desmarcar do BYE e reabilitar" onclick="event.stopPropagation(); window.handleUnselectCategoryBye('${f.id}')">
+                          <span class="check-symbol">✓</span>
+                          <span class="check-slot-tag">${byeRank}º Ranking</span>
+                        </button>
+                      </div>
+                    `;
+                  } else {
+                    return `
+                      <div class="state-select-item is-available" data-fed-id="${f.id}" onclick="window.handlePickCategoryBye('${f.id}')" title="Clique para alocar ${f.nome} (${f.uf}) na próxima vaga de BYE">
+                        <div class="state-item-left">
+                          <img src="assets/federations/${f.id}.jpg" alt="${f.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${f.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${f.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
+                          <span class="state-item-name">${f.nome} (${f.uf})</span>
+                        </div>
+                        <button type="button" class="btn-state-assign-quick" title="Alocar no próximo BYE" onclick="event.stopPropagation(); window.handlePickCategoryBye('${f.id}')">
+                          + Selecionar
+                        </button>
+                      </div>
+                    `;
+                  }
+                }).join('')}
+              </div>
+            </div>
           </div>
         ` : `
           <div style="text-align: center; padding: 1.5rem; background: #f8fafc; border-radius: var(--radius-md); color: var(--text-muted); font-size: 0.95rem;">
@@ -528,7 +649,8 @@ export function renderCategoryView() {
 
           return `
             <div onclick="window.handleToggleCategoryBye('${fed.id}', event)"
-                 style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; border: 2px solid ${isBye ? '#10b981' : (isChecked ? 'var(--primary-light)' : 'var(--border-light)')}; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s ease; background: ${isBye ? '#ecfdf5' : (isChecked ? '#f8fafc' : '#ffffff')};">
+                 style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; border: 2px ${isBye ? 'dashed #059669' : 'solid ' + (isChecked ? 'var(--primary-light)' : 'var(--border-light)')}; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s ease; background: ${isBye ? '#f0fdf4' : (isChecked ? '#f8fafc' : '#ffffff')}; opacity: ${isBye ? '0.55' : '1'};"
+                 ${isBye ? `onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.55'"` : ''}>
               <div style="display: flex; align-items: center; gap: 0.65rem;">
                 <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 36px; height: 26px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2); background: #ffffff; padding: 1px; flex-shrink: 0;">
                 <div>
@@ -547,13 +669,21 @@ export function renderCategoryView() {
                 </div>
               </div>
 
-              <input type="checkbox" 
-                     class="cat-fed-checkbox" 
-                     value="${fed.id}" 
-                     ${isChecked ? 'checked' : ''} 
-                     onchange="window.handleToggleCategoryParticipant('${fed.id}', this.checked)"
-                     onclick="event.stopPropagation()"
-                     style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary);">
+              <div style="display: flex; align-items: center; gap: 0.45rem;">
+                ${isBye ? `
+                  <button type="button" class="btn-state-unselect-check" title="Clique para desmarcar do BYE e reabilitar" onclick="event.stopPropagation(); window.handleUnselectCategoryBye('${fed.id}')">
+                    <span class="check-symbol">✓</span>
+                    <span class="check-slot-tag">${byeRank}º BYE</span>
+                  </button>
+                ` : ''}
+                <input type="checkbox" 
+                       class="cat-fed-checkbox" 
+                       value="${fed.id}" 
+                       ${isChecked ? 'checked' : ''} 
+                       onchange="window.handleToggleCategoryParticipant('${fed.id}', this.checked)"
+                       onclick="event.stopPropagation()"
+                       style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary);">
+              </div>
             </div>
           `;
         }).join('')}
