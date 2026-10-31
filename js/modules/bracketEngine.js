@@ -1,7 +1,7 @@
 // Posições estratégicas de BYEs para garantir os quadrantes: Top (1, 3, 6), Bottom (5, 4, 2)
 const STANDARD_BYE_SLOTS_32 = [1, 30, 9, 22, 17, 14, 25, 6, 19, 11, 27, 3, 29, 5, 21, 13];
 
-export function createGraphBracket(federations, categoryId, categoryByes = null) {
+export function createGraphBracket(federations, categoryId, categoryByes = []) {
   // Separar as federações escolhidas para passar de BYE (respeitando a ordem de seleção)
   const byeFeds = [];
   if (Array.isArray(categoryByes)) {
@@ -13,24 +13,6 @@ export function createGraphBracket(federations, categoryId, categoryByes = null)
 
   // Quantidade de BYEs = 32 - N (onde N é o total de equipes participantes)
   const numByes = Math.max(0, 32 - federations.length);
-
-  // Apenas se categoryByes não foi especificado (null/undefined), completa automaticamente pelos melhores seeds
-  if (categoryByes === null || categoryByes === undefined) {
-    if (byeFeds.length < numByes) {
-      const sortedFeds = [...federations].sort((a, b) => {
-        if (a.seed && b.seed) return a.seed - b.seed;
-        if (a.seed) return -1;
-        if (b.seed) return 1;
-        return a.nome.localeCompare(b.nome, 'pt-BR');
-      });
-      for (const fed of sortedFeds) {
-        if (!byeFeds.some(f => f.id === fed.id)) {
-          byeFeds.push(fed);
-          if (byeFeds.length === numByes) break;
-        }
-      }
-    }
-  }
 
   const byeSlots = STANDARD_BYE_SLOTS_32.slice(0, numByes);
   

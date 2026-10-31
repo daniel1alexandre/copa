@@ -201,11 +201,24 @@ class AppStore {
           // Migração: se os brackets existirem mas estiverem no modelo antigo (< 75 jogos), regera para garantir a chave reversa completa e correta
           if (parsed.brackets) {
             Object.keys(parsed.brackets).forEach(catId => {
+              const catByes = (parsed.categoryByes && parsed.categoryByes[catId]) || [];
               if (parsed.brackets[catId] && parsed.brackets[catId].length < 75) {
                 const feds = (parsed.categoryParticipants && parsed.categoryParticipants[catId])
                   ? parsed.categoryParticipants[catId].map(id => INITIAL_FEDERATIONS.find(f => f.id === id)).filter(Boolean)
                   : INITIAL_FEDERATIONS;
-                parsed.brackets[catId] = createGraphBracket(feds, catId);
+                parsed.brackets[catId] = createGraphBracket(feds, catId, catByes);
+              } else if (catByes.length === 0 && parsed.brackets[catId]) {
+                // Regra: quando não tiver nenhum estado selecionado como Bye na categoria,
+                // nos confrontos também não pode ter nenhum estado selecionado na primeira fase
+                const hasR32Team = parsed.brackets[catId].some(
+                  g => g.fase === '1ª Fase' && (g.lado_a || g.lado_b)
+                );
+                if (hasR32Team) {
+                  const feds = (parsed.categoryParticipants && parsed.categoryParticipants[catId])
+                    ? parsed.categoryParticipants[catId].map(id => INITIAL_FEDERATIONS.find(f => f.id === id)).filter(Boolean)
+                    : INITIAL_FEDERATIONS;
+                  parsed.brackets[catId] = createGraphBracket(feds, catId, []);
+                }
               }
             });
           }
@@ -234,53 +247,9 @@ class AppStore {
     const tournament = JSON.parse(JSON.stringify(INITIAL_TOURNAMENT));
     const pointsTable = JSON.parse(JSON.stringify(DEFAULT_POINTS_TABLE));
 
-    // Gera o grafo da categoria Profissional imediatamente
+    // Gera o grafo da categoria Profissional sem BYEs pré-definidos e sem estados escalados
     const brackets = {};
-    brackets['prof'] = createGraphBracket(federations, 'prof');
-
-    // Agenda os primeiros jogos da 1ª fase nas quadras para início imediato
-    const activeFirstRoundGames = brackets['prof'].filter(g => !g.is_bye && g.lado_a && g.lado_b);
-    const times = ['08:30', '09:30', '10:30', '11:30', '13:00', '14:00', '15:00', '16:00'];
-    
-    // Distribui alguns jogos em andamento e em espera para o operador ver na hora
-    if (activeFirstRoundGames.length >= 6) {
-      // Jogo 1 na Quadra Central (em andamento)
-      activeFirstRoundGames[0].quadra_id = 'q1';
-      activeFirstRoundGames[0].horario = '08:30';
-      activeFirstRoundGames[0].status = 'em andamento';
-      activeFirstRoundGames[0].resultado_jogo1 = 'a';
-      activeFirstRoundGames[0].placar_jogo1 = '6/4 6/3';
-      activeFirstRoundGames[0].vitorias_a = 1;
-      activeFirstRoundGames[0].vitorias_b = 0;
-
-      // Jogo 2 na Quadra 2 (em andamento)
-      activeFirstRoundGames[1].quadra_id = 'q2';
-      activeFirstRoundGames[1].horario = '08:30';
-      activeFirstRoundGames[1].status = 'em andamento';
-      activeFirstRoundGames[1].resultado_jogo1 = 'b';
-      activeFirstRoundGames[1].placar_jogo1 = '3/6 4/6';
-      activeFirstRoundGames[1].resultado_jogo2 = 'a';
-      activeFirstRoundGames[1].placar_jogo2 = '6/2 6/4';
-      activeFirstRoundGames[1].vitorias_a = 1;
-      activeFirstRoundGames[1].vitorias_b = 1; // 1x1 empate, vai para DX!
-
-      // Jogos agendados em espera
-      activeFirstRoundGames[2].quadra_id = 'q3';
-      activeFirstRoundGames[2].horario = '08:30';
-      activeFirstRoundGames[2].status = 'em espera';
-
-      activeFirstRoundGames[3].quadra_id = 'q4';
-      activeFirstRoundGames[3].horario = '08:30';
-      activeFirstRoundGames[3].status = 'em espera';
-
-      activeFirstRoundGames[4].quadra_id = 'q1';
-      activeFirstRoundGames[4].horario = '09:30';
-      activeFirstRoundGames[4].status = 'em espera';
-
-      activeFirstRoundGames[5].quadra_id = 'q2';
-      activeFirstRoundGames[5].horario = '09:30';
-      activeFirstRoundGames[5].status = 'em espera';
-    }
+    brackets['prof'] = createGraphBracket(federations, 'prof', []);
 
     const state = {
       tournament,
@@ -289,6 +258,7 @@ class AppStore {
       courts,
       athletes,
       brackets,
+      categoryByes: { prof: [] },
       pointsTable,
       lastUpdated: '1970-01-01T00:00:00.000Z'
     };
@@ -355,6 +325,23 @@ class AppStore {
       categoryByes: remoteState.categoryByes || seed.categoryByes || {},
       users: (remoteState.users && remoteState.users.length > 0) ? remoteState.users : (this.state.users || seed.users)
     };
+
+    // Regra: quando não tiver nenhum estado selecionado como Bye na categoria,
+    // nos confrontos também não pode ter nenhum estado selecionado na primeira fase
+    if (this.state.brackets) {
+      Object.keys(this.state.brackets).forEach(catId => {
+        const catByes = (this.state.categoryByes && this.state.categoryByes[catId]) || [];
+        if (catByes.length === 0 && this.state.brackets[catId]) {
+          const hasR32Team = this.state.brackets[catId].some(
+            g => g.fase === '1ª Fase' && (g.lado_a || g.lado_b)
+          );
+          if (hasR32Team) {
+            const feds = this.getCategoryParticipatingFeds(catId);
+            this.state.brackets[catId] = createGraphBracket(feds, catId, []);
+          }
+        }
+      });
+    }
     if (saveToStorage && typeof localStorage !== 'undefined') {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
@@ -503,26 +490,10 @@ class AppStore {
 
     // Validar os BYEs atuais para garantir que só tenham federações participantes
     let byes = (this.getCategoryByes(categoryId) || []).filter(id => fedIds.includes(id));
-
-    // Se faltarem BYEs para preencher a cota da categoria, completa automaticamente pelos melhores rankings/seeds
-    if (byes.length < numByes) {
-      const sortedBySeed = [...feds].sort((a, b) => {
-        if (a.seed && b.seed) return a.seed - b.seed;
-        if (a.seed) return -1;
-        if (b.seed) return 1;
-        return a.nome.localeCompare(b.nome, 'pt-BR');
-      });
-      for (const fed of sortedBySeed) {
-        if (!byes.includes(fed.id)) {
-          byes.push(fed.id);
-          if (byes.length === numByes) break;
-        }
-      }
-    }
     byes = byes.slice(0, numByes);
     this.setCategoryByes(categoryId, byes, false);
     
-    // Gera o chaveamento colocando APENAS os estados de BYE; os demais slots da 1ª fase ficam vazios
+    // Gera o chaveamento colocando APENAS os estados de BYE; se não houver BYEs, a 1ª fase fica totalmente vazia
     this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byes);
     this.save();
     return feds;
@@ -552,10 +523,22 @@ class AppStore {
   }
 
   getGames(categoryId = 'prof') {
+    const byes = this.getCategoryByes(categoryId);
+    const feds = this.getCategoryParticipatingFeds(categoryId);
+
     if (!this.state.brackets[categoryId]) {
-      const feds = this.getCategoryParticipatingFeds(categoryId);
-      this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, this.getCategoryByes(categoryId));
+      this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byes);
       this.save(false);
+    } else if (byes.length === 0) {
+      // Regra oficial: quando não tiver nenhum estado selecionado como Bye na categoria,
+      // nos confrontos também não pode ter nenhum estado selecionado na primeira fase
+      const hasAnyR32Team = this.state.brackets[categoryId].some(
+        g => g.fase === '1ª Fase' && (g.lado_a || g.lado_b)
+      );
+      if (hasAnyR32Team) {
+        this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, []);
+        this.save(false);
+      }
     }
     return this.state.brackets[categoryId];
   }
