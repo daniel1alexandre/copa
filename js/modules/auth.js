@@ -111,6 +111,9 @@ class AuthService {
   logout() {
     this.clearSession();
     showLoginPortal();
+    if (typeof window.updateNavTabsAccess === 'function') {
+      window.updateNavTabsAccess();
+    }
     toast.show({
       title: 'Sessão Encerrada',
       message: 'Você saiu do sistema.',
@@ -139,6 +142,9 @@ export function initAuthUI() {
   // Monitora alterações de sessão
   auth.onAuthChange(() => {
     updateTopbarUserBadge();
+    if (typeof window.updateNavTabsAccess === 'function') {
+      window.updateNavTabsAccess();
+    }
   });
 }
 
@@ -334,6 +340,9 @@ window.handlePortalLogin = function (e) {
 
     setTimeout(() => {
       hideLoginPortal();
+      if (typeof window.updateNavTabsAccess === 'function') {
+        window.updateNavTabsAccess();
+      }
       if (window.toast && typeof window.toast.show === 'function') {
         window.toast.show({
           title: 'Bem-vindo, Baumann!',
@@ -362,10 +371,16 @@ window.handlePortalLogin = function (e) {
 window.handlePortalGuestLogin = function () {
   auth.loginAsGuest();
   hideLoginPortal();
+  if (typeof window.updateNavTabsAccess === 'function') {
+    window.updateNavTabsAccess();
+  }
+  if (typeof window.switchTab === 'function') {
+    window.switchTab('chaveamento');
+  }
   if (window.toast && typeof window.toast.show === 'function') {
     window.toast.show({
-      title: 'Acesso Visitante',
-      message: 'Você está no modo de visualização em tempo real das chaves e do ranking.',
+      title: 'Modo Espectador',
+      message: 'Visualização liberada para Confrontos e Classificação em tempo real.',
       type: 'info'
     });
   }

@@ -1208,6 +1208,16 @@ export function advanceTeamByBye(categoryId, gameCode, winningSide = 'A') {
 }
 
 export function openChangeTeamSlotModal(gameCode, categoryId = 'prof') {
+  if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+    if (window.toast) {
+      window.toast.show({
+        title: 'Acesso Restrito',
+        message: 'Apenas a arbitragem e administradores podem alterar as equipes dos confrontos.',
+        type: 'warning'
+      });
+    }
+    return;
+  }
   const games = store.getGames(categoryId);
   const game = games.find(g => g.code === gameCode);
   if (!game) return;
@@ -1810,6 +1820,7 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
   // Se ambos estiverem escalados e NÃO estiver empatado em 1x1, as disputas Fem e Masc ficam travadas e a Mista bloqueada
   // Só permite destravar caso seja admin solicitando explicitamente (forceUnlock)
   const isLocked = isBothMainReady && !isEmpate1x1 && !forceUnlock;
+  const isReadOnlyGuest = !isAdmin;
   const isMistaAllowed = isEmpate1x1;
 
   function buildOptions(list, selectedVal, disabled = false) {
@@ -1850,7 +1861,19 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
       <div class="modal-body" style="padding: 1.25rem 1.4rem; max-height: calc(85vh - 140px); overflow-y: auto;">
         
         <!-- BANNERS DE STATUS E REGRA DE ESCALAÇÃO -->
-        ${isEmpate1x1 ? `
+        ${isReadOnlyGuest ? `
+          <div style="background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 0.85rem 1.15rem; margin-bottom: 1.15rem; display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.5rem; line-height: 1;">👁️</span>
+            <div>
+              <div style="font-weight: 800; font-size: 0.92rem; color: #1e293b;">
+                Modo Espectador CBT — Somente Leitura
+              </div>
+              <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; line-height: 1.35; margin-top: 0.1rem;">
+                Você está visualizando a escalação oficial da CBT em tempo real. Alterações são permitidas apenas para a arbitragem autorizada.
+              </div>
+            </div>
+          </div>
+        ` : isEmpate1x1 ? `
           <div style="background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%); border: 2px solid #c084fc; border-radius: var(--radius-md); padding: 0.85rem 1.15rem; margin-bottom: 1.15rem; box-shadow: 0 2px 8px rgba(192, 132, 252, 0.2); display: flex; align-items: center; gap: 0.75rem;">
             <span style="font-size: 1.6rem; line-height: 1;">🔥</span>
             <div>
@@ -1971,13 +1994,13 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Feminino):</label>
-                <select id="lineup_fem_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${isLocked ? 'disabled' : ''}>
+                <select id="lineup_fem_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesA_fem, femA[0])}
                 </select>
               </div>
               <div>
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Feminino):</label>
-                <select id="lineup_fem_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${isLocked ? 'disabled' : ''}>
+                <select id="lineup_fem_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesA_fem, femA[1])}
                 </select>
               </div>
@@ -1991,13 +2014,13 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Feminino):</label>
-                <select id="lineup_fem_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${isLocked ? 'disabled' : ''}>
+                <select id="lineup_fem_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesB_fem, femB[0])}
                 </select>
               </div>
               <div>
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Feminino):</label>
-                <select id="lineup_fem_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${isLocked ? 'disabled' : ''}>
+                <select id="lineup_fem_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesB_fem, femB[1])}
                 </select>
               </div>
@@ -2042,13 +2065,13 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Masculino):</label>
-                <select id="lineup_masc_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${isLocked ? 'disabled' : ''}>
+                <select id="lineup_masc_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesA_masc, mascA[0])}
                 </select>
               </div>
               <div>
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Masculino):</label>
-                <select id="lineup_masc_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${isLocked ? 'disabled' : ''}>
+                <select id="lineup_masc_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesA_masc, mascA[1])}
                 </select>
               </div>
@@ -2062,13 +2085,13 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Masculino):</label>
-                <select id="lineup_masc_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${isLocked ? 'disabled' : ''}>
+                <select id="lineup_masc_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesB_masc, mascB[0])}
                 </select>
               </div>
               <div>
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Masculino):</label>
-                <select id="lineup_masc_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${isLocked ? 'disabled' : ''}>
+                <select id="lineup_masc_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesB_masc, mascB[1])}
                 </select>
               </div>
@@ -2115,13 +2138,13 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Mista):</label>
-                <select id="lineup_mista_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${!isMistaAllowed ? 'disabled' : ''}>
+                <select id="lineup_mista_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(!isMistaAllowed || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesA_todos, mistaA[0])}
                 </select>
               </div>
               <div>
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Mista):</label>
-                <select id="lineup_mista_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${!isMistaAllowed ? 'disabled' : ''}>
+                <select id="lineup_mista_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(!isMistaAllowed || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesA_todos, mistaA[1])}
                 </select>
               </div>
@@ -2135,13 +2158,13 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
               </div>
               <div style="margin-bottom: 0.5rem;">
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Mista):</label>
-                <select id="lineup_mista_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${!isMistaAllowed ? 'disabled' : ''}>
+                <select id="lineup_mista_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(!isMistaAllowed || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesB_todos, mistaB[0])}
                 </select>
               </div>
               <div>
                 <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Mista):</label>
-                <select id="lineup_mista_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${!isMistaAllowed ? 'disabled' : ''}>
+                <select id="lineup_mista_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(!isMistaAllowed || isReadOnlyGuest) ? 'disabled' : ''}>
                   ${buildOptions(athletesB_todos, mistaB[1])}
                 </select>
               </div>
@@ -2166,7 +2189,7 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
           <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">
             Fechar
           </button>
-          ${(!isLocked || isMistaAllowed || forceUnlock) ? `
+          ${isReadOnlyGuest ? '' : (!isLocked || isMistaAllowed || forceUnlock) ? `
             <button type="button" class="btn btn-primary" onclick="window.saveMatchLineup('${game.code}', '${categoryId}')" style="background: ${isMistaAllowed ? '#7c3aed' : '#028090'}; border-color: ${isMistaAllowed ? '#7c3aed' : '#028090'}; font-weight: 800; padding: 0.5rem 1.25rem; display: inline-flex; align-items: center; gap: 0.45rem;">
               💾 ${isMistaAllowed ? 'Salvar Escalação da Dupla Mista' : 'Salvar Escalação'}
             </button>
@@ -2188,6 +2211,16 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
 window.openMatchLineupModal = openMatchLineupModal;
 
 window.saveMatchLineup = (gameCode, categoryId) => {
+  if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+    if (window.toast) {
+      window.toast.show({
+        title: 'Acesso Restrito',
+        message: 'Apenas a arbitragem e administradores podem salvar a escalação.',
+        type: 'warning'
+      });
+    }
+    return;
+  }
   const getVal = id => {
     const el = document.getElementById(id);
     return el ? el.value.trim() : '';
@@ -2282,6 +2315,16 @@ window.saveMatchLineup = (gameCode, categoryId) => {
 };
 
 window.clearMatchLineup = (gameCode, categoryId) => {
+  if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+    if (window.toast) {
+      window.toast.show({
+        title: 'Acesso Restrito',
+        message: 'Apenas administradores podem limpar a escalação.',
+        type: 'warning'
+      });
+    }
+    return;
+  }
   if (confirm(`Tem certeza que deseja limpar toda a escalação do confronto ${gameCode}?`)) {
     store.clearGameLineup(categoryId, gameCode);
     toast.show({

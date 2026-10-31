@@ -1277,6 +1277,12 @@ body::before {
   box-shadow: 0 1px 4px rgba(2, 128, 144, 0.15);
 }
 
+/* Ocultação de abas restritas no modo visitante/espectador */
+.nav-tab.nav-tab-restricted {
+  display: none !important;
+}
+
+
 
 
 

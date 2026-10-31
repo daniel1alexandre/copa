@@ -10,9 +10,53 @@ import { initTeamsAthletesView, renderTeamsAthletes } from './modules/teamsAthle
 import { initConfigView, renderConfig } from './modules/configView.js';
 import { openMatchModal, openScheduleModal, openConfigureFirstRoundModal, openEditFirstRoundCardModal } from './modules/modal.js';
 
+const GUEST_ALLOWED_TABS = ['chaveamento', 'ranking'];
 let activeTab = 'home';
 
+export function updateNavTabsAccess() {
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
+
+  const tabButtons = document.querySelectorAll('.nav-tab');
+  tabButtons.forEach(btn => {
+    const tab = btn.dataset.tab;
+    if (isAdmin) {
+      btn.style.display = '';
+      btn.removeAttribute('disabled');
+      btn.classList.remove('nav-tab-restricted');
+    } else {
+      if (GUEST_ALLOWED_TABS.includes(tab)) {
+        btn.style.display = '';
+        btn.removeAttribute('disabled');
+        btn.classList.remove('nav-tab-restricted');
+      } else {
+        btn.style.display = 'none';
+        btn.setAttribute('disabled', 'true');
+        btn.classList.add('nav-tab-restricted');
+      }
+    }
+  });
+
+  // Se o visitante estiver numa aba restrita, redireciona para 'chaveamento'
+  if (!isAdmin && !GUEST_ALLOWED_TABS.includes(activeTab)) {
+    switchTab('chaveamento');
+  }
+}
+
 function switchTab(tabId) {
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
+
+  // Bloqueio rigoroso de navegação no modo visitante/espectador
+  if (!isAdmin && !GUEST_ALLOWED_TABS.includes(tabId)) {
+    if (window.toast && typeof window.toast.show === 'function') {
+      window.toast.show({
+        title: 'Acesso Restrito',
+        message: 'No modo visitante/espectador, apenas os menus Confrontos e Classificação estão liberados para visualização.',
+        type: 'warning'
+      });
+    }
+    tabId = 'chaveamento';
+  }
+
   activeTab = tabId;
 
   // Atualiza botões da barra de navegação
@@ -121,8 +165,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializa o controle de zoom da aplicação (Padrão 85%)
   initZoomController();
 
-  // Render inicial
-  switchTab('home');
+  window.updateNavTabsAccess = updateNavTabsAccess;
+  updateNavTabsAccess();
+
+  // Render inicial conforme perfil de acesso
+  if (!auth.isAdmin()) {
+    switchTab('chaveamento');
+  } else {
+    switchTab('home');
+  }
 
   // Fechar modal ao pressionar ESC
   document.addEventListener('keydown', (e) => {

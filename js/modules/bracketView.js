@@ -816,6 +816,7 @@ function renderTeamLineupBar(game, slot, team, isSlotBye) {
     return '';
   }
 
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
   const esc = game.escalacao || {};
   const fem = slot === 'A' ? (esc.feminino?.lado_a || []) : (esc.feminino?.lado_b || []);
   const masc = slot === 'A' ? (esc.masculino?.lado_a || []) : (esc.masculino?.lado_b || []);
@@ -837,12 +838,12 @@ function renderTeamLineupBar(game, slot, team, isSlotBye) {
   const textColor = isConfirmed ? '#047857' : '#475569';
   const labelColor = isConfirmed ? '#065f46' : '#1e293b';
   const btnBorder = isConfirmed ? '#6ee7b7' : '#cbd5e1';
-  const btnText = isConfirmed ? 'Editar Escalação ➔' : 'Escalar Time ➔';
+  const btnText = isAdmin ? (isConfirmed ? 'Editar Escalação ➔' : 'Escalar Time ➔') : '👁️ Ver Escalação';
 
   return `
     <div class="team-lineup-card ${isConfirmed ? 'is-confirmed' : 'is-pending'}"
          onclick="event.stopPropagation(); window.openMatchLineupModal('${game.code}', '${game.categoria_id}', '${slot}')"
-         title="Clique para escalar os atletas de ${team.nome || team.uf} (${team.uf})"
+         title="${isAdmin ? `Clique para escalar os atletas de ${team.nome || team.uf} (${team.uf})` : `Clique para visualizar a escalação de ${team.nome || team.uf} (${team.uf})`}"
          style="margin-bottom: 0.35rem; padding: 0.28rem 0.55rem; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; cursor: pointer; transition: all 0.15s ease; background: ${cardBg}; border: ${cardBorder}; color: ${textColor};"
          onmouseover="this.style.filter='brightness(0.97)'"
          onmouseout="this.style.filter='none'">
@@ -1177,10 +1178,9 @@ function renderMatchCard(game) {
 
       <!-- TIME A -->
       <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}"
-           onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')"
-           title="💡 Clique para escolher os Estados deste confronto"
-           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderA}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
-           onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'">
+           ${isAdmin ? `onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="💡 Clique para escolher os Estados deste confronto"` : `title="${game.lado_a?.nome || 'Equipe'}"`}
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderA}; min-height: 36px; cursor: ${isAdmin ? 'pointer' : 'default'}; transition: all 0.15s ease;"
+           ${isAdmin ? `onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'"` : ''}>
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${getTeamName(game.lado_a, slotAIsBye, 'A')}
         </div>
@@ -1196,10 +1196,9 @@ function renderMatchCard(game) {
 
       <!-- TIME B -->
       <div class="match-team-row ${isWinnerB ? 'is-winner' : (isWinnerA ? 'is-loser' : '')}"
-           onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')"
-           title="💡 Clique para escolher os Estados deste confronto"
-           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderB}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
-           onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'">
+           ${isAdmin ? `onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="💡 Clique para escolher os Estados deste confronto"` : `title="${game.lado_b?.nome || 'Equipe'}"`}
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderB}; min-height: 36px; cursor: ${isAdmin ? 'pointer' : 'default'}; transition: all 0.15s ease;"
+           ${isAdmin ? `onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'"` : ''}>
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${getTeamName(game.lado_b, slotBIsBye, 'B')}
         </div>
@@ -1235,34 +1234,61 @@ function renderMatchCard(game) {
                <!-- F -->
                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0; gap: 4px;">
                  <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Feminino">F</strong>
-                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo1 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                    <option value="" ${!game.resultado_jogo1 ? 'selected' : ''}>-Venc-</option>
-                    <option value="a" ${String(game.resultado_jogo1).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
-                    <option value="b" ${String(game.resultado_jogo1).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
-                 </select>
+                 ${isAdmin ? `
+                   <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo1 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155;" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'placar', this.value)">
+                   <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155;" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'vencedor', this.value)">
+                      <option value="" ${!game.resultado_jogo1 ? 'selected' : ''}>-Venc-</option>
+                      <option value="a" ${String(game.resultado_jogo1).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
+                      <option value="b" ${String(game.resultado_jogo1).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
+                   </select>
+                 ` : `
+                   <span style="width: 86px; font-size: 0.68rem; font-weight: 700; text-align: center; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; padding: 0.18rem 0.2rem; display: inline-block;">
+                     ${game.placar_jogo1 || '-'}
+                   </span>
+                   <span style="width: 72px; font-size: 0.65rem; font-weight: 800; text-align: center; color: ${game.resultado_jogo1 ? '#047857' : '#94a3b8'}; background: ${game.resultado_jogo1 ? '#ecfdf5' : '#f8fafc'}; border: 1px solid ${game.resultado_jogo1 ? '#86efac' : '#e2e8f0'}; border-radius: 3px; padding: 0.18rem 0.2rem; display: inline-block;">
+                     ${game.resultado_jogo1 ? (String(game.resultado_jogo1).toLowerCase() === 'a' ? 'Eq. A' : 'Eq. B') : '-'}
+                   </span>
+                 `}
                </div>
                
                <!-- M -->
                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0; gap: 4px;">
                  <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Masculino">M</strong>
-                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo2 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                    <option value="" ${!game.resultado_jogo2 ? 'selected' : ''}>-Venc-</option>
-                    <option value="a" ${String(game.resultado_jogo2).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
-                    <option value="b" ${String(game.resultado_jogo2).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
-                 </select>
+                 ${isAdmin ? `
+                   <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo2 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155;" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'placar', this.value)">
+                   <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155;" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'vencedor', this.value)">
+                      <option value="" ${!game.resultado_jogo2 ? 'selected' : ''}>-Venc-</option>
+                      <option value="a" ${String(game.resultado_jogo2).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
+                      <option value="b" ${String(game.resultado_jogo2).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
+                   </select>
+                 ` : `
+                   <span style="width: 86px; font-size: 0.68rem; font-weight: 700; text-align: center; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; padding: 0.18rem 0.2rem; display: inline-block;">
+                     ${game.placar_jogo2 || '-'}
+                   </span>
+                   <span style="width: 72px; font-size: 0.65rem; font-weight: 800; text-align: center; color: ${game.resultado_jogo2 ? '#047857' : '#94a3b8'}; background: ${game.resultado_jogo2 ? '#ecfdf5' : '#f8fafc'}; border: 1px solid ${game.resultado_jogo2 ? '#86efac' : '#e2e8f0'}; border-radius: 3px; padding: 0.18rem 0.2rem; display: inline-block;">
+                     ${game.resultado_jogo2 ? (String(game.resultado_jogo2).toLowerCase() === 'a' ? 'Eq. A' : 'Eq. B') : '-'}
+                   </span>
+                 `}
                </div>
                
                <!-- DX -->
                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0; gap: 4px;">
                  <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Dupla Mista">DX</strong>
-                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo3 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                    <option value="" ${!game.resultado_jogo3 ? 'selected' : ''}>-Venc-</option>
-                    <option value="a" ${String(game.resultado_jogo3).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
-                    <option value="b" ${String(game.resultado_jogo3).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
-                 </select>
+                 ${isAdmin ? `
+                   <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo3 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155;" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'placar', this.value)">
+                   <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155;" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'vencedor', this.value)">
+                      <option value="" ${!game.resultado_jogo3 ? 'selected' : ''}>-Venc-</option>
+                      <option value="a" ${String(game.resultado_jogo3).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
+                      <option value="b" ${String(game.resultado_jogo3).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
+                   </select>
+                 ` : `
+                   <span style="width: 86px; font-size: 0.68rem; font-weight: 700; text-align: center; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; padding: 0.18rem 0.2rem; display: inline-block;">
+                     ${game.placar_jogo3 || '-'}
+                   </span>
+                   <span style="width: 72px; font-size: 0.65rem; font-weight: 800; text-align: center; color: ${game.resultado_jogo3 ? '#047857' : '#94a3b8'}; background: ${game.resultado_jogo3 ? '#ecfdf5' : '#f8fafc'}; border: 1px solid ${game.resultado_jogo3 ? '#86efac' : '#e2e8f0'}; border-radius: 3px; padding: 0.18rem 0.2rem; display: inline-block;">
+                     ${game.resultado_jogo3 ? (String(game.resultado_jogo3).toLowerCase() === 'a' ? 'Eq. A' : 'Eq. B') : '-'}
+                   </span>
+                 `}
                </div>
             </div>
 
@@ -1431,6 +1457,10 @@ window.saveInlineCard = function(code, catId) {
 };
 
 window.inlineUpdateScore = function(code, catId, jogoNum, field, value) {
+  if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+    console.warn('Ação bloqueada: somente administradores podem atualizar placares.');
+    return;
+  }
   const game = window.store.getGames(catId).find(g => g.code === code);
   if(!game) return;
   
