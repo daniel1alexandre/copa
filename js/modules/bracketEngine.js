@@ -1,29 +1,33 @@
 // Posições estratégicas de BYEs para garantir os quadrantes: Top (1, 3, 6), Bottom (5, 4, 2)
 const STANDARD_BYE_SLOTS_32 = [1, 30, 9, 22, 17, 14, 25, 6, 19, 11, 27, 3, 29, 5, 21, 13];
 
-export function createGraphBracket(federations, categoryId, categoryByes = []) {
+export function createGraphBracket(federations, categoryId, categoryByes = null) {
   // Separar as federações escolhidas para passar de BYE (respeitando a ordem de seleção)
   const byeFeds = [];
-  categoryByes.forEach(byeId => {
-    const fed = federations.find(f => f.id === byeId);
-    if (fed) byeFeds.push(fed);
-  });
+  if (Array.isArray(categoryByes)) {
+    categoryByes.forEach(byeId => {
+      const fed = federations.find(f => f.id === byeId);
+      if (fed) byeFeds.push(fed);
+    });
+  }
 
   // Quantidade de BYEs = 32 - N (onde N é o total de equipes participantes)
   const numByes = Math.max(0, 32 - federations.length);
 
-  // Se faltarem BYEs para preencher a cota da categoria, completa automaticamente pelos melhores seeds
-  if (byeFeds.length < numByes) {
-    const sortedFeds = [...federations].sort((a, b) => {
-      if (a.seed && b.seed) return a.seed - b.seed;
-      if (a.seed) return -1;
-      if (b.seed) return 1;
-      return a.nome.localeCompare(b.nome, 'pt-BR');
-    });
-    for (const fed of sortedFeds) {
-      if (!byeFeds.some(f => f.id === fed.id)) {
-        byeFeds.push(fed);
-        if (byeFeds.length === numByes) break;
+  // Apenas se categoryByes não foi especificado (null/undefined), completa automaticamente pelos melhores seeds
+  if (categoryByes === null || categoryByes === undefined) {
+    if (byeFeds.length < numByes) {
+      const sortedFeds = [...federations].sort((a, b) => {
+        if (a.seed && b.seed) return a.seed - b.seed;
+        if (a.seed) return -1;
+        if (b.seed) return 1;
+        return a.nome.localeCompare(b.nome, 'pt-BR');
+      });
+      for (const fed of sortedFeds) {
+        if (!byeFeds.some(f => f.id === fed.id)) {
+          byeFeds.push(fed);
+          if (byeFeds.length === numByes) break;
+        }
       }
     }
   }
@@ -66,8 +70,8 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
     const gameId = `g_main_r32_${matchNum}`;
     const code = `C${matchNum}`;
 
-    const isByeA = slotA?.isBye;
-    const isByeB = slotB?.isBye;
+    const isByeA = Boolean(slotA?.isBye);
+    const isByeB = Boolean(slotB?.isBye);
     const hasBye = isByeA || isByeB;
 
     // Próximo jogo: Oitavas (C17 a C24)
@@ -88,6 +92,11 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       }
     }
 
+    const teamA = isByeA ? null : slotA;
+    const teamB = isByeB ? null : slotB;
+    const advancingTeam = isByeA ? teamB : (isByeB ? teamA : null);
+    const hasAdvanceWinner = Boolean(hasBye && advancingTeam && advancingTeam.id);
+
     const game = {
       id: gameId,
       code: code,
@@ -95,11 +104,11 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       bracket: 'principal',
       fase: '1ª Fase',
       descricao: `1ª Fase (${matchNum})`,
-      lado_a: isByeA ? null : slotA,
-      lado_b: isByeB ? null : slotB,
+      lado_a: teamA,
+      lado_b: teamB,
       is_bye: hasBye,
       bye_slot: isByeA ? 'A' : (isByeB ? 'B' : null),
-      status: hasBye ? 'encerrado' : 'aguardando',
+      status: hasAdvanceWinner ? 'encerrado' : 'aguardando',
       quadra_id: null,
       horario: null,
       resultado_jogo1: null,
@@ -110,7 +119,7 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
       placar_jogo3: '',
       vitorias_a: 0,
       vitorias_b: 0,
-      vencedor_id: hasBye ? (isByeA ? slotB?.id : slotA?.id) : null,
+      vencedor_id: hasAdvanceWinner ? advancingTeam.id : null,
       perdedor_id: null,
       proxima_fase: `C${nextGameNum}`,
       proxima_fase_slot: nextSlot,
@@ -763,12 +772,13 @@ export function isSlotVagaLivre(games, game, slot) {
 
   // 1. Na 1ª Fase (C1 a C16)
   if (game.fase === '1ª Fase') {
-    if (game.is_bye) {
-      if (slot === 'A') return !game.lado_a || game.bye_slot === 'A';
-      if (slot === 'B') return !game.lado_b || game.bye_slot === 'B';
+    if (game.bye_slot) {
+      return game.bye_slot === slot;
     }
-    if (slot === 'A' && !game.lado_a && (game.is_bye || game.bye_slot === 'A')) return true;
-    if (slot === 'B' && !game.lado_b && (game.is_bye || game.bye_slot === 'B')) return true;
+    if (game.is_bye) {
+      if (slot === 'A') return !game.lado_a && Boolean(game.lado_b);
+      if (slot === 'B') return !game.lado_b && Boolean(game.lado_a);
+    }
     return false;
   }
 

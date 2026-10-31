@@ -7,6 +7,9 @@ let selectedCategoryId = 'prof';
 export function initCategoryView() {
   window.selectCategoryTab = (catId) => {
     selectedCategoryId = catId;
+    if (typeof window.switchBracketCategory === 'function') {
+      window.switchBracketCategory(catId);
+    }
     renderCategoryView();
   };
 
@@ -139,7 +142,7 @@ export function initCategoryView() {
     renderCategoryView();
   };
 
-  // Limpar todas as vagas de BYE da categoria
+  // Limpar todas as vagas de BYE da categoria e os estados selecionados nos confrontos
   window.handleClearAllByes = () => {
     if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
       toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem limpar BYEs.', type: 'error' });
@@ -148,8 +151,8 @@ export function initCategoryView() {
 
     store.setCategoryByes(selectedCategoryId, []);
     toast.show({
-      title: 'BYEs Limpos',
-      message: 'Todas as vagas de BYE desta categoria foram desmarcadas.',
+      title: 'BYEs e Confrontos Limpos',
+      message: 'Todas as vagas de BYE e estados selecionados no menu Confrontos foram limpos.',
       type: 'info'
     });
     renderCategoryView();

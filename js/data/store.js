@@ -544,7 +544,10 @@ class AppStore {
     if (updateBracket) {
       const feds = this.getCategoryParticipatingFeds(categoryId);
       this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byeFedIds);
-      this.save();
+      const actionSummary = (byeFedIds && byeFedIds.length > 0)
+        ? `BYEs da categoria ${categoryId} atualizados`
+        : `BYEs e estados dos confrontos da categoria ${categoryId} limpos`;
+      this.save(true, actionSummary);
     }
   }
 
