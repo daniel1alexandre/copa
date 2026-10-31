@@ -1055,9 +1055,7 @@ function renderMatchCard(game) {
 
   return `
     <div class="bracket-match-card ${phaseCardClass} ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" 
-         onclick="window.openMatchLineupModal('${game.code}', '${game.categoria_id}')"
-         title="📋 Clique para abrir a Escalação deste confronto"
-         style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: ${cardShadow}; border: ${cardBorder}; background: ${cardBg}; cursor: pointer; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+         style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: ${cardShadow}; border: ${cardBorder}; background: ${cardBg}; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
 
       <!-- CABEÇALHO DO CARD COM TODAS AS INFORMAÇÕES VISÍVEIS -->
       <div class="match-card-header" style="margin-bottom: 0.45rem; border-bottom: 1px solid ${headerBorderColor}; padding-bottom: 0.4rem; display: flex; flex-direction: column; gap: 0.25rem;">
@@ -1120,8 +1118,8 @@ function renderMatchCard(game) {
 
       <!-- TIME A -->
       <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}"
-           onclick="event.stopPropagation(); window.openMatchLineupModal('${game.code}', '${game.categoria_id}')"
-           title="📋 Clique para abrir a Escalação deste confronto"
+           onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')"
+           title="💡 Clique para escolher os Estados deste confronto"
            style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.3rem; border: 1px solid ${borderA}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
            onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'">
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
@@ -1136,8 +1134,8 @@ function renderMatchCard(game) {
 
       <!-- TIME B -->
       <div class="match-team-row ${isWinnerB ? 'is-winner' : (isWinnerA ? 'is-loser' : '')}"
-           onclick="event.stopPropagation(); window.openMatchLineupModal('${game.code}', '${game.categoria_id}')"
-           title="📋 Clique para abrir a Escalação deste confronto"
+           onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')"
+           title="💡 Clique para escolher os Estados deste confronto"
            style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
            onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'">
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
@@ -1170,8 +1168,8 @@ function renderMatchCard(game) {
               </span>
             `}
           </div>
-          <span style="font-size: 0.68rem; font-weight: 800; color: #028090; margin-left: 0.35rem; flex-shrink: 0;">
-            ${hasLineup ? 'Ver / Editar ➔' : 'Escalar ➔'}
+          <span style="font-size: 0.68rem; font-weight: 800; color: #028090; margin-left: 0.35rem; flex-shrink: 0; background: #ffffff; border: 1px solid #99f6e4; padding: 0.1rem 0.45rem; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+            ${hasLineup ? 'Editar Escalação ➔' : 'Escalar ➔'}
           </span>
         </div>
       ` : ''}

@@ -1235,10 +1235,16 @@ body::before {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.bracket-match-card:hover {
-  border-color: #028090 !important;
-  box-shadow: 0 3px 10px rgba(2, 128, 144, 0.22) !important;
+.match-team-row {
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
+
+.match-team-row:hover {
+  border-color: #028090 !important;
+  box-shadow: 0 0 0 2px rgba(2, 128, 144, 0.25) !important;
+}
+
 
 
 
