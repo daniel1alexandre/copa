@@ -894,6 +894,35 @@ class AppStore {
   }
 
   // ==========================================
+  // ESCALAÇÃO DE ATLETAS POR CONFRONTO
+  // ==========================================
+  saveGameLineup(categoryId, gameCode, lineup) {
+    const games = this.getGames(categoryId);
+    const game = games.find(g => g.code === gameCode);
+    if (!game) return { success: false, message: 'Jogo não encontrado.' };
+
+    game.escalacao = lineup;
+    this.save(true, `Escalação do confronto ${gameCode} atualizada`);
+    return { success: true, message: 'Escalação salva com sucesso!' };
+  }
+
+  clearGameLineup(categoryId, gameCode) {
+    const games = this.getGames(categoryId);
+    const game = games.find(g => g.code === gameCode);
+    if (!game) return { success: false, message: 'Jogo não encontrado.' };
+
+    game.escalacao = null;
+    this.save(true, `Escalação do confronto ${gameCode} removida`);
+    return { success: true, message: 'Escalação removida com sucesso!' };
+  }
+
+  getGameLineup(categoryId, gameCode) {
+    const games = this.getGames(categoryId);
+    const game = games.find(g => g.code === gameCode);
+    return game?.escalacao || null;
+  }
+
+  // ==========================================
   // VALIDAÇÕES DE ATLETA
   // ==========================================
   checkAthleteConflict(nome, equipeId, categoryId, currentAthleteId = null) {

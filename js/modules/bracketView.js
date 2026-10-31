@@ -1,7 +1,7 @@
 // Módulo de Visualização e Interação do Chaveamento
 import { store } from '../data/store.js';
 import { calculateCategoryPlacements, isSlotVagaLivre } from './bracketEngine.js';
-import { openMatchModal, openEditFirstRoundCardModal } from './modal.js';
+import { openMatchModal, openEditFirstRoundCardModal, openMatchLineupModal } from './modal.js';
 import { toast } from './toast.js';
 
 let currentCategory = 'prof';
@@ -11,6 +11,7 @@ let currentViewMode = 'tree'; // tree | table
 export function initBracketView() {
   window.openEditFirstRoundCardModal = (code, catId) => openEditFirstRoundCardModal(code, catId || currentCategory);
   window.openMatchScore = (code, catId) => openMatchModal(code, catId || currentCategory);
+  window.openMatchLineupModal = (code, catId) => openMatchLineupModal(code, catId || currentCategory);
 
   window.switchBracketCategory = (catId) => {
     currentCategory = catId;
@@ -1036,8 +1037,27 @@ function renderMatchCard(game) {
     </span>
   `;
 
+  const hasLineup = Boolean(
+    game.escalacao && (
+      (game.escalacao.feminino?.lado_a?.length > 0 || game.escalacao.feminino?.lado_b?.length > 0) ||
+      (game.escalacao.masculino?.lado_a?.length > 0 || game.escalacao.masculino?.lado_b?.length > 0)
+    )
+  );
+
+  let lineupSummary = '';
+  if (hasLineup) {
+    const parts = [];
+    if (game.escalacao.feminino?.lado_a?.length || game.escalacao.feminino?.lado_b?.length) parts.push('Fem');
+    if (game.escalacao.masculino?.lado_a?.length || game.escalacao.masculino?.lado_b?.length) parts.push('Masc');
+    if (game.escalacao.mista?.lado_a?.length || game.escalacao.mista?.lado_b?.length) parts.push('Mista');
+    lineupSummary = parts.join(' • ');
+  }
+
   return `
-    <div class="bracket-match-card ${phaseCardClass} ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: ${cardShadow}; border: ${cardBorder}; background: ${cardBg}; cursor: default; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+    <div class="bracket-match-card ${phaseCardClass} ${game.status === 'em andamento' ? 'is-live' : ''} ${game.status === 'encerrado' ? 'is-finished' : ''} ${isBye ? 'is-bye' : ''} ${isFirstRound ? 'is-first-round' : ''}" 
+         onclick="window.openMatchLineupModal('${game.code}', '${game.categoria_id}')"
+         title="📋 Clique para abrir a Escalação deste confronto"
+         style="height: auto; width: 100%; box-sizing: border-box; padding: 0.6rem 0.75rem; border-radius: 8px; box-shadow: ${cardShadow}; border: ${cardBorder}; background: ${cardBg}; cursor: pointer; display: flex; flex-direction: column; position: relative; overflow: hidden;">
 
       <!-- CABEÇALHO DO CARD COM TODAS AS INFORMAÇÕES VISÍVEIS -->
       <div class="match-card-header" style="margin-bottom: 0.45rem; border-bottom: 1px solid ${headerBorderColor}; padding-bottom: 0.4rem; display: flex; flex-direction: column; gap: 0.25rem;">
@@ -1056,7 +1076,7 @@ function renderMatchCard(game) {
           <div style="display: flex; align-items: center; gap: 0.35rem; flex-shrink: 0;">
             ${statusBadgeHtml}
             ${isAdmin ? `
-              <button style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.35rem; box-shadow: 0 1px 2px rgba(0,0,0,0.06);" onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="Editar Confronto (Selecionar Estados)">✏️</button>
+              <button style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; font-size: 0.75rem; padding: 0.15rem 0.35rem; box-shadow: 0 1px 2px rgba(0,0,0,0.06);" onclick="event.stopPropagation(); window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="Editar Confronto (Selecionar Estados)">✏️</button>
             ` : ''}
           </div>
         </div>
@@ -1100,9 +1120,10 @@ function renderMatchCard(game) {
 
       <!-- TIME A -->
       <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}"
-           ${isAdmin ? `onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="💡 Clique para selecionar os dois estados deste confronto"` : `title="Confronto oficial"`}
-           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.3rem; border: 1px solid ${borderA}; min-height: 36px; cursor: ${isAdmin ? 'pointer' : 'default'}; transition: all 0.15s ease;"
-           ${isAdmin ? `onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'"` : ''}>
+           onclick="event.stopPropagation(); window.openMatchLineupModal('${game.code}', '${game.categoria_id}')"
+           title="📋 Clique para abrir a Escalação deste confronto"
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.3rem; border: 1px solid ${borderA}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
+           onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'">
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${getTeamName(game.lado_a, slotAIsBye, 'A')}
         </div>
@@ -1115,9 +1136,10 @@ function renderMatchCard(game) {
 
       <!-- TIME B -->
       <div class="match-team-row ${isWinnerB ? 'is-winner' : (isWinnerA ? 'is-loser' : '')}"
-           ${isAdmin ? `onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')" title="💡 Clique para selecionar os dois estados deste confronto"` : `title="Confronto oficial"`}
-           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 36px; cursor: ${isAdmin ? 'pointer' : 'default'}; transition: all 0.15s ease;"
-           ${isAdmin ? `onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'"` : ''}>
+           onclick="event.stopPropagation(); window.openMatchLineupModal('${game.code}', '${game.categoria_id}')"
+           title="📋 Clique para abrir a Escalação deste confronto"
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
+           onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'">
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${getTeamName(game.lado_b, slotBIsBye, 'B')}
         </div>
@@ -1127,6 +1149,32 @@ function renderMatchCard(game) {
           </div>
         ` : ''}
       </div>
+
+      <!-- INFORMAÇÃO / BOTÃO DE ESCALAÇÃO -->
+      ${!isBye ? `
+        <div class="match-card-lineup-bar" 
+             onclick="event.stopPropagation(); window.openMatchLineupModal('${game.code}', '${game.categoria_id}')"
+             title="Clique para escalar os atletas deste confronto"
+             style="margin-top: 0.35rem; padding: 0.28rem 0.5rem; border-radius: 4px; display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; cursor: pointer; transition: all 0.15s ease; ${hasLineup ? 'background: #f0fdfa; border: 1px solid #99f6e4; color: #0f766e;' : 'background: #f8fafc; border: 1px dashed #cbd5e1; color: #475569;'}">
+          <div style="display: flex; align-items: center; gap: 0.35rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            <strong style="color: ${hasLineup ? '#004b57' : '#028090'}; display: inline-flex; align-items: center; gap: 3px;">
+              📋 Escalação:
+            </strong>
+            ${hasLineup ? `
+              <span style="color: #047857; font-weight: 700; font-size: 0.68rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                ✓ Definida (${lineupSummary})
+              </span>
+            ` : `
+              <span style="color: #64748b; font-weight: 600; font-size: 0.68rem;">
+                Aguardando definição dos atletas
+              </span>
+            `}
+          </div>
+          <span style="font-size: 0.68rem; font-weight: 800; color: #028090; margin-left: 0.35rem; flex-shrink: 0;">
+            ${hasLineup ? 'Ver / Editar ➔' : 'Escalar ➔'}
+          </span>
+        </div>
+      ` : ''}
 
       <!-- DETALHES DE SUBJOGOS (PLACAR) -->
       <div class="match-footer-details" style="margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed ${footerBorderColor};">
@@ -1150,8 +1198,8 @@ function renderMatchCard(game) {
                <!-- F -->
                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0; gap: 4px;">
                  <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Feminino">F</strong>
-                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo1 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo1 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '1', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
                     <option value="" ${!game.resultado_jogo1 ? 'selected' : ''}>-Venc-</option>
                     <option value="a" ${String(game.resultado_jogo1).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
                     <option value="b" ${String(game.resultado_jogo1).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
@@ -1161,8 +1209,8 @@ function renderMatchCard(game) {
                <!-- M -->
                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0; gap: 4px;">
                  <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Masculino">M</strong>
-                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo2 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo2 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '2', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
                     <option value="" ${!game.resultado_jogo2 ? 'selected' : ''}>-Venc-</option>
                     <option value="a" ${String(game.resultado_jogo2).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
                     <option value="b" ${String(game.resultado_jogo2).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
@@ -1172,8 +1220,8 @@ function renderMatchCard(game) {
                <!-- DX -->
                <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.1rem 0; gap: 4px;">
                  <strong style="color:#64748b; font-size: 0.72rem; width: 18px; flex-shrink: 0;" title="Dupla Mista">DX</strong>
-                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo3 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
-                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <input type="text" placeholder="_/_ _/_ _/_" value="${game.placar_jogo3 || ''}" style="width: 86px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; text-align:center; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" oninput="window.maskScore(this)" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'placar', this.value)" ${!isAdmin ? 'disabled' : ''}>
+                 <select style="width: 72px; font-size:0.65rem; padding:0.18rem 0.2rem; border:1px solid #cbd5e1; border-radius:3px; outline:none; font-weight: 700; color: #334155; ${!isAdmin ? 'background: #f1f5f9; cursor: not-allowed; opacity: 0.8;' : ''}" onclick="event.stopPropagation()" onchange="window.inlineUpdateScore('${game.code}', '${game.categoria_id}', '3', 'vencedor', this.value)" ${!isAdmin ? 'disabled' : ''}>
                     <option value="" ${!game.resultado_jogo3 ? 'selected' : ''}>-Venc-</option>
                     <option value="a" ${String(game.resultado_jogo3).toLowerCase() === 'a' ? 'selected' : ''}>Eq. A</option>
                     <option value="b" ${String(game.resultado_jogo3).toLowerCase() === 'b' ? 'selected' : ''}>Eq. B</option>
@@ -1298,7 +1346,10 @@ function renderTableBracket(games) {
                     ${g.proxima_fase || 'Término'}
                   </span>
                 </td>
-                <td>
+                <td style="white-space: nowrap;">
+                  <button class="btn btn-sm btn-outline" onclick="window.openMatchLineupModal('${g.code}', '${g.categoria_id}')" style="margin-right: 0.35rem; font-weight: 700; border-color: #028090; color: #028090;">
+                    📋 Escalação
+                  </button>
                   <button class="btn btn-sm ${isAdmin ? 'btn-primary' : 'btn-outline'}" onclick="${editAction}">
                     ${isAdmin ? '✏️ Editar' : '👁️ Ver'}
                   </button>
