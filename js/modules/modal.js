@@ -1648,7 +1648,7 @@ window.openConfigureFirstRoundModal = openConfigureFirstRoundModal;
 // ============================================================
 // MODAL DE ESCALAÇÃO DE ATLETAS POR CONFRONTO
 // ============================================================
-export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot = null, forceUnlock = false) {
+export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot = 'A', forceUnlock = false) {
   const games = store.getGames(categoryId);
   const game = games.find(g => g.code === gameCode);
   if (!game) return;
@@ -1757,73 +1757,65 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
     return;
   }
 
-  // CASO 3: CONFRONTO COM OS DOIS ESTADOS DEFINIDOS (PRONTO PARA ESCALAÇÃO)
-  const idA = (teamA.id || '').toLowerCase();
-  const idB = (teamB.id || '').toLowerCase();
+  // CASO 3: ESCALAÇÃO FOCADA NO ESTADO SELECIONADO (A OU B)
+  const currentSlot = (targetSlot || 'A').toUpperCase() === 'B' ? 'B' : 'A';
+  const otherSlot = currentSlot === 'A' ? 'B' : 'A';
+  const currentTeam = currentSlot === 'A' ? teamA : teamB;
+  const otherTeam = currentSlot === 'A' ? teamB : teamA;
 
-  // Helper para inferência de gênero caso o atleta não tenha a propriedade explícita
+  const currentId = (currentTeam.id || '').toLowerCase();
+  const otherId = (otherTeam.id || '').toLowerCase();
+
+  // Helper de inferência de gênero seguro
   function getAthleteGenderSafe(ath) {
     if (ath.genero === 'F' || ath.genero === 'M') return ath.genero;
     const fn = (ath.nome || '').trim().split(/\s+/)[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
-    if (['ANA','MARIA','JULIA','BRUNA','CAMILA','BEATRIZ','CAROLINA','LARISSA','AMANDA','LETICIA','FERNANDA','GABRIELA','MARIANA','LUISA','LUIZA','LAURA','ISABELA','ISABELLA','SOFIA','ALICE','MANUELA','VALENTINA','LIVIA','GIOVANNA','RAFAELA','NATHALIA','NATALIA','PAULA','PATRICIA','RENATA','VANESSA','PRISCILA','BIANCA','TATIANA','DANIELA','FLAVIA','ALINE','JAQUELINE','JESSICA','MARINA','LILIAN','THAIS','RAQUEL','DEBORA','SABRINA','TALITA','SIMONE','ANDRESSA','ADRIANA','CLAUDIA','CRISTINA','MONICA','CARLA','INGRID','NICOLE','MILENA','MIRELA','REBECA','SAMARA','VITORIA','YASMIN','SARAH','BARBARA','CLARA','LARA','LORENA','CECILIA','ELISA'].includes(fn)) return 'F';
-    if (fn.endsWith('A') && !['LUCA','SASHA','JOSHUA'].includes(fn)) return 'F';
+    if (['ANDREA','JENNIFER','MABEL','TARIN','PETRONY','SASHA','YOCHABEL','ANA','MARIA','JULIA','BRUNA','CAMILA','BEATRIZ','CAROLINA','LARISSA','AMANDA','LETICIA','FERNANDA','GABRIELA','MARIANA','LUISA','LUIZA','LAURA','ISABELA','ISABELLA','SOFIA','ALICE','MANUELA','VALENTINA','LIVIA','GIOVANNA','RAFAELA','NATHALIA','NATALIA','PAULA','PATRICIA','RENATA','VANESSA','PRISCILA','BIANCA','TATIANA','DANIELA','FLAVIA','ALINE','JAQUELINE','JESSICA','MARINA','LILIAN','THAIS','RAQUEL','DEBORA','SABRINA','TALITA','SIMONE','ANDRESSA','ADRIANA','CLAUDIA','CRISTINA','MONICA','CARLA','INGRID','NICOLE','MILENA','MIRELA','REBECA','SAMARA','VITORIA','YASMIN','SARAH','BARBARA','CLARA','LARA','LORENA','CECILIA','ELISA'].includes(fn)) return 'F';
+    if (fn.endsWith('A') && !['LUCA','LUCCA','JOSHUA'].includes(fn)) return 'F';
     if (fn.endsWith('E') && ['ANE','INE','ELE','ELLE','ETE','ISE','ICE'].some(sfx => fn.endsWith(sfx))) return 'F';
     return 'M';
   }
 
-  // Filtra atletas correspondentes ao Estado A e categoria informada
-  let athletesA = allAthletes.filter(a => a.equipe_id === idA && Array.isArray(a.categorias) && a.categorias.includes(categoryId));
-  if (athletesA.length === 0) {
-    athletesA = allAthletes.filter(a => a.equipe_id === idA);
+  // Filtra atletas correspondentes estritamente ao Estado selecionado
+  let currentAthletes = allAthletes.filter(a => a.equipe_id === currentId && Array.isArray(a.categorias) && a.categorias.includes(categoryId));
+  if (currentAthletes.length === 0) {
+    currentAthletes = allAthletes.filter(a => a.equipe_id === currentId);
   }
-  athletesA.forEach(a => { if (!a.genero) a.genero = getAthleteGenderSafe(a); });
-  athletesA.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+  currentAthletes.forEach(a => { if (!a.genero) a.genero = getAthleteGenderSafe(a); });
+  currentAthletes.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 
-  // Filtra atletas correspondentes ao Estado B e categoria informada
-  let athletesB = allAthletes.filter(a => a.equipe_id === idB && Array.isArray(a.categorias) && a.categorias.includes(categoryId));
-  if (athletesB.length === 0) {
-    athletesB = allAthletes.filter(a => a.equipe_id === idB);
-  }
-  athletesB.forEach(a => { if (!a.genero) a.genero = getAthleteGenderSafe(a); });
-  athletesB.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
-
-  // Filtros por Gênero estritos conforme solicitação do usuário:
-  // - Feminina: apenas mulheres (F)
-  // - Masculina: apenas homens (M)
-  // - Mista: todos os atletas
-  const athletesA_fem = athletesA.filter(a => a.genero === 'F');
-  const athletesA_masc = athletesA.filter(a => a.genero === 'M');
-  const athletesA_todos = athletesA;
-
-  const athletesB_fem = athletesB.filter(a => a.genero === 'F');
-  const athletesB_masc = athletesB.filter(a => a.genero === 'M');
-  const athletesB_todos = athletesB;
+  // Separação estrita por gênero
+  const currentAthletes_fem = currentAthletes.filter(a => a.genero === 'F');
+  const currentAthletes_masc = currentAthletes.filter(a => a.genero === 'M');
+  const currentAthletes_todos = currentAthletes;
 
   // Escalação atual gravada no jogo
   const esc = game.escalacao || {};
-  const femA = (esc.feminino?.lado_a) || [];
-  const femB = (esc.feminino?.lado_b) || [];
-  const mascA = (esc.masculino?.lado_a) || [];
-  const mascB = (esc.masculino?.lado_b) || [];
-  const mistaA = (esc.mista?.lado_a) || [];
-  const mistaB = (esc.mista?.lado_b) || [];
+  const currentFem = currentSlot === 'A' ? (esc.feminino?.lado_a || []) : (esc.feminino?.lado_b || []);
+  const currentMasc = currentSlot === 'A' ? (esc.masculino?.lado_a || []) : (esc.masculino?.lado_b || []);
+  const currentMista = currentSlot === 'A' ? (esc.mista?.lado_a || []) : (esc.mista?.lado_b || []);
 
-  // Regra de status de confirmação e empate em 1 x 1
-  const isFemReady = (femA.length >= 2 && femB.length >= 2);
-  const isMascReady = (mascA.length >= 2 && mascB.length >= 2);
-  const isBothMainReady = (isFemReady && isMascReady);
+  const otherFem = otherSlot === 'A' ? (esc.feminino?.lado_a || []) : (esc.feminino?.lado_b || []);
+  const otherMasc = otherSlot === 'A' ? (esc.masculino?.lado_a || []) : (esc.masculino?.lado_b || []);
+
+  const isCurrentFemReady = (currentFem.length >= 2);
+  const isCurrentMascReady = (currentMasc.length >= 2);
+  const isCurrentReady = (isCurrentFemReady && isCurrentMascReady);
+
+  const isOtherFemReady = (otherFem.length >= 2);
+  const isOtherMascReady = (otherMasc.length >= 2);
+  const isOtherReady = (isOtherFemReady && isOtherMascReady);
 
   // Empate em 1 x 1 na série:
   const isEmpate1x1 = (game.vitorias_a === 1 && game.vitorias_b === 1) || 
     (game.resultado_jogo1 && game.resultado_jogo2 && String(game.resultado_jogo1).toLowerCase() !== String(game.resultado_jogo2).toLowerCase());
 
-  // Se ambos estiverem escalados e NÃO estiver empatado em 1x1, as disputas Fem e Masc ficam travadas e a Mista bloqueada
-  // Só permite destravar caso seja admin solicitando explicitamente (forceUnlock)
-  const isLocked = isBothMainReady && !isEmpate1x1 && !forceUnlock;
+  // Bloqueio se escalação confirmada e não empatado em 1x1
+  const isLocked = isCurrentReady && !isEmpate1x1 && !forceUnlock;
   const isReadOnlyGuest = !isAdmin;
   const isMistaAllowed = isEmpate1x1;
 
-  function buildOptions(list, selectedVal, disabled = false) {
+  function buildOptions(list, selectedVal) {
     let out = '<option value="">-- Selecione o atleta --</option>';
     for (const ath of list) {
       const isSel = (ath.id === selectedVal || ath.nome === selectedVal || ath.cbt_id === selectedVal);
@@ -1839,19 +1831,19 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
   }
 
   overlay.innerHTML = `
-    <div class="modal-dialog" style="max-width: 840px; width: 95vw;">
+    <div class="modal-dialog" style="max-width: 680px; width: 95vw;">
       
       <!-- CABEÇALHO DO MODAL DE ESCALAÇÃO -->
       <div class="modal-header" style="background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 80%); border-bottom: 2px solid #99f6e4; padding: 1.15rem 1.4rem;">
         <div>
           <div style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; font-weight: 800; color: #028090; text-transform: uppercase; letter-spacing: 0.05em; background: #ccfbf1; padding: 0.15rem 0.55rem; border-radius: 4px; border: 1px solid #99f6e4;">
-            📋 ESCALAÇÃO OFICIAL CBT
+            📋 ESCALAÇÃO OFICIAL CBT • ${currentTeam.uf}
           </div>
           <h2 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 900; color: #004b57; margin: 0.35rem 0 0.15rem 0;">
-            Escalação de Atletas • Confronto ${game.code}
+            Escalação: ${currentTeam.nome} (${currentTeam.uf})
           </h2>
           <div style="font-size: 0.84rem; color: #0f766e; font-weight: 700;">
-            Fase: <strong>${game.fase}</strong> • Categoria: <strong>${catName}</strong>
+            Confronto ${game.code} (${game.fase}) • Categoria: <strong>${catName}</strong>
           </div>
         </div>
         <button class="modal-close-btn" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">&times;</button>
@@ -1860,7 +1852,26 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
       <!-- CORPO DO MODAL -->
       <div class="modal-body" style="padding: 1.25rem 1.4rem; max-height: calc(85vh - 140px); overflow-y: auto;">
         
-        <!-- BANNERS DE STATUS E REGRA DE ESCALAÇÃO -->
+        <!-- ABAS DE NAVEGAÇÃO ENTRE OS DOIS ESTADOS DO CONFRONTO -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.15rem; background: #f1f5f9; padding: 0.35rem; border-radius: var(--radius-md); border: 1px solid #e2e8f0;">
+          <button type="button" 
+                  onclick="window.openMatchLineupModal('${game.code}', '${categoryId}', 'A')"
+                  style="flex: 1; padding: 0.55rem 0.85rem; border-radius: 6px; font-weight: 800; font-size: 0.82rem; cursor: pointer; transition: all 0.15s ease; border: ${currentSlot === 'A' ? '2px solid #028090' : '1px solid transparent'}; background: ${currentSlot === 'A' ? '#ffffff' : 'transparent'}; color: ${currentSlot === 'A' ? '#004b57' : '#64748b'}; box-shadow: ${currentSlot === 'A' ? '0 2px 4px rgba(0,0,0,0.06)' : 'none'}; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <img src="assets/federations/${(teamA.id || '').toLowerCase()}.jpg" alt="${teamA.uf}" style="width: 24px; height: 17px; object-fit: contain; border-radius: 2px;" onerror="this.src='assets/logo.jpg'">
+            <span>${teamA.uf} - ${teamA.nome}</span>
+            ${(esc.feminino?.lado_a?.length >= 2 && esc.masculino?.lado_a?.length >= 2) ? '<span style="color: #10b981; font-weight: 900;">✓</span>' : '<span style="color: #94a3b8; font-size: 0.72rem; font-weight: 600;">(Pendente)</span>'}
+          </button>
+          
+          <button type="button" 
+                  onclick="window.openMatchLineupModal('${game.code}', '${categoryId}', 'B')"
+                  style="flex: 1; padding: 0.55rem 0.85rem; border-radius: 6px; font-weight: 800; font-size: 0.82rem; cursor: pointer; transition: all 0.15s ease; border: ${currentSlot === 'B' ? '2px solid #028090' : '1px solid transparent'}; background: ${currentSlot === 'B' ? '#ffffff' : 'transparent'}; color: ${currentSlot === 'B' ? '#004b57' : '#64748b'}; box-shadow: ${currentSlot === 'B' ? '0 2px 4px rgba(0,0,0,0.06)' : 'none'}; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <img src="assets/federations/${(teamB.id || '').toLowerCase()}.jpg" alt="${teamB.uf}" style="width: 24px; height: 17px; object-fit: contain; border-radius: 2px;" onerror="this.src='assets/logo.jpg'">
+            <span>${teamB.uf} - ${teamB.nome}</span>
+            ${(esc.feminino?.lado_b?.length >= 2 && esc.masculino?.lado_b?.length >= 2) ? '<span style="color: #10b981; font-weight: 900;">✓</span>' : '<span style="color: #94a3b8; font-size: 0.72rem; font-weight: 600;">(Pendente)</span>'}
+          </button>
+        </div>
+
+        <!-- BANNERS DE STATUS -->
         ${isReadOnlyGuest ? `
           <div style="background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 0.85rem 1.15rem; margin-bottom: 1.15rem; display: flex; align-items: center; gap: 0.75rem;">
             <span style="font-size: 1.5rem; line-height: 1;">👁️</span>
@@ -1891,15 +1902,15 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
               <span style="font-size: 1.5rem; line-height: 1;">✓</span>
               <div>
                 <div style="font-weight: 900; font-size: 0.92rem; color: #065f46;">
-                  Escalação Feminina e Masculina Confirmada!
+                  Escalação de ${currentTeam.uf} Confirmada!
                 </div>
                 <div style="font-size: 0.8rem; color: #047857; font-weight: 600; line-height: 1.35; margin-top: 0.1rem;">
-                  As escalações oficiais estão fechadas. Conforme o regulamento, a escalação da <strong>Dupla Mista</strong> só será liberada se o confronto empatar em 1 x 1.
+                  A escalação feminina e masculina de ${currentTeam.uf} está gravada. A <strong>Dupla Mista</strong> será liberada apenas se o confronto empatar em 1 x 1.
                 </div>
               </div>
             </div>
             ${isAdmin ? `
-              <button type="button" class="btn btn-outline btn-xs" onclick="window.openMatchLineupModal('${game.code}', '${categoryId}', null, true)" style="border-color: #10b981; color: #047857; font-weight: 800; font-size: 0.72rem; white-space: nowrap;">
+              <button type="button" class="btn btn-outline btn-xs" onclick="window.openMatchLineupModal('${game.code}', '${categoryId}', '${currentSlot}', true)" style="border-color: #10b981; color: #047857; font-weight: 800; font-size: 0.72rem; white-space: nowrap;">
                 🔓 Destravar Edição (Admin)
               </button>
             ` : ''}
@@ -1908,296 +1919,195 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
           <div style="background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.15rem; display: flex; align-items: flex-start; gap: 0.65rem;">
             <span style="font-size: 1.25rem; line-height: 1;">ℹ️</span>
             <div style="font-size: 0.82rem; color: #1e3a8a; line-height: 1.45;">
-              <strong>Regra de Escalação Oficial:</strong> Escale as duplas <strong>Feminina</strong> (apenas mulheres) e <strong>Masculina</strong> (apenas homens). A <strong>Dupla Mista</strong> permanece bloqueada e só será liberada caso o confronto fique empatado em 1 x 1 após os dois primeiros jogos.
+              <strong>Regra de Escalação de ${currentTeam.uf}:</strong> Escale as duplas <strong>Feminina</strong> (apenas atletas mulheres) e <strong>Masculina</strong> (apenas atletas homens). A <strong>Dupla Mista</strong> permanece bloqueada e só será liberada caso o confronto fique empatado em 1 x 1.
             </div>
           </div>
         `}
 
-        <!-- PLACAR DE EQUIPES DO CONFRONTO -->
-        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.85rem 1.15rem; margin-bottom: 1.15rem;">
-          
-          <!-- LADO A -->
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <img src="assets/federations/${idA}.jpg" alt="${teamA.uf}" 
-                 onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${idA}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${idA}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }"
-                 style="width: 48px; height: 34px; object-fit: contain; border-radius: 4px; background: #fff; padding: 2px; border: 1.5px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.08); flex-shrink: 0;">
+        <!-- CARD DESTAQUE DO ESTADO EM QUESTÃO -->
+        <div style="background: #ffffff; border: 1.5px solid #028090; border-radius: var(--radius-md); padding: 0.9rem 1.15rem; margin-bottom: 1.15rem; box-shadow: 0 2px 6px rgba(2, 128, 144, 0.08); display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.85rem;">
+            <img src="assets/federations/${currentId}.jpg" alt="${currentTeam.uf}" 
+                 onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${currentId}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${currentId}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }"
+                 style="width: 52px; height: 38px; object-fit: contain; border-radius: 4px; background: #fff; padding: 2px; border: 1.5px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.08); flex-shrink: 0;">
             <div>
-              <div style="font-size: 0.72rem; font-weight: 800; color: #028090; text-transform: uppercase;">Equipe A</div>
-              <div style="font-weight: 900; font-size: 1.05rem; color: #004b57; line-height: 1.2;">${teamA.nome}</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">
-                UF: ${teamA.uf} • 👩 ${athletesA_fem.length} mulheres • 👨 ${athletesA_masc.length} homens
+              <div style="font-size: 0.72rem; font-weight: 800; color: #028090; text-transform: uppercase;">
+                Equipe ${currentSlot} • ${currentTeam.uf}
+              </div>
+              <div style="font-weight: 900; font-size: 1.1rem; color: #004b57; line-height: 1.2;">
+                ${currentTeam.nome}
+              </div>
+              <div style="font-size: 0.75rem; color: #475569; font-weight: 700; margin-top: 0.15rem;">
+                Atletas aptos: 👩 <strong>${currentAthletes_fem.length} mulheres</strong> • 👨 <strong>${currentAthletes_masc.length} homens</strong> • 👥 Total: ${currentAthletes_todos.length} inscritos
               </div>
             </div>
           </div>
-
-          <!-- VS E PLACAR -->
-          <div style="text-align: center;">
-            <div style="font-weight: 900; font-size: 0.9rem; color: #64748b; background: #ffffff; padding: 0.3rem 0.65rem; border-radius: 50%; border: 1px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: inline-block;">
-              VS
-            </div>
-            ${(game.vitorias_a || game.vitorias_b) ? `
-              <div style="font-size: 0.78rem; font-weight: 900; color: #0f172a; margin-top: 0.2rem;">
-                ${game.vitorias_a || 0} x ${game.vitorias_b || 0}
-              </div>
-            ` : ''}
+          <div>
+            ${isCurrentReady ? `
+              <span style="font-size: 0.76rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1.5px solid #86efac; padding: 0.35rem 0.75rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 0.35rem;">
+                ✓ Definida
+              </span>
+            ` : `
+              <span style="font-size: 0.76rem; font-weight: 700; color: #b45309; background: #fffbeb; border: 1.5px solid #fde68a; padding: 0.35rem 0.75rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 0.35rem;">
+                ⏳ Pendente
+              </span>
+            `}
           </div>
-
-          <!-- LADO B -->
-          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.75rem; text-align: right;">
-            <div>
-              <div style="font-size: 0.72rem; font-weight: 800; color: #028090; text-transform: uppercase;">Equipe B</div>
-              <div style="font-weight: 900; font-size: 1.05rem; color: #004b57; line-height: 1.2;">${teamB.nome}</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">
-                UF: ${teamB.uf} • 👩 ${athletesB_fem.length} mulheres • 👨 ${athletesB_masc.length} homens
-              </div>
-            </div>
-            <img src="assets/federations/${idB}.jpg" alt="${teamB.uf}" 
-                 onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${idB}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${idB}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }"
-                 style="width: 48px; height: 34px; object-fit: contain; border-radius: 4px; background: #fff; padding: 2px; border: 1.5px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.08); flex-shrink: 0;">
-          </div>
-
         </div>
 
-        <!-- 1. DISPUTA FEMININA (MOSTRA APENAS ATLETAS MULHERES) -->
-        <div class="card" style="margin-bottom: 1.15rem; border: 1.5px solid #fbcfe8; background: #ffffff; padding: 1rem; box-shadow: var(--shadow-sm); ${isLocked ? 'background: #fffdfd; border-color: #f9a8d4;' : ''}">
+        <!-- 1. DISPUTA FEMININA (APENAS MULHERES DO ESTADO SELECIONADO) -->
+        <div class="card" style="margin-bottom: 1.15rem; border: 1.5px solid #fbcfe8; background: #ffffff; padding: 1rem; box-shadow: var(--shadow-sm); ${isLocked ? 'background: #fdfbfc;' : ''}">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid #fce7f3; padding-bottom: 0.45rem;">
             <div style="display: flex; align-items: center; gap: 0.45rem;">
-              <span style="font-size: 1.2rem;">👩</span>
+              <span style="font-size: 1.25rem;">👧</span>
               <div>
                 <strong style="color: #9d174d; font-size: 0.95rem; font-weight: 900;">
                   1. Disputa Feminina (Dupla Feminina)
                 </strong>
                 <span style="font-size: 0.72rem; color: #be185d; font-weight: 700; margin-left: 0.4rem;">
-                  • Somente atletas mulheres
+                  • Somente atletas mulheres de ${currentTeam.uf}
                 </span>
               </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 0.4rem;">
-              ${isLocked ? `
-                <span style="font-size: 0.68rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #86efac; padding: 0.15rem 0.45rem; border-radius: 4px;">
-                  ✓ Confirmada
-                </span>
-              ` : ''}
-              <span style="font-size: 0.72rem; font-weight: 700; color: #be185d; background: #fdf2f8; padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid #fbcfe8;">
-                Jogo 1 da Série
-              </span>
-            </div>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #be185d; background: #fdf2f8; padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid #fbcfe8;">
+              Jogo 1 da Série • ${currentAthletes_fem.length} mulheres inscritas
+            </span>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
-            
-            <!-- DUPLA FEMININA A -->
-            <div style="background: #fff5f7; padding: 0.75rem; border-radius: 6px; border: 1px solid #fce7f3;">
-              <div style="font-size: 0.78rem; font-weight: 800; color: #9d174d; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
-                <span>${teamA.uf} • Atletas Mulheres:</span>
-                <span style="font-size: 0.68rem; font-weight: 700; color: #be185d;">${athletesA_fem.length} inscritas</span>
-              </div>
-              <div style="margin-bottom: 0.5rem;">
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Feminino):</label>
-                <select id="lineup_fem_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesA_fem, femA[0])}
+          <div style="background: #fff5f7; padding: 0.85rem; border-radius: 6px; border: 1px solid #fce7f3;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label style="font-size: 0.75rem; color: #9d174d; font-weight: 800; display: block; margin-bottom: 0.3rem;">
+                  Atleta 1 (Feminino):
+                </label>
+                <select id="lineup_fem_0" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
+                  ${buildOptions(currentAthletes_fem, currentFem[0])}
                 </select>
               </div>
               <div>
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Feminino):</label>
-                <select id="lineup_fem_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesA_fem, femA[1])}
+                <label style="font-size: 0.75rem; color: #9d174d; font-weight: 800; display: block; margin-bottom: 0.3rem;">
+                  Atleta 2 (Feminino):
+                </label>
+                <select id="lineup_fem_1" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
+                  ${buildOptions(currentAthletes_fem, currentFem[1])}
                 </select>
               </div>
             </div>
-
-            <!-- DUPLA FEMININA B -->
-            <div style="background: #fff5f7; padding: 0.75rem; border-radius: 6px; border: 1px solid #fce7f3;">
-              <div style="font-size: 0.78rem; font-weight: 800; color: #9d174d; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
-                <span>${teamB.uf} • Atletas Mulheres:</span>
-                <span style="font-size: 0.68rem; font-weight: 700; color: #be185d;">${athletesB_fem.length} inscritas</span>
-              </div>
-              <div style="margin-bottom: 0.5rem;">
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Feminino):</label>
-                <select id="lineup_fem_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesB_fem, femB[0])}
-                </select>
-              </div>
-              <div>
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Feminino):</label>
-                <select id="lineup_fem_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesB_fem, femB[1])}
-                </select>
-              </div>
-            </div>
-
           </div>
         </div>
 
-        <!-- 2. DISPUTA MASCULINA (MOSTRA APENAS ATLETAS HOMENS) -->
-        <div class="card" style="margin-bottom: 1.15rem; border: 1.5px solid #bae6fd; background: #ffffff; padding: 1rem; box-shadow: var(--shadow-sm); ${isLocked ? 'background: #f8fbff; border-color: #93c5fd;' : ''}">
+        <!-- 2. DISPUTA MASCULINA (APENAS HOMENS DO ESTADO SELECIONADO) -->
+        <div class="card" style="margin-bottom: 1.15rem; border: 1.5px solid #bae6fd; background: #ffffff; padding: 1rem; box-shadow: var(--shadow-sm); ${isLocked ? 'background: #f8fbff;' : ''}">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid #e0f2fe; padding-bottom: 0.45rem;">
             <div style="display: flex; align-items: center; gap: 0.45rem;">
-              <span style="font-size: 1.2rem;">👨</span>
+              <span style="font-size: 1.25rem;">👦</span>
               <div>
                 <strong style="color: #0369a1; font-size: 0.95rem; font-weight: 900;">
                   2. Disputa Masculina (Dupla Masculina)
                 </strong>
                 <span style="font-size: 0.72rem; color: #0284c7; font-weight: 700; margin-left: 0.4rem;">
-                  • Somente atletas homens
+                  • Somente atletas homens de ${currentTeam.uf}
                 </span>
               </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 0.4rem;">
-              ${isLocked ? `
-                <span style="font-size: 0.68rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #86efac; padding: 0.15rem 0.45rem; border-radius: 4px;">
-                  ✓ Confirmada
-                </span>
-              ` : ''}
-              <span style="font-size: 0.72rem; font-weight: 700; color: #0284c7; background: #f0f9ff; padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid #bae6fd;">
-                Jogo 2 da Série
-              </span>
-            </div>
+            <span style="font-size: 0.72rem; font-weight: 700; color: #0369a1; background: #f0f9ff; padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid #bae6fd;">
+              Jogo 2 da Série • ${currentAthletes_masc.length} homens inscritos
+            </span>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
-            
-            <!-- DUPLA MASCULINA A -->
-            <div style="background: #f0f9ff; padding: 0.75rem; border-radius: 6px; border: 1px solid #e0f2fe;">
-              <div style="font-size: 0.78rem; font-weight: 800; color: #0369a1; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
-                <span>${teamA.uf} • Atletas Homens:</span>
-                <span style="font-size: 0.68rem; font-weight: 700; color: #0284c7;">${athletesA_masc.length} inscritos</span>
-              </div>
-              <div style="margin-bottom: 0.5rem;">
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Masculino):</label>
-                <select id="lineup_masc_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesA_masc, mascA[0])}
+          <div style="background: #f0f9ff; padding: 0.85rem; border-radius: 6px; border: 1px solid #e0f2fe;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label style="font-size: 0.75rem; color: #0369a1; font-weight: 800; display: block; margin-bottom: 0.3rem;">
+                  Atleta 1 (Masculino):
+                </label>
+                <select id="lineup_masc_0" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
+                  ${buildOptions(currentAthletes_masc, currentMasc[0])}
                 </select>
               </div>
               <div>
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Masculino):</label>
-                <select id="lineup_masc_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesA_masc, mascA[1])}
+                <label style="font-size: 0.75rem; color: #0369a1; font-weight: 800; display: block; margin-bottom: 0.3rem;">
+                  Atleta 2 (Masculino):
+                </label>
+                <select id="lineup_masc_1" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
+                  ${buildOptions(currentAthletes_masc, currentMasc[1])}
                 </select>
               </div>
             </div>
-
-            <!-- DUPLA MASCULINA B -->
-            <div style="background: #f0f9ff; padding: 0.75rem; border-radius: 6px; border: 1px solid #e0f2fe;">
-              <div style="font-size: 0.78rem; font-weight: 800; color: #0369a1; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
-                <span>${teamB.uf} • Atletas Homens:</span>
-                <span style="font-size: 0.68rem; font-weight: 700; color: #0284c7;">${athletesB_masc.length} inscritos</span>
-              </div>
-              <div style="margin-bottom: 0.5rem;">
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Masculino):</label>
-                <select id="lineup_masc_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesB_masc, mascB[0])}
-                </select>
-              </div>
-              <div>
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Masculino):</label>
-                <select id="lineup_masc_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesB_masc, mascB[1])}
-                </select>
-              </div>
-            </div>
-
           </div>
         </div>
 
-        <!-- 3. DISPUTA MISTA (MOSTRA TODOS OS ATLETAS - LIBERADA APENAS NO EMPATE 1x1) -->
-        <div class="card" style="margin-bottom: 0.5rem; border: 1.5px solid ${isMistaAllowed ? '#c084fc' : '#cbd5e1'}; background: ${isMistaAllowed ? '#ffffff' : '#f8fafc'}; padding: 1rem; box-shadow: ${isMistaAllowed ? '0 4px 12px rgba(192, 132, 252, 0.15)' : 'none'}; opacity: ${isMistaAllowed ? '1' : '0.85'};">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid ${isMistaAllowed ? '#ede9fe' : '#e2e8f0'}; padding-bottom: 0.45rem;">
+        <!-- 3. DISPUTA MISTA (JOGO 3 - DESEMPATE) -->
+        <div class="card" style="margin-bottom: 1.15rem; border: 1.5px solid ${isMistaAllowed ? '#c084fc' : '#cbd5e1'}; background: ${isMistaAllowed ? '#fdf4ff' : '#f8fafc'}; padding: 1rem; box-shadow: var(--shadow-sm); opacity: ${isMistaAllowed ? '1' : '0.85'};">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; border-bottom: 1px solid ${isMistaAllowed ? '#f3e8ff' : '#e2e8f0'}; padding-bottom: 0.45rem;">
             <div style="display: flex; align-items: center; gap: 0.45rem;">
-              <span style="font-size: 1.2rem;">👫</span>
+              <span style="font-size: 1.25rem;">👥</span>
               <div>
-                <strong style="color: ${isMistaAllowed ? '#6d28d9' : '#64748b'}; font-size: 0.95rem; font-weight: 900;">
-                  3. Disputa Mista (Dupla Mista / DX)
+                <strong style="color: ${isMistaAllowed ? '#6b21a8' : '#475569'}; font-size: 0.95rem; font-weight: 900;">
+                  3. Disputa Mista (Dupla Mista)
                 </strong>
-                <span style="font-size: 0.72rem; color: ${isMistaAllowed ? '#7c3aed' : '#64748b'}; font-weight: 700; margin-left: 0.4rem;">
-                  • Mostra todos os atletas (${isMistaAllowed ? '🔓 Aberta' : '🔒 Bloqueada'})
+                <span style="font-size: 0.72rem; color: ${isMistaAllowed ? '#7e22ce' : '#64748b'}; font-weight: 700; margin-left: 0.4rem;">
+                  • Todos os atletas de ${currentTeam.uf}
                 </span>
               </div>
             </div>
-            <span style="font-size: 0.72rem; font-weight: 700; color: ${isMistaAllowed ? '#7c3aed' : '#64748b'}; background: ${isMistaAllowed ? '#f5f3ff' : '#f1f5f9'}; padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid ${isMistaAllowed ? '#ddd6fe' : '#cbd5e1'};">
-              ${isMistaAllowed ? '🔥 Jogo 3 Decisivo (1x1)' : '🔒 Só abre em caso de 1 x 1'}
+            <span style="font-size: 0.72rem; font-weight: 800; color: ${isMistaAllowed ? '#7e22ce' : '#64748b'}; background: ${isMistaAllowed ? '#fae8ff' : '#e2e8f0'}; padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid ${isMistaAllowed ? '#e9d5ff' : '#cbd5e1'};">
+              ${isMistaAllowed ? '🔥 LIBERADA (Jogo 3 de Desempate)' : '🔒 Bloqueada (Libera apenas no 1 x 1)'}
             </span>
           </div>
 
           ${!isMistaAllowed ? `
-            <div style="background: #f1f5f9; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.85rem; display: flex; align-items: center; gap: 0.6rem; color: #475569; font-size: 0.82rem;">
+            <div style="padding: 0.75rem 1rem; background: #ffffff; border: 1px dashed #cbd5e1; border-radius: 6px; font-size: 0.8rem; color: #64748b; line-height: 1.4; display: flex; align-items: center; gap: 0.5rem;">
               <span style="font-size: 1.25rem;">🔒</span>
               <div>
-                <strong>Escalação da Dupla Mista Bloqueada:</strong> Conforme o regulamento oficial CBT, a Dupla Mista só é disputada e escalada caso os confrontos Feminino e Masculino fiquem <strong>empatados em 1 x 1</strong>. Se uma equipe vencer os dois primeiros jogos (2 x 0), o confronto encerra sem necessidade da partida mista.
+                <strong>Disputa de Desempate:</strong> A escalação da dupla mista de ${currentTeam.uf} só é permitida caso a série fique empatada em 1 x 1 após a realização da Disputa Feminina e da Disputa Masculina.
               </div>
             </div>
-          ` : ''}
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
-            
-            <!-- DUPLA MISTA A -->
-            <div style="background: ${isMistaAllowed ? '#faf5ff' : '#f8fafc'}; padding: 0.75rem; border-radius: 6px; border: 1px solid ${isMistaAllowed ? '#ede9fe' : '#e2e8f0'};">
-              <div style="font-size: 0.78rem; font-weight: 800; color: ${isMistaAllowed ? '#6d28d9' : '#64748b'}; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
-                <span>${teamA.uf} • Todos os Atletas:</span>
-                <span style="font-size: 0.68rem; font-weight: 700; color: ${isMistaAllowed ? '#7c3aed' : '#64748b'};">${athletesA_todos.length} aptos</span>
-              </div>
-              <div style="margin-bottom: 0.5rem;">
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Mista):</label>
-                <select id="lineup_mista_a_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(!isMistaAllowed || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesA_todos, mistaA[0])}
-                </select>
-              </div>
-              <div>
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Mista):</label>
-                <select id="lineup_mista_a_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(!isMistaAllowed || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesA_todos, mistaA[1])}
-                </select>
+          ` : `
+            <div style="background: #ffffff; padding: 0.85rem; border-radius: 6px; border: 1.5px solid #d8b4fe;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label style="font-size: 0.75rem; color: #6b21a8; font-weight: 800; display: block; margin-bottom: 0.3rem;">
+                    Atleta 1 (Mista):
+                  </label>
+                  <select id="lineup_mista_0" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
+                    ${buildOptions(currentAthletes_todos, currentMista[0])}
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size: 0.75rem; color: #6b21a8; font-weight: 800; display: block; margin-bottom: 0.3rem;">
+                    Atleta 2 (Mista):
+                  </label>
+                  <select id="lineup_mista_1" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
+                    ${buildOptions(currentAthletes_todos, currentMista[1])}
+                  </select>
+                </div>
               </div>
             </div>
-
-            <!-- DUPLA MISTA B -->
-            <div style="background: ${isMistaAllowed ? '#faf5ff' : '#f8fafc'}; padding: 0.75rem; border-radius: 6px; border: 1px solid ${isMistaAllowed ? '#ede9fe' : '#e2e8f0'};">
-              <div style="font-size: 0.78rem; font-weight: 800; color: ${isMistaAllowed ? '#6d28d9' : '#64748b'}; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
-                <span>${teamB.uf} • Todos os Atletas:</span>
-                <span style="font-size: 0.68rem; font-weight: 700; color: ${isMistaAllowed ? '#7c3aed' : '#64748b'};">${athletesB_todos.length} aptos</span>
-              </div>
-              <div style="margin-bottom: 0.5rem;">
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 1 (Mista):</label>
-                <select id="lineup_mista_b_0" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(!isMistaAllowed || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesB_todos, mistaB[0])}
-                </select>
-              </div>
-              <div>
-                <label style="font-size: 0.72rem; color: #64748b; font-weight: 700; display: block; margin-bottom: 0.2rem;">Atleta 2 (Mista):</label>
-                <select id="lineup_mista_b_1" class="form-select" style="font-size: 0.82rem; padding: 0.35rem 0.6rem;" ${(!isMistaAllowed || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(athletesB_todos, mistaB[1])}
-                </select>
-              </div>
-            </div>
-
-          </div>
+          `}
         </div>
 
       </div>
 
       <!-- RODAPÉ DE AÇÕES -->
-      <div class="modal-footer" style="background: #f8fafc; border-top: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; padding: 1rem 1.4rem;">
+      <div class="modal-footer" style="background: #f8fafc; border-top: 1px solid var(--border-light); padding: 0.85rem 1.4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
         <div>
-          ${isAdmin ? `
-            <button type="button" class="btn btn-outline btn-sm" onclick="window.clearMatchLineup('${game.code}', '${categoryId}')" style="color: #dc2626; border-color: #fca5a5;">
-              🗑️ Limpar Escalação
+          ${(isAdmin && (currentFem.length > 0 || currentMasc.length > 0 || currentMista.length > 0)) ? `
+            <button type="button" class="btn btn-outline btn-sm" onclick="window.clearSingleTeamLineup('${game.code}', '${categoryId}', '${currentSlot}')" style="color: #ef4444; border-color: #fca5a5; font-size: 0.78rem; font-weight: 700;">
+              🗑️ Limpar Escalação de ${currentTeam.uf}
             </button>
           ` : '<span></span>'}
         </div>
 
-        <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <div style="display: flex; gap: 0.65rem;">
           <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">
-            Fechar
+            ${isReadOnlyGuest ? 'Fechar' : 'Cancelar'}
           </button>
-          ${isReadOnlyGuest ? '' : (!isLocked || isMistaAllowed || forceUnlock) ? `
-            <button type="button" class="btn btn-primary" onclick="window.saveMatchLineup('${game.code}', '${categoryId}')" style="background: ${isMistaAllowed ? '#7c3aed' : '#028090'}; border-color: ${isMistaAllowed ? '#7c3aed' : '#028090'}; font-weight: 800; padding: 0.5rem 1.25rem; display: inline-flex; align-items: center; gap: 0.45rem;">
-              💾 ${isMistaAllowed ? 'Salvar Escalação da Dupla Mista' : 'Salvar Escalação'}
+          ${!isReadOnlyGuest ? `
+            <button type="button" class="btn btn-primary" onclick="window.saveSingleTeamLineup('${game.code}', '${categoryId}', '${currentSlot}')" style="background: linear-gradient(135deg, #028090 0%, #004b57 100%); font-weight: 800; box-shadow: 0 2px 6px rgba(2, 128, 144, 0.3); padding: 0.5rem 1.25rem;">
+              💾 Salvar Escalação de ${currentTeam.uf}
             </button>
-          ` : `
-            <button type="button" class="btn btn-primary" disabled style="background: #10b981; border-color: #10b981; opacity: 0.9; cursor: not-allowed; font-weight: 800; padding: 0.5rem 1.25rem;">
-              ✓ Escalação Confirmada
-            </button>
-          `}
+          ` : ''}
         </div>
       </div>
 
@@ -2210,7 +2120,7 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
 // Manipuladores globais para salvar e limpar a escalação
 window.openMatchLineupModal = openMatchLineupModal;
 
-window.saveMatchLineup = (gameCode, categoryId) => {
+window.saveSingleTeamLineup = (gameCode, categoryId, targetSlot = 'A') => {
   if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
     if (window.toast) {
       window.toast.show({
@@ -2221,6 +2131,7 @@ window.saveMatchLineup = (gameCode, categoryId) => {
     }
     return;
   }
+
   const getVal = id => {
     const el = document.getElementById(id);
     return el ? el.value.trim() : '';
@@ -2232,49 +2143,48 @@ window.saveMatchLineup = (gameCode, categoryId) => {
   };
 
   const game = store.getGames(categoryId).find(g => g.code === gameCode);
-  const prevEsc = game?.escalacao || {};
+  if (!game) return;
 
-  let femA = [getVal('lineup_fem_a_0'), getVal('lineup_fem_a_1')].filter(Boolean);
-  let femB = [getVal('lineup_fem_b_0'), getVal('lineup_fem_b_1')].filter(Boolean);
-  let femANomes = [getName('lineup_fem_a_0'), getName('lineup_fem_a_1')].filter(Boolean);
-  let femBNomes = [getName('lineup_fem_b_0'), getName('lineup_fem_b_1')].filter(Boolean);
+  const prevEsc = game.escalacao || {};
+  const slot = (targetSlot || 'A').toUpperCase() === 'B' ? 'B' : 'A';
 
-  if (femA.length === 0 && prevEsc.feminino?.lado_a?.length) {
-    femA = prevEsc.feminino.lado_a;
-    femANomes = prevEsc.feminino.lado_a_nomes || [];
+  const femVals = [getVal('lineup_fem_0'), getVal('lineup_fem_1')].filter(Boolean);
+  const femNomes = [getName('lineup_fem_0'), getName('lineup_fem_1')].filter(Boolean);
+
+  const mascVals = [getVal('lineup_masc_0'), getVal('lineup_masc_1')].filter(Boolean);
+  const mascNomes = [getName('lineup_masc_0'), getName('lineup_masc_1')].filter(Boolean);
+
+  const mistaVals = [getVal('lineup_mista_0'), getVal('lineup_mista_1')].filter(Boolean);
+  const mistaNomes = [getName('lineup_mista_0'), getName('lineup_mista_1')].filter(Boolean);
+
+  // Validação: não permitir selecionar a mesma pessoa duas vezes na mesma dupla
+  if (femVals.length === 2 && femVals[0] === femVals[1]) {
+    alert('Atenção: selecione duas atletas diferentes para a Dupla Feminina.');
+    return;
   }
-  if (femB.length === 0 && prevEsc.feminino?.lado_b?.length) {
-    femB = prevEsc.feminino.lado_b;
-    femBNomes = prevEsc.feminino.lado_b_nomes || [];
+  if (mascVals.length === 2 && mascVals[0] === mascVals[1]) {
+    alert('Atenção: selecione dois atletas diferentes para a Dupla Masculina.');
+    return;
   }
-
-  let mascA = [getVal('lineup_masc_a_0'), getVal('lineup_masc_a_1')].filter(Boolean);
-  let mascB = [getVal('lineup_masc_b_0'), getVal('lineup_masc_b_1')].filter(Boolean);
-  let mascANomes = [getName('lineup_masc_a_0'), getName('lineup_masc_a_1')].filter(Boolean);
-  let mascBNomes = [getName('lineup_masc_b_0'), getName('lineup_masc_b_1')].filter(Boolean);
-
-  if (mascA.length === 0 && prevEsc.masculino?.lado_a?.length) {
-    mascA = prevEsc.masculino.lado_a;
-    mascANomes = prevEsc.masculino.lado_a_nomes || [];
-  }
-  if (mascB.length === 0 && prevEsc.masculino?.lado_b?.length) {
-    mascB = prevEsc.masculino.lado_b;
-    mascBNomes = prevEsc.masculino.lado_b_nomes || [];
+  if (mistaVals.length === 2 && mistaVals[0] === mistaVals[1]) {
+    alert('Atenção: selecione dois atletas diferentes para a Dupla Mista.');
+    return;
   }
 
-  let mistaA = [getVal('lineup_mista_a_0'), getVal('lineup_mista_a_1')].filter(Boolean);
-  let mistaB = [getVal('lineup_mista_b_0'), getVal('lineup_mista_b_1')].filter(Boolean);
-  let mistaANomes = [getName('lineup_mista_a_0'), getName('lineup_mista_a_1')].filter(Boolean);
-  let mistaBNomes = [getName('lineup_mista_b_0'), getName('lineup_mista_b_1')].filter(Boolean);
+  const femA = slot === 'A' ? femVals : (prevEsc.feminino?.lado_a || []);
+  const femANomes = slot === 'A' ? femNomes : (prevEsc.feminino?.lado_a_nomes || []);
+  const femB = slot === 'B' ? femVals : (prevEsc.feminino?.lado_b || []);
+  const femBNomes = slot === 'B' ? femNomes : (prevEsc.feminino?.lado_b_nomes || []);
 
-  if (mistaA.length === 0 && prevEsc.mista?.lado_a?.length) {
-    mistaA = prevEsc.mista.lado_a;
-    mistaANomes = prevEsc.mista.lado_a_nomes || [];
-  }
-  if (mistaB.length === 0 && prevEsc.mista?.lado_b?.length) {
-    mistaB = prevEsc.mista.lado_b;
-    mistaBNomes = prevEsc.mista.lado_b_nomes || [];
-  }
+  const mascA = slot === 'A' ? mascVals : (prevEsc.masculino?.lado_a || []);
+  const mascANomes = slot === 'A' ? mascNomes : (prevEsc.masculino?.lado_a_nomes || []);
+  const mascB = slot === 'B' ? mascVals : (prevEsc.masculino?.lado_b || []);
+  const mascBNomes = slot === 'B' ? mascNomes : (prevEsc.masculino?.lado_b_nomes || []);
+
+  const mistaA = slot === 'A' ? (mistaVals.length ? mistaVals : (prevEsc.mista?.lado_a || [])) : (prevEsc.mista?.lado_a || []);
+  const mistaANomes = slot === 'A' ? (mistaNomes.length ? mistaNomes : (prevEsc.mista?.lado_a_nomes || [])) : (prevEsc.mista?.lado_a_nomes || []);
+  const mistaB = slot === 'B' ? (mistaVals.length ? mistaVals : (prevEsc.mista?.lado_b || [])) : (prevEsc.mista?.lado_b || []);
+  const mistaBNomes = slot === 'B' ? (mistaNomes.length ? mistaNomes : (prevEsc.mista?.lado_b_nomes || [])) : (prevEsc.mista?.lado_b_nomes || []);
 
   const lineup = {
     feminino: {
@@ -2300,17 +2210,80 @@ window.saveMatchLineup = (gameCode, categoryId) => {
 
   const res = store.saveGameLineup(categoryId, gameCode, lineup);
   if (res.success) {
-    toast.show({
-      title: 'Escalação Salva',
-      message: `Escalação oficial do confronto ${gameCode} gravada com sucesso!`,
-      type: 'success'
-    });
+    const team = slot === 'A' ? game.lado_a : game.lado_b;
+    const teamUf = team ? team.uf : slot;
+    if (window.toast) {
+      window.toast.show({
+        title: 'Escalação Salva',
+        message: `Escalação oficial de ${teamUf} salva com sucesso!`,
+        type: 'success'
+      });
+    }
     const overlay = document.getElementById('match-modal-overlay');
     if (overlay) overlay.classList.remove('active');
     if (window.renderBracket) window.renderBracket();
     if (window.renderSchedule) window.renderSchedule();
   } else {
     alert(res.message || 'Erro ao salvar escalação.');
+  }
+};
+
+window.saveMatchLineup = (gameCode, categoryId) => {
+  return window.saveSingleTeamLineup(gameCode, categoryId, 'A');
+};
+
+window.clearSingleTeamLineup = (gameCode, categoryId, targetSlot = 'A') => {
+  if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+    if (window.toast) {
+      window.toast.show({
+        title: 'Acesso Restrito',
+        message: 'Apenas administradores podem resetar a escalação.',
+        type: 'warning'
+      });
+    }
+    return;
+  }
+  const game = store.getGames(categoryId).find(g => g.code === gameCode);
+  if (!game) return;
+  const slot = (targetSlot || 'A').toUpperCase() === 'B' ? 'B' : 'A';
+  const team = slot === 'A' ? game.lado_a : game.lado_b;
+  const teamUf = team ? team.uf : slot;
+
+  if (confirm(`Deseja limpar a escalação apenas da equipe ${teamUf}?`)) {
+    const prevEsc = game.escalacao || {};
+    const lineup = {
+      feminino: {
+        lado_a: slot === 'A' ? [] : (prevEsc.feminino?.lado_a || []),
+        lado_b: slot === 'B' ? [] : (prevEsc.feminino?.lado_b || []),
+        lado_a_nomes: slot === 'A' ? [] : (prevEsc.feminino?.lado_a_nomes || []),
+        lado_b_nomes: slot === 'B' ? [] : (prevEsc.feminino?.lado_b_nomes || [])
+      },
+      masculino: {
+        lado_a: slot === 'A' ? [] : (prevEsc.masculino?.lado_a || []),
+        lado_b: slot === 'B' ? [] : (prevEsc.masculino?.lado_b || []),
+        lado_a_nomes: slot === 'A' ? [] : (prevEsc.masculino?.lado_a_nomes || []),
+        lado_b_nomes: slot === 'B' ? [] : (prevEsc.masculino?.lado_b_nomes || [])
+      },
+      mista: {
+        lado_a: slot === 'A' ? [] : (prevEsc.mista?.lado_a || []),
+        lado_b: slot === 'B' ? [] : (prevEsc.mista?.lado_b || []),
+        lado_a_nomes: slot === 'A' ? [] : (prevEsc.mista?.lado_a_nomes || []),
+        lado_b_nomes: slot === 'B' ? [] : (prevEsc.mista?.lado_b_nomes || [])
+      },
+      data_atualizacao: new Date().toISOString()
+    };
+    store.saveGameLineup(categoryId, gameCode, lineup);
+    if (window.toast) {
+      window.toast.show({
+        title: 'Escalação Resetada',
+        message: `A escalação de ${teamUf} foi resetada.`,
+        type: 'info'
+      });
+    }
+    const overlay = document.getElementById('match-modal-overlay');
+    if (overlay) overlay.classList.remove('active');
+    if (window.renderBracket) window.renderBracket();
+    if (window.renderSchedule) window.renderSchedule();
   }
 };
 
@@ -2327,16 +2300,16 @@ window.clearMatchLineup = (gameCode, categoryId) => {
   }
   if (confirm(`Tem certeza que deseja limpar toda a escalação do confronto ${gameCode}?`)) {
     store.clearGameLineup(categoryId, gameCode);
-    toast.show({
-      title: 'Escalação Limpa',
-      message: `A escalação do confronto ${gameCode} foi resetada.`,
-      type: 'warning'
-    });
+    if (window.toast) {
+      window.toast.show({
+        title: 'Escalação Limpa',
+        message: `A escalação do confronto ${gameCode} foi resetada.`,
+        type: 'warning'
+      });
+    }
     const overlay = document.getElementById('match-modal-overlay');
     if (overlay) overlay.classList.remove('active');
     if (window.renderBracket) window.renderBracket();
     if (window.renderSchedule) window.renderSchedule();
   }
 };
-
-

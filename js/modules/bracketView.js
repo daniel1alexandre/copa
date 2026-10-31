@@ -11,7 +11,7 @@ let currentViewMode = 'tree'; // tree | table
 export function initBracketView() {
   window.openEditFirstRoundCardModal = (code, catId) => openEditFirstRoundCardModal(code, catId || currentCategory);
   window.openMatchScore = (code, catId) => openMatchModal(code, catId || currentCategory);
-  window.openMatchLineupModal = (code, catId) => openMatchLineupModal(code, catId || currentCategory);
+  window.openMatchLineupModal = (code, catId, slot = 'A') => openMatchLineupModal(code, catId || currentCategory, slot);
 
   window.switchBracketCategory = (catId) => {
     currentCategory = catId;
@@ -1410,7 +1410,7 @@ function renderTableBracket(games) {
                   </span>
                 </td>
                 <td style="white-space: nowrap;">
-                  <button class="btn btn-sm btn-outline" onclick="window.openMatchLineupModal('${g.code}', '${g.categoria_id}')" style="margin-right: 0.35rem; font-weight: 700; border-color: #028090; color: #028090;">
+                  <button class="btn btn-sm btn-outline" onclick="window.openMatchLineupModal('${g.code}', '${g.categoria_id}', 'A')" style="margin-right: 0.35rem; font-weight: 700; border-color: #028090; color: #028090;">
                     📋 Escalação
                   </button>
                   <button class="btn btn-sm ${isAdmin ? 'btn-primary' : 'btn-outline'}" onclick="${editAction}">
