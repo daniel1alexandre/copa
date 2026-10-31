@@ -1,8 +1,9 @@
 // Base Oficial de Atletas da Copa das Federações de Beach Tennis 2026 - CBT (Tênis Integrado)
 // Extraído diretamente da Pré-Lista Oficial de Inscritos (77 páginas, 27 federações)
 // Total de Atletas Únicos: 2128 | Total de Inscrições: 2259
+// Com classificação oficial de gênero (F = Feminino, M = Masculino)
 
-export const CBT_OFFICIAL_ATHLETES_VERSION = "2026.11-cbt-official";
+export const CBT_OFFICIAL_ATHLETES_VERSION = "2026.12-cbt-official-gender";
 
 export const CBT_OFFICIAL_ATHLETES_2026 = [
   {
@@ -14,7 +15,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-453695",
@@ -25,7 +27,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-480255",
@@ -36,7 +39,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-741974",
@@ -47,7 +51,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-374793",
@@ -58,7 +63,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-390035",
@@ -69,7 +75,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 58,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-427189",
@@ -80,7 +87,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-384456",
@@ -91,7 +99,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-492980",
@@ -102,7 +111,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-399028",
@@ -113,7 +123,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-426069",
@@ -124,7 +135,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-423552",
@@ -135,7 +147,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-262002",
@@ -146,7 +159,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-261836",
@@ -157,7 +171,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-261516",
@@ -170,7 +185,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-ac-454434",
@@ -181,7 +197,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-719251",
@@ -192,7 +209,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-423230",
@@ -203,7 +221,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-204816",
@@ -214,7 +233,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-390038",
@@ -225,7 +245,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-369501",
@@ -236,7 +257,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-217518",
@@ -247,7 +269,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-387860",
@@ -258,7 +281,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-384487",
@@ -269,7 +293,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-51886",
@@ -280,7 +305,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-229476",
@@ -291,7 +317,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-256301",
@@ -302,7 +329,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-743385",
@@ -313,7 +341,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-259258",
@@ -324,7 +353,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-471734",
@@ -335,7 +365,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-400553",
@@ -346,7 +377,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-442244",
@@ -357,7 +389,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-237806",
@@ -368,7 +401,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-2062",
@@ -379,7 +413,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-374971",
@@ -390,7 +425,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-227605",
@@ -401,7 +437,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 70,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-383737",
@@ -412,7 +449,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-261573",
@@ -423,7 +461,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-514844",
@@ -434,7 +473,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-453259",
@@ -445,7 +485,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-410410",
@@ -456,7 +497,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-47602",
@@ -470,7 +512,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub18",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ac-386621",
@@ -481,7 +524,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-416908",
@@ -492,7 +536,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-719647",
@@ -503,7 +548,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 70,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-493462",
@@ -514,7 +560,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-454406",
@@ -525,7 +572,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 71,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-373899",
@@ -539,7 +587,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_c",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ac-260326",
@@ -550,7 +599,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-260431",
@@ -561,7 +611,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-390062",
@@ -572,7 +623,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-374287",
@@ -585,7 +637,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ac-460109",
@@ -596,7 +649,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-374781",
@@ -607,7 +661,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-48559",
@@ -620,7 +675,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ac-723305",
@@ -631,7 +687,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 69,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-369279",
@@ -642,7 +699,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-39450",
@@ -653,7 +711,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-475064",
@@ -664,7 +723,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-427072",
@@ -675,7 +735,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-408463",
@@ -686,7 +747,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-227732",
@@ -697,7 +759,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-220746",
@@ -708,7 +771,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-223908",
@@ -719,7 +783,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ac-453481",
@@ -730,7 +795,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 10,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ac-400651",
@@ -741,7 +807,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-721236",
@@ -752,7 +819,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-744522",
@@ -763,7 +831,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-257057",
@@ -774,7 +843,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 48,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-258619",
@@ -785,7 +855,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-370089",
@@ -796,7 +867,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-16399",
@@ -807,7 +879,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-418360",
@@ -819,7 +892,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "186º"
+    "ranking": "186º",
+    "genero": "M"
   },
   {
     "id": "ath-al-42873",
@@ -831,7 +905,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "M"
   },
   {
     "id": "ath-al-42841",
@@ -842,7 +917,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-399557",
@@ -853,7 +929,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-426324",
@@ -864,7 +941,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-465220",
@@ -875,7 +953,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-450242",
@@ -886,7 +965,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-240115",
@@ -897,7 +977,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-515465",
@@ -909,7 +990,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "29º"
+    "ranking": "29º",
+    "genero": "M"
   },
   {
     "id": "ath-al-246947",
@@ -920,7 +1002,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-406591",
@@ -931,7 +1014,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-388284",
@@ -942,7 +1026,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-57412",
@@ -953,7 +1038,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-246892",
@@ -964,7 +1050,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-238201",
@@ -975,7 +1062,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-35189",
@@ -987,7 +1075,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-al-3302",
@@ -998,7 +1087,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 66,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-35196",
@@ -1010,7 +1100,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "206º"
+    "ranking": "206º",
+    "genero": "M"
   },
   {
     "id": "ath-al-472637",
@@ -1021,7 +1112,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-416143",
@@ -1033,7 +1125,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "148º"
+    "ranking": "148º",
+    "genero": "F"
   },
   {
     "id": "ath-al-236948",
@@ -1044,7 +1137,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-430692",
@@ -1056,7 +1150,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-al-499282",
@@ -1067,7 +1162,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-43692",
@@ -1079,7 +1175,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "72º"
+    "ranking": "72º",
+    "genero": "M"
   },
   {
     "id": "ath-al-16474",
@@ -1090,7 +1187,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-491614",
@@ -1102,7 +1200,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "M"
   },
   {
     "id": "ath-al-492906",
@@ -1114,7 +1213,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "F"
   },
   {
     "id": "ath-al-242444",
@@ -1125,7 +1225,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-381046",
@@ -1137,7 +1238,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "186º"
+    "ranking": "186º",
+    "genero": "M"
   },
   {
     "id": "ath-al-6645",
@@ -1151,7 +1253,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-al-7628",
@@ -1165,7 +1268,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-al-372443",
@@ -1176,7 +1280,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-502757",
@@ -1188,7 +1293,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "F"
   },
   {
     "id": "ath-al-6561",
@@ -1199,7 +1305,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-445793",
@@ -1210,7 +1317,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-731860",
@@ -1221,7 +1329,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-260168",
@@ -1233,7 +1342,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "102º"
+    "ranking": "102º",
+    "genero": "M"
   },
   {
     "id": "ath-al-469552",
@@ -1244,7 +1354,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-258338",
@@ -1256,7 +1367,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "25º"
+    "ranking": "25º",
+    "genero": "M"
   },
   {
     "id": "ath-al-506108",
@@ -1267,7 +1379,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-43359",
@@ -1279,7 +1392,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "M"
   },
   {
     "id": "ath-al-432807",
@@ -1290,7 +1404,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-501924",
@@ -1301,7 +1416,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-440918",
@@ -1312,7 +1428,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-519012",
@@ -1324,7 +1441,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "43º"
+    "ranking": "43º",
+    "genero": "F"
   },
   {
     "id": "ath-al-276080",
@@ -1335,7 +1453,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-398722",
@@ -1346,7 +1465,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-423524",
@@ -1358,7 +1478,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "194º"
+    "ranking": "194º",
+    "genero": "F"
   },
   {
     "id": "ath-al-233573",
@@ -1369,7 +1490,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-257714",
@@ -1380,7 +1502,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-385293",
@@ -1391,7 +1514,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-210398",
@@ -1402,7 +1526,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-465566",
@@ -1413,7 +1538,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-442424",
@@ -1424,7 +1550,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-723406",
@@ -1435,7 +1562,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-380413",
@@ -1447,7 +1575,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "106º"
+    "ranking": "106º",
+    "genero": "F"
   },
   {
     "id": "ath-al-422937",
@@ -1459,7 +1588,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "194º"
+    "ranking": "194º",
+    "genero": "F"
   },
   {
     "id": "ath-al-257513",
@@ -1472,7 +1602,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-al-375918",
@@ -1483,7 +1614,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-6576",
@@ -1495,7 +1627,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "206º"
+    "ranking": "206º",
+    "genero": "M"
   },
   {
     "id": "ath-al-237871",
@@ -1508,7 +1641,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub18",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-al-417842",
@@ -1520,7 +1654,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "86º"
+    "ranking": "86º",
+    "genero": "F"
   },
   {
     "id": "ath-al-398678",
@@ -1531,7 +1666,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-381087",
@@ -1542,7 +1678,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-52536",
@@ -1554,7 +1691,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "56º"
+    "ranking": "56º",
+    "genero": "M"
   },
   {
     "id": "ath-al-374482",
@@ -1565,7 +1703,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-426056",
@@ -1576,7 +1715,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-210395",
@@ -1587,7 +1727,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 47,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-al-490240",
@@ -1598,7 +1739,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-246372",
@@ -1609,7 +1751,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 47,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-273390",
@@ -1620,7 +1763,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-35326",
@@ -1631,7 +1775,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-40304",
@@ -1642,7 +1787,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-al-56599",
@@ -1653,7 +1799,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-406218",
@@ -1665,7 +1812,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "149º"
+    "ranking": "149º",
+    "genero": "F"
   },
   {
     "id": "ath-am-453264",
@@ -1676,7 +1824,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-410903",
@@ -1688,7 +1837,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "F"
   },
   {
     "id": "ath-am-418211",
@@ -1700,7 +1850,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "F"
   },
   {
     "id": "ath-am-470143",
@@ -1712,7 +1863,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "61º"
+    "ranking": "61º",
+    "genero": "F"
   },
   {
     "id": "ath-am-54771",
@@ -1724,7 +1876,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-am-456136",
@@ -1735,7 +1888,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-56157",
@@ -1747,7 +1901,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "69º"
+    "ranking": "69º",
+    "genero": "M"
   },
   {
     "id": "ath-am-370461",
@@ -1758,7 +1913,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-413715",
@@ -1770,7 +1926,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "69º"
+    "ranking": "69º",
+    "genero": "M"
   },
   {
     "id": "ath-am-414836",
@@ -1782,7 +1939,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "61º"
+    "ranking": "61º",
+    "genero": "F"
   },
   {
     "id": "ath-am-479551",
@@ -1794,7 +1952,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "31º"
+    "ranking": "31º",
+    "genero": "M"
   },
   {
     "id": "ath-am-264162",
@@ -1806,7 +1965,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-am-456228",
@@ -1818,7 +1978,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "64º"
+    "ranking": "64º",
+    "genero": "M"
   },
   {
     "id": "ath-am-705856",
@@ -1829,7 +1990,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-377108",
@@ -1843,7 +2005,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub18",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-am-243307",
@@ -1854,7 +2017,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 68,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-56168",
@@ -1866,7 +2030,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "163º"
+    "ranking": "163º",
+    "genero": "M"
   },
   {
     "id": "ath-am-380053",
@@ -1877,7 +2042,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-480776",
@@ -1888,7 +2054,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-498921",
@@ -1899,7 +2066,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-499466",
@@ -1910,7 +2078,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-400982",
@@ -1922,7 +2091,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "114º"
+    "ranking": "114º",
+    "genero": "M"
   },
   {
     "id": "ath-am-499568",
@@ -1933,7 +2103,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-202163",
@@ -1947,7 +2118,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-am-369682",
@@ -1959,7 +2131,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "M"
   },
   {
     "id": "ath-am-454492",
@@ -1970,7 +2143,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-511137",
@@ -1982,7 +2156,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "M"
   },
   {
     "id": "ath-am-472592",
@@ -1993,7 +2168,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-456122",
@@ -2004,7 +2180,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-369740",
@@ -2015,7 +2192,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-517536",
@@ -2027,7 +2205,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "100º"
+    "ranking": "100º",
+    "genero": "F"
   },
   {
     "id": "ath-am-706070",
@@ -2039,7 +2218,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "22º"
+    "ranking": "22º",
+    "genero": "F"
   },
   {
     "id": "ath-am-369737",
@@ -2050,7 +2230,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-455803",
@@ -2061,7 +2242,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-478798",
@@ -2072,7 +2254,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-256918",
@@ -2086,7 +2269,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-am-492583",
@@ -2098,7 +2282,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "46º"
+    "ranking": "46º",
+    "genero": "M"
   },
   {
     "id": "ath-am-492584",
@@ -2110,7 +2295,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "M"
   },
   {
     "id": "ath-am-743270",
@@ -2121,7 +2307,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-456406",
@@ -2132,7 +2319,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-454870",
@@ -2143,7 +2331,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-518584",
@@ -2155,7 +2344,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "M"
   },
   {
     "id": "ath-am-401607",
@@ -2167,7 +2357,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "F"
   },
   {
     "id": "ath-am-490417",
@@ -2179,7 +2370,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "114º"
+    "ranking": "114º",
+    "genero": "F"
   },
   {
     "id": "ath-am-384413",
@@ -2191,7 +2383,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-am-456522",
@@ -2203,7 +2396,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "129º"
+    "ranking": "129º",
+    "genero": "F"
   },
   {
     "id": "ath-am-745175",
@@ -2214,7 +2408,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 69,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-493015",
@@ -2226,7 +2421,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "F"
   },
   {
     "id": "ath-am-453371",
@@ -2237,7 +2433,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-737196",
@@ -2248,7 +2445,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-247647",
@@ -2259,7 +2457,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-462440",
@@ -2270,7 +2469,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-496452",
@@ -2281,7 +2481,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-442325",
@@ -2293,7 +2494,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "M"
   },
   {
     "id": "ath-am-418207",
@@ -2305,7 +2507,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "F"
   },
   {
     "id": "ath-am-256901",
@@ -2316,7 +2519,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-384928",
@@ -2329,7 +2533,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-am-456575",
@@ -2340,7 +2545,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-505973",
@@ -2352,7 +2558,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "M"
   },
   {
     "id": "ath-am-744000",
@@ -2363,7 +2570,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-374592",
@@ -2374,7 +2582,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-379957",
@@ -2385,7 +2594,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-244373",
@@ -2396,7 +2606,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-456291",
@@ -2407,7 +2618,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-491289",
@@ -2419,7 +2631,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "29º"
+    "ranking": "29º",
+    "genero": "M"
   },
   {
     "id": "ath-am-429546",
@@ -2430,7 +2643,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-509260",
@@ -2441,7 +2655,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-am-256887",
@@ -2452,7 +2667,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-am-369847",
@@ -2464,7 +2680,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-am-451789",
@@ -2476,7 +2693,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "69º"
+    "ranking": "69º",
+    "genero": "M"
   },
   {
     "id": "ath-am-456602",
@@ -2487,7 +2705,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-454521",
@@ -2498,7 +2717,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-454447",
@@ -2509,7 +2729,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-509049",
@@ -2520,7 +2741,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-455754",
@@ -2531,7 +2753,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-395729",
@@ -2542,7 +2765,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-737904",
@@ -2553,7 +2777,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-517854",
@@ -2564,7 +2789,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-491806",
@@ -2575,7 +2801,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-738061",
@@ -2586,7 +2813,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-467665",
@@ -2597,7 +2825,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-454043",
@@ -2608,7 +2837,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-517057",
@@ -2619,7 +2849,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-505834",
@@ -2630,7 +2861,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-450915",
@@ -2641,7 +2873,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-425609",
@@ -2652,7 +2885,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 57,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-459737",
@@ -2663,7 +2897,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-204124",
@@ -2674,7 +2909,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 66,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-510210",
@@ -2685,7 +2921,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-424230",
@@ -2698,7 +2935,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ap-381491",
@@ -2709,7 +2947,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-491678",
@@ -2721,7 +2960,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "98º"
+    "ranking": "98º",
+    "genero": "M"
   },
   {
     "id": "ath-ap-375991",
@@ -2732,7 +2972,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-413071",
@@ -2743,7 +2984,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-441869",
@@ -2754,7 +2996,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-454654",
@@ -2765,7 +3008,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 55,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-511243",
@@ -2776,7 +3020,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-416369",
@@ -2787,7 +3032,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-491764",
@@ -2799,7 +3045,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "92º"
+    "ranking": "92º",
+    "genero": "F"
   },
   {
     "id": "ath-ap-738126",
@@ -2810,7 +3057,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-379731",
@@ -2821,7 +3069,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-450834",
@@ -2832,7 +3081,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-738116",
@@ -2845,7 +3095,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ap-208748",
@@ -2856,7 +3107,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-741920",
@@ -2867,7 +3119,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-470202",
@@ -2878,7 +3131,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-711674",
@@ -2889,7 +3143,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-717516",
@@ -2901,7 +3156,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "103º"
+    "ranking": "103º",
+    "genero": "M"
   },
   {
     "id": "ath-ap-379732",
@@ -2922,7 +3178,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-ap-491153",
@@ -2933,7 +3190,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-380095",
@@ -2944,7 +3202,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-410053",
@@ -2955,7 +3214,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-704747",
@@ -2966,7 +3226,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-201868",
@@ -2977,7 +3238,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-510615",
@@ -2989,7 +3251,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "173º"
+    "ranking": "173º",
+    "genero": "M"
   },
   {
     "id": "ath-ap-742222",
@@ -3000,7 +3263,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-416124",
@@ -3011,7 +3275,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-442873",
@@ -3022,7 +3287,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-741921",
@@ -3033,7 +3299,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-203187",
@@ -3044,7 +3311,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-412953",
@@ -3055,7 +3323,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 57,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-37345",
@@ -3066,7 +3335,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-37309",
@@ -3077,7 +3347,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-499573",
@@ -3088,7 +3359,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-441299",
@@ -3100,7 +3372,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "M"
   },
   {
     "id": "ath-ap-379818",
@@ -3111,7 +3384,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-454149",
@@ -3122,7 +3396,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-744113",
@@ -3133,7 +3408,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-511799",
@@ -3144,7 +3420,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-744404",
@@ -3155,7 +3432,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-204091",
@@ -3166,7 +3444,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-460671",
@@ -3177,7 +3456,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-518674",
@@ -3188,7 +3468,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-481443",
@@ -3200,7 +3481,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "202º"
+    "ranking": "202º",
+    "genero": "M"
   },
   {
     "id": "ath-ap-742297",
@@ -3211,7 +3493,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ap-373757",
@@ -3222,7 +3505,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ap-418894",
@@ -3233,7 +3517,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-443041",
@@ -3245,7 +3530,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-381912",
@@ -3256,7 +3542,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-242403",
@@ -3268,7 +3555,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ba-41445",
@@ -3280,7 +3568,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-385475",
@@ -3292,7 +3581,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-122653",
@@ -3303,7 +3593,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-505499",
@@ -3315,7 +3606,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-213054",
@@ -3326,7 +3618,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-35745",
@@ -3338,7 +3631,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "91º"
+    "ranking": "91º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-247495",
@@ -3350,7 +3644,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-231969",
@@ -3362,7 +3657,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-374880",
@@ -3373,7 +3669,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-246402",
@@ -3387,7 +3684,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master40"
     ],
     "ranking": "1º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-ba-498203",
@@ -3398,7 +3696,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-704081",
@@ -3410,7 +3709,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "68º"
+    "ranking": "68º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-457577",
@@ -3422,7 +3722,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "84º"
+    "ranking": "84º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-381851",
@@ -3434,7 +3735,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-456547",
@@ -3446,7 +3748,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-496973",
@@ -3458,7 +3761,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "32º"
+    "ranking": "32º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-222002",
@@ -3470,7 +3774,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-264399",
@@ -3482,7 +3787,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "14º"
+    "ranking": "14º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-495937",
@@ -3494,7 +3800,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-377932",
@@ -3505,7 +3812,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-264269",
@@ -3517,7 +3825,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-229735",
@@ -3529,7 +3838,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-381781",
@@ -3540,7 +3850,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-377930",
@@ -3553,7 +3864,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12",
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ba-266711",
@@ -3564,7 +3876,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-470238",
@@ -3576,7 +3889,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-714225",
@@ -3588,7 +3902,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "60º"
+    "ranking": "60º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-275730",
@@ -3600,7 +3915,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-510687",
@@ -3612,7 +3928,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-520607",
@@ -3623,7 +3940,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-382033",
@@ -3635,7 +3953,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "22º"
+    "ranking": "22º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-409267",
@@ -3647,7 +3966,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-276012",
@@ -3659,7 +3979,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-261903",
@@ -3671,7 +3992,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-469038",
@@ -3683,7 +4005,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-409767",
@@ -3695,7 +4018,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-445456",
@@ -3707,7 +4031,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "57º"
+    "ranking": "57º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-264147",
@@ -3719,7 +4044,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-509450",
@@ -3731,7 +4057,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-209351",
@@ -3744,7 +4071,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub14",
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ba-505519",
@@ -3755,7 +4083,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-493428",
@@ -3767,7 +4096,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "13º"
+    "ranking": "13º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-246982",
@@ -3779,7 +4109,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-526017",
@@ -3791,7 +4122,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-205568",
@@ -3803,7 +4135,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-209436",
@@ -3815,7 +4148,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ba-57488",
@@ -3826,7 +4160,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-247475",
@@ -3838,7 +4173,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-57821",
@@ -3850,7 +4186,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-703399",
@@ -3862,7 +4199,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "70º"
+    "ranking": "70º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-381911",
@@ -3873,7 +4211,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-266236",
@@ -3885,7 +4224,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-264295",
@@ -3897,7 +4237,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "46º"
+    "ranking": "46º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-457529",
@@ -3909,7 +4250,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "22º"
+    "ranking": "22º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-52832",
@@ -3920,7 +4262,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-264243",
@@ -3932,7 +4275,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-377918",
@@ -3943,7 +4287,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-440996",
@@ -3954,7 +4299,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-231769",
@@ -3966,7 +4312,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "14º"
+    "ranking": "14º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-266669",
@@ -3978,7 +4325,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "29º"
+    "ranking": "29º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-500289",
@@ -3990,7 +4338,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-519970",
@@ -4002,7 +4351,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-264413",
@@ -4014,7 +4364,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-1270",
@@ -4028,7 +4379,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a"
     ],
     "ranking": "60º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ba-375091",
@@ -4039,7 +4391,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-9485",
@@ -4052,7 +4405,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ba-369962",
@@ -4064,7 +4418,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-374752",
@@ -4076,7 +4431,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-229720",
@@ -4087,7 +4443,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-496193",
@@ -4099,7 +4456,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "57º"
+    "ranking": "57º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-38467",
@@ -4111,7 +4469,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-481221",
@@ -4123,7 +4482,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-223620",
@@ -4135,7 +4495,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-712572",
@@ -4147,7 +4508,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "52º"
+    "ranking": "52º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-53501",
@@ -4158,7 +4520,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-409755",
@@ -4170,7 +4533,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-412867",
@@ -4182,7 +4546,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-218725",
@@ -4193,7 +4558,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ba-52712",
@@ -4206,7 +4572,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ba-38515",
@@ -4218,7 +4585,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-7953",
@@ -4229,7 +4597,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-423194",
@@ -4240,7 +4609,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-52889",
@@ -4252,7 +4622,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-500461",
@@ -4264,7 +4635,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-461116",
@@ -4276,7 +4648,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-209464",
@@ -4288,7 +4661,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "20º"
+    "ranking": "20º",
+    "genero": "F"
   },
   {
     "id": "ath-ba-495954",
@@ -4299,7 +4673,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ba-500467",
@@ -4311,7 +4686,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "13º"
+    "ranking": "13º",
+    "genero": "M"
   },
   {
     "id": "ath-ba-275842",
@@ -4323,7 +4699,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "14º"
+    "ranking": "14º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-209813",
@@ -4334,7 +4711,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-410805",
@@ -4345,7 +4723,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-499671",
@@ -4356,7 +4735,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-410394",
@@ -4368,7 +4748,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "34º"
+    "ranking": "34º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-239891",
@@ -4380,7 +4761,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "97º"
+    "ranking": "97º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-450326",
@@ -4392,7 +4774,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "55º"
+    "ranking": "55º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-371194",
@@ -4404,7 +4787,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-243589",
@@ -4416,7 +4800,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-450475",
@@ -4428,7 +4813,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-394026",
@@ -4439,7 +4825,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-700918",
@@ -4450,7 +4837,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-444116",
@@ -4462,7 +4850,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "14º"
+    "ranking": "14º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-203198",
@@ -4474,7 +4863,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "72º"
+    "ranking": "72º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-246855",
@@ -4486,7 +4876,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "55º"
+    "ranking": "55º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-56258",
@@ -4498,7 +4889,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-207929",
@@ -4510,7 +4902,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-406368",
@@ -4522,7 +4915,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "46º"
+    "ranking": "46º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-56265",
@@ -4534,7 +4928,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-260418",
@@ -4546,7 +4941,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-228921",
@@ -4557,7 +4953,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-464620",
@@ -4569,7 +4966,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-204953",
@@ -4581,7 +4979,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "55º"
+    "ranking": "55º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-48617",
@@ -4594,7 +4993,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50"
     ],
     "ranking": "56º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-466898",
@@ -4606,7 +5006,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "86º"
+    "ranking": "86º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-458785",
@@ -4618,7 +5019,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "81º"
+    "ranking": "81º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-493518",
@@ -4630,7 +5032,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-370101",
@@ -4642,7 +5045,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-375426",
@@ -4654,7 +5058,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-55823",
@@ -4665,7 +5070,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-411019",
@@ -4677,7 +5083,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-414985",
@@ -4688,7 +5095,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-396770",
@@ -4700,7 +5108,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-421102",
@@ -4712,7 +5121,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-261079",
@@ -4724,7 +5134,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-426060",
@@ -4735,7 +5146,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-450297",
@@ -4747,7 +5159,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-442129",
@@ -4758,7 +5171,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-247327",
@@ -4770,7 +5184,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-389494",
@@ -4781,7 +5196,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-233067",
@@ -4792,7 +5208,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-463231",
@@ -4804,7 +5221,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-463307",
@@ -4816,7 +5234,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-402268",
@@ -4827,7 +5246,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-243588",
@@ -4839,7 +5259,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-411106",
@@ -4851,7 +5272,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-12309",
@@ -4863,7 +5285,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-260310",
@@ -4875,7 +5298,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "70º"
+    "ranking": "70º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-388772",
@@ -4887,7 +5311,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "47º"
+    "ranking": "47º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-207107",
@@ -4899,7 +5324,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "56º"
+    "ranking": "56º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-227498",
@@ -4911,7 +5337,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "38º"
+    "ranking": "38º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-227649",
@@ -4922,7 +5349,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-209811",
@@ -4934,7 +5362,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "33º"
+    "ranking": "33º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-408757",
@@ -4945,7 +5374,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-236566",
@@ -4957,7 +5387,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-40530",
@@ -4969,7 +5400,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-410895",
@@ -4981,7 +5413,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-388101",
@@ -4992,7 +5425,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-420121",
@@ -5003,7 +5437,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-444234",
@@ -5015,7 +5450,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-278384",
@@ -5027,7 +5463,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-370577",
@@ -5038,7 +5475,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-246951",
@@ -5049,7 +5487,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-233167",
@@ -5061,7 +5500,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-444547",
@@ -5073,7 +5513,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "59º"
+    "ranking": "59º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-429142",
@@ -5084,7 +5525,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-275123",
@@ -5096,7 +5538,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "33º"
+    "ranking": "33º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-383787",
@@ -5108,7 +5551,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "73º"
+    "ranking": "73º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-392255",
@@ -5119,7 +5563,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-246080",
@@ -5131,7 +5576,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-394704",
@@ -5142,7 +5588,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-227339",
@@ -5154,7 +5601,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-203934",
@@ -5166,7 +5614,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-275452",
@@ -5177,7 +5626,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-427875",
@@ -5189,7 +5639,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-389147",
@@ -5200,7 +5651,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ce-415384",
@@ -5211,7 +5663,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-227951",
@@ -5223,7 +5676,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-205745",
@@ -5235,7 +5689,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "80º"
+    "ranking": "80º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-266725",
@@ -5248,7 +5703,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-421227",
@@ -5260,7 +5716,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-51551",
@@ -5272,7 +5729,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-56269",
@@ -5284,7 +5742,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-48506",
@@ -5296,7 +5755,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ce-482267",
@@ -5308,7 +5768,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-415616",
@@ -5320,7 +5781,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "62º"
+    "ranking": "62º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-227502",
@@ -5332,7 +5794,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-440835",
@@ -5344,7 +5807,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "43º"
+    "ranking": "43º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-466937",
@@ -5356,7 +5820,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "39º"
+    "ranking": "39º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-514924",
@@ -5368,7 +5833,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "82º"
+    "ranking": "82º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-383480",
@@ -5380,7 +5846,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "22º"
+    "ranking": "22º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-456058",
@@ -5391,7 +5858,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ce-56240",
@@ -5403,7 +5871,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "M"
   },
   {
     "id": "ath-ce-411018",
@@ -5415,7 +5884,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "64º"
+    "ranking": "64º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-259316",
@@ -5427,7 +5897,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "F"
   },
   {
     "id": "ath-ce-390196",
@@ -5438,7 +5909,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-503228",
@@ -5450,7 +5922,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "115º"
+    "ranking": "115º",
+    "genero": "F"
   },
   {
     "id": "ath-df-208493",
@@ -5463,7 +5936,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-df-248200",
@@ -5474,7 +5948,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-458833",
@@ -5486,7 +5961,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "F"
   },
   {
     "id": "ath-df-727148",
@@ -5497,7 +5973,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-276866",
@@ -5508,7 +5985,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-206469",
@@ -5519,7 +5997,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 47,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-38871",
@@ -5531,7 +6010,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "F"
   },
   {
     "id": "ath-df-369830",
@@ -5542,7 +6022,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-60338",
@@ -5553,7 +6034,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-248411",
@@ -5564,7 +6046,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-501440",
@@ -5576,7 +6059,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "119º"
+    "ranking": "119º",
+    "genero": "F"
   },
   {
     "id": "ath-df-427982",
@@ -5587,7 +6071,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-251203",
@@ -5599,7 +6084,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "F"
   },
   {
     "id": "ath-df-509562",
@@ -5610,7 +6096,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-421615",
@@ -5622,7 +6109,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-df-516475",
@@ -5633,7 +6121,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-452954",
@@ -5644,7 +6133,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-223190",
@@ -5655,7 +6145,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-206120",
@@ -5666,7 +6157,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 66,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-59984",
@@ -5678,7 +6170,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-df-511860",
@@ -5690,7 +6183,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "63º"
+    "ranking": "63º",
+    "genero": "M"
   },
   {
     "id": "ath-df-474433",
@@ -5702,7 +6196,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "63º"
+    "ranking": "63º",
+    "genero": "M"
   },
   {
     "id": "ath-df-499077",
@@ -5713,7 +6208,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-60260",
@@ -5724,7 +6220,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-721124",
@@ -5735,7 +6232,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-60215",
@@ -5746,7 +6244,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-54952",
@@ -5757,7 +6256,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-454166",
@@ -5768,7 +6268,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-275265",
@@ -5779,7 +6280,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-50190",
@@ -5790,7 +6292,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-452820",
@@ -5801,7 +6304,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-743681",
@@ -5812,7 +6316,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-509508",
@@ -5824,7 +6329,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "52º"
+    "ranking": "52º",
+    "genero": "M"
   },
   {
     "id": "ath-df-743698",
@@ -5835,7 +6341,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-508699",
@@ -5847,7 +6354,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "115º"
+    "ranking": "115º",
+    "genero": "F"
   },
   {
     "id": "ath-df-227665",
@@ -5858,7 +6366,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-260964",
@@ -5870,7 +6379,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-df-255357",
@@ -5882,7 +6392,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "102º"
+    "ranking": "102º",
+    "genero": "M"
   },
   {
     "id": "ath-df-452376",
@@ -5894,7 +6405,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "F"
   },
   {
     "id": "ath-df-744088",
@@ -5905,7 +6417,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-376694",
@@ -5916,7 +6429,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-206263",
@@ -5930,7 +6444,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_c"
     ],
     "ranking": "63º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-df-215362",
@@ -5942,7 +6457,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-df-57446",
@@ -5953,7 +6469,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-251226",
@@ -5965,7 +6482,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "72º"
+    "ranking": "72º",
+    "genero": "M"
   },
   {
     "id": "ath-df-211606",
@@ -5978,7 +6496,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-df-60245",
@@ -5989,7 +6508,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-219824",
@@ -6000,7 +6520,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-209183",
@@ -6013,7 +6534,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-df-220020",
@@ -6025,7 +6547,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-df-212475",
@@ -6037,7 +6560,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-df-60270",
@@ -6051,7 +6575,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub18"
     ],
     "ranking": "123º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-df-509036",
@@ -6062,7 +6587,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-215450",
@@ -6073,7 +6599,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-453335",
@@ -6084,7 +6611,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-233363",
@@ -6096,7 +6624,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "121º"
+    "ranking": "121º",
+    "genero": "F"
   },
   {
     "id": "ath-df-399471",
@@ -6107,7 +6636,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-744295",
@@ -6118,7 +6648,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-509784",
@@ -6129,7 +6660,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-3340",
@@ -6141,7 +6673,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "M"
   },
   {
     "id": "ath-df-243460",
@@ -6153,7 +6686,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "M"
   },
   {
     "id": "ath-df-34266",
@@ -6164,7 +6698,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-729950",
@@ -6175,7 +6710,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-60264",
@@ -6186,7 +6722,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-721814",
@@ -6197,7 +6734,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-452430",
@@ -6209,7 +6747,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "115º"
+    "ranking": "115º",
+    "genero": "F"
   },
   {
     "id": "ath-df-60022",
@@ -6220,7 +6759,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-42497",
@@ -6231,7 +6771,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-371879",
@@ -6242,7 +6783,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-381501",
@@ -6254,7 +6796,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-df-58227",
@@ -6265,7 +6808,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-743754",
@@ -6276,7 +6820,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-459853",
@@ -6288,7 +6833,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "184º"
+    "ranking": "184º",
+    "genero": "M"
   },
   {
     "id": "ath-df-251042",
@@ -6299,7 +6845,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-510071",
@@ -6310,7 +6857,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-509873",
@@ -6322,7 +6870,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "52º"
+    "ranking": "52º",
+    "genero": "M"
   },
   {
     "id": "ath-df-243335",
@@ -6333,7 +6882,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-382317",
@@ -6344,7 +6894,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-511821",
@@ -6355,7 +6906,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 48,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-60355",
@@ -6366,7 +6918,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-460147",
@@ -6377,7 +6930,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-206069",
@@ -6388,7 +6942,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 67,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-454355",
@@ -6399,7 +6954,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 48,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-278417",
@@ -6410,7 +6966,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-508305",
@@ -6421,7 +6978,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-407556",
@@ -6432,7 +6990,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-df-462457",
@@ -6443,7 +7002,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-247554",
@@ -6455,7 +7015,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-df-60221",
@@ -6466,7 +7027,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 57,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-df-493122",
@@ -6478,7 +7040,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "79º"
+    "ranking": "79º",
+    "genero": "M"
   },
   {
     "id": "ath-df-704790",
@@ -6489,7 +7052,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-38696",
@@ -6500,7 +7064,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-795",
@@ -6512,7 +7077,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "117º"
+    "ranking": "117º",
+    "genero": "M"
   },
   {
     "id": "ath-es-440994",
@@ -6523,7 +7089,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-259412",
@@ -6534,7 +7101,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-232138",
@@ -6545,7 +7113,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-381715",
@@ -6556,7 +7125,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-502042",
@@ -6567,7 +7137,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-403990",
@@ -6578,7 +7149,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-525287",
@@ -6589,7 +7161,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-700801",
@@ -6600,7 +7173,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-521897",
@@ -6612,7 +7186,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "147º"
+    "ranking": "147º",
+    "genero": "F"
   },
   {
     "id": "ath-es-701412",
@@ -6623,7 +7198,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-399878",
@@ -6634,7 +7210,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-39899",
@@ -6645,7 +7222,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-409024",
@@ -6657,7 +7235,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-51107",
@@ -6669,7 +7248,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-es-262620",
@@ -6680,7 +7260,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-6404",
@@ -6691,7 +7272,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-478871",
@@ -6703,7 +7285,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-492533",
@@ -6714,7 +7297,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-258899",
@@ -6725,7 +7309,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-249956",
@@ -6736,7 +7321,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-727196",
@@ -6747,7 +7333,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-222878",
@@ -6758,7 +7345,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-274267",
@@ -6769,7 +7357,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-470652",
@@ -6780,7 +7369,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-260637",
@@ -6791,7 +7381,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-465368",
@@ -6802,7 +7393,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-404028",
@@ -6813,7 +7405,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-443880",
@@ -6825,7 +7418,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "108º"
+    "ranking": "108º",
+    "genero": "F"
   },
   {
     "id": "ath-es-481881",
@@ -6836,7 +7430,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-432715",
@@ -6848,7 +7443,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "88º"
+    "ranking": "88º",
+    "genero": "M"
   },
   {
     "id": "ath-es-403827",
@@ -6859,7 +7455,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-201023",
@@ -6870,7 +7467,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-369400",
@@ -6881,7 +7479,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-701432",
@@ -6892,7 +7491,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-383441",
@@ -6903,7 +7503,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-375228",
@@ -6915,7 +7516,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "50º"
+    "ranking": "50º",
+    "genero": "F"
   },
   {
     "id": "ath-es-229367",
@@ -6926,7 +7528,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-502596",
@@ -6937,7 +7540,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-389592",
@@ -6948,7 +7552,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-408147",
@@ -6959,7 +7564,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-233623",
@@ -6970,7 +7576,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-374093",
@@ -6982,7 +7589,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-54599",
@@ -6994,7 +7602,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-429739",
@@ -7005,7 +7614,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-48046",
@@ -7016,7 +7626,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-54685",
@@ -7027,7 +7638,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-490293",
@@ -7039,7 +7651,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "M"
   },
   {
     "id": "ath-es-15488",
@@ -7051,7 +7664,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "25º"
+    "ranking": "25º",
+    "genero": "M"
   },
   {
     "id": "ath-es-242633",
@@ -7063,7 +7677,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-379577",
@@ -7074,7 +7689,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 57,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-227862",
@@ -7085,7 +7701,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-276408",
@@ -7096,7 +7713,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-15853",
@@ -7108,7 +7726,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "F"
   },
   {
     "id": "ath-es-58630",
@@ -7119,7 +7738,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-248664",
@@ -7130,7 +7750,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-403889",
@@ -7141,7 +7762,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 68,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-705211",
@@ -7153,7 +7775,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "147º"
+    "ranking": "147º",
+    "genero": "F"
   },
   {
     "id": "ath-es-409530",
@@ -7164,7 +7787,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-419109",
@@ -7176,7 +7800,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-263508",
@@ -7188,7 +7813,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "61º"
+    "ranking": "61º",
+    "genero": "F"
   },
   {
     "id": "ath-es-275759",
@@ -7199,7 +7825,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-468253",
@@ -7211,7 +7838,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "202º"
+    "ranking": "202º",
+    "genero": "M"
   },
   {
     "id": "ath-es-487533",
@@ -7222,7 +7850,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-704269",
@@ -7233,7 +7862,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-524154",
@@ -7245,7 +7875,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "43º"
+    "ranking": "43º",
+    "genero": "F"
   },
   {
     "id": "ath-es-377170",
@@ -7257,7 +7888,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-499317",
@@ -7268,7 +7900,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-492186",
@@ -7279,7 +7912,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-450270",
@@ -7291,7 +7925,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "13º"
+    "ranking": "13º",
+    "genero": "F"
   },
   {
     "id": "ath-es-416924",
@@ -7303,7 +7938,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "43º"
+    "ranking": "43º",
+    "genero": "M"
   },
   {
     "id": "ath-es-380996",
@@ -7314,7 +7950,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-259541",
@@ -7325,7 +7962,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-439967",
@@ -7337,7 +7975,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "F"
   },
   {
     "id": "ath-es-507412",
@@ -7348,7 +7987,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-469754",
@@ -7360,7 +8000,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "25º"
+    "ranking": "25º",
+    "genero": "M"
   },
   {
     "id": "ath-es-50462",
@@ -7371,7 +8012,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-260822",
@@ -7383,7 +8025,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-506288",
@@ -7394,7 +8037,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-378447",
@@ -7405,7 +8049,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 48,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-233618",
@@ -7416,7 +8061,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-229301",
@@ -7428,7 +8074,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "M"
   },
   {
     "id": "ath-es-264066",
@@ -7439,7 +8086,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 59,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-222794",
@@ -7451,7 +8099,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-266823",
@@ -7462,7 +8111,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-429287",
@@ -7473,7 +8123,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-248667",
@@ -7484,7 +8135,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-427713",
@@ -7496,7 +8148,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "148º"
+    "ranking": "148º",
+    "genero": "F"
   },
   {
     "id": "ath-es-475084",
@@ -7507,7 +8160,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-260647",
@@ -7518,7 +8172,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-459557",
@@ -7529,7 +8184,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-431564",
@@ -7540,7 +8196,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-39978",
@@ -7551,7 +8208,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-es-486190",
@@ -7563,7 +8221,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "108º"
+    "ranking": "108º",
+    "genero": "F"
   },
   {
     "id": "ath-es-399987",
@@ -7574,7 +8233,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-es-471650",
@@ -7586,7 +8246,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-es-416559",
@@ -7597,7 +8258,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-741768",
@@ -7608,7 +8270,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-51025",
@@ -7619,7 +8282,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-22955",
@@ -7631,7 +8295,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-233339",
@@ -7643,7 +8308,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-go-506039",
@@ -7654,7 +8320,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-206354",
@@ -7665,7 +8332,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-209151",
@@ -7677,7 +8345,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-222095",
@@ -7689,7 +8358,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-247913",
@@ -7700,7 +8370,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-227245",
@@ -7711,7 +8382,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-521184",
@@ -7722,7 +8394,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-505225",
@@ -7734,7 +8407,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-go-241903",
@@ -7745,7 +8419,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-233441",
@@ -7756,7 +8431,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-717787",
@@ -7767,7 +8443,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-710049",
@@ -7779,7 +8456,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "F"
   },
   {
     "id": "ath-go-425639",
@@ -7790,7 +8468,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-56772",
@@ -7801,7 +8480,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-232438",
@@ -7812,7 +8492,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-499710",
@@ -7823,7 +8504,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-500848",
@@ -7835,7 +8517,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "40º"
+    "ranking": "40º",
+    "genero": "F"
   },
   {
     "id": "ath-go-371313",
@@ -7846,7 +8529,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-448331",
@@ -7857,7 +8541,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-426762",
@@ -7868,7 +8553,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-414359",
@@ -7880,7 +8566,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-710533",
@@ -7891,7 +8578,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-511931",
@@ -7902,7 +8590,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-495015",
@@ -7913,7 +8602,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-277009",
@@ -7925,7 +8615,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-41603",
@@ -7936,7 +8627,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-385411",
@@ -7948,7 +8640,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "43º"
+    "ranking": "43º",
+    "genero": "M"
   },
   {
     "id": "ath-go-259811",
@@ -7960,7 +8653,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "M"
   },
   {
     "id": "ath-go-440421",
@@ -7971,7 +8665,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-201535",
@@ -7983,7 +8678,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "M"
   },
   {
     "id": "ath-go-501494",
@@ -7994,7 +8690,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-471516",
@@ -8005,7 +8702,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-495337",
@@ -8017,7 +8715,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "90º"
+    "ranking": "90º",
+    "genero": "F"
   },
   {
     "id": "ath-go-512917",
@@ -8029,7 +8728,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "F"
   },
   {
     "id": "ath-go-414306",
@@ -8040,7 +8740,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-250418",
@@ -8052,7 +8753,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-9615",
@@ -8063,7 +8765,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-520796",
@@ -8074,7 +8777,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-394998",
@@ -8085,7 +8789,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-461747",
@@ -8096,7 +8801,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-396681",
@@ -8107,7 +8813,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-396434",
@@ -8118,7 +8825,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-714095",
@@ -8129,7 +8837,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-704454",
@@ -8141,7 +8850,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-go-506930",
@@ -8153,7 +8863,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-710364",
@@ -8164,7 +8875,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-377156",
@@ -8175,7 +8887,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-395976",
@@ -8187,7 +8900,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "12º"
+    "ranking": "12º",
+    "genero": "M"
   },
   {
     "id": "ath-go-15632",
@@ -8198,7 +8912,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-474808",
@@ -8209,7 +8924,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-711120",
@@ -8221,7 +8937,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "34º"
+    "ranking": "34º",
+    "genero": "M"
   },
   {
     "id": "ath-go-515584",
@@ -8232,7 +8949,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-371315",
@@ -8243,7 +8961,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-515287",
@@ -8254,7 +8973,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-449242",
@@ -8266,7 +8986,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "21º"
+    "ranking": "21º",
+    "genero": "M"
   },
   {
     "id": "ath-go-275394",
@@ -8277,7 +8998,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-714617",
@@ -8288,7 +9010,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-276339",
@@ -8300,7 +9023,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-go-47772",
@@ -8312,7 +9036,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "F"
   },
   {
     "id": "ath-go-710860",
@@ -8323,7 +9048,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-465723",
@@ -8335,7 +9061,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "88º"
+    "ranking": "88º",
+    "genero": "F"
   },
   {
     "id": "ath-go-472769",
@@ -8346,7 +9073,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-479743",
@@ -8357,7 +9085,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-398454",
@@ -8368,7 +9097,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-514655",
@@ -8379,7 +9109,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-406973",
@@ -8390,7 +9121,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-495916",
@@ -8401,7 +9133,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-402489",
@@ -8412,7 +9145,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-496808",
@@ -8423,7 +9157,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-214685",
@@ -8434,7 +9169,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-495331",
@@ -8446,7 +9182,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "53º"
+    "ranking": "53º",
+    "genero": "M"
   },
   {
     "id": "ath-go-513017",
@@ -8457,7 +9194,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-40701",
@@ -8469,7 +9207,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "50º"
+    "ranking": "50º",
+    "genero": "M"
   },
   {
     "id": "ath-go-500005",
@@ -8480,7 +9219,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-232595",
@@ -8491,7 +9231,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-501456",
@@ -8502,7 +9243,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-384690",
@@ -8513,7 +9255,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 56,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-241647",
@@ -8525,7 +9268,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-494965",
@@ -8536,7 +9280,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-415683",
@@ -8547,7 +9292,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-395026",
@@ -8558,7 +9304,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-255908",
@@ -8570,7 +9317,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-go-380538",
@@ -8582,7 +9330,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "M"
   },
   {
     "id": "ath-go-241277",
@@ -8594,7 +9343,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-go-710929",
@@ -8605,7 +9355,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-507815",
@@ -8616,7 +9367,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-go-425484",
@@ -8627,7 +9379,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-404439",
@@ -8638,7 +9391,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-463382",
@@ -8649,7 +9403,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-go-462472",
@@ -8660,7 +9415,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-743428",
@@ -8671,7 +9427,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-371580",
@@ -8682,7 +9439,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-720610",
@@ -8694,7 +9452,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "156º"
+    "ranking": "156º",
+    "genero": "F"
   },
   {
     "id": "ath-ma-400771",
@@ -8705,7 +9464,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-245061",
@@ -8716,7 +9476,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-247831",
@@ -8728,7 +9489,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "70º"
+    "ranking": "70º",
+    "genero": "M"
   },
   {
     "id": "ath-ma-463474",
@@ -8740,7 +9502,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "14º"
+    "ranking": "14º",
+    "genero": "F"
   },
   {
     "id": "ath-ma-743443",
@@ -8751,7 +9514,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-369785",
@@ -8765,7 +9529,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub16",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ma-413193",
@@ -8776,7 +9541,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-378501",
@@ -8789,7 +9555,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ma-430803",
@@ -8801,7 +9568,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "M"
   },
   {
     "id": "ath-ma-743511",
@@ -8812,7 +9580,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-237867",
@@ -8823,7 +9592,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-427923",
@@ -8834,7 +9604,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-525187",
@@ -8846,7 +9617,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "184º"
+    "ranking": "184º",
+    "genero": "M"
   },
   {
     "id": "ath-ma-400733",
@@ -8857,7 +9629,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-371697",
@@ -8868,7 +9641,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-232535",
@@ -8881,7 +9655,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ma-426439",
@@ -8893,7 +9668,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "M"
   },
   {
     "id": "ath-ma-384052",
@@ -8904,7 +9680,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-451777",
@@ -8915,7 +9692,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-464818",
@@ -8926,7 +9704,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-409177",
@@ -8937,7 +9716,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-48248",
@@ -8949,7 +9729,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "34º"
+    "ranking": "34º",
+    "genero": "M"
   },
   {
     "id": "ath-ma-411194",
@@ -8960,7 +9741,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-384093",
@@ -8973,7 +9755,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12",
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ma-377335",
@@ -8984,7 +9767,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-383284",
@@ -8995,7 +9779,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-520422",
@@ -9007,7 +9792,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "194º"
+    "ranking": "194º",
+    "genero": "F"
   },
   {
     "id": "ath-ma-400756",
@@ -9018,7 +9804,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-396906",
@@ -9029,7 +9816,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-371437",
@@ -9040,7 +9828,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-452138",
@@ -9052,7 +9841,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "38º"
+    "ranking": "38º",
+    "genero": "F"
   },
   {
     "id": "ath-ma-278682",
@@ -9065,7 +9855,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ma-500116",
@@ -9077,7 +9868,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "98º"
+    "ranking": "98º",
+    "genero": "F"
   },
   {
     "id": "ath-ma-524963",
@@ -9089,7 +9881,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "F"
   },
   {
     "id": "ath-ma-370658",
@@ -9100,7 +9893,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-412489",
@@ -9111,7 +9905,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-456928",
@@ -9122,7 +9917,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-710501",
@@ -9134,7 +9930,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "211º"
+    "ranking": "211º",
+    "genero": "F"
   },
   {
     "id": "ath-ma-371520",
@@ -9145,7 +9942,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-727185",
@@ -9156,7 +9954,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-242783",
@@ -9168,7 +9967,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "64º"
+    "ranking": "64º",
+    "genero": "F"
   },
   {
     "id": "ath-ma-371102",
@@ -9179,7 +9979,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-511296",
@@ -9191,7 +9992,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "63º"
+    "ranking": "63º",
+    "genero": "M"
   },
   {
     "id": "ath-ma-383270",
@@ -9202,7 +10004,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-396259",
@@ -9213,7 +10016,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-495589",
@@ -9225,7 +10029,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "184º"
+    "ranking": "184º",
+    "genero": "M"
   },
   {
     "id": "ath-ma-246515",
@@ -9236,7 +10041,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-386829",
@@ -9247,7 +10053,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-448554",
@@ -9258,7 +10065,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-396162",
@@ -9269,7 +10077,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-396178",
@@ -9280,7 +10089,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-489069",
@@ -9291,7 +10101,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-448556",
@@ -9302,7 +10113,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-377433",
@@ -9313,7 +10125,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-370482",
@@ -9324,7 +10137,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ma-395676",
@@ -9335,7 +10149,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ma-471464",
@@ -9346,7 +10161,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-715307",
@@ -9358,7 +10174,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-718746",
@@ -9369,7 +10186,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-471342",
@@ -9380,7 +10198,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-490913",
@@ -9391,7 +10210,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-745425",
@@ -9402,7 +10222,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-493280",
@@ -9414,7 +10235,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-706979",
@@ -9426,7 +10248,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "76º"
+    "ranking": "76º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-374874",
@@ -9438,7 +10261,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mg-744144",
@@ -9449,7 +10273,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-744226",
@@ -9460,7 +10285,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 55,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-710777",
@@ -9472,7 +10298,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "143º"
+    "ranking": "143º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-278059",
@@ -9483,7 +10310,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-458027",
@@ -9494,7 +10322,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-276268",
@@ -9505,7 +10334,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-411001",
@@ -9516,7 +10346,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-49677",
@@ -9527,7 +10358,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-706059",
@@ -9538,7 +10370,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-411028",
@@ -9550,7 +10383,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "12º"
+    "ranking": "12º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-499037",
@@ -9561,7 +10395,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-708102",
@@ -9573,7 +10408,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mg-418274",
@@ -9584,7 +10420,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-493535",
@@ -9596,7 +10433,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-423655",
@@ -9608,7 +10446,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-418630",
@@ -9620,7 +10459,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-405460",
@@ -9631,7 +10471,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-418774",
@@ -9642,7 +10483,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-744255",
@@ -9653,7 +10495,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-278577",
@@ -9665,7 +10508,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mg-467052",
@@ -9676,7 +10520,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-410064",
@@ -9687,7 +10532,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-264264",
@@ -9698,7 +10544,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-735716",
@@ -9709,7 +10556,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-472056",
@@ -9720,7 +10568,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-216038",
@@ -9731,7 +10580,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-460587",
@@ -9742,7 +10592,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-278325",
@@ -9753,7 +10604,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-744111",
@@ -9764,7 +10616,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-705585",
@@ -9776,7 +10629,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "206º"
+    "ranking": "206º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-9460",
@@ -9788,7 +10642,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mg-243715",
@@ -9800,7 +10655,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "73º"
+    "ranking": "73º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-515395",
@@ -9812,7 +10668,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-459470",
@@ -9824,7 +10681,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mg-374015",
@@ -9835,7 +10693,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 73,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-277205",
@@ -9847,7 +10706,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-463843",
@@ -9859,7 +10719,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-419019",
@@ -9871,7 +10732,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mg-459499",
@@ -9882,7 +10744,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-500981",
@@ -9894,7 +10757,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-517253",
@@ -9906,7 +10770,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-439714",
@@ -9919,7 +10784,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-mg-706120",
@@ -9930,7 +10796,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-256487",
@@ -9942,7 +10809,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "29º"
+    "ranking": "29º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-744127",
@@ -9953,7 +10821,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-230224",
@@ -9964,7 +10833,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 67,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-410412",
@@ -9976,7 +10846,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "14º"
+    "ranking": "14º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-708083",
@@ -9988,7 +10859,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mg-454075",
@@ -10000,7 +10872,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-490906",
@@ -10011,7 +10884,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-464370",
@@ -10022,7 +10896,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 56,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-443360",
@@ -10034,7 +10909,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-263545",
@@ -10047,7 +10923,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "sub18"
     ],
-    "ranking": "44º"
+    "ranking": "44º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-52440",
@@ -10058,7 +10935,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-234669",
@@ -10070,7 +10948,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "M"
   },
   {
     "id": "ath-mg-390705",
@@ -10082,7 +10961,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof",
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-744085",
@@ -10093,7 +10973,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-742454",
@@ -10104,7 +10985,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-727585",
@@ -10115,7 +10997,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-369799",
@@ -10128,7 +11011,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master40",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mg-464970",
@@ -10139,7 +11023,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-459756",
@@ -10150,7 +11035,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mg-451103",
@@ -10162,7 +11048,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "F"
   },
   {
     "id": "ath-mg-221799",
@@ -10173,7 +11060,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mg-499992",
@@ -10185,7 +11073,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "M"
   },
   {
     "id": "ath-ms-215930",
@@ -10196,7 +11085,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-503476",
@@ -10208,7 +11098,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "12º"
+    "ranking": "12º",
+    "genero": "F"
   },
   {
     "id": "ath-ms-450319",
@@ -10219,7 +11110,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-261192",
@@ -10230,7 +11122,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-709962",
@@ -10242,7 +11135,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "194º"
+    "ranking": "194º",
+    "genero": "F"
   },
   {
     "id": "ath-ms-459323",
@@ -10253,7 +11147,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-472124",
@@ -10265,7 +11160,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "104º"
+    "ranking": "104º",
+    "genero": "M"
   },
   {
     "id": "ath-ms-701913",
@@ -10276,7 +11172,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-421965",
@@ -10287,7 +11184,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-421930",
@@ -10298,7 +11196,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-369989",
@@ -10309,7 +11208,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-412230",
@@ -10322,7 +11222,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_c",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ms-472507",
@@ -10334,7 +11235,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "104º"
+    "ranking": "104º",
+    "genero": "M"
   },
   {
     "id": "ath-ms-256031",
@@ -10345,7 +11247,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-210481",
@@ -10357,7 +11260,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "86º"
+    "ranking": "86º",
+    "genero": "M"
   },
   {
     "id": "ath-ms-55002",
@@ -10370,7 +11274,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ms-412246",
@@ -10381,7 +11286,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-448191",
@@ -10392,7 +11298,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-243141",
@@ -10404,7 +11311,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "122º"
+    "ranking": "122º",
+    "genero": "M"
   },
   {
     "id": "ath-ms-369536",
@@ -10415,7 +11323,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-421867",
@@ -10426,7 +11335,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-719527",
@@ -10437,7 +11347,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-418694",
@@ -10448,7 +11359,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-57661",
@@ -10459,7 +11371,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-369988",
@@ -10470,7 +11383,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-55007",
@@ -10481,7 +11395,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-422708",
@@ -10492,7 +11407,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-18462",
@@ -10503,7 +11419,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-49295",
@@ -10514,7 +11431,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 67,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-427609",
@@ -10525,7 +11443,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-232950",
@@ -10536,7 +11455,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-258085",
@@ -10547,7 +11467,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-514386",
@@ -10558,7 +11479,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-459322",
@@ -10569,7 +11491,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-417753",
@@ -10580,7 +11503,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-214731",
@@ -10591,7 +11515,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-410110",
@@ -10604,7 +11529,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub14",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ms-384658",
@@ -10615,7 +11541,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-380423",
@@ -10628,7 +11555,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ms-448417",
@@ -10639,7 +11567,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-445445",
@@ -10650,7 +11579,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-472181",
@@ -10661,7 +11591,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-442526",
@@ -10672,7 +11603,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-710141",
@@ -10683,7 +11615,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-369915",
@@ -10694,7 +11627,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-415249",
@@ -10705,7 +11639,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-454174",
@@ -10716,7 +11651,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-399965",
@@ -10729,7 +11665,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ms-502371",
@@ -10740,7 +11677,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-258240",
@@ -10751,7 +11689,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-4262",
@@ -10762,7 +11701,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-369775",
@@ -10773,7 +11713,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-725094",
@@ -10784,7 +11725,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-503406",
@@ -10795,7 +11737,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-261595",
@@ -10806,7 +11749,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-377287",
@@ -10818,7 +11762,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "25º"
+    "ranking": "25º",
+    "genero": "F"
   },
   {
     "id": "ath-ms-411610",
@@ -10829,7 +11774,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-447783",
@@ -10840,7 +11786,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-705129",
@@ -10852,7 +11799,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "143º"
+    "ranking": "143º",
+    "genero": "F"
   },
   {
     "id": "ath-ms-423499",
@@ -10864,7 +11812,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "M"
   },
   {
     "id": "ath-ms-446975",
@@ -10875,7 +11824,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-448168",
@@ -10886,7 +11836,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-447973",
@@ -10898,7 +11849,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "F"
   },
   {
     "id": "ath-ms-415646",
@@ -10909,7 +11861,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-369890",
@@ -10920,7 +11873,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-369789",
@@ -10931,7 +11885,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-710084",
@@ -10942,7 +11897,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-405982",
@@ -10954,7 +11910,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "185º"
+    "ranking": "185º",
+    "genero": "F"
   },
   {
     "id": "ath-ms-202506",
@@ -10965,7 +11922,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 70,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-423358",
@@ -10977,7 +11935,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "38º"
+    "ranking": "38º",
+    "genero": "M"
   },
   {
     "id": "ath-ms-50796",
@@ -10989,7 +11948,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "69º"
+    "ranking": "69º",
+    "genero": "M"
   },
   {
     "id": "ath-ms-710087",
@@ -11000,7 +11960,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-423322",
@@ -11011,7 +11972,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-508830",
@@ -11022,7 +11984,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-411621",
@@ -11033,7 +11996,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-50935",
@@ -11044,7 +12008,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-258082",
@@ -11055,7 +12020,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 48,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-30462",
@@ -11066,7 +12032,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-422819",
@@ -11077,7 +12044,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-422825",
@@ -11088,7 +12056,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-260492",
@@ -11099,7 +12068,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-232945",
@@ -11110,7 +12080,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-719239",
@@ -11121,7 +12092,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-418817",
@@ -11132,7 +12104,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ms-259558",
@@ -11145,7 +12118,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub18",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ms-369948",
@@ -11156,7 +12130,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-470264",
@@ -11167,7 +12142,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ms-219236",
@@ -11178,7 +12154,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-250484",
@@ -11191,7 +12168,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_c",
       "sub16",
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-387997",
@@ -11202,7 +12180,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-475106",
@@ -11214,7 +12193,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "53º"
+    "ranking": "53º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-258729",
@@ -11226,7 +12206,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-7209",
@@ -11238,7 +12219,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-261740",
@@ -11249,7 +12231,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-40471",
@@ -11260,7 +12243,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-41275",
@@ -11271,7 +12255,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-701257",
@@ -11283,7 +12268,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-250163",
@@ -11295,7 +12281,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-480150",
@@ -11306,7 +12293,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-516494",
@@ -11318,7 +12306,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "39º"
+    "ranking": "39º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-493072",
@@ -11330,7 +12319,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "51º"
+    "ranking": "51º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-428832",
@@ -11341,7 +12331,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-222919",
@@ -11353,7 +12344,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-9108",
@@ -11364,7 +12356,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-389189",
@@ -11375,7 +12368,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-469588",
@@ -11387,7 +12381,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-258288",
@@ -11399,7 +12394,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-369175",
@@ -11410,7 +12406,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-249297",
@@ -11422,7 +12419,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "109º"
+    "ranking": "109º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-249993",
@@ -11434,7 +12432,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "56º"
+    "ranking": "56º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-278626",
@@ -11446,7 +12445,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "41º"
+    "ranking": "41º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-39251",
@@ -11458,7 +12458,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "21º"
+    "ranking": "21º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-726033",
@@ -11470,7 +12471,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-404345",
@@ -11482,7 +12484,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-50430",
@@ -11494,7 +12497,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "32º"
+    "ranking": "32º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-408970",
@@ -11506,7 +12510,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-5948",
@@ -11518,7 +12523,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "51º"
+    "ranking": "51º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-352816",
@@ -11529,7 +12535,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-239608",
@@ -11540,7 +12547,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-451759",
@@ -11552,7 +12560,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-499108",
@@ -11563,7 +12572,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-60722",
@@ -11574,7 +12584,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-259903",
@@ -11586,7 +12597,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "93º"
+    "ranking": "93º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-248186",
@@ -11598,7 +12610,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-262778",
@@ -11610,7 +12623,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "32º"
+    "ranking": "32º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-262809",
@@ -11621,7 +12635,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-258501",
@@ -11633,7 +12648,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "39º"
+    "ranking": "39º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-278580",
@@ -11645,7 +12661,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-450929",
@@ -11657,7 +12674,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-389581",
@@ -11669,7 +12687,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "67º"
+    "ranking": "67º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-250288",
@@ -11681,7 +12700,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-258406",
@@ -11692,7 +12712,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-373079",
@@ -11704,7 +12725,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-375276",
@@ -11716,7 +12738,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-369083",
@@ -11728,7 +12751,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-478191",
@@ -11740,7 +12764,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-215654",
@@ -11752,7 +12777,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "78º"
+    "ranking": "78º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-240358",
@@ -11763,7 +12789,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-461545",
@@ -11775,7 +12802,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "44º"
+    "ranking": "44º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-40494",
@@ -11787,7 +12815,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-250016",
@@ -11799,7 +12828,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-259802",
@@ -11811,7 +12841,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-5849",
@@ -11823,7 +12854,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-389929",
@@ -11835,7 +12867,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "71º"
+    "ranking": "71º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-716632",
@@ -11847,7 +12880,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-218093",
@@ -11859,7 +12893,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "38º"
+    "ranking": "38º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-426623",
@@ -11870,7 +12905,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-466292",
@@ -11882,7 +12918,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "34º"
+    "ranking": "34º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-497855",
@@ -11894,7 +12931,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "50º"
+    "ranking": "50º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-377192",
@@ -11905,7 +12943,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-222547",
@@ -11916,7 +12955,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-376128",
@@ -11928,7 +12968,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-213869",
@@ -11940,7 +12981,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-421621",
@@ -11952,7 +12994,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-51485",
@@ -11963,7 +13006,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-503941",
@@ -11975,7 +13019,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "29º"
+    "ranking": "29º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-390018",
@@ -11987,7 +13032,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-mt-261959",
@@ -11999,7 +13045,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-222949",
@@ -12011,7 +13058,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-50859",
@@ -12023,7 +13071,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "38º"
+    "ranking": "38º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-417506",
@@ -12035,7 +13084,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-248192",
@@ -12047,7 +13097,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "89º"
+    "ranking": "89º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-250018",
@@ -12059,7 +13110,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-368615",
@@ -12071,7 +13123,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "89º"
+    "ranking": "89º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-456362",
@@ -12082,7 +13135,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-mt-388148",
@@ -12094,7 +13148,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "87º"
+    "ranking": "87º",
+    "genero": "F"
   },
   {
     "id": "ath-mt-250024",
@@ -12105,7 +13160,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-mt-248166",
@@ -12117,7 +13173,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-208955",
@@ -12129,7 +13186,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-mt-383736",
@@ -12141,7 +13199,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-236846",
@@ -12152,7 +13211,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-374672",
@@ -12164,7 +13224,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-257577",
@@ -12176,7 +13237,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-447716",
@@ -12187,7 +13249,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-454768",
@@ -12198,7 +13261,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-399197",
@@ -12210,7 +13274,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-744153",
@@ -12221,7 +13286,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-408729",
@@ -12233,7 +13299,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "36º"
+    "ranking": "36º",
+    "genero": "F"
   },
   {
     "id": "ath-pa-410930",
@@ -12244,7 +13311,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-744373",
@@ -12255,7 +13323,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-744627",
@@ -12266,7 +13335,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-237300",
@@ -12277,7 +13347,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-511024",
@@ -12288,7 +13359,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-744165",
@@ -12299,7 +13371,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-479895",
@@ -12310,7 +13383,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-743539",
@@ -12321,7 +13395,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-454096",
@@ -12332,7 +13407,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-236900",
@@ -12343,7 +13419,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-454807",
@@ -12356,7 +13433,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-415716",
@@ -12367,7 +13445,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-743380",
@@ -12378,7 +13457,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-374642",
@@ -12390,7 +13470,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-373348",
@@ -12401,7 +13482,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-744610",
@@ -12412,7 +13494,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-451035",
@@ -12423,7 +13506,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-404064",
@@ -12434,7 +13518,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 64,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-246761",
@@ -12445,7 +13530,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-447780",
@@ -12456,7 +13542,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-704907",
@@ -12467,7 +13554,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-404317",
@@ -12478,7 +13566,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-372902",
@@ -12489,7 +13578,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-450926",
@@ -12500,7 +13590,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-705361",
@@ -12511,7 +13602,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-447368",
@@ -12522,7 +13614,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-380585",
@@ -12533,7 +13626,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-450756",
@@ -12544,7 +13638,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-744400",
@@ -12555,7 +13650,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-704612",
@@ -12566,7 +13662,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-59673",
@@ -12577,7 +13674,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-240340",
@@ -12588,7 +13686,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 57,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-259941",
@@ -12599,7 +13698,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-449818",
@@ -12610,7 +13710,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-450228",
@@ -12621,7 +13722,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-470291",
@@ -12632,7 +13734,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-236832",
@@ -12644,7 +13747,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "47º"
+    "ranking": "47º",
+    "genero": "F"
   },
   {
     "id": "ath-pa-244882",
@@ -12655,7 +13759,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-402784",
@@ -12666,7 +13771,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-744360",
@@ -12677,7 +13783,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-449441",
@@ -12688,7 +13795,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-384946",
@@ -12700,7 +13808,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-744367",
@@ -12711,7 +13820,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-236871",
@@ -12722,7 +13832,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-452893",
@@ -12733,7 +13844,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-245042",
@@ -12744,7 +13856,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-424836",
@@ -12755,7 +13868,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-467385",
@@ -12766,7 +13880,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-374046",
@@ -12777,7 +13892,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-704598",
@@ -12788,7 +13904,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-744613",
@@ -12799,7 +13916,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-735053",
@@ -12810,7 +13928,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-744135",
@@ -12821,7 +13940,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-449737",
@@ -12832,7 +13952,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-215214",
@@ -12845,7 +13966,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-704284",
@@ -12856,7 +13978,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-236728",
@@ -12867,7 +13990,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-744669",
@@ -12878,7 +14002,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-374968",
@@ -12889,7 +14014,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-704515",
@@ -12900,7 +14026,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-744133",
@@ -12911,7 +14038,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-404113",
@@ -12922,7 +14050,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-374280",
@@ -12935,7 +14064,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-pa-744376",
@@ -12946,7 +14076,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-451033",
@@ -12959,7 +14090,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pa-260450",
@@ -12970,7 +14102,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-372840",
@@ -12981,7 +14114,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-449233",
@@ -12992,7 +14126,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-734885",
@@ -13004,7 +14139,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "117º"
+    "ranking": "117º",
+    "genero": "M"
   },
   {
     "id": "ath-pa-375006",
@@ -13015,7 +14151,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pa-744084",
@@ -13026,7 +14163,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pa-744092",
@@ -13037,7 +14175,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-51768",
@@ -13048,7 +14187,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 58,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-490025",
@@ -13060,7 +14200,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "34º"
+    "ranking": "34º",
+    "genero": "F"
   },
   {
     "id": "ath-pb-238154",
@@ -13071,7 +14212,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-417625",
@@ -13083,7 +14225,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "78º"
+    "ranking": "78º",
+    "genero": "F"
   },
   {
     "id": "ath-pb-214671",
@@ -13094,7 +14237,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-227666",
@@ -13106,7 +14250,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "36º"
+    "ranking": "36º",
+    "genero": "F"
   },
   {
     "id": "ath-pb-243914",
@@ -13119,7 +14264,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub14",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pb-398306",
@@ -13130,7 +14276,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-54023",
@@ -13141,7 +14288,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 68,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-382404",
@@ -13152,7 +14300,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-398074",
@@ -13163,7 +14312,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-710765",
@@ -13175,7 +14325,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "141º"
+    "ranking": "141º",
+    "genero": "M"
   },
   {
     "id": "ath-pb-51793",
@@ -13187,7 +14338,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-pb-258282",
@@ -13198,7 +14350,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-414612",
@@ -13209,7 +14362,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-40168",
@@ -13220,7 +14374,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-276844",
@@ -13231,7 +14386,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-370038",
@@ -13242,7 +14398,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-381111",
@@ -13254,7 +14411,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-pb-381109",
@@ -13266,7 +14424,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-pb-257262",
@@ -13277,7 +14436,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-217451",
@@ -13288,7 +14448,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-227467",
@@ -13299,7 +14460,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-390290",
@@ -13310,7 +14472,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-259119",
@@ -13321,7 +14484,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-413482",
@@ -13332,7 +14496,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-238013",
@@ -13343,7 +14508,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-203773",
@@ -13354,7 +14520,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-227614",
@@ -13365,7 +14532,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-492315",
@@ -13376,7 +14544,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-52279",
@@ -13388,7 +14557,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "38º"
+    "ranking": "38º",
+    "genero": "F"
   },
   {
     "id": "ath-pb-245084",
@@ -13399,7 +14569,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-243900",
@@ -13410,7 +14581,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 56,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-232376",
@@ -13422,7 +14594,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-pb-419248",
@@ -13433,7 +14606,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-387076",
@@ -13444,7 +14618,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-440268",
@@ -13455,7 +14630,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-389280",
@@ -13466,7 +14642,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-404459",
@@ -13477,7 +14654,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-248675",
@@ -13489,7 +14667,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pb-369449",
@@ -13500,7 +14679,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-211886",
@@ -13511,7 +14691,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-720308",
@@ -13522,7 +14703,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-262085",
@@ -13534,7 +14716,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "F"
   },
   {
     "id": "ath-pb-496743",
@@ -13546,7 +14729,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "147º"
+    "ranking": "147º",
+    "genero": "F"
   },
   {
     "id": "ath-pb-496738",
@@ -13558,7 +14742,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "147º"
+    "ranking": "147º",
+    "genero": "F"
   },
   {
     "id": "ath-pb-249097",
@@ -13569,7 +14754,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-410856",
@@ -13580,7 +14766,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-224257",
@@ -13592,7 +14779,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "38º"
+    "ranking": "38º",
+    "genero": "F"
   },
   {
     "id": "ath-pb-387098",
@@ -13603,7 +14791,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-380425",
@@ -13614,7 +14803,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-238770",
@@ -13625,7 +14815,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-248457",
@@ -13636,7 +14827,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-522394",
@@ -13647,7 +14839,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-704135",
@@ -13658,7 +14851,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-385727",
@@ -13669,7 +14863,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-223276",
@@ -13682,7 +14877,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pb-275331",
@@ -13693,7 +14889,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-458436",
@@ -13704,7 +14901,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-224820",
@@ -13718,7 +14916,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pb-237963",
@@ -13729,7 +14928,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-245852",
@@ -13740,7 +14940,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-245851",
@@ -13751,7 +14952,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-218927",
@@ -13762,7 +14964,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-227469",
@@ -13775,7 +14978,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pb-123111",
@@ -13786,7 +14990,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 55,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-276806",
@@ -13797,7 +15002,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-382370",
@@ -13808,7 +15014,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-250677",
@@ -13819,7 +15026,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-230037",
@@ -13830,7 +15038,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-407335",
@@ -13841,7 +15050,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-237860",
@@ -13852,7 +15062,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-244320",
@@ -13863,7 +15074,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-726590",
@@ -13874,7 +15086,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 8,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-373306",
@@ -13885,7 +15098,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-474344",
@@ -13896,7 +15110,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pb-705620",
@@ -13907,7 +15122,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pb-248493",
@@ -13918,7 +15134,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-12849",
@@ -13932,7 +15149,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub14",
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pe-427170",
@@ -13943,7 +15161,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-447267",
@@ -13954,7 +15173,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-446916",
@@ -13966,7 +15186,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "M"
   },
   {
     "id": "ath-pe-470710",
@@ -13977,7 +15198,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-406763",
@@ -13988,7 +15210,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-427275",
@@ -14000,7 +15223,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "M"
   },
   {
     "id": "ath-pe-662",
@@ -14011,7 +15235,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-56325",
@@ -14022,7 +15247,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-427126",
@@ -14033,7 +15259,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-263896",
@@ -14044,7 +15271,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-257390",
@@ -14056,7 +15284,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "59º"
+    "ranking": "59º",
+    "genero": "F"
   },
   {
     "id": "ath-pe-236184",
@@ -14069,7 +15298,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pe-446945",
@@ -14080,7 +15310,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-703366",
@@ -14091,7 +15322,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-58342",
@@ -14102,7 +15334,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-427141",
@@ -14113,7 +15346,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-421623",
@@ -14124,7 +15358,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-424017",
@@ -14135,7 +15370,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-427210",
@@ -14147,7 +15383,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "F"
   },
   {
     "id": "ath-pe-227480",
@@ -14160,7 +15397,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pe-56297",
@@ -14171,7 +15409,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-383522",
@@ -14182,7 +15421,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-471182",
@@ -14193,7 +15433,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-745750",
@@ -14204,7 +15445,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-481207",
@@ -14215,7 +15457,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-27760",
@@ -14226,7 +15469,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-379578",
@@ -14237,7 +15481,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 55,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-233880",
@@ -14249,7 +15494,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pe-446377",
@@ -14260,7 +15506,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-380917",
@@ -14271,7 +15518,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-446752",
@@ -14282,7 +15530,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-446490",
@@ -14293,7 +15542,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-427186",
@@ -14304,7 +15554,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-405950",
@@ -14315,7 +15566,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-447887",
@@ -14326,7 +15578,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-379646",
@@ -14337,7 +15590,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-380060",
@@ -14348,7 +15602,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-448617",
@@ -14360,7 +15615,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "104º"
+    "ranking": "104º",
+    "genero": "F"
   },
   {
     "id": "ath-pe-455353",
@@ -14372,7 +15628,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "186º"
+    "ranking": "186º",
+    "genero": "F"
   },
   {
     "id": "ath-pe-427164",
@@ -14383,7 +15640,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-216876",
@@ -14394,7 +15652,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-375445",
@@ -14405,7 +15664,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-492654",
@@ -14417,7 +15677,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "F"
   },
   {
     "id": "ath-pe-229161",
@@ -14428,7 +15689,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-493468",
@@ -14439,7 +15701,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-475342",
@@ -14450,7 +15713,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-420376",
@@ -14461,7 +15725,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-250627",
@@ -14472,7 +15737,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-446303",
@@ -14483,7 +15749,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-221653",
@@ -14495,7 +15762,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "F"
   },
   {
     "id": "ath-pe-421739",
@@ -14507,7 +15775,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "F"
   },
   {
     "id": "ath-pe-447698",
@@ -14518,7 +15787,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-745749",
@@ -14529,7 +15799,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-446676",
@@ -14541,7 +15812,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "170º"
+    "ranking": "170º",
+    "genero": "M"
   },
   {
     "id": "ath-pe-713031",
@@ -14552,7 +15824,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-714272",
@@ -14564,7 +15837,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "38º"
+    "ranking": "38º",
+    "genero": "F"
   },
   {
     "id": "ath-pe-714010",
@@ -14575,7 +15849,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-384642",
@@ -14588,7 +15863,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pe-376802",
@@ -14599,7 +15875,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-228935",
@@ -14610,7 +15887,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-489978",
@@ -14621,7 +15899,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-492308",
@@ -14632,7 +15911,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-420342",
@@ -14643,7 +15923,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-53714",
@@ -14654,7 +15935,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-381052",
@@ -14665,7 +15947,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pe-421031",
@@ -14677,7 +15960,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-pe-378684",
@@ -14688,7 +15972,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-375443",
@@ -14699,7 +15984,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-427131",
@@ -14710,7 +15996,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pe-427209",
@@ -14722,7 +16009,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "104º"
+    "ranking": "104º",
+    "genero": "M"
   },
   {
     "id": "ath-pe-429699",
@@ -14733,7 +16021,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-450426",
@@ -14744,7 +16033,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-385730",
@@ -14757,7 +16047,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master40",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-pi-468385",
@@ -14768,7 +16059,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-234488",
@@ -14781,7 +16073,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pi-389466",
@@ -14792,7 +16085,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-518676",
@@ -14804,7 +16098,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "64º"
+    "ranking": "64º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-395575",
@@ -14815,7 +16110,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-276656",
@@ -14827,7 +16123,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "73º"
+    "ranking": "73º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-401171",
@@ -14839,7 +16136,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "122º"
+    "ranking": "122º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-40334",
@@ -14850,7 +16148,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-514350",
@@ -14862,7 +16161,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "13º"
+    "ranking": "13º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-244138",
@@ -14874,7 +16174,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "124º"
+    "ranking": "124º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-490380",
@@ -14886,7 +16187,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "69º"
+    "ranking": "69º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-456559",
@@ -14898,7 +16200,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "50º"
+    "ranking": "50º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-383081",
@@ -14911,7 +16214,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pi-706098",
@@ -14923,7 +16227,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "147º"
+    "ranking": "147º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-490390",
@@ -14934,7 +16239,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-409359",
@@ -14946,7 +16252,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-517828",
@@ -14958,7 +16265,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "14º"
+    "ranking": "14º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-4382",
@@ -14970,7 +16278,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-pi-385254",
@@ -14982,7 +16291,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-426315",
@@ -14994,7 +16304,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "55º"
+    "ranking": "55º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-383437",
@@ -15005,7 +16316,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-212150",
@@ -15017,7 +16329,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "124º"
+    "ranking": "124º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-276572",
@@ -15028,7 +16341,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-411603",
@@ -15039,7 +16353,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-703328",
@@ -15051,7 +16366,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "97º"
+    "ranking": "97º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-443870",
@@ -15062,7 +16378,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-258222",
@@ -15077,7 +16394,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master40"
     ],
     "ranking": "284º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pi-241108",
@@ -15089,7 +16407,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-pi-446882",
@@ -15100,7 +16419,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-383842",
@@ -15112,7 +16432,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-512281",
@@ -15124,7 +16445,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-458381",
@@ -15136,7 +16458,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "107º"
+    "ranking": "107º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-482322",
@@ -15148,7 +16471,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-469239",
@@ -15161,7 +16485,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pi-470342",
@@ -15173,7 +16498,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "73º"
+    "ranking": "73º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-710695",
@@ -15185,7 +16511,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "79º"
+    "ranking": "79º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-372590",
@@ -15197,7 +16524,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-227558",
@@ -15209,7 +16537,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-277105",
@@ -15221,7 +16550,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-277300",
@@ -15232,7 +16562,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-276230",
@@ -15243,7 +16574,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-467172",
@@ -15255,7 +16587,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "132º"
+    "ranking": "132º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-40644",
@@ -15266,7 +16599,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-380213",
@@ -15279,7 +16613,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pi-423172",
@@ -15290,7 +16625,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-410321",
@@ -15302,7 +16638,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-440940",
@@ -15313,7 +16650,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-409233",
@@ -15324,7 +16662,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-223133",
@@ -15336,7 +16675,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "50º"
+    "ranking": "50º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-417953",
@@ -15348,7 +16688,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-374338",
@@ -15359,7 +16700,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-486389",
@@ -15371,7 +16713,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-408336",
@@ -15383,7 +16726,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "21º"
+    "ranking": "21º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-493307",
@@ -15395,7 +16739,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "74º"
+    "ranking": "74º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-470516",
@@ -15406,7 +16751,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-377685",
@@ -15418,7 +16764,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "40º"
+    "ranking": "40º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-277262",
@@ -15430,7 +16777,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "36º"
+    "ranking": "36º",
+    "genero": "F"
   },
   {
     "id": "ath-pi-416871",
@@ -15441,7 +16789,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 34,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-453065",
@@ -15452,7 +16801,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 66,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-490381",
@@ -15463,7 +16813,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 11,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-409355",
@@ -15474,7 +16825,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-451795",
@@ -15485,7 +16837,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-372142",
@@ -15496,7 +16849,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-380768",
@@ -15507,7 +16861,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-409535",
@@ -15518,7 +16873,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pi-704416",
@@ -15530,7 +16886,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "M"
   },
   {
     "id": "ath-pi-386004",
@@ -15541,7 +16898,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pi-468383",
@@ -15552,7 +16910,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-256565",
@@ -15563,7 +16922,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-208035",
@@ -15575,7 +16935,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-43589",
@@ -15587,7 +16948,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-pr-413887",
@@ -15599,7 +16961,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "12º"
+    "ranking": "12º",
+    "genero": "F"
   },
   {
     "id": "ath-pr-58931",
@@ -15611,7 +16974,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "F"
   },
   {
     "id": "ath-pr-741462",
@@ -15622,7 +16986,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-479258",
@@ -15633,7 +16998,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-48899",
@@ -15645,7 +17011,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-499445",
@@ -15657,7 +17024,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-709007",
@@ -15669,7 +17037,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "22º"
+    "ranking": "22º",
+    "genero": "F"
   },
   {
     "id": "ath-pr-60106",
@@ -15681,7 +17050,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "F"
   },
   {
     "id": "ath-pr-495068",
@@ -15692,7 +17062,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-206980",
@@ -15703,7 +17074,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-246033",
@@ -15714,7 +17086,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-705946",
@@ -15725,7 +17098,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-722930",
@@ -15736,7 +17110,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-18344",
@@ -15747,7 +17122,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 66,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-722789",
@@ -15758,7 +17134,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-122616",
@@ -15770,7 +17147,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-736740",
@@ -15781,7 +17159,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-216518",
@@ -15792,7 +17171,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-59743",
@@ -15803,7 +17183,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-430146",
@@ -15814,7 +17195,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-215927",
@@ -15826,7 +17208,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-216695",
@@ -15837,7 +17220,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-423743",
@@ -15848,7 +17232,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-228342",
@@ -15859,7 +17244,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 55,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-7379",
@@ -15871,7 +17257,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-519097",
@@ -15883,7 +17270,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "32º"
+    "ranking": "32º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-237071",
@@ -15894,7 +17282,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-385213",
@@ -15905,7 +17294,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-452222",
@@ -15916,7 +17306,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-206908",
@@ -15927,7 +17318,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 48,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-408425",
@@ -15938,7 +17330,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-464420",
@@ -15949,7 +17342,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-218550",
@@ -15960,7 +17354,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-741574",
@@ -15971,7 +17366,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-49013",
@@ -15983,7 +17379,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-723227",
@@ -15994,7 +17391,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-741569",
@@ -16005,7 +17403,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-493236",
@@ -16016,7 +17415,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-202841",
@@ -16028,7 +17428,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-430179",
@@ -16039,7 +17440,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-493114",
@@ -16051,7 +17453,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-517216",
@@ -16062,7 +17465,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-735662",
@@ -16073,7 +17477,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-462474",
@@ -16085,7 +17490,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-228188",
@@ -16097,7 +17503,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-735670",
@@ -16108,7 +17515,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-741451",
@@ -16119,7 +17527,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-53617",
@@ -16131,7 +17540,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "F"
   },
   {
     "id": "ath-pr-710120",
@@ -16143,7 +17553,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "32º"
+    "ranking": "32º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-710593",
@@ -16154,7 +17565,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-516766",
@@ -16165,7 +17577,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-710416",
@@ -16176,7 +17589,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-734074",
@@ -16187,7 +17601,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-705958",
@@ -16198,7 +17613,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-465342",
@@ -16209,7 +17625,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-708858",
@@ -16220,7 +17637,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-250050",
@@ -16232,7 +17650,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-707168",
@@ -16243,7 +17662,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-468403",
@@ -16254,7 +17674,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-735724",
@@ -16265,7 +17686,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-239421",
@@ -16277,7 +17699,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "43º"
+    "ranking": "43º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-741452",
@@ -16288,7 +17711,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-478242",
@@ -16299,7 +17723,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-231699",
@@ -16311,7 +17736,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-206911",
@@ -16323,7 +17749,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-239587",
@@ -16334,7 +17761,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-47672",
@@ -16346,7 +17774,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "F"
   },
   {
     "id": "ath-pr-262395",
@@ -16357,7 +17786,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-401288",
@@ -16368,7 +17798,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-517214",
@@ -16380,7 +17811,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-741570",
@@ -16391,7 +17823,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-205260",
@@ -16403,7 +17836,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-494906",
@@ -16414,7 +17848,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-735768",
@@ -16425,7 +17860,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-736007",
@@ -16436,7 +17872,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-430138",
@@ -16447,7 +17884,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-741658",
@@ -16458,7 +17896,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-465341",
@@ -16469,7 +17908,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-239598",
@@ -16480,7 +17920,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-47662",
@@ -16491,7 +17932,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-249934",
@@ -16503,7 +17945,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "F"
   },
   {
     "id": "ath-pr-249978",
@@ -16515,7 +17958,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-255668",
@@ -16526,7 +17970,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-722786",
@@ -16537,7 +17982,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-741542",
@@ -16548,7 +17994,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-219408",
@@ -16560,7 +18007,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-741536",
@@ -16571,7 +18019,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-228261",
@@ -16582,7 +18031,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-54000",
@@ -16594,7 +18044,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "M"
   },
   {
     "id": "ath-pr-734891",
@@ -16605,7 +18056,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-54034",
@@ -16617,7 +18069,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "21º"
+    "ranking": "21º",
+    "genero": "F"
   },
   {
     "id": "ath-pr-516911",
@@ -16628,7 +18081,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-705961",
@@ -16639,7 +18093,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-pr-386167",
@@ -16651,7 +18106,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-pr-705957",
@@ -16662,7 +18118,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-pr-209775",
@@ -16674,7 +18131,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-368685",
@@ -16686,7 +18144,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-256618",
@@ -16698,7 +18157,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-56470",
@@ -16710,7 +18170,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rj-452400",
@@ -16721,7 +18182,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-495119",
@@ -16733,7 +18195,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-493076",
@@ -16744,7 +18207,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-370474",
@@ -16756,7 +18220,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-243655",
@@ -16768,7 +18233,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-414973",
@@ -16780,7 +18246,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "34º"
+    "ranking": "34º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-223558",
@@ -16792,7 +18259,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-425374",
@@ -16804,7 +18272,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "87º"
+    "ranking": "87º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-30433",
@@ -16817,7 +18286,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50"
     ],
     "ranking": "80º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rj-40843",
@@ -16829,7 +18299,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rj-17487",
@@ -16841,7 +18312,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "105º"
+    "ranking": "105º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-712528",
@@ -16852,7 +18324,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-262649",
@@ -16864,7 +18337,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "74º"
+    "ranking": "74º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-447068",
@@ -16875,7 +18349,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-256047",
@@ -16887,7 +18362,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "56º"
+    "ranking": "56º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-218282",
@@ -16899,7 +18375,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rj-414945",
@@ -16911,7 +18388,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-241049",
@@ -16923,7 +18401,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-391970",
@@ -16935,7 +18414,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-443661",
@@ -16946,7 +18426,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 47,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-453560",
@@ -16958,7 +18439,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "84º"
+    "ranking": "84º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-477587",
@@ -16970,7 +18452,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "65º"
+    "ranking": "65º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-418824",
@@ -16982,7 +18465,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "21º"
+    "ranking": "21º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-415000",
@@ -16993,7 +18477,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-203961",
@@ -17005,7 +18490,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-417777",
@@ -17017,7 +18503,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "87º"
+    "ranking": "87º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-53774",
@@ -17029,7 +18516,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "40º"
+    "ranking": "40º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-47528",
@@ -17041,7 +18529,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rj-452636",
@@ -17052,7 +18541,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-382100",
@@ -17064,7 +18554,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-414228",
@@ -17076,7 +18567,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "34º"
+    "ranking": "34º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-524606",
@@ -17087,7 +18579,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-443066",
@@ -17099,7 +18592,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "40º"
+    "ranking": "40º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-492824",
@@ -17111,7 +18605,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-516732",
@@ -17123,7 +18618,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-212379",
@@ -17135,7 +18631,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rj-204168",
@@ -17146,7 +18643,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-381151",
@@ -17157,7 +18655,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-473796",
@@ -17168,7 +18667,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-203891",
@@ -17179,7 +18679,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-213643",
@@ -17190,7 +18691,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-715541",
@@ -17201,7 +18703,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-257306",
@@ -17212,7 +18715,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-214656",
@@ -17224,7 +18728,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rj-377631",
@@ -17236,7 +18741,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-744684",
@@ -17247,7 +18753,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-259398",
@@ -17259,7 +18766,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rj-40840",
@@ -17271,7 +18779,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "14º"
+    "ranking": "14º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-451450",
@@ -17283,7 +18792,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-392047",
@@ -17295,7 +18805,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "87º"
+    "ranking": "87º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-8601",
@@ -17307,7 +18818,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "82º"
+    "ranking": "82º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-3194",
@@ -17319,7 +18831,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-413731",
@@ -17330,7 +18843,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-241545",
@@ -17342,7 +18856,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "56º"
+    "ranking": "56º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-262550",
@@ -17353,7 +18868,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-492667",
@@ -17365,7 +18881,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "53º"
+    "ranking": "53º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-377803",
@@ -17376,7 +18893,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-258186",
@@ -17387,7 +18905,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-465224",
@@ -17399,7 +18918,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-495222",
@@ -17410,7 +18930,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-521107",
@@ -17421,7 +18942,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-513097",
@@ -17432,7 +18954,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 9,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-383425",
@@ -17443,7 +18966,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-35447",
@@ -17455,7 +18979,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-472347",
@@ -17467,7 +18992,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "41º"
+    "ranking": "41º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-30531",
@@ -17479,7 +19005,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-40703",
@@ -17491,7 +19018,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-40000",
@@ -17503,7 +19031,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rj-32705",
@@ -17515,7 +19044,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-391567",
@@ -17527,7 +19057,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-418825",
@@ -17538,7 +19069,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-444176",
@@ -17549,7 +19081,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-451644",
@@ -17560,7 +19093,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-40811",
@@ -17572,7 +19106,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rj-492666",
@@ -17584,7 +19119,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-446862",
@@ -17595,7 +19131,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rj-404026",
@@ -17607,7 +19144,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-55123",
@@ -17618,7 +19156,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 55,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rj-392168",
@@ -17630,7 +19169,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "69º"
+    "ranking": "69º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-505714",
@@ -17642,7 +19182,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "51º"
+    "ranking": "51º",
+    "genero": "M"
   },
   {
     "id": "ath-rj-493606",
@@ -17654,7 +19195,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "44º"
+    "ranking": "44º",
+    "genero": "F"
   },
   {
     "id": "ath-rj-50597",
@@ -17666,7 +19208,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rj-471140",
@@ -17677,7 +19220,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-278240",
@@ -17689,7 +19233,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "131º"
+    "ranking": "131º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-482241",
@@ -17700,7 +19245,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-439793",
@@ -17711,7 +19257,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-12189",
@@ -17722,7 +19269,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-466218",
@@ -17733,7 +19281,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-55933",
@@ -17745,7 +19294,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "141º"
+    "ranking": "141º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-515222",
@@ -17757,7 +19307,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "44º"
+    "ranking": "44º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-440392",
@@ -17768,7 +19319,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-489562",
@@ -17780,7 +19332,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "71º"
+    "ranking": "71º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-466258",
@@ -17792,7 +19345,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-430073",
@@ -17804,7 +19358,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-429563",
@@ -17816,7 +19371,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-412214",
@@ -17827,7 +19383,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-381561",
@@ -17838,7 +19395,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-255596",
@@ -17850,7 +19408,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "96º"
+    "ranking": "96º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-450168",
@@ -17861,7 +19420,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-261229",
@@ -17875,7 +19435,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub14"
     ],
     "ranking": "118º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rn-230039",
@@ -17887,7 +19448,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "131º"
+    "ranking": "131º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-238985",
@@ -17898,7 +19460,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-502623",
@@ -17909,7 +19472,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-227031",
@@ -17921,7 +19485,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-470998",
@@ -17932,7 +19497,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-380785",
@@ -17944,7 +19510,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "83º"
+    "ranking": "83º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-399777",
@@ -17956,7 +19523,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "50º"
+    "ranking": "50º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-239943",
@@ -17967,7 +19535,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-518297",
@@ -17979,7 +19548,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-403000",
@@ -17991,7 +19561,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-452512",
@@ -18003,7 +19574,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "47º"
+    "ranking": "47º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-457539",
@@ -18015,7 +19587,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-409834",
@@ -18026,7 +19599,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-48662",
@@ -18037,7 +19611,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-246411",
@@ -18049,7 +19624,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-57628",
@@ -18061,7 +19637,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "129º"
+    "ranking": "129º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-398351",
@@ -18073,7 +19650,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "47º"
+    "ranking": "47º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-384572",
@@ -18086,7 +19664,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rn-40065",
@@ -18098,7 +19677,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-479918",
@@ -18110,7 +19690,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "49º"
+    "ranking": "49º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-501856",
@@ -18121,7 +19702,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-212897",
@@ -18132,7 +19714,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-464746",
@@ -18143,7 +19726,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-242988",
@@ -18156,7 +19740,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rn-422231",
@@ -18169,7 +19754,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rn-237326",
@@ -18184,7 +19770,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub16"
     ],
     "ranking": "175º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rn-429975",
@@ -18196,7 +19783,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "129º"
+    "ranking": "129º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-522474",
@@ -18207,7 +19795,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-244124",
@@ -18218,7 +19807,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 52,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-394971",
@@ -18229,7 +19819,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-414382",
@@ -18241,7 +19832,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-429406",
@@ -18253,7 +19845,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "72º"
+    "ranking": "72º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-456846",
@@ -18265,7 +19858,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "68º"
+    "ranking": "68º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-721821",
@@ -18277,7 +19871,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "49º"
+    "ranking": "49º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-203401",
@@ -18289,7 +19884,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "163º"
+    "ranking": "163º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-39948",
@@ -18300,7 +19896,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 65,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-419498",
@@ -18311,7 +19908,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-266622",
@@ -18323,7 +19921,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "155º"
+    "ranking": "155º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-473694",
@@ -18335,7 +19934,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-410460",
@@ -18346,7 +19946,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-526153",
@@ -18358,7 +19959,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "92º"
+    "ranking": "92º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-43163",
@@ -18372,7 +19974,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master40"
     ],
     "ranking": "51º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rn-397345",
@@ -18383,7 +19986,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-457645",
@@ -18396,7 +20000,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_c",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rn-273802",
@@ -18408,7 +20013,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-277227",
@@ -18419,7 +20025,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-410312",
@@ -18431,7 +20038,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-266360",
@@ -18443,7 +20051,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "56º"
+    "ranking": "56º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-208333",
@@ -18455,7 +20064,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-431998",
@@ -18466,7 +20076,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-40044",
@@ -18478,7 +20089,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "163º"
+    "ranking": "163º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-243362",
@@ -18489,7 +20101,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-214546",
@@ -18502,7 +20115,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rn-495349",
@@ -18513,7 +20127,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-417976",
@@ -18525,7 +20140,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-rn-481699",
@@ -18537,7 +20153,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "63º"
+    "ranking": "63º",
+    "genero": "F"
   },
   {
     "id": "ath-rn-57672",
@@ -18548,7 +20165,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rn-419483",
@@ -18559,7 +20177,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rn-43164",
@@ -18571,7 +20190,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-ro-509294",
@@ -18582,7 +20202,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 66,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-384593",
@@ -18593,7 +20214,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 55,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-398102",
@@ -18604,7 +20226,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-386488",
@@ -18615,7 +20238,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-423024",
@@ -18626,7 +20250,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-458980",
@@ -18638,7 +20263,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "81º"
+    "ranking": "81º",
+    "genero": "F"
   },
   {
     "id": "ath-ro-373801",
@@ -18649,7 +20275,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-380881",
@@ -18660,7 +20287,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 30,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-416755",
@@ -18671,7 +20299,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-261297",
@@ -18683,7 +20312,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "115º"
+    "ranking": "115º",
+    "genero": "M"
   },
   {
     "id": "ath-ro-378739",
@@ -18694,7 +20324,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-456134",
@@ -18705,7 +20336,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-377010",
@@ -18716,7 +20348,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-405450",
@@ -18727,7 +20360,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-208626",
@@ -18739,7 +20373,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "111º"
+    "ranking": "111º",
+    "genero": "M"
   },
   {
     "id": "ath-ro-235568",
@@ -18753,7 +20388,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ro-432725",
@@ -18764,7 +20400,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-406025",
@@ -18775,7 +20412,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-50205",
@@ -18786,7 +20424,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-470355",
@@ -18798,7 +20437,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "145º"
+    "ranking": "145º",
+    "genero": "M"
   },
   {
     "id": "ath-ro-204141",
@@ -18809,7 +20449,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-464832",
@@ -18820,7 +20461,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-60573",
@@ -18831,7 +20473,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-417545",
@@ -18842,7 +20485,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-389180",
@@ -18854,7 +20498,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "202º"
+    "ranking": "202º",
+    "genero": "M"
   },
   {
     "id": "ath-ro-428999",
@@ -18868,7 +20513,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ro-411189",
@@ -18879,7 +20525,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-412601",
@@ -18891,7 +20538,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "115º"
+    "ranking": "115º",
+    "genero": "M"
   },
   {
     "id": "ath-ro-412617",
@@ -18903,7 +20551,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "70º"
+    "ranking": "70º",
+    "genero": "F"
   },
   {
     "id": "ath-ro-405415",
@@ -18914,7 +20563,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-514932",
@@ -18925,7 +20575,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-386637",
@@ -18936,7 +20587,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-384536",
@@ -18948,7 +20600,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "81º"
+    "ranking": "81º",
+    "genero": "F"
   },
   {
     "id": "ath-ro-464551",
@@ -18959,7 +20612,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-250980",
@@ -18970,7 +20624,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-429100",
@@ -18981,7 +20636,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-421629",
@@ -18992,7 +20648,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-426189",
@@ -19003,7 +20660,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-380977",
@@ -19014,7 +20672,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-405383",
@@ -19025,7 +20684,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-432720",
@@ -19036,7 +20696,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-412209",
@@ -19047,7 +20708,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-371622",
@@ -19058,7 +20720,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-498898",
@@ -19069,7 +20732,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-411176",
@@ -19080,7 +20744,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 73,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-465945",
@@ -19091,7 +20756,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-242486",
@@ -19102,7 +20768,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-205059",
@@ -19114,7 +20781,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "95º"
+    "ranking": "95º",
+    "genero": "F"
   },
   {
     "id": "ath-ro-399248",
@@ -19125,7 +20793,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-255656",
@@ -19136,7 +20805,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-430919",
@@ -19147,7 +20817,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-384146",
@@ -19158,7 +20829,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-50373",
@@ -19171,7 +20843,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_c",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ro-412327",
@@ -19182,7 +20855,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 64,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-371711",
@@ -19196,7 +20870,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ro-498893",
@@ -19207,7 +20882,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-206770",
@@ -19220,7 +20896,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ro-275665",
@@ -19231,7 +20908,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-ro-422019",
@@ -19242,7 +20920,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-705397",
@@ -19253,7 +20932,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-403823",
@@ -19264,7 +20944,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 71,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-519188",
@@ -19275,7 +20956,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-470240",
@@ -19286,7 +20968,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-219350",
@@ -19297,7 +20980,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-ro-205847",
@@ -19310,7 +20994,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub16",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-ro-479250",
@@ -19321,7 +21006,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-418177",
@@ -19332,7 +21018,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-206680",
@@ -19345,7 +21032,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rr-256335",
@@ -19359,7 +21047,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub16",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rr-369422",
@@ -19370,7 +21059,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 63,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-744827",
@@ -19381,7 +21071,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-205600",
@@ -19392,7 +21083,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-710872",
@@ -19403,7 +21095,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-704294",
@@ -19415,7 +21108,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "102º"
+    "ranking": "102º",
+    "genero": "M"
   },
   {
     "id": "ath-rr-728383",
@@ -19426,7 +21120,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-487752",
@@ -19437,7 +21132,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 39,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-743073",
@@ -19448,7 +21144,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-423575",
@@ -19459,7 +21156,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-250865",
@@ -19470,7 +21168,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-743250",
@@ -19481,7 +21180,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-240517",
@@ -19492,7 +21192,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-741266",
@@ -19503,7 +21204,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-377935",
@@ -19515,7 +21217,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "64º"
+    "ranking": "64º",
+    "genero": "F"
   },
   {
     "id": "ath-rr-745494",
@@ -19529,7 +21232,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub14",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rr-741264",
@@ -19540,7 +21244,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-377938",
@@ -19552,7 +21257,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "51º"
+    "ranking": "51º",
+    "genero": "M"
   },
   {
     "id": "ath-rr-231848",
@@ -19566,7 +21272,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rr-725109",
@@ -19577,7 +21284,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-468482",
@@ -19588,7 +21296,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 46,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-492703",
@@ -19599,7 +21308,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-242138",
@@ -19610,7 +21320,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-737648",
@@ -19621,7 +21332,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 67,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-445763",
@@ -19632,7 +21344,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-370645",
@@ -19643,7 +21356,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 45,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-744154",
@@ -19654,7 +21368,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-517538",
@@ -19666,7 +21381,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "F"
   },
   {
     "id": "ath-rr-501046",
@@ -19678,7 +21394,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "101º"
+    "ranking": "101º",
+    "genero": "M"
   },
   {
     "id": "ath-rr-442613",
@@ -19690,7 +21407,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "124º"
+    "ranking": "124º",
+    "genero": "M"
   },
   {
     "id": "ath-rr-387828",
@@ -19701,7 +21419,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-492157",
@@ -19713,7 +21432,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "M"
   },
   {
     "id": "ath-rr-719162",
@@ -19724,7 +21444,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-492455",
@@ -19735,7 +21456,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-417994",
@@ -19746,7 +21468,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-705772",
@@ -19757,7 +21480,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-721469",
@@ -19769,7 +21493,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "145º"
+    "ranking": "145º",
+    "genero": "M"
   },
   {
     "id": "ath-rr-745350",
@@ -19780,7 +21505,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-475030",
@@ -19791,7 +21517,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-743093",
@@ -19802,7 +21529,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 69,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-472593",
@@ -19813,7 +21541,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-743360",
@@ -19824,7 +21553,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-441872",
@@ -19836,7 +21566,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "M"
   },
   {
     "id": "ath-rr-256137",
@@ -19847,7 +21578,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-392544",
@@ -19858,7 +21590,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-495787",
@@ -19870,7 +21603,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "61º"
+    "ranking": "61º",
+    "genero": "F"
   },
   {
     "id": "ath-rr-743072",
@@ -19881,7 +21615,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-503104",
@@ -19893,7 +21628,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "148º"
+    "ranking": "148º",
+    "genero": "F"
   },
   {
     "id": "ath-rr-737680",
@@ -19904,7 +21640,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rr-459545",
@@ -19915,7 +21652,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rr-743963",
@@ -19926,7 +21664,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-56862",
@@ -19938,7 +21677,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-123032",
@@ -19949,7 +21689,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-228084",
@@ -19961,7 +21702,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "108º"
+    "ranking": "108º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-215293",
@@ -19973,7 +21715,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "13º"
+    "ranking": "13º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-420304",
@@ -19984,7 +21727,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-447529",
@@ -19995,7 +21739,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-458892",
@@ -20006,7 +21751,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-58976",
@@ -20018,7 +21764,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-201828",
@@ -20030,7 +21777,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-263079",
@@ -20042,7 +21790,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "55º"
+    "ranking": "55º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-479923",
@@ -20054,7 +21803,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-444617",
@@ -20066,7 +21816,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "31º"
+    "ranking": "31º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-242924",
@@ -20078,7 +21829,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-243431",
@@ -20090,7 +21842,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-41524",
@@ -20102,7 +21855,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-377419",
@@ -20114,7 +21868,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-206002",
@@ -20126,7 +21881,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-243137",
@@ -20138,7 +21894,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-258833",
@@ -20150,7 +21907,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-400716",
@@ -20162,7 +21920,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "52º"
+    "ranking": "52º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-49915",
@@ -20173,7 +21932,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-396609",
@@ -20185,7 +21945,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-18113",
@@ -20197,7 +21958,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "34º"
+    "ranking": "34º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-395384",
@@ -20209,7 +21971,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-227473",
@@ -20220,7 +21983,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-388508",
@@ -20231,7 +21995,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-480438",
@@ -20243,7 +22008,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "25º"
+    "ranking": "25º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-247692",
@@ -20255,7 +22021,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-13052",
@@ -20267,7 +22034,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "21º"
+    "ranking": "21º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-1223",
@@ -20279,7 +22047,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "8º"
+    "ranking": "8º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-422807",
@@ -20291,7 +22060,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-58977",
@@ -20305,7 +22075,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master40"
     ],
     "ranking": "3º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rs-212340",
@@ -20317,7 +22088,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-458827",
@@ -20329,7 +22101,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-232857",
@@ -20341,7 +22114,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rs-12766",
@@ -20353,7 +22127,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-205307",
@@ -20367,7 +22142,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50"
     ],
     "ranking": "7º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rs-57284",
@@ -20379,7 +22155,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-471103",
@@ -20391,7 +22168,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-219628",
@@ -20403,7 +22181,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-442828",
@@ -20415,7 +22194,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-417399",
@@ -20427,7 +22207,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "22º"
+    "ranking": "22º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-455654",
@@ -20438,7 +22219,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-204577",
@@ -20450,7 +22232,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-460453",
@@ -20462,7 +22245,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-56537",
@@ -20474,7 +22258,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-378790",
@@ -20486,7 +22271,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-47957",
@@ -20498,7 +22284,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-380547",
@@ -20510,7 +22297,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-202077",
@@ -20521,7 +22309,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 58,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-420675",
@@ -20533,7 +22322,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "12º"
+    "ranking": "12º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-262061",
@@ -20545,7 +22335,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rs-376833",
@@ -20557,7 +22348,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-5000",
@@ -20570,7 +22362,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rs-242865",
@@ -20582,7 +22375,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "55º"
+    "ranking": "55º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-409733",
@@ -20594,7 +22388,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-261855",
@@ -20605,7 +22400,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-400474",
@@ -20617,7 +22413,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-442481",
@@ -20629,7 +22426,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-504706",
@@ -20640,7 +22438,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-398025",
@@ -20652,7 +22451,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-428924",
@@ -20664,7 +22464,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-246706",
@@ -20675,7 +22476,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-442681",
@@ -20687,7 +22489,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "69º"
+    "ranking": "69º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-413791",
@@ -20699,7 +22502,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-473828",
@@ -20711,7 +22515,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "12º"
+    "ranking": "12º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-212181",
@@ -20722,7 +22527,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-375600",
@@ -20734,7 +22540,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "13º"
+    "ranking": "13º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-219775",
@@ -20745,7 +22552,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-209486",
@@ -20757,7 +22565,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rs-204910",
@@ -20769,7 +22578,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-233040",
@@ -20781,7 +22591,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-rs-56675",
@@ -20793,7 +22604,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-517552",
@@ -20805,7 +22617,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-378789",
@@ -20817,7 +22630,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-396413",
@@ -20829,7 +22643,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-43198",
@@ -20841,7 +22656,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rs-414949",
@@ -20853,7 +22669,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "29º"
+    "ranking": "29º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-230252",
@@ -20864,7 +22681,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-230181",
@@ -20876,7 +22694,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rs-384851",
@@ -20887,7 +22706,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-261626",
@@ -20898,7 +22718,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-58240",
@@ -20909,7 +22730,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 64,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-rs-244636",
@@ -20921,7 +22743,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-216550",
@@ -20933,7 +22756,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-rs-442497",
@@ -20945,7 +22769,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-249155",
@@ -20957,7 +22782,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "58º"
+    "ranking": "58º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-3199",
@@ -20968,7 +22794,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-9767",
@@ -20980,7 +22807,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-514574",
@@ -20991,7 +22819,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 31,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-386859",
@@ -21002,7 +22831,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-rs-232599",
@@ -21014,7 +22844,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "M"
   },
   {
     "id": "ath-rs-385316",
@@ -21026,7 +22857,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "F"
   },
   {
     "id": "ath-rs-57009",
@@ -21038,7 +22870,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-261853",
@@ -21050,7 +22883,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-716708",
@@ -21062,7 +22896,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "31º"
+    "ranking": "31º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-398173",
@@ -21074,7 +22909,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "89º"
+    "ranking": "89º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-517781",
@@ -21086,7 +22922,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "28º"
+    "ranking": "28º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-482394",
@@ -21097,7 +22934,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-30787",
@@ -21109,7 +22947,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-9076",
@@ -21121,7 +22960,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sc-388605",
@@ -21133,7 +22973,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "90º"
+    "ranking": "90º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-250642",
@@ -21144,7 +22985,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-232530",
@@ -21156,7 +22998,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-sc-468596",
@@ -21167,7 +23010,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-45880",
@@ -21181,7 +23025,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master40"
     ],
     "ranking": "81º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sc-455748",
@@ -21193,7 +23038,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-217598",
@@ -21205,7 +23051,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-719702",
@@ -21217,7 +23064,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "44º"
+    "ranking": "44º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-491143",
@@ -21229,7 +23077,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "21º"
+    "ranking": "21º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-48895",
@@ -21243,7 +23092,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master60"
     ],
     "ranking": "26º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-sc-715651",
@@ -21254,7 +23104,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-388721",
@@ -21266,7 +23117,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "22º"
+    "ranking": "22º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-241235",
@@ -21278,7 +23130,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "147º"
+    "ranking": "147º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-396943",
@@ -21290,7 +23143,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-264509",
@@ -21302,7 +23156,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-486725",
@@ -21314,7 +23169,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "20º"
+    "ranking": "20º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-371776",
@@ -21325,7 +23181,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sc-205782",
@@ -21337,7 +23194,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "109º"
+    "ranking": "109º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-494002",
@@ -21349,7 +23207,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "31º"
+    "ranking": "31º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-482766",
@@ -21361,7 +23220,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-444270",
@@ -21373,7 +23233,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "19º"
+    "ranking": "19º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-486447",
@@ -21385,7 +23246,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-442852",
@@ -21396,7 +23258,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-448457",
@@ -21407,7 +23270,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 27,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sc-466096",
@@ -21418,7 +23282,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sc-208669",
@@ -21430,7 +23295,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sc-493911",
@@ -21442,7 +23308,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "20º"
+    "ranking": "20º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-229521",
@@ -21454,7 +23321,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-233212",
@@ -21466,7 +23334,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-447268",
@@ -21477,7 +23346,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 29,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-410013",
@@ -21489,7 +23359,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "64º"
+    "ranking": "64º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-719713",
@@ -21500,7 +23371,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-40989",
@@ -21513,7 +23385,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-sc-237254",
@@ -21525,7 +23398,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-493931",
@@ -21537,7 +23411,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "20º"
+    "ranking": "20º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-242291",
@@ -21548,7 +23423,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-400699",
@@ -21560,7 +23436,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "21º"
+    "ranking": "21º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-486253",
@@ -21572,7 +23449,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-208803",
@@ -21583,7 +23461,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 28,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-385930",
@@ -21595,7 +23474,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-239664",
@@ -21606,7 +23486,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sc-46781",
@@ -21617,7 +23498,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sc-386388",
@@ -21629,7 +23511,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "57º"
+    "ranking": "57º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-202970",
@@ -21641,7 +23524,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-428743",
@@ -21652,7 +23536,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sc-495585",
@@ -21663,7 +23548,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sc-31867",
@@ -21675,7 +23561,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-486825",
@@ -21687,7 +23574,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "64º"
+    "ranking": "64º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-225484",
@@ -21698,7 +23586,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-497166",
@@ -21709,7 +23598,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-210186",
@@ -21721,7 +23611,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "30º"
+    "ranking": "30º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-210119",
@@ -21733,7 +23624,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "65º"
+    "ranking": "65º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-717771",
@@ -21745,7 +23637,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "31º"
+    "ranking": "31º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-242253",
@@ -21759,7 +23652,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub18",
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sc-449749",
@@ -21771,7 +23665,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "40º"
+    "ranking": "40º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-261674",
@@ -21783,7 +23678,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "16º"
+    "ranking": "16º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-401972",
@@ -21795,7 +23691,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "80º"
+    "ranking": "80º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-389284",
@@ -21807,7 +23704,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "17º"
+    "ranking": "17º",
+    "genero": "M"
   },
   {
     "id": "ath-sc-388267",
@@ -21819,7 +23717,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sc-222912",
@@ -21831,7 +23730,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-47283",
@@ -21843,7 +23743,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "26º"
+    "ranking": "26º",
+    "genero": "F"
   },
   {
     "id": "ath-sc-242036",
@@ -21854,7 +23755,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 33,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sc-381660",
@@ -21866,7 +23768,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "29º"
+    "ranking": "29º",
+    "genero": "M"
   },
   {
     "id": "ath-se-247146",
@@ -21877,7 +23780,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-384968",
@@ -21888,7 +23792,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-378740",
@@ -21899,7 +23804,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-432854",
@@ -21910,7 +23816,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-247563",
@@ -21922,7 +23829,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "109º"
+    "ranking": "109º",
+    "genero": "M"
   },
   {
     "id": "ath-se-442044",
@@ -21934,7 +23842,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "60º"
+    "ranking": "60º",
+    "genero": "M"
   },
   {
     "id": "ath-se-250636",
@@ -21945,7 +23854,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-745061",
@@ -21956,7 +23866,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-240181",
@@ -21967,7 +23878,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 38,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-229501",
@@ -21979,7 +23891,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "135º"
+    "ranking": "135º",
+    "genero": "F"
   },
   {
     "id": "ath-se-50497",
@@ -21991,7 +23904,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "F"
   },
   {
     "id": "ath-se-370031",
@@ -22002,7 +23916,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-506622",
@@ -22013,7 +23928,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 12,
     "categorias": [
       "sub12"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-237634",
@@ -22024,7 +23940,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-446515",
@@ -22035,7 +23952,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-519191",
@@ -22047,7 +23965,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "186º"
+    "ranking": "186º",
+    "genero": "M"
   },
   {
     "id": "ath-se-418797",
@@ -22058,7 +23977,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-248569",
@@ -22071,7 +23991,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-se-461680",
@@ -22082,7 +24003,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-374407",
@@ -22093,7 +24015,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-469727",
@@ -22104,7 +24027,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-514302",
@@ -22116,7 +24040,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "104º"
+    "ranking": "104º",
+    "genero": "M"
   },
   {
     "id": "ath-se-377729",
@@ -22127,7 +24052,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-419302",
@@ -22141,7 +24067,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-se-34563",
@@ -22153,7 +24080,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "35º"
+    "ranking": "35º",
+    "genero": "M"
   },
   {
     "id": "ath-se-445765",
@@ -22164,7 +24092,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-574",
@@ -22178,7 +24107,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-se-509421",
@@ -22190,7 +24120,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "70º"
+    "ranking": "70º",
+    "genero": "M"
   },
   {
     "id": "ath-se-377730",
@@ -22202,7 +24133,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "69º"
+    "ranking": "69º",
+    "genero": "M"
   },
   {
     "id": "ath-se-423098",
@@ -22213,7 +24145,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 70,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-514296",
@@ -22225,7 +24158,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "40º"
+    "ranking": "40º",
+    "genero": "M"
   },
   {
     "id": "ath-se-370198",
@@ -22236,7 +24170,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 37,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-469665",
@@ -22247,7 +24182,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-526147",
@@ -22259,7 +24195,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "23º"
+    "ranking": "23º",
+    "genero": "F"
   },
   {
     "id": "ath-se-516214",
@@ -22271,7 +24208,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "73º"
+    "ranking": "73º",
+    "genero": "M"
   },
   {
     "id": "ath-se-247868",
@@ -22282,7 +24220,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-745196",
@@ -22293,7 +24232,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "sub14"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-405482",
@@ -22304,7 +24244,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-397493",
@@ -22315,7 +24256,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-510703",
@@ -22326,7 +24268,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-498638",
@@ -22338,7 +24281,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "F"
   },
   {
     "id": "ath-se-492244",
@@ -22350,7 +24294,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "154º"
+    "ranking": "154º",
+    "genero": "F"
   },
   {
     "id": "ath-se-708111",
@@ -22362,7 +24307,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "80º"
+    "ranking": "80º",
+    "genero": "F"
   },
   {
     "id": "ath-se-245771",
@@ -22373,7 +24319,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-731410",
@@ -22384,7 +24331,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 24,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-457586",
@@ -22395,7 +24343,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-401507",
@@ -22406,7 +24355,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-425252",
@@ -22418,7 +24368,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "76º"
+    "ranking": "76º",
+    "genero": "M"
   },
   {
     "id": "ath-se-241663",
@@ -22429,7 +24380,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-461578",
@@ -22440,7 +24392,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-58680",
@@ -22451,7 +24404,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 49,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-458559",
@@ -22463,7 +24417,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "80º"
+    "ranking": "80º",
+    "genero": "F"
   },
   {
     "id": "ath-se-505466",
@@ -22475,7 +24430,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "63º"
+    "ranking": "63º",
+    "genero": "M"
   },
   {
     "id": "ath-se-418580",
@@ -22486,7 +24442,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "sub18"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-260274",
@@ -22500,7 +24457,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub16",
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-se-257381",
@@ -22511,7 +24469,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 48,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-241619",
@@ -22522,7 +24481,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 41,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-se-458778",
@@ -22534,7 +24494,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "80º"
+    "ranking": "80º",
+    "genero": "F"
   },
   {
     "id": "ath-se-246304",
@@ -22546,7 +24507,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "44º"
+    "ranking": "44º",
+    "genero": "F"
   },
   {
     "id": "ath-se-515422",
@@ -22558,7 +24520,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "F"
   },
   {
     "id": "ath-se-247570",
@@ -22570,7 +24533,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "204º"
+    "ranking": "204º",
+    "genero": "M"
   },
   {
     "id": "ath-se-430398",
@@ -22582,7 +24546,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "36º"
+    "ranking": "36º",
+    "genero": "M"
   },
   {
     "id": "ath-se-420349",
@@ -22593,7 +24558,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 44,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-se-706252",
@@ -22604,7 +24570,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-440403",
@@ -22616,7 +24583,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-7341",
@@ -22628,7 +24596,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-477679",
@@ -22640,7 +24609,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "18º"
+    "ranking": "18º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-443053",
@@ -22651,7 +24621,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-415978",
@@ -22663,7 +24634,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-405923",
@@ -22675,7 +24647,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-492269",
@@ -22686,7 +24659,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-374985",
@@ -22698,7 +24672,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-263326",
@@ -22710,7 +24685,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-39908",
@@ -22722,7 +24698,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-440725",
@@ -22734,7 +24711,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-206788",
@@ -22746,7 +24724,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-213416",
@@ -22758,7 +24737,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "92º"
+    "ranking": "92º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-264497",
@@ -22770,7 +24750,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "10º"
+    "ranking": "10º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-442194",
@@ -22782,7 +24763,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-122933",
@@ -22794,7 +24776,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-222125",
@@ -22806,7 +24789,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_a"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-466902",
@@ -22818,7 +24802,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-730847",
@@ -22830,7 +24815,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-51892",
@@ -22841,7 +24827,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-491256",
@@ -22852,7 +24839,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-255757",
@@ -22863,7 +24851,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 42,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-491424",
@@ -22874,7 +24863,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-220286",
@@ -22886,7 +24876,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-242975",
@@ -22898,7 +24889,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "129º"
+    "ranking": "129º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-409247",
@@ -22909,7 +24901,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-441875",
@@ -22921,7 +24914,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-492540",
@@ -22932,7 +24926,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-241822",
@@ -22944,7 +24939,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-232251",
@@ -22955,7 +24951,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-231920",
@@ -22967,7 +24964,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-239269",
@@ -22979,7 +24977,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-sp-231547",
@@ -22991,7 +24990,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-60518",
@@ -23003,7 +25003,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-414234",
@@ -23015,7 +25016,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-451624",
@@ -23027,7 +25029,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "12º"
+    "ranking": "12º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-249859",
@@ -23039,7 +25042,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-706042",
@@ -23050,7 +25054,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-463402",
@@ -23061,7 +25066,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-414367",
@@ -23073,7 +25079,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "13º"
+    "ranking": "13º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-218464",
@@ -23085,7 +25092,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "12º"
+    "ranking": "12º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-492355",
@@ -23096,7 +25104,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 13,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-224355",
@@ -23108,7 +25117,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-39971",
@@ -23120,7 +25130,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "72º"
+    "ranking": "72º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-415980",
@@ -23132,7 +25143,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-480961",
@@ -23143,7 +25155,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-231868",
@@ -23155,7 +25168,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-412314",
@@ -23166,7 +25180,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-7106",
@@ -23178,7 +25193,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "5º"
+    "ranking": "5º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-735358",
@@ -23189,7 +25205,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-711079",
@@ -23201,7 +25218,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "95º"
+    "ranking": "95º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-710113",
@@ -23212,7 +25230,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-397601",
@@ -23224,7 +25243,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-60206",
@@ -23236,7 +25256,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-440562",
@@ -23248,7 +25269,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-209255",
@@ -23260,7 +25282,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-417384",
@@ -23272,7 +25295,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-60208",
@@ -23284,7 +25308,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "46º"
+    "ranking": "46º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-227688",
@@ -23296,7 +25321,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "129º"
+    "ranking": "129º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-415602",
@@ -23308,7 +25334,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "76º"
+    "ranking": "76º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-50789",
@@ -23320,7 +25347,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-2768",
@@ -23332,7 +25360,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "92º"
+    "ranking": "92º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-248288",
@@ -23343,7 +25372,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-411608",
@@ -23355,7 +25385,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "2º"
+    "ranking": "2º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-711154",
@@ -23367,7 +25398,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "95º"
+    "ranking": "95º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-378355",
@@ -23379,7 +25411,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "6º"
+    "ranking": "6º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-41129",
@@ -23390,7 +25423,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-233911",
@@ -23401,7 +25435,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 55,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-9321",
@@ -23412,7 +25447,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-468513",
@@ -23423,7 +25459,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-250243",
@@ -23435,7 +25472,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-472005",
@@ -23447,7 +25485,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-246979",
@@ -23458,7 +25497,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 19,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-55102",
@@ -23469,7 +25509,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-411012",
@@ -23481,7 +25522,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-414755",
@@ -23492,7 +25534,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-426334",
@@ -23503,7 +25546,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 35,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-442100",
@@ -23514,7 +25558,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-232001",
@@ -23525,7 +25570,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 17,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-478704",
@@ -23537,7 +25583,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "56º"
+    "ranking": "56º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-394914",
@@ -23548,7 +25595,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-492090",
@@ -23560,7 +25608,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "87º"
+    "ranking": "87º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-511949",
@@ -23571,7 +25620,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 20,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-492520",
@@ -23583,7 +25633,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-469972",
@@ -23595,7 +25646,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "15º"
+    "ranking": "15º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-501505",
@@ -23606,7 +25658,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 14,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-2309",
@@ -23618,7 +25671,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "11º"
+    "ranking": "11º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-441859",
@@ -23629,7 +25683,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-sp-55015",
@@ -23641,7 +25696,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-sp-55075",
@@ -23653,7 +25709,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-sp-52152",
@@ -23665,7 +25722,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "9º"
+    "ranking": "9º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-232433",
@@ -23676,7 +25734,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 43,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-501276",
@@ -23688,7 +25747,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub16"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-504949",
@@ -23700,7 +25760,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "1º"
+    "ranking": "1º",
+    "genero": "F"
   },
   {
     "id": "ath-sp-40069",
@@ -23711,7 +25772,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 40,
     "categorias": [
       "master40"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-sp-232328",
@@ -23723,7 +25785,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "24º"
+    "ranking": "24º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-454407",
@@ -23735,7 +25798,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "48º"
+    "ranking": "48º",
+    "genero": "M"
   },
   {
     "id": "ath-sp-55234",
@@ -23747,7 +25811,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "72º"
+    "ranking": "72º",
+    "genero": "F"
   },
   {
     "id": "ath-to-370339",
@@ -23759,7 +25824,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "4º"
+    "ranking": "4º",
+    "genero": "M"
   },
   {
     "id": "ath-to-451939",
@@ -23771,7 +25837,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "46º"
+    "ranking": "46º",
+    "genero": "F"
   },
   {
     "id": "ath-to-493441",
@@ -23782,7 +25849,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 60,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-429836",
@@ -23793,7 +25861,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 54,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-442368",
@@ -23805,7 +25874,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "92º"
+    "ranking": "92º",
+    "genero": "F"
   },
   {
     "id": "ath-to-458124",
@@ -23817,7 +25887,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "59º"
+    "ranking": "59º",
+    "genero": "F"
   },
   {
     "id": "ath-to-449005",
@@ -23829,7 +25900,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-to-423129",
@@ -23841,7 +25913,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "42º"
+    "ranking": "42º",
+    "genero": "F"
   },
   {
     "id": "ath-to-452117",
@@ -23852,7 +25925,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-741579",
@@ -23863,7 +25937,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 50,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-460150",
@@ -23874,7 +25949,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 53,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-1732",
@@ -23888,7 +25964,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub18"
     ],
     "ranking": "61º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-to-471430",
@@ -23900,7 +25977,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "74º"
+    "ranking": "74º",
+    "genero": "M"
   },
   {
     "id": "ath-to-37371",
@@ -23913,7 +25991,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "sub12"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-to-461869",
@@ -23925,7 +26004,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "74º"
+    "ranking": "74º",
+    "genero": "M"
   },
   {
     "id": "ath-to-446180",
@@ -23938,7 +26018,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_c",
       "master60"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-to-239576",
@@ -23950,7 +26031,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_b"
     ],
-    "ranking": "36º"
+    "ranking": "36º",
+    "genero": "F"
   },
   {
     "id": "ath-to-58568",
@@ -23962,7 +26044,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master60"
     ],
-    "ranking": "110º"
+    "ranking": "110º",
+    "genero": "M"
   },
   {
     "id": "ath-to-57653",
@@ -23973,7 +26056,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 62,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-734974",
@@ -23984,7 +26068,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 47,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-479797",
@@ -23996,7 +26081,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "M"
   },
   {
     "id": "ath-to-403868",
@@ -24007,7 +26093,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-203182",
@@ -24018,7 +26105,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 23,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-702389",
@@ -24030,7 +26118,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "32º"
+    "ranking": "32º",
+    "genero": "F"
   },
   {
     "id": "ath-to-460471",
@@ -24041,7 +26130,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "prof"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-446978",
@@ -24052,7 +26142,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-378583",
@@ -24063,7 +26154,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 25,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-712611",
@@ -24075,7 +26167,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "78º"
+    "ranking": "78º",
+    "genero": "M"
   },
   {
     "id": "ath-to-56592",
@@ -24090,7 +26183,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master50"
     ],
     "ranking": "48º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-to-460293",
@@ -24101,7 +26195,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 51,
     "categorias": [
       "master50"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-446977",
@@ -24112,7 +26207,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-451816",
@@ -24123,7 +26219,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-379343",
@@ -24135,7 +26232,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "33º"
+    "ranking": "33º",
+    "genero": "F"
   },
   {
     "id": "ath-to-442697",
@@ -24146,7 +26244,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-473673",
@@ -24157,7 +26256,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 15,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-232900",
@@ -24168,7 +26268,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 18,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-443600",
@@ -24180,7 +26281,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "prof"
     ],
-    "ranking": "94º"
+    "ranking": "94º",
+    "genero": "F"
   },
   {
     "id": "ath-to-274696",
@@ -24191,7 +26293,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 16,
     "categorias": [
       "sub16"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-415321",
@@ -24203,7 +26306,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "39º"
+    "ranking": "39º",
+    "genero": "M"
   },
   {
     "id": "ath-to-369556",
@@ -24215,7 +26319,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "33º"
+    "ranking": "33º",
+    "genero": "M"
   },
   {
     "id": "ath-to-40234",
@@ -24229,7 +26334,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master40"
     ],
     "ranking": "21º",
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-to-423195",
@@ -24242,7 +26348,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "sub14"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "F"
   },
   {
     "id": "ath-to-449002",
@@ -24254,7 +26361,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "25º"
+    "ranking": "25º",
+    "genero": "F"
   },
   {
     "id": "ath-to-448555",
@@ -24266,7 +26374,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "cat_c"
     ],
-    "ranking": "25º"
+    "ranking": "25º",
+    "genero": "F"
   },
   {
     "id": "ath-to-432847",
@@ -24278,7 +26387,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "147º"
+    "ranking": "147º",
+    "genero": "F"
   },
   {
     "id": "ath-to-496373",
@@ -24290,7 +26400,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-to-455723",
@@ -24302,7 +26413,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-to-203088",
@@ -24314,7 +26426,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "F"
   },
   {
     "id": "ath-to-390305",
@@ -24325,7 +26438,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 32,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-378647",
@@ -24336,7 +26450,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 36,
     "categorias": [
       "cat_b"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-458283",
@@ -24348,7 +26463,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub14"
     ],
-    "ranking": "45º"
+    "ranking": "45º",
+    "genero": "F"
   },
   {
     "id": "ath-to-40240",
@@ -24361,7 +26477,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_b",
       "master40"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-to-203184",
@@ -24373,7 +26490,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master50"
     ],
-    "ranking": "3º"
+    "ranking": "3º",
+    "genero": "F"
   },
   {
     "id": "ath-to-711337",
@@ -24385,7 +26503,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "36º"
+    "ranking": "36º",
+    "genero": "F"
   },
   {
     "id": "ath-to-211600",
@@ -24396,7 +26515,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 61,
     "categorias": [
       "master60"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-402338",
@@ -24407,7 +26527,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 22,
     "categorias": [
       "cat_c"
-    ]
+    ],
+    "genero": "F"
   },
   {
     "id": "ath-to-257261",
@@ -24418,7 +26539,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 21,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   },
   {
     "id": "ath-to-377884",
@@ -24430,7 +26552,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "7º"
+    "ranking": "7º",
+    "genero": "F"
   },
   {
     "id": "ath-to-422501",
@@ -24442,7 +26565,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "37º"
+    "ranking": "37º",
+    "genero": "F"
   },
   {
     "id": "ath-to-421371",
@@ -24454,7 +26578,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub18"
     ],
-    "ranking": "27º"
+    "ranking": "27º",
+    "genero": "M"
   },
   {
     "id": "ath-to-479799",
@@ -24466,7 +26591,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "sub12"
     ],
-    "ranking": "54º"
+    "ranking": "54º",
+    "genero": "M"
   },
   {
     "id": "ath-to-16031",
@@ -24478,7 +26604,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "ranking": "135º"
+    "ranking": "135º",
+    "genero": "M"
   },
   {
     "id": "ath-to-448342",
@@ -24491,7 +26618,8 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "cat_a",
       "cat_b"
     ],
-    "funcao": "Capitão"
+    "funcao": "Capitão",
+    "genero": "M"
   },
   {
     "id": "ath-to-276114",
@@ -24502,6 +26630,7 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "idade": 26,
     "categorias": [
       "cat_a"
-    ]
+    ],
+    "genero": "M"
   }
 ];

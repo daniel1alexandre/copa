@@ -811,6 +811,65 @@ function renderTreeBracket(games, subtab) {
 }
 
 // Card de Jogo individual na Árvore
+function renderTeamLineupBar(game, slot, team, isSlotBye) {
+  if (game.is_bye || isSlotBye || !team) {
+    return '';
+  }
+
+  const esc = game.escalacao || {};
+  const fem = slot === 'A' ? (esc.feminino?.lado_a || []) : (esc.feminino?.lado_b || []);
+  const masc = slot === 'A' ? (esc.masculino?.lado_a || []) : (esc.masculino?.lado_b || []);
+  const mista = slot === 'A' ? (esc.mista?.lado_a || []) : (esc.mista?.lado_b || []);
+
+  const hasFem = fem.length >= 2;
+  const hasMasc = masc.length >= 2;
+  const hasMista = mista.length >= 2;
+  const isConfirmed = hasFem && hasMasc;
+
+  let summaryParts = [];
+  if (hasFem) summaryParts.push('Fem');
+  if (hasMasc) summaryParts.push('Masc');
+  if (hasMista) summaryParts.push('Mista');
+  const summaryText = summaryParts.length > 0 ? summaryParts.join(' • ') : 'Pendente';
+
+  const cardBg = isConfirmed ? '#ecfdf5' : '#f8fafc';
+  const cardBorder = isConfirmed ? '1.5px solid #10b981' : '1px dashed #cbd5e1';
+  const textColor = isConfirmed ? '#047857' : '#475569';
+  const labelColor = isConfirmed ? '#065f46' : '#1e293b';
+  const btnBorder = isConfirmed ? '#6ee7b7' : '#cbd5e1';
+  const btnText = isConfirmed ? 'Editar Escalação ➔' : 'Escalar Time ➔';
+
+  return `
+    <div class="team-lineup-card ${isConfirmed ? 'is-confirmed' : 'is-pending'}"
+         onclick="event.stopPropagation(); window.openMatchLineupModal('${game.code}', '${game.categoria_id}', '${slot}')"
+         title="Clique para escalar os atletas de ${team.nome || team.uf} (${team.uf})"
+         style="margin-bottom: 0.35rem; padding: 0.28rem 0.55rem; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; cursor: pointer; transition: all 0.15s ease; background: ${cardBg}; border: ${cardBorder}; color: ${textColor};"
+         onmouseover="this.style.filter='brightness(0.97)'"
+         onmouseout="this.style.filter='none'">
+      <div style="display: flex; align-items: center; gap: 0.4rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        <span style="font-size: 0.85rem; line-height: 1;">📋</span>
+        <strong style="color: ${labelColor}; font-weight: 800; font-size: 0.75rem;">
+          Escalação:
+        </strong>
+        ${isConfirmed ? `
+          <span style="color: #047857; font-weight: 800; font-size: 0.72rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+            ✓ Definida (${summaryText})
+          </span>
+        ` : `
+          <span style="color: #64748b; font-weight: 600; font-size: 0.7rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+            ${summaryParts.length > 0 ? `Incompleta (${summaryText})` : 'Pendente'}
+          </span>
+        `}
+      </div>
+
+      <button type="button" 
+              style="font-size: 0.68rem; font-weight: 800; color: #028090; margin-left: 0.4rem; flex-shrink: 0; background: #ffffff; border: 1.5px solid ${btnBorder}; padding: 0.15rem 0.5rem; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); cursor: pointer; display: inline-flex; align-items: center; gap: 2px;">
+        ${btnText}
+      </button>
+    </div>
+  `;
+}
+
 function renderMatchCard(game) {
   const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
   const isBye = Boolean(game.is_bye);
@@ -1120,7 +1179,7 @@ function renderMatchCard(game) {
       <div class="match-team-row ${isWinnerA ? 'is-winner' : (isWinnerB ? 'is-loser' : '')}"
            onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')"
            title="💡 Clique para escolher os Estados deste confronto"
-           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.3rem; border: 1px solid ${borderA}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgA}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderA}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
            onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'">
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${getTeamName(game.lado_a, slotAIsBye, 'A')}
@@ -1132,11 +1191,14 @@ function renderMatchCard(game) {
         ` : ''}
       </div>
 
+      <!-- CARD DE ESCALAÇÃO DO TIME A -->
+      ${renderTeamLineupBar(game, 'A', game.lado_a, slotAIsBye)}
+
       <!-- TIME B -->
       <div class="match-team-row ${isWinnerB ? 'is-winner' : (isWinnerA ? 'is-loser' : '')}"
            onclick="window.openChangeTeamSlotModal('${game.code}', '${game.categoria_id}')"
            title="💡 Clique para escolher os Estados deste confronto"
-           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; border: 1px solid ${borderB}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
+           style="display: flex; justify-content: space-between; align-items: center; padding: 0.35rem 0.5rem; background: ${bgB}; border-radius: 4px; margin-bottom: 0.25rem; border: 1px solid ${borderB}; min-height: 36px; cursor: pointer; transition: all 0.15s ease;"
            onmouseover="this.style.boxShadow='0 0 0 2px #028090'" onmouseout="this.style.boxShadow='none'">
         <div class="match-team-info" style="flex: 1; min-width: 0; display: flex; align-items: center;">
           ${getTeamName(game.lado_b, slotBIsBye, 'B')}
@@ -1148,31 +1210,8 @@ function renderMatchCard(game) {
         ` : ''}
       </div>
 
-      <!-- INFORMAÇÃO / BOTÃO DE ESCALAÇÃO -->
-      ${!isBye ? `
-        <div class="match-card-lineup-bar" 
-             onclick="event.stopPropagation(); window.openMatchLineupModal('${game.code}', '${game.categoria_id}')"
-             title="Clique para escalar os atletas deste confronto"
-             style="margin-top: 0.35rem; padding: 0.28rem 0.5rem; border-radius: 4px; display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; cursor: pointer; transition: all 0.15s ease; ${hasLineup ? 'background: #f0fdfa; border: 1px solid #99f6e4; color: #0f766e;' : 'background: #f8fafc; border: 1px dashed #cbd5e1; color: #475569;'}">
-          <div style="display: flex; align-items: center; gap: 0.35rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-            <strong style="color: ${hasLineup ? '#004b57' : '#028090'}; display: inline-flex; align-items: center; gap: 3px;">
-              📋 Escalação:
-            </strong>
-            ${hasLineup ? `
-              <span style="color: #047857; font-weight: 700; font-size: 0.68rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-                ✓ Definida (${lineupSummary})
-              </span>
-            ` : `
-              <span style="color: #64748b; font-weight: 600; font-size: 0.68rem;">
-                Aguardando definição dos atletas
-              </span>
-            `}
-          </div>
-          <span style="font-size: 0.68rem; font-weight: 800; color: #028090; margin-left: 0.35rem; flex-shrink: 0; background: #ffffff; border: 1px solid #99f6e4; padding: 0.1rem 0.45rem; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-            ${hasLineup ? 'Editar Escalação ➔' : 'Escalar ➔'}
-          </span>
-        </div>
-      ` : ''}
+      <!-- CARD DE ESCALAÇÃO DO TIME B -->
+      ${renderTeamLineupBar(game, 'B', game.lado_b, slotBIsBye)}
 
       <!-- DETALHES DE SUBJOGOS (PLACAR) -->
       <div class="match-footer-details" style="margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px dashed ${footerBorderColor};">
