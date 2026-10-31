@@ -18,7 +18,11 @@ export function initTeamsAthletesView() {
   };
 
   window.handleAthleteCategoryFilter = (catId) => {
-    categoryFilter = catId || '';
+    if (!catId || categoryFilter === catId) {
+      categoryFilter = '';
+    } else {
+      categoryFilter = catId;
+    }
     renderTeamsAthletes();
   };
 
@@ -46,11 +50,11 @@ export function initTeamsAthletesView() {
   };
 
   window.restoreOfficialCBTList = () => {
-    if (confirm('Deseja restaurar a relação oficial completa de atletas do Tênis Integrado CBT 2026 para todas as 27 federações? Todas as convocações oficiais serão recarregadas.')) {
+    if (confirm('Deseja importar a relação oficial completa de 2.128 atletas da Copa das Federações 2026 (CBT / Tênis Integrado) para todas as 27 federações?')) {
       store.resetAthletesToOfficialCBT();
       toast.show({
-        title: 'Base CBT Restaurada',
-        message: 'Relação completa de atletas do Tênis Integrado CBT 2026 carregada com sucesso!',
+        title: 'Relação de Atletas Importada',
+        message: '2.128 atletas oficiais do Tênis Integrado CBT 2026 carregados com sucesso!',
         type: 'success'
       });
       renderTeamsAthletes();
@@ -61,6 +65,8 @@ export function initTeamsAthletesView() {
 export function renderTeamsAthletes() {
   const container = document.getElementById('view-atletas') || document.getElementById('view-cadastro');
   if (!container) return;
+
+  const wasSearching = (typeof document !== 'undefined' && document.activeElement && document.activeElement.id === 'athlete-search-input');
 
   const feds = store.getFederations();
   const allAthletes = store.getAthletes();
@@ -117,12 +123,8 @@ export function renderTeamsAthletes() {
       </div>
 
       <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
-        <button class="btn btn-primary" onclick="window.openTenisIntegraModal()" style="background: #028090; border-color: #028090; font-weight: 800; font-size: 0.85rem; padding: 0.5rem 0.95rem; display: inline-flex; align-items: center; gap: 0.45rem;">
-          📥 Importar do Tênis Integrado (CBT)
-        </button>
-
-        <button class="btn btn-outline" onclick="window.restoreOfficialCBTList()" style="font-weight: 700; font-size: 0.85rem; padding: 0.5rem 0.9rem;" title="Recarregar relação completa oficial de atletas de todos os estados">
-          ⚡ Restaurar Base CBT 2026
+        <button class="btn btn-primary" onclick="window.restoreOfficialCBTList()" style="background: #028090; border-color: #028090; font-weight: 800; font-size: 0.85rem; padding: 0.5rem 0.95rem; display: inline-flex; align-items: center; gap: 0.45rem;" title="Importar relação oficial completa de 2.128 atletas da Copa das Federações 2026 CBT">
+          📥 Importar Relação de Atletas
         </button>
 
         ${isAdmin ? `
@@ -188,15 +190,25 @@ export function renderTeamsAthletes() {
           </div>
         </div>
 
-        <!-- RESUMO POR CATEGORIA DO ESTADO SELECIONADO -->
-        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; max-width: 520px; justify-content: flex-end;">
+        <!-- CARDS DE FILTRO POR CATEGORIA (CLICÁVEIS) COM CARD 'TODOS' -->
+        <div style="display: flex; flex-wrap: wrap; gap: 0.35rem; max-width: 580px; justify-content: flex-end; align-items: center;">
+          <button type="button" 
+                  onclick="window.handleAthleteCategoryFilter('')"
+                  style="font-size: 0.74rem; font-weight: 800; padding: 0.35rem 0.65rem; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 0.25rem; border: 1.5px solid ${!categoryFilter ? '#004b57' : '#99f6e4'}; background: ${!categoryFilter ? '#028090' : '#ffffff'}; color: ${!categoryFilter ? '#ffffff' : '#0f766e'}; box-shadow: ${!categoryFilter ? '0 2px 6px rgba(2, 128, 144, 0.3)' : 'none'};"
+                  title="Exibir todos os atletas inscritos de ${currentFed.uf}">
+            <strong>Todos:</strong> ${stateAthletes.length}
+          </button>
           ${categories.map(cat => {
             const count = catCounts[cat.id] || 0;
             if (count === 0) return '';
+            const isActive = categoryFilter === cat.id;
             return `
-              <span style="font-size: 0.72rem; font-weight: 800; background: #ccfbf1; color: #0f766e; border: 1px solid #99f6e4; padding: 0.25rem 0.55rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.25rem;">
+              <button type="button" 
+                      onclick="window.handleAthleteCategoryFilter('${cat.id}')"
+                      style="font-size: 0.74rem; font-weight: 800; padding: 0.35rem 0.65rem; border-radius: 6px; cursor: pointer; transition: all 0.15s ease; display: inline-flex; align-items: center; gap: 0.25rem; border: 1.5px solid ${isActive ? '#004b57' : '#99f6e4'}; background: ${isActive ? '#028090' : '#ffffff'}; color: ${isActive ? '#ffffff' : '#0f766e'}; box-shadow: ${isActive ? '0 2px 6px rgba(2, 128, 144, 0.3)' : 'none'};"
+                      title="Filtrar apenas atletas da categoria ${cat.nome}">
                 <strong>${cat.nome}:</strong> ${count}
-              </span>
+              </button>
             `;
           }).join('')}
         </div>
@@ -204,39 +216,29 @@ export function renderTeamsAthletes() {
       </div>
     </div>
 
-    <!-- BARRA DE FILTROS DO ESTADO (BUSCA & CATEGORIA) -->
-    <div class="card" style="padding: 0.85rem 1rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; background: #ffffff;">
-      <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 260px;">
-        <input type="text" 
-               id="athlete-search-input" 
-               class="form-control" 
-               style="font-size: 0.88rem; padding: 0.45rem 0.75rem;"
-               placeholder="🔍 Buscar atleta por nome ou número CBT em ${currentFed.uf}..." 
-               value="${searchFilter}" 
-               oninput="window.handleAthleteSearch(this.value)">
-      </div>
-
-      <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-        <label style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin: 0;">Filtrar Categoria:</label>
-        <select class="form-select" style="font-size: 0.85rem; font-weight: 700; padding: 0.45rem 0.75rem; width: auto;" onchange="window.handleAthleteCategoryFilter(this.value)">
-          <option value="">Todas as Categorias (${stateAthletes.length})</option>
-          ${categories.map(cat => {
-            const cCount = catCounts[cat.id] || 0;
-            return `<option value="${cat.id}" ${cat.id === categoryFilter ? 'selected' : ''}>${cat.nome} (${cCount})</option>`;
-          }).join('')}
-        </select>
-      </div>
-    </div>
-
     <!-- LISTAGEM DE ATLETAS DO ESTADO SELECIONADO -->
     <div class="card" style="padding: 0; overflow: hidden; border: 1px solid var(--border-light); background: #ffffff; box-shadow: var(--shadow-sm);">
-      <div style="padding: 0.85rem 1.15rem; background: var(--bg-subtle); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between;">
-        <strong style="font-size: 0.9rem; color: var(--accent-dark-blue);">
-          Atletas de ${currentFed.nome} (${filteredAthletes.length} exibidos)
-        </strong>
-        <span style="font-size: 0.75rem; color: #059669; font-weight: 700; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.15rem 0.5rem; border-radius: 4px;">
-          ✓ Sincronizado com Tênis Integrado CBT
-        </span>
+      <div style="padding: 0.75rem 1.15rem; background: var(--bg-subtle); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem;">
+        <div>
+          <strong style="font-size: 0.9rem; color: var(--accent-dark-blue);">
+            Atletas de ${currentFed.nome} ${categoryFilter ? `• ${categories.find(c => c.id === categoryFilter)?.nome || ''}` : ''}
+          </strong>
+          <span style="font-size: 0.78rem; color: var(--text-muted); margin-left: 0.4rem;">
+            (${filteredAthletes.length} ${filteredAthletes.length === 1 ? 'atleta' : 'atletas'})
+          </span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <input type="text" 
+                 id="athlete-search-input"
+                 class="form-control" 
+                 style="font-size: 0.8rem; padding: 0.35rem 0.65rem; width: 230px;"
+                 placeholder="🔍 Buscar atleta por nome ou CBT..." 
+                 value="${searchFilter}" 
+                 oninput="window.handleAthleteSearch(this.value)">
+          <span style="font-size: 0.75rem; color: #059669; font-weight: 700; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.2rem 0.55rem; border-radius: 4px; white-space: nowrap;">
+            ✓ CBT Oficial
+          </span>
+        </div>
       </div>
 
       ${filteredAthletes.length === 0 ? `
@@ -247,15 +249,12 @@ export function renderTeamsAthletes() {
           </h4>
           <p style="font-size: 0.85rem; max-width: 500px; margin: 0 auto 1.25rem auto;">
             ${searchFilter || categoryFilter 
-              ? 'Tente ajustar os filtros de busca ou selecionar outra categoria.' 
-              : 'Esta federação ainda não possui atletas importados. Clique no botão abaixo para colar a lista do Tênis Integrado ou carregar a base oficial CBT.'}
+              ? 'Tente ajustar o termo de busca ou clicar em "Todos" para ver todas as categorias.' 
+              : 'Esta federação ainda não possui atletas importados. Clique no botão abaixo para carregar a relação oficial completa.'}
           </p>
           <div style="display: flex; justify-content: center; gap: 0.5rem;">
-            <button class="btn btn-primary btn-sm" onclick="window.openTenisIntegraModal()">
-              📥 Importar do Tênis Integrado
-            </button>
-            <button class="btn btn-outline btn-sm" onclick="window.restoreOfficialCBTList()">
-              ⚡ Restaurar Base Oficial CBT
+            <button class="btn btn-primary btn-sm" onclick="window.restoreOfficialCBTList()">
+              📥 Importar Relação de Atletas
             </button>
           </div>
         </div>
@@ -362,6 +361,15 @@ export function renderTeamsAthletes() {
       `}
     </div>
   `;
+
+  if (wasSearching) {
+    const input = document.getElementById('athlete-search-input');
+    if (input) {
+      input.focus();
+      const len = input.value.length;
+      input.setSelectionRange(len, len);
+    }
+  }
 }
 
 // Modal Especial de Importação e Extração do Tênis Integrado CBT
