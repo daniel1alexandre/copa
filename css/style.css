@@ -1184,4 +1184,23 @@ body::before {
   }
 }
 
+/* ============================================================
+   MENU ATLETAS POR ESTADO (TÊNIS INTEGRADO CBT)
+   ============================================================ */
+.athlete-state-pill {
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.athlete-state-pill:hover {
+  border-color: #028090 !important;
+  background-color: #f0fdfa !important;
+  transform: translateY(-1px);
+}
+
+.athlete-state-pill.active {
+  border-color: #028090 !important;
+  background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%) !important;
+  box-shadow: 0 3px 8px rgba(2, 128, 144, 0.25) !important;
+}
+
 

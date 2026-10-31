@@ -225,6 +225,11 @@ class AppStore {
           // Garante que pointsTable sempre contenha todos os 27 lugares com os valores padrão oficiais CBT
           parsed.pointsTable = { ...DEFAULT_POINTS_TABLE, ...(parsed.pointsTable || {}) };
 
+          // Garante que atletas sempre contenham a base do Tênis Integrado se estiver vazio ou com amostras antigas
+          if (!Array.isArray(parsed.athletes) || parsed.athletes.length < 20) {
+            parsed.athletes = JSON.parse(JSON.stringify(INITIAL_ATHLETES));
+          }
+
           if (parsed.tournament) {
             if (!parsed.tournament.horaInicio) parsed.tournament.horaInicio = '08:00';
             if (!parsed.tournament.dataInicio) parsed.tournament.dataInicio = '2026-10-15';
@@ -938,43 +943,100 @@ class AppStore {
     this.save();
   }
 
+  setAthletes(athletes) {
+    this.state.athletes = athletes;
+    this.save(true, 'Relação de atletas atualizada');
+  }
+
+  resetAthletesToOfficialCBT() {
+    this.state.athletes = JSON.parse(JSON.stringify(INITIAL_ATHLETES));
+    this.save(true, 'Base oficial de atletas do Tênis Integrado CBT restaurada');
+    return this.state.athletes;
+  }
+
   bulkImportAthletes(lines, defaultEquipeId = null) {
-    // Formato aceito: Nome; SiglaEquipe ou UF; Categorias separadas por vírgula
     let imported = 0;
     let conflicts = 0;
+    if (!this.state.athletes) this.state.athletes = [];
 
-    for (const line of lines) {
-      const parts = line.split(/[;,]/).map(p => p.trim()).filter(Boolean);
+    for (const rawLine of lines) {
+      const line = rawLine.trim();
+      if (!line || line.startsWith('#') || line.toLowerCase().startsWith('nome') || line.toLowerCase().startsWith('atleta')) continue;
+
+      // Suporta separadores tab, ponto-e-vírgula, vírgula ou pipe
+      let parts = line.includes('\t') ? line.split('\t') : (line.includes(';') ? line.split(';') : (line.includes('|') ? line.split('|') : line.split(',')));
+      parts = parts.map(p => p.trim()).filter(Boolean);
       if (parts.length === 0) continue;
 
-      const nome = parts[0];
+      let nome = parts[0];
       let equipeId = defaultEquipeId;
-      let cats = ['prof'];
+      let cats = [];
+      let cbtId = '';
 
-      if (parts.length >= 2) {
+      // Tenta detectar se a primeira coluna é um número ou ID CBT (ex: 1, 2 ou CBT-1234)
+      if (/^\d+$/.test(nome) && parts.length > 1) {
+        nome = parts[1];
+        parts = [nome, ...parts.slice(2)];
+      }
+
+      // Procura por UF ou Sigla de Federação nas colunas
+      for (let i = 1; i < parts.length; i++) {
+        const p = parts[i];
+        if (p.toUpperCase().startsWith('CBT-')) {
+          cbtId = p.toUpperCase();
+          continue;
+        }
         const fedMatch = this.state.federations.find(f => 
-          f.uf.toLowerCase() === parts[1].toLowerCase() || 
-          f.sigla.toLowerCase() === parts[1].toLowerCase() ||
-          f.id.toLowerCase() === parts[1].toLowerCase()
+          f.uf.toLowerCase() === p.toLowerCase() || 
+          f.sigla.toLowerCase() === p.toLowerCase() ||
+          f.id.toLowerCase() === p.toLowerCase() ||
+          f.nome.toLowerCase() === p.toLowerCase()
         );
-        if (fedMatch) equipeId = fedMatch.id;
+        if (fedMatch) {
+          equipeId = fedMatch.id;
+          continue;
+        }
+
+        // Tenta mapear categoria
+        const pNorm = p.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (pNorm.includes('prof') || pNorm === 'pro') cats.push('prof');
+        else if (pNorm === 'cata' || pNorm === 'a') cats.push('cat_a');
+        else if (pNorm === 'catb' || pNorm === 'b') cats.push('cat_b');
+        else if (pNorm === 'catc' || pNorm === 'c') cats.push('cat_c');
+        else if (pNorm.includes('sub12') || pNorm.includes('12')) cats.push('sub12');
+        else if (pNorm.includes('sub14') || pNorm.includes('14')) cats.push('sub14');
+        else if (pNorm.includes('sub16') || pNorm.includes('16')) cats.push('sub16');
+        else if (pNorm.includes('sub18') || pNorm.includes('18')) cats.push('sub18');
+        else if (pNorm.includes('40') || pNorm.includes('master40')) cats.push('master40');
+        else if (pNorm.includes('50') || pNorm.includes('master50')) cats.push('master50');
+        else if (pNorm.includes('60') || pNorm.includes('master60')) cats.push('master60');
       }
 
-      if (parts.length >= 3) {
-        cats = parts.slice(2);
-      }
+      if (cats.length === 0) cats = ['prof'];
+      if (!equipeId) equipeId = defaultEquipeId;
 
-      if (equipeId) {
-        this.addAthlete({
-          nome,
-          equipe_id: equipeId,
-          categorias: cats
-        });
+      if (nome && equipeId) {
+        // Verifica se já existe atleta com o mesmo nome nessa equipe
+        const existing = this.state.athletes.find(a => 
+          a.nome.toLowerCase() === nome.toLowerCase() && a.equipe_id === equipeId
+        );
+        if (existing) {
+          existing.categorias = Array.from(new Set([...(existing.categorias || []), ...cats]));
+          if (cbtId) existing.cbt_id = cbtId;
+        } else {
+          this.state.athletes.push({
+            id: 'ath_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+            nome,
+            equipe_id: equipeId,
+            categorias: cats,
+            cbt_id: cbtId || `CBT-${Math.floor(10000 + Math.random() * 90000)}`
+          });
+        }
         imported++;
       }
     }
 
-    this.save();
+    this.save(true, `${imported} atletas importados do Tênis Integrado CBT`);
     return { imported, conflicts };
   }
 

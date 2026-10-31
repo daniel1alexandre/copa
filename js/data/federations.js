@@ -272,18 +272,6 @@ export const INITIAL_FEDERATIONS = [
   }
 ];
 
-export const INITIAL_ATHLETES = [
-  // Exemplo de atletas já inscritos representando federações em categorias
-  { id: "ath-1", nome: "Sophia Menezes", equipe_id: "sp", categorias: ["prof", "cat_a"] },
-  { id: "ath-2", nome: "Lucas Fontes", equipe_id: "sp", categorias: ["prof"] },
-  { id: "ath-3", nome: "Mariana Alvares", equipe_id: "rj", categorias: ["prof"] },
-  { id: "ath-4", nome: "Gustavo Rocha", equipe_id: "rj", categorias: ["prof"] },
-  { id: "ath-5", nome: "Beatriz Silveira", equipe_id: "pr", categorias: ["prof", "cat_b"] },
-  { id: "ath-6", nome: "Rafael Antunes", equipe_id: "pr", categorias: ["prof"] },
-  { id: "ath-7", nome: "Camila Dorneles", equipe_id: "rs", categorias: ["prof"] },
-  { id: "ath-8", nome: "Henrique Vasconcelos", equipe_id: "rs", categorias: ["prof"] },
-  { id: "ath-9", nome: "Carolina Bastos", equipe_id: "mg", categorias: ["prof"] },
-  { id: "ath-10", nome: "Felipe Drummond", equipe_id: "mg", categorias: ["prof"] },
-  { id: "ath-11", nome: "Juliana Meireles", equipe_id: "ba", categorias: ["prof"] },
-  { id: "ath-12", nome: "Rodrigo Santana", equipe_id: "ba", categorias: ["prof"] }
-];
+import { CBT_OFFICIAL_ATHLETES_2026 } from './athletesData.js';
+
+export const INITIAL_ATHLETES = CBT_OFFICIAL_ATHLETES_2026;
