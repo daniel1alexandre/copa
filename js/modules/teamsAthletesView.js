@@ -287,10 +287,21 @@ export function renderTeamsAthletes() {
                           ${initials}
                         </div>
                         <div>
-                          <div style="font-weight: 800; font-size: 0.92rem; color: var(--accent-dark-blue);">
-                            ${ath.nome}
+                          <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+                            <span style="font-weight: 800; font-size: 0.92rem; color: var(--accent-dark-blue);">
+                              ${ath.nome}
+                            </span>
+                            ${ath.funcao === 'Capitão' ? `
+                              <span style="font-size: 0.68rem; font-weight: 800; background: #fef3c7; color: #b45309; border: 1px solid #fde68a; padding: 0.1rem 0.4rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.2rem;">
+                                👑 Capitão
+                              </span>
+                            ` : ''}
                           </div>
-                          ${ath.genero ? `<div style="font-size: 0.7rem; color: var(--text-muted);">${ath.genero === 'F' ? 'Feminino' : 'Masculino'}</div>` : ''}
+                          <div style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem;">
+                            ${ath.idade ? `<span>${ath.idade} anos</span>` : ''}
+                            ${ath.ranking ? `<span>• Ranking CBT: <strong>${ath.ranking}</strong></span>` : ''}
+                            ${ath.genero ? `<span>• ${ath.genero === 'F' ? 'Feminino' : 'Masculino'}</span>` : ''}
+                          </div>
                         </div>
                       </div>
                     </td>

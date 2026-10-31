@@ -1,5 +1,5 @@
 // Armazenamento central com persistência em localStorage e reatividade
-import { INITIAL_FEDERATIONS, INITIAL_ATHLETES } from './federations.js';
+import { INITIAL_FEDERATIONS, INITIAL_ATHLETES, CBT_OFFICIAL_ATHLETES_VERSION } from './federations.js';
 import { INITIAL_CATEGORIES, DEFAULT_POINTS_TABLE, INITIAL_COURTS, INITIAL_TOURNAMENT } from './categories.js';
 import { createGraphBracket, propagateMatchResult, revertMatchResult, updateFirstRoundMatch, propagateAllByes } from '../modules/bracketEngine.js';
 
@@ -225,9 +225,10 @@ class AppStore {
           // Garante que pointsTable sempre contenha todos os 27 lugares com os valores padrão oficiais CBT
           parsed.pointsTable = { ...DEFAULT_POINTS_TABLE, ...(parsed.pointsTable || {}) };
 
-          // Garante que atletas sempre contenham a base do Tênis Integrado se estiver vazio ou com amostras antigas
-          if (!Array.isArray(parsed.athletes) || parsed.athletes.length < 20) {
+          // Garante que atletas sempre contenham a base completa do Tênis Integrado oficial CBT
+          if (!Array.isArray(parsed.athletes) || parsed.athletes.length < 2000 || parsed._athletes_version !== CBT_OFFICIAL_ATHLETES_VERSION) {
             parsed.athletes = JSON.parse(JSON.stringify(INITIAL_ATHLETES));
+            parsed._athletes_version = CBT_OFFICIAL_ATHLETES_VERSION;
           }
 
           if (parsed.tournament) {
@@ -950,6 +951,7 @@ class AppStore {
 
   resetAthletesToOfficialCBT() {
     this.state.athletes = JSON.parse(JSON.stringify(INITIAL_ATHLETES));
+    this.state._athletes_version = CBT_OFFICIAL_ATHLETES_VERSION;
     this.save(true, 'Base oficial de atletas do Tênis Integrado CBT restaurada');
     return this.state.athletes;
   }
