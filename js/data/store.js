@@ -309,7 +309,7 @@ class AppStore {
       }
     }
 
-    const cloud = window.firebaseService || window.supabaseService;
+    const cloud = typeof window !== 'undefined' ? (window.firebaseService || window.supabaseService) : null;
     if (syncToRemote && cloud && typeof cloud.pushState === 'function') {
       cloud.pushState(this.state);
     }
@@ -951,6 +951,10 @@ class AppStore {
       id: 'ath_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
       nome: athlete.nome.trim(),
       equipe_id: athlete.equipe_id,
+      uf: athlete.uf || (athlete.equipe_id ? athlete.equipe_id.toUpperCase() : ''),
+      cbt_id: athlete.cbt_id || '',
+      idade: athlete.idade || null,
+      genero: athlete.genero || 'M',
       categorias: athlete.categorias || []
     };
     this.state.athletes.push(newAth);

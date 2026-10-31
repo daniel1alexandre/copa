@@ -185,7 +185,11 @@ export function renderTeamsAthletes() {
               ${currentFed.nome} (${currentFed.uf})
             </h3>
             <div style="font-size: 0.85rem; color: #0f766e; font-weight: 700;">
-              👥 <strong>${stateAthletes.length} atletas inscritos</strong> representando ${currentFed.nome} na Copa das Federações 2026 CBT.
+              👥 <strong>${stateAthletes.length} atletas inscritos</strong> 
+              <span style="font-size: 0.78rem; color: #047857; background: #ccfbf1; padding: 0.1rem 0.5rem; border-radius: 4px; margin-left: 0.35rem; border: 1px solid #99f6e4;">
+                👩 ${stateAthletes.filter(a => a.genero === 'F').length} mulheres • 👨 ${stateAthletes.filter(a => a.genero !== 'F').length} homens
+              </span>
+              representando ${currentFed.nome} na Copa das Federações 2026 CBT.
             </div>
           </div>
         </div>
@@ -296,10 +300,18 @@ export function renderTeamsAthletes() {
                               </span>
                             ` : ''}
                           </div>
-                          <div style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem;">
+                          <div style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.2rem;">
+                            ${ath.genero === 'F' ? `
+                              <span style="font-size: 0.68rem; font-weight: 800; background: #fdf2f8; color: #be185d; border: 1px solid #fbcfe8; padding: 0.1rem 0.45rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.2rem;">
+                                👩 Feminino
+                              </span>
+                            ` : `
+                              <span style="font-size: 0.68rem; font-weight: 800; background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; padding: 0.1rem 0.45rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.2rem;">
+                                👨 Masculino
+                              </span>
+                            `}
                             ${ath.idade ? `<span>${ath.idade} anos</span>` : ''}
                             ${ath.ranking ? `<span>• Ranking CBT: <strong>${ath.ranking}</strong></span>` : ''}
-                            ${ath.genero ? `<span>• ${ath.genero === 'F' ? 'Feminino' : 'Masculino'}</span>` : ''}
                           </div>
                         </div>
                       </div>
@@ -509,6 +521,7 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
   const feds = store.getFederations();
   const categories = store.getActiveCategories();
   const isEditing = Boolean(athlete);
+  const currentGenero = (athlete?.genero || 'M').toUpperCase() === 'F' ? 'F' : 'M';
 
   overlay.innerHTML = `
     <div class="modal-dialog" style="max-width: 520px;">
@@ -521,6 +534,21 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
           <div class="form-group" style="margin-bottom: 0.85rem;">
             <label class="form-label" style="font-weight: 700; font-size: 0.85rem;">Nome Completo do Atleta:</label>
             <input type="text" id="ath-form-nome" class="form-control" required value="${athlete?.nome || ''}" placeholder="Ex: Daniel Mola">
+          </div>
+
+          <!-- CAMPO DE GÊNERO / NAIPE -->
+          <div class="form-group" style="margin-bottom: 0.85rem;">
+            <label class="form-label" style="font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: space-between;">
+              <span>Gênero / Naipe do Atleta:</span>
+              <span style="font-size: 0.72rem; color: #028090; font-weight: 800;">Obrigatório</span>
+            </label>
+            <select id="ath-form-genero" class="form-select" required style="font-weight: 800; font-size: 0.88rem; padding: 0.45rem 0.65rem; border: 1.5px solid #028090;">
+              <option value="F" ${currentGenero === 'F' ? 'selected' : ''}>👩 Feminino (Naipe Feminino e Mista)</option>
+              <option value="M" ${currentGenero === 'M' ? 'selected' : ''}>👨 Masculino (Naipe Masculino e Mista)</option>
+            </select>
+            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem;">
+              Ao alterar e salvar, o gênero é imediatamente assumido na lista de atletas e nas escalações de jogos.
+            </div>
           </div>
 
           <div class="form-group" style="margin-bottom: 0.85rem;">
@@ -561,6 +589,7 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
 
   document.getElementById('btn-save-athlete').addEventListener('click', () => {
     const nome = document.getElementById('ath-form-nome').value.trim();
+    const genero = document.getElementById('ath-form-genero').value;
     const cbt_id = document.getElementById('ath-form-cbt').value.trim();
     const equipe_id = document.getElementById('ath-form-equipe').value;
     const catCheckboxes = document.querySelectorAll('input[name="ath-cat"]:checked');
@@ -576,16 +605,28 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
       return;
     }
 
+    const fed = feds.find(f => f.id === equipe_id);
+    const uf = fed ? fed.uf : equipe_id.toUpperCase();
+
     if (isEditing) {
-      store.updateAthlete(athlete.id, { nome, cbt_id, equipe_id, categorias });
-      toast.show({ title: 'Atleta Atualizado', message: `${nome} foi atualizado com sucesso.`, type: 'success' });
+      store.updateAthlete(athlete.id, { nome, genero, cbt_id, equipe_id, uf, categorias });
+      toast.show({ 
+        title: 'Atleta Atualizado', 
+        message: `${nome} foi atualizado com sucesso (${genero === 'F' ? 'Feminino' : 'Masculino'}).`, 
+        type: 'success' 
+      });
     } else {
-      store.addAthlete({ nome, cbt_id, equipe_id, categorias });
-      toast.show({ title: 'Atleta Inscrito', message: `${nome} cadastrado na federação ${equipe_id.toUpperCase()}.`, type: 'success' });
+      store.addAthlete({ nome, genero, cbt_id, equipe_id, uf, categorias });
+      toast.show({ 
+        title: 'Atleta Inscrito', 
+        message: `${nome} cadastrado na federação ${uf} (${genero === 'F' ? 'Feminino' : 'Masculino'}).`, 
+        type: 'success' 
+      });
     }
 
     overlay.classList.remove('active');
     selectedStateId = equipe_id;
     renderTeamsAthletes();
+    if (typeof window.renderBracket === 'function') window.renderBracket();
   });
 }
