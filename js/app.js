@@ -6,11 +6,12 @@ import { renderDashboard } from './modules/dashboard.js';
 import { initCategoryView, renderCategoryView } from './modules/categoryView.js';
 import { initBracketView, renderBracket } from './modules/bracketView.js';
 import { initRankingView, renderRanking } from './modules/rankingView.js';
+import { initSeedView, renderSeedView } from './modules/seedView.js';
 import { initTeamsAthletesView, renderTeamsAthletes } from './modules/teamsAthletesView.js';
 import { initConfigView, renderConfig } from './modules/configView.js';
 import { openMatchModal, openScheduleModal, openConfigureFirstRoundModal, openEditFirstRoundCardModal } from './modules/modal.js';
 
-const GUEST_ALLOWED_TABS = ['chaveamento', 'ranking'];
+const GUEST_ALLOWED_TABS = ['chaveamento', 'cabeca-chave', 'ranking'];
 let activeTab = 'home';
 
 export function updateNavTabsAccess() {
@@ -50,7 +51,7 @@ function switchTab(tabId) {
     if (window.toast && typeof window.toast.show === 'function') {
       window.toast.show({
         title: 'Acesso Restrito',
-        message: 'No modo visitante/espectador, apenas os menus Confrontos e Classificação estão liberados para visualização.',
+        message: 'No modo visitante/espectador, apenas os menus Confrontos, Cabeça de Chave e Classificação estão liberados para visualização.',
         type: 'warning'
       });
     }
@@ -89,6 +90,7 @@ function renderCurrentView() {
     else if (activeTab === 'categorias') renderCategoryView();
     else if (activeTab === 'atletas' || activeTab === 'cadastro') renderTeamsAthletes();
     else if (activeTab === 'chaveamento') renderBracket();
+    else if (activeTab === 'cabeca-chave') renderSeedView();
     else if (activeTab === 'ranking') renderRanking();
     else if (activeTab === 'configuracoes') renderConfig();
   } catch (err) {
@@ -125,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializa submódulos de eventos
   initCategoryView();
   initBracketView();
+  initSeedView();
   initRankingView();
   initTeamsAthletesView();
   initConfigView();
