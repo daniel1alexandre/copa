@@ -1815,9 +1815,12 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
   const isReadOnlyGuest = !isAdmin;
   const isMistaAllowed = isEmpate1x1;
 
-  function buildOptions(list, selectedVal) {
+  function buildOptions(list, selectedVal, excludedVal = null) {
     let out = '<option value="">-- Selecione o atleta --</option>';
     for (const ath of list) {
+      if (excludedVal && (ath.id === excludedVal || ath.nome === excludedVal || ath.cbt_id === excludedVal)) {
+        continue;
+      }
       const isSel = (ath.id === selectedVal || ath.nome === selectedVal || ath.cbt_id === selectedVal);
       const badges = [];
       if (ath.genero) badges.push(ath.genero === 'F' ? 'Fem' : 'Masc');
@@ -1981,7 +1984,7 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
                   Atleta 1 (Feminino):
                 </label>
                 <select id="lineup_fem_0" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(currentAthletes_fem, currentFem[0])}
+                  ${buildOptions(currentAthletes_fem, currentFem[0], currentFem[1])}
                 </select>
               </div>
               <div>
@@ -1989,7 +1992,7 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
                   Atleta 2 (Feminino):
                 </label>
                 <select id="lineup_fem_1" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(currentAthletes_fem, currentFem[1])}
+                  ${buildOptions(currentAthletes_fem, currentFem[1], currentFem[0])}
                 </select>
               </div>
             </div>
@@ -2022,7 +2025,7 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
                   Atleta 1 (Masculino):
                 </label>
                 <select id="lineup_masc_0" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(currentAthletes_masc, currentMasc[0])}
+                  ${buildOptions(currentAthletes_masc, currentMasc[0], currentMasc[1])}
                 </select>
               </div>
               <div>
@@ -2030,7 +2033,7 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
                   Atleta 2 (Masculino):
                 </label>
                 <select id="lineup_masc_1" class="form-select" style="font-size: 0.84rem; padding: 0.45rem 0.65rem;" ${(isLocked || isReadOnlyGuest) ? 'disabled' : ''}>
-                  ${buildOptions(currentAthletes_masc, currentMasc[1])}
+                  ${buildOptions(currentAthletes_masc, currentMasc[1], currentMasc[0])}
                 </select>
               </div>
             </div>
@@ -2115,6 +2118,29 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
   `;
 
   overlay.classList.add('active');
+
+  // Sincronização dinâmica: quando 1 atleta for selecionado como Atleta 1, ele automaticamente NÃO aparece para ser selecionado como Atleta 2
+  // Aplicado exclusivamente para as disputas Feminina e Masculina. Na Mista todos os nomes aparecem normalmente.
+  function attachExclusivePairSync(id1, id2, list) {
+    const el1 = document.getElementById(id1);
+    const el2 = document.getElementById(id2);
+    if (!el1 || !el2) return;
+
+    el1.addEventListener('change', () => {
+      const val1 = el1.value;
+      const val2 = el2.value;
+      el2.innerHTML = buildOptions(list, val2, val1);
+    });
+
+    el2.addEventListener('change', () => {
+      const val1 = el1.value;
+      const val2 = el2.value;
+      el1.innerHTML = buildOptions(list, val1, val2);
+    });
+  }
+
+  attachExclusivePairSync('lineup_fem_0', 'lineup_fem_1', currentAthletes_fem);
+  attachExclusivePairSync('lineup_masc_0', 'lineup_masc_1', currentAthletes_masc);
 }
 
 // Manipuladores globais para salvar e limpar a escalação

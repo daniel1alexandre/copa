@@ -955,6 +955,8 @@ class AppStore {
       cbt_id: athlete.cbt_id || '',
       idade: athlete.idade || null,
       genero: athlete.genero || 'M',
+      funcao: athlete.funcao || null,
+      is_capitao: Boolean(athlete.is_capitao || athlete.funcao === 'Capitão'),
       categorias: athlete.categorias || []
     };
     this.state.athletes.push(newAth);

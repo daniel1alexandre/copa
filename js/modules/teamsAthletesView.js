@@ -81,6 +81,7 @@ export function renderTeamsAthletes() {
 
   // Atletas do estado selecionado
   const stateAthletes = allAthletes.filter(a => a.equipe_id === selectedStateId);
+  const stateCaptains = stateAthletes.filter(a => a.funcao === 'Capitão' || a.is_capitao === true);
 
   // Aplica filtros de busca e categoria sobre os atletas do estado selecionado
   let filteredAthletes = stateAthletes;
@@ -191,6 +192,13 @@ export function renderTeamsAthletes() {
               </span>
               representando ${currentFed.nome} na Copa das Federações 2026 CBT.
             </div>
+            ${stateCaptains.length > 0 ? `
+              <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <span style="font-size: 0.76rem; font-weight: 900; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #78350f; border: 1.5px solid #d97706; padding: 0.25rem 0.75rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 5px rgba(217, 119, 6, 0.25);">
+                  👑 CAPITÃO CONVOCADO: <strong>${stateCaptains.map(c => c.nome).join(' • ')}</strong>
+                </span>
+              </div>
+            ` : ''}
           </div>
         </div>
 
@@ -278,25 +286,30 @@ export function renderTeamsAthletes() {
             </thead>
             <tbody>
               ${filteredAthletes.map((ath, idx) => {
+                const isCapitao = ath.funcao === 'Capitão' || ath.is_capitao === true;
                 const initials = ath.nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+                const rowStyle = isCapitao 
+                  ? 'background: linear-gradient(90deg, #fffbeb 0%, #fef3c7 35%, #ffffff 100%); border-left: 5px solid #d97706; box-shadow: inset 0 1px 0 #fde68a, inset 0 -1px 0 #fde68a;' 
+                  : 'transition: background 0.15s ease;';
                 return `
-                  <tr style="transition: background 0.15s ease;">
-                    <td style="text-align: center; color: var(--text-muted); font-weight: 700; font-size: 0.8rem;">
-                      ${idx + 1}
+                  <tr style="${rowStyle}">
+                    <td style="text-align: center; color: ${isCapitao ? '#92400e' : 'var(--text-muted)'}; font-weight: ${isCapitao ? '900' : '700'}; font-size: ${isCapitao ? '0.9rem' : '0.8rem'};">
+                      ${isCapitao ? `👑 ${idx + 1}` : (idx + 1)}
                     </td>
                     <td>
                       <div style="display: flex; align-items: center; gap: 0.65rem;">
-                        <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #028090 0%, #004b57 100%); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+                        <div style="width: ${isCapitao ? '38px' : '32px'}; height: ${isCapitao ? '38px' : '32px'}; border-radius: 50%; background: ${isCapitao ? 'linear-gradient(135deg, #f59e0b 0%, #b45309 100%)' : 'linear-gradient(135deg, #028090 0%, #004b57 100%)'}; color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: ${isCapitao ? '0.82rem' : '0.75rem'}; flex-shrink: 0; box-shadow: ${isCapitao ? '0 3px 8px rgba(245, 158, 11, 0.45)' : '0 1px 3px rgba(0,0,0,0.15)'}; ${isCapitao ? 'border: 2px solid #fbbf24; position: relative;' : ''}">
                           ${initials}
+                          ${isCapitao ? '<span style="position: absolute; top: -7px; right: -7px; font-size: 0.95rem; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.4));" title="Capitão da Equipe">👑</span>' : ''}
                         </div>
                         <div>
-                          <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-                            <span style="font-weight: 800; font-size: 0.92rem; color: var(--accent-dark-blue);">
+                          <div style="display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap;">
+                            <span style="font-weight: ${isCapitao ? '900' : '800'}; font-size: ${isCapitao ? '0.98rem' : '0.92rem'}; color: ${isCapitao ? '#78350f' : 'var(--accent-dark-blue)'};">
                               ${ath.nome}
                             </span>
-                            ${ath.funcao === 'Capitão' ? `
-                              <span style="font-size: 0.68rem; font-weight: 800; background: #fef3c7; color: #b45309; border: 1px solid #fde68a; padding: 0.1rem 0.4rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.2rem;">
-                                👑 Capitão
+                            ${isCapitao ? `
+                              <span style="font-size: 0.72rem; font-weight: 900; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #78350f; border: 1.5px solid #d97706; padding: 0.2rem 0.55rem; border-radius: 6px; display: inline-flex; align-items: center; gap: 0.35rem; box-shadow: 0 1px 3px rgba(217, 119, 6, 0.25); text-transform: uppercase; letter-spacing: 0.04em;">
+                                👑 CAPITÃO DE EQUIPE
                               </span>
                             ` : ''}
                           </div>
@@ -317,7 +330,7 @@ export function renderTeamsAthletes() {
                       </div>
                     </td>
                     <td>
-                      <span style="font-family: monospace; font-size: 0.78rem; font-weight: 700; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; color: #334155;">
+                      <span style="font-family: monospace; font-size: 0.78rem; font-weight: 700; background: ${isCapitao ? '#fef3c7' : '#f1f5f9'}; border: ${isCapitao ? '1px solid #fde68a' : 'none'}; padding: 0.2rem 0.5rem; border-radius: 4px; color: ${isCapitao ? '#78350f' : '#334155'};">
                         ${ath.cbt_id || `CBT-${ath.id.replace(/\D/g, '').slice(-5) || 'OFICIAL'}`}
                       </span>
                     </td>
@@ -353,10 +366,17 @@ export function renderTeamsAthletes() {
                       </div>
                     </td>
                     <td>
-                      <span style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.2rem 0.55rem; border-radius: var(--radius-full);">
-                        <span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
-                        Inscrição Confirmada
-                      </span>
+                      ${isCapitao ? `
+                        <span style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 900; color: #78350f; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1.5px solid #d97706; padding: 0.25rem 0.65rem; border-radius: var(--radius-full); box-shadow: 0 1px 3px rgba(217, 119, 6, 0.2);">
+                          <span style="width: 8px; height: 8px; border-radius: 50%; background: #d97706;"></span>
+                          👑 Capitão Convocado
+                        </span>
+                      ` : `
+                        <span style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.2rem 0.55rem; border-radius: var(--radius-full);">
+                          <span style="width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
+                          Inscrição Confirmada
+                        </span>
+                      `}
                     </td>
                     ${isAdmin ? `
                       <td style="text-align: right; white-space: nowrap;">
@@ -551,6 +571,14 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
             </div>
           </div>
 
+          <!-- CAMPO DESIGNAR CAPITÃO -->
+          <div class="form-group" style="margin-bottom: 0.85rem;">
+            <label style="display: flex; align-items: center; gap: 0.55rem; font-size: 0.85rem; font-weight: 800; color: #78350f; background: #fffbeb; padding: 0.55rem 0.8rem; border-radius: 6px; border: 1.5px solid #fcd34d; cursor: pointer;">
+              <input type="checkbox" id="ath-form-capitao" ${(athlete?.funcao === 'Capitão' || athlete?.is_capitao === true) ? 'checked' : ''} style="width: 18px; height: 18px; accent-color: #d97706; cursor: pointer;">
+              <span>👑 Atleta Convocado como Capitão de Equipe</span>
+            </label>
+          </div>
+
           <div class="form-group" style="margin-bottom: 0.85rem;">
             <label class="form-label" style="font-weight: 700; font-size: 0.85rem;">Registro / Código CBT (Tênis Integrado):</label>
             <input type="text" id="ath-form-cbt" class="form-control" value="${athlete?.cbt_id || ''}" placeholder="Ex: CBT-14820">
@@ -607,19 +635,22 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
 
     const fed = feds.find(f => f.id === equipe_id);
     const uf = fed ? fed.uf : equipe_id.toUpperCase();
+    const isCapitaoChecked = document.getElementById('ath-form-capitao')?.checked;
+    const funcao = isCapitaoChecked ? 'Capitão' : null;
+    const is_capitao = Boolean(isCapitaoChecked);
 
     if (isEditing) {
-      store.updateAthlete(athlete.id, { nome, genero, cbt_id, equipe_id, uf, categorias });
+      store.updateAthlete(athlete.id, { nome, genero, cbt_id, equipe_id, uf, funcao, is_capitao, categorias });
       toast.show({ 
         title: 'Atleta Atualizado', 
-        message: `${nome} foi atualizado com sucesso (${genero === 'F' ? 'Feminino' : 'Masculino'}).`, 
+        message: `${nome} foi atualizado com sucesso (${genero === 'F' ? 'Feminino' : 'Masculino'}${is_capitao ? ' • 👑 Capitão' : ''}).`, 
         type: 'success' 
       });
     } else {
-      store.addAthlete({ nome, genero, cbt_id, equipe_id, uf, categorias });
+      store.addAthlete({ nome, genero, cbt_id, equipe_id, uf, funcao, is_capitao, categorias });
       toast.show({ 
         title: 'Atleta Inscrito', 
-        message: `${nome} cadastrado na federação ${uf} (${genero === 'F' ? 'Feminino' : 'Masculino'}).`, 
+        message: `${nome} cadastrado na federação ${uf} (${genero === 'F' ? 'Feminino' : 'Masculino'}${is_capitao ? ' • 👑 Capitão' : ''}).`, 
         type: 'success' 
       });
     }
