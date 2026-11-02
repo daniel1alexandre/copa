@@ -7,32 +7,34 @@ const SESSION_KEY = 'copa_federacoes_auth_session';
 
 class AuthService {
   constructor() {
-    this.session = this.loadSession();
+    // Garante que toda vez que o endereço do aplicativo for utilizado,
+    // ele abra na página de login sem carregar login automático prévio
+    try {
+      localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
+    } catch (_) {}
+    this.session = null;
     this.authListeners = [];
   }
 
   loadSession() {
-    try {
-      const saved = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
-      if (saved) {
-        return JSON.parse(saved);
-      }
-    } catch (_) {}
     return null;
   }
 
-  saveSession(sessionData, remember = true) {
+  saveSession(sessionData, remember = false) {
     this.session = sessionData;
-    const json = JSON.stringify(sessionData);
-    localStorage.setItem(SESSION_KEY, json);
-    sessionStorage.setItem(SESSION_KEY, json);
+    try {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+    } catch (_) {}
     this.notify();
   }
 
   clearSession() {
     this.session = null;
-    localStorage.removeItem(SESSION_KEY);
-    sessionStorage.removeItem(SESSION_KEY);
+    try {
+      localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SESSION_KEY);
+    } catch (_) {}
     this.notify();
   }
 
@@ -131,13 +133,9 @@ window.auth = auth;
 export function initAuthUI() {
   renderAuthPortalElement();
 
-  // Se não estiver logado, exibe a tela inicial
-  if (!auth.isLoggedIn()) {
-    showLoginPortal();
-  } else {
-    hideLoginPortal();
-    updateTopbarUserBadge();
-  }
+  // Toda vez que o endereço do aplicativo for utilizado, abre obrigatoriamente na página de login
+  showLoginPortal();
+  updateTopbarUserBadge();
 
   // Monitora alterações de sessão
   auth.onAuthChange(() => {
@@ -343,14 +341,17 @@ window.handlePortalLogin = function (e) {
       if (typeof window.updateNavTabsAccess === 'function') {
         window.updateNavTabsAccess();
       }
+      if (typeof window.switchTab === 'function') {
+        window.switchTab('home');
+      }
       if (window.toast && typeof window.toast.show === 'function') {
         window.toast.show({
-          title: 'Bem-vindo, Baumann!',
+          title: `Bem-vindo, ${result.user?.displayName || 'Baumann'}!`,
           message: 'Painel da Copa Federações liberado com acesso de Administrador CBT.',
           type: 'success'
         });
       }
-    }, 450);
+    }, 400);
   } else {
     if (card) {
       card.classList.add('portal-shake');

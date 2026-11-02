@@ -20,7 +20,7 @@
 
   <!-- Supabase: usa fetch() direto à REST API (sem SDK externo) -->
 </head>
-<body>
+<body class="portal-open">
 
   <!-- BARRA DE TOPO DA COPA FEDERAÇÕES -->
   <header class="topbar">
@@ -128,6 +128,93 @@
 
   <!-- CONTAINER PARA NOTIFICAÇÕES TOAST -->
   <div id="toast-container"></div>
+
+  <!-- PORTAL INICIAL DE LOGIN OFICIAL CBT (ABRE SEMPRE QUE O ENDEREÇO É ACESSADO) -->
+  <div id="cbt-login-portal" class="cbt-portal-overlay active">
+    <div class="cbt-portal-backdrop"></div>
+    <div class="cbt-portal-card">
+      
+      <!-- CABEÇALHO COM LOGO OFICIAL CBT -->
+      <div class="portal-brand-header">
+        <div class="portal-logo-wrapper">
+          <img src="assets/logo.jpg" alt="Logo Oficial Confederação Brasileira de Tênis" class="portal-cbt-logo">
+          <div class="portal-logo-glow"></div>
+        </div>
+        <div class="portal-titles">
+          <span class="portal-confederacao">CONFEDERAÇÃO BRASILEIRA DE TÊNIS</span>
+          <h2 class="portal-main-title">Copa das Federações 2026</h2>
+          <span class="portal-sub-badge">🇧🇷 CAMPEONATO BRASILEIRO OFICIAL DE BEACH TENNIS</span>
+        </div>
+      </div>
+
+      <!-- MENSAGEM DE ALERTA/ERRO -->
+      <div id="portal-feedback" class="portal-feedback" style="display: none;"></div>
+
+      <!-- FORMULÁRIO DE ACESSO -->
+      <form id="cbt-login-form" class="portal-form" onsubmit="window.handlePortalLogin(event)">
+        <div class="portal-form-group">
+          <label for="portal-username" class="portal-label">
+            <span class="label-icon">👤</span> Usuário Autorizado:
+          </label>
+          <div class="portal-input-wrapper">
+            <input 
+              type="text" 
+              id="portal-username" 
+              class="portal-input" 
+              placeholder="Digite seu usuário" 
+              value="" 
+              autocomplete="off"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="portal-form-group">
+          <label for="portal-password" class="portal-label">
+            <span class="label-icon">🔒</span> Senha de Acesso:
+          </label>
+          <div class="portal-input-wrapper">
+            <input 
+              type="password" 
+              id="portal-password" 
+              class="portal-input" 
+              placeholder="Digite a senha de administrador" 
+              autocomplete="current-password"
+              required
+            >
+            <button type="button" class="portal-pw-toggle" onclick="window.togglePortalPasswordVisibility()" title="Mostrar/Ocultar Senha">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <div class="portal-options-row" style="justify-content: flex-end;">
+          <span class="portal-security-badge">🛡️ Acesso Seguro CBT</span>
+        </div>
+
+        <button type="submit" id="portal-btn-submit" class="portal-btn-primary">
+          <span class="btn-text">Entrar no Sistema Oficial</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+
+      <!-- DIVISOR -->
+      <div class="portal-divider">
+        <span>OU ACOMPANHE AS DISPUTAS</span>
+      </div>
+
+      <!-- BOTÃO VISITANTE / ESPECTADOR AO VIVO -->
+      <button type="button" class="portal-btn-secondary" onclick="window.handlePortalGuestLogin()">
+        <span class="secondary-icon">🎾</span>
+        <div class="secondary-text">
+          <strong>Acessar como Visitante / Espectador</strong>
+          <small>Consultar confrontos, resultados e ranking em tempo real</small>
+        </div>
+        <span class="secondary-tag">AO VIVO</span>
+      </button>
+
+    </div>
+  </div>
 
   <!-- SCRIPT PRINCIPAL MODULAR -->
   <script type="module" src="js/app.js"></script>
