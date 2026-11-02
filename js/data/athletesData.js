@@ -3,7 +3,7 @@
 // Total de Atletas Únicos: 2128 | Total de Inscrições: 2259
 // Com classificação oficial de gênero (F = Feminino, M = Masculino)
 
-export const CBT_OFFICIAL_ATHLETES_VERSION = "2026.13-cbt-gender-corrected";
+export const CBT_OFFICIAL_ATHLETES_VERSION = "2026.14-cbt-gender-full-reviewed";
 
 export const CBT_OFFICIAL_ATHLETES_2026 = [
   {
@@ -6967,7 +6967,7 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "categorias": [
       "master40"
     ],
-    "genero": "F"
+    "genero": "M"
   },
   {
     "id": "ath-df-508305",
@@ -10962,7 +10962,7 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "prof",
       "cat_a"
     ],
-    "genero": "F"
+    "genero": "M"
   },
   {
     "id": "ath-mg-744085",
@@ -16714,7 +16714,7 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "sub12"
     ],
     "ranking": "26º",
-    "genero": "M"
+    "genero": "F"
   },
   {
     "id": "ath-pi-408336",
@@ -26019,7 +26019,7 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
       "master60"
     ],
     "funcao": "Capitão",
-    "genero": "F"
+    "genero": "M"
   },
   {
     "id": "ath-to-239576",
