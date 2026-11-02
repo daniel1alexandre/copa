@@ -11,13 +11,14 @@ import { initTeamsAthletesView, renderTeamsAthletes } from './modules/teamsAthle
 import { initConfigView, renderConfig } from './modules/configView.js';
 import { openMatchModal, openScheduleModal, openConfigureFirstRoundModal, openEditFirstRoundCardModal } from './modules/modal.js';
 
-const GUEST_ALLOWED_TABS = ['chaveamento', 'cabeca-chave', 'ranking'];
+const GUEST_ALLOWED_TABS = ['chaveamento', 'cabeca-chave', 'ranking', 'atletas'];
 let activeTab = 'home';
 
 export function updateNavTabsAccess() {
   const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
 
-  const tabButtons = document.querySelectorAll('.nav-tab');
+  // Atualiza botões da barra de navegação principal e botões da barra superior
+  const tabButtons = document.querySelectorAll('.nav-tab, .btn-topbar[data-tab]');
   tabButtons.forEach(btn => {
     const tab = btn.dataset.tab;
     if (isAdmin) {
@@ -51,7 +52,7 @@ function switchTab(tabId) {
     if (window.toast && typeof window.toast.show === 'function') {
       window.toast.show({
         title: 'Acesso Restrito',
-        message: 'No modo visitante/espectador, apenas os menus Confrontos, Cabeça de Chave e Classificação estão liberados para visualização.',
+        message: 'No modo visitante/espectador, os menus Confrontos, Cabeça de Chave, Classificação e Atletas estão liberados para consulta.',
         type: 'warning'
       });
     }

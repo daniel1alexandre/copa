@@ -48,23 +48,23 @@
           <button type="button" class="btn-zoom-reset" id="btn-zoom-reset" title="Restaurar padrão (85%)">↺</button>
         </div>
 
-        <button class="btn-topbar btn-topbar-ghost" onclick="window.switchTab('categorias')">
+        <button class="btn-topbar btn-topbar-ghost" data-tab="categorias" onclick="window.switchTab('categorias')">
           🎾 Categorias
         </button>
 
-        <button class="btn-topbar btn-topbar-ghost" onclick="window.switchTab('atletas')">
+        <button class="btn-topbar btn-topbar-ghost" data-tab="atletas" onclick="window.switchTab('atletas')">
           👤 Atletas
         </button>
 
-        <button class="btn-topbar btn-topbar-ghost" onclick="window.switchTab('chaveamento')">
+        <button class="btn-topbar btn-topbar-ghost" data-tab="chaveamento" onclick="window.switchTab('chaveamento')">
           ⚔️ Confrontos
         </button>
 
-        <button class="btn-topbar btn-topbar-ghost" style="background: rgba(2, 128, 144, 0.2); border-color: rgba(2, 128, 144, 0.5); color: #028090;" onclick="window.switchTab('cabeca-chave')">
+        <button class="btn-topbar btn-topbar-ghost" data-tab="cabeca-chave" style="background: rgba(2, 128, 144, 0.2); border-color: rgba(2, 128, 144, 0.5); color: #028090;" onclick="window.switchTab('cabeca-chave')">
           👑 Cabeça de Chave
         </button>
 
-        <button class="btn-topbar btn-topbar-ghost" style="background: rgba(255, 183, 3, 0.2); border-color: rgba(255, 183, 3, 0.4); color: #ffb703;" onclick="window.switchTab('ranking')">
+        <button class="btn-topbar btn-topbar-ghost" data-tab="ranking" style="background: rgba(255, 183, 3, 0.2); border-color: rgba(255, 183, 3, 0.4); color: #ffb703;" onclick="window.switchTab('ranking')">
           🏆 Ranking Geral
         </button>
 
@@ -219,7 +219,7 @@
         <span class="secondary-icon">🎾</span>
         <div class="secondary-text">
           <strong>Acessar como Visitante / Espectador</strong>
-          <small>Consultar confrontos, resultados e ranking em tempo real</small>
+          <small>Consultar confrontos, atletas inscritos, cabeças de chave e ranking em tempo real</small>
         </div>
         <span class="secondary-tag">AO VIVO</span>
       </button>

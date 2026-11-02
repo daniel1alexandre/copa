@@ -381,7 +381,7 @@ window.handlePortalGuestLogin = function () {
   if (window.toast && typeof window.toast.show === 'function') {
     window.toast.show({
       title: 'Modo Espectador',
-      message: 'Visualização liberada para Confrontos e Classificação em tempo real.',
+      message: 'Visualização liberada para Confrontos, Cabeça de Chave, Classificação e Consulta de Atletas.',
       type: 'info'
     });
   }

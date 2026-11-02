@@ -28,15 +28,27 @@ export function initTeamsAthletesView() {
   };
 
   window.openNewAthleteModal = () => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem cadastrar atletas.', type: 'error' });
+      return;
+    }
     renderAthleteFormModal(null, selectedStateId);
   };
 
   window.openEditAthleteModal = (id) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem editar atletas.', type: 'error' });
+      return;
+    }
     const ath = store.getAthletes().find(a => a.id === id);
     if (ath) renderAthleteFormModal(ath, ath.equipe_id);
   };
 
   window.handleDeleteAthlete = (id) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem remover atletas.', type: 'error' });
+      return;
+    }
     const ath = store.getAthletes().find(a => a.id === id);
     if (!ath) return;
     if (confirm(`Tem certeza que deseja remover o atleta "${ath.nome}" da lista oficial?`)) {
@@ -47,10 +59,18 @@ export function initTeamsAthletesView() {
   };
 
   window.openTenisIntegraModal = () => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem acessar a integração CBT.', type: 'error' });
+      return;
+    }
     renderTenisIntegraModal(selectedStateId);
   };
 
   window.restoreOfficialCBTList = () => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem restaurar a relação oficial de atletas.', type: 'error' });
+      return;
+    }
     if (confirm('Deseja importar a relação oficial completa de 2.128 atletas da Copa das Federações 2026 (CBT / Tênis Integrado) para todas as 27 federações?')) {
       store.resetAthletesToOfficialCBT();
       toast.show({
@@ -125,15 +145,18 @@ export function renderTeamsAthletes() {
       </div>
 
       <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
-        <button class="btn btn-primary" onclick="window.restoreOfficialCBTList()" style="background: #028090; border-color: #028090; font-weight: 800; font-size: 0.85rem; padding: 0.5rem 0.95rem; display: inline-flex; align-items: center; gap: 0.45rem;" title="Importar relação oficial completa de 2.128 atletas da Copa das Federações 2026 CBT">
-          📥 Importar Relação de Atletas
-        </button>
-
         ${isAdmin ? `
+          <button class="btn btn-primary" onclick="window.restoreOfficialCBTList()" style="background: #028090; border-color: #028090; font-weight: 800; font-size: 0.85rem; padding: 0.5rem 0.95rem; display: inline-flex; align-items: center; gap: 0.45rem;" title="Importar relação oficial completa de 2.128 atletas da Copa das Federações 2026 CBT">
+            📥 Importar Relação de Atletas
+          </button>
           <button class="btn btn-outline" onclick="window.openNewAthleteModal()" style="font-weight: 700; font-size: 0.85rem; padding: 0.5rem 0.9rem; background: #ffffff;">
             ➕ Novo Atleta
           </button>
-        ` : ''}
+        ` : `
+          <div style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; font-size: 0.8rem; font-weight: 700; padding: 0.45rem 0.85rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
+            👁️ Consulta Oficial CBT • 2.128 Atletas
+          </div>
+        `}
       </div>
     </div>
 
@@ -259,9 +282,11 @@ export function renderTeamsAthletes() {
               : 'Esta federação ainda não possui atletas importados. Clique no botão abaixo para carregar a relação oficial completa.'}
           </p>
           <div style="display: flex; justify-content: center; gap: 0.5rem;">
-            <button class="btn btn-primary btn-sm" onclick="window.restoreOfficialCBTList()">
-              📥 Importar Relação de Atletas
-            </button>
+            ${isAdmin ? `
+              <button class="btn btn-primary btn-sm" onclick="window.restoreOfficialCBTList()">
+                📥 Importar Relação de Atletas
+              </button>
+            ` : ''}
           </div>
         </div>
       ` : `

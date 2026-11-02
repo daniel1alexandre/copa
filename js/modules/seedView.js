@@ -560,3 +560,4 @@ function renderSingleCategoryDetailed(category) {
 
   return html;
 }
+
