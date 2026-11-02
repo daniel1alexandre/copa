@@ -2,6 +2,7 @@
 import { store } from '../data/store.js';
 import { toast } from './toast.js';
 import { auth } from './auth.js';
+import { getAthleteGender } from '../data/federations.js';
 
 export function openMatchModal(gameCode, categoryId = 'prof') {
   const games = store.getGames(categoryId);
@@ -1768,14 +1769,7 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
 
   // Helper de inferência e validação de gênero
   function isAthleteFeminino(ath) {
-    const g = String(ath?.genero || '').trim().toUpperCase();
-    if (g === 'FEMININO' || g === 'F' || g === 'FEM' || g === 'MULHER') return true;
-    if (g === 'MASCULINO' || g === 'M' || g === 'MASC' || g === 'HOMEM') return false;
-    const fn = (ath?.nome || '').trim().split(/\s+/)[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
-    if (['ANDREA','JENNIFER','MABEL','SASHA','YOCHABEL','ANA','MARIA','JULIA','BRUNA','CAMILA','BEATRIZ','CAROLINA','LARISSA','AMANDA','LETICIA','FERNANDA','GABRIELA','MARIANA','LUISA','LUIZA','LAURA','ISABELA','ISABELLA','SOFIA','ALICE','MANUELA','VALENTINA','LIVIA','GIOVANNA','RAFAELA','NATHALIA','NATALIA','PAULA','PATRICIA','RENATA','VANESSA','PRISCILA','BIANCA','TATIANA','DANIELA','FLAVIA','ALINE','JAQUELINE','JESSICA','MARINA','LILIAN','THAIS','RAQUEL','DEBORA','SABRINA','TALITA','SIMONE','ANDRESSA','ADRIANA','CLAUDIA','CRISTINA','MONICA','CARLA','INGRID','NICOLE','MILENA','MIRELA','REBECA','SAMARA','VITORIA','YASMIN','SARAH','BARBARA','CLARA','LARA','LORENA','CECILIA','ELISA'].includes(fn)) return true;
-    if (fn.endsWith('A') && !['LUCA','LUCCA','JOSHUA','CAUA','KAUA','MAUA'].includes(fn)) return true;
-    if (fn.endsWith('E') && ['ANE','INE','ELE','ELLE','ETE','ISE','ICE'].some(sfx => fn.endsWith(sfx))) return true;
-    return false;
+    return getAthleteGender(ath) === 'Feminino';
   }
 
   // Filtra atletas correspondentes estritamente ao Estado selecionado

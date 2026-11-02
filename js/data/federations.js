@@ -272,7 +272,7 @@ export const INITIAL_FEDERATIONS = [
   }
 ];
 
-import { CBT_OFFICIAL_ATHLETES_2026, CBT_OFFICIAL_ATHLETES_VERSION } from './athletesData.js';
+import { CBT_OFFICIAL_ATHLETES_2026, CBT_OFFICIAL_ATHLETES_VERSION, getAthleteGender } from './athletesData.js';
 
 export const INITIAL_ATHLETES = CBT_OFFICIAL_ATHLETES_2026;
-export { CBT_OFFICIAL_ATHLETES_VERSION };
+export { CBT_OFFICIAL_ATHLETES_VERSION, getAthleteGender };

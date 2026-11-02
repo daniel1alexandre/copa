@@ -1,6 +1,7 @@
 // Módulo de Atletas Inscritos por Estado (Copa das Federações 2026 - CBT / Tênis Integrado)
 import { store } from '../data/store.js';
 import { toast } from './toast.js';
+import { getAthleteGender } from '../data/federations.js';
 
 let selectedStateId = 'sp'; // Estado inicialmente selecionado (São Paulo)
 let searchFilter = '';
@@ -188,7 +189,7 @@ export function renderTeamsAthletes() {
             <div style="font-size: 0.85rem; color: #0f766e; font-weight: 700;">
               👥 <strong>${stateAthletes.length} atletas inscritos</strong> 
               <span style="font-size: 0.78rem; color: #047857; background: #ccfbf1; padding: 0.1rem 0.5rem; border-radius: 4px; margin-left: 0.35rem; border: 1px solid #99f6e4;">
-                👩 ${stateAthletes.filter(a => String(a.genero || '').toUpperCase().startsWith('F')).length} mulheres • 👨 ${stateAthletes.filter(a => !String(a.genero || '').toUpperCase().startsWith('F')).length} homens
+                👩 ${stateAthletes.filter(a => getAthleteGender(a) === 'Feminino').length} mulheres • 👨 ${stateAthletes.filter(a => getAthleteGender(a) !== 'Feminino').length} homens
               </span>
               representando ${currentFed.nome} na Copa das Federações 2026 CBT.
             </div>
@@ -307,7 +308,7 @@ export function renderTeamsAthletes() {
                             ` : ''}
                           </div>
                           <div style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.2rem;">
-                            ${String(ath.genero || '').toUpperCase().startsWith('F') ? `
+                            ${getAthleteGender(ath) === 'Feminino' ? `
                               <span style="font-size: 0.68rem; font-weight: 800; background: #fdf2f8; color: #be185d; border: 1px solid #fbcfe8; padding: 0.1rem 0.45rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.2rem;">
                                 👩 Feminino
                               </span>
@@ -534,7 +535,7 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
   const feds = store.getFederations();
   const categories = store.getActiveCategories();
   const isEditing = Boolean(athlete);
-  const currentGenero = String(athlete?.genero || '').toUpperCase().startsWith('F') ? 'Feminino' : 'Masculino';
+  const currentGenero = athlete ? getAthleteGender(athlete) : 'Masculino';
 
   overlay.innerHTML = `
     <div class="modal-dialog" style="max-width: 520px;">

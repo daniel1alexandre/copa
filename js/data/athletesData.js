@@ -3,7 +3,7 @@
 // Total de Atletas Únicos: 2128 | Total de Inscrições: 2259
 // Com classificação oficial de gênero (F = Feminino, M = Masculino)
 
-export const CBT_OFFICIAL_ATHLETES_VERSION = "2026.15-cbt-gender-masculino-feminino";
+export const CBT_OFFICIAL_ATHLETES_VERSION = "2026.16-cbt-gender-enforced-autoheal";
 
 export const CBT_OFFICIAL_ATHLETES_2026 = [
   {
@@ -26634,3 +26634,27 @@ export const CBT_OFFICIAL_ATHLETES_2026 = [
     "genero": "Masculino"
   }
 ];
+
+const OFFICIAL_GENDER_MAP = new Map();
+for (const a of CBT_OFFICIAL_ATHLETES_2026) {
+  if (a.id) OFFICIAL_GENDER_MAP.set(a.id, a.genero);
+  if (a.cbt_id) OFFICIAL_GENDER_MAP.set(a.cbt_id, a.genero);
+  if (a.nome) OFFICIAL_GENDER_MAP.set(a.nome.trim().toUpperCase(), a.genero);
+}
+
+export function getAthleteGender(ath) {
+  if (!ath) return 'Masculino';
+  if (ath.genero === 'Feminino' || ath.genero === 'Masculino') return ath.genero;
+  if (ath.genero === 'F') return 'Feminino';
+  if (ath.genero === 'M') return 'Masculino';
+  if (ath.id && OFFICIAL_GENDER_MAP.has(ath.id)) return OFFICIAL_GENDER_MAP.get(ath.id);
+  if (ath.cbt_id && OFFICIAL_GENDER_MAP.has(ath.cbt_id)) return OFFICIAL_GENDER_MAP.get(ath.cbt_id);
+  if (ath.nome && OFFICIAL_GENDER_MAP.has(ath.nome.trim().toUpperCase())) return OFFICIAL_GENDER_MAP.get(ath.nome.trim().toUpperCase());
+  
+  const fn = (ath.nome || '').trim().split(/\s+/)[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+  if (['LUCA','LUCCA','JOSHUA','CAUA','KAUA','MAUA','AYLA','NATA','TARIN','PETRONY','DEUSIMAR'].includes(fn)) return 'Masculino';
+  if (['MURIEL','SASHA','YOCHABEL'].includes(fn)) return 'Feminino';
+  if (fn.endsWith('A') || fn.endsWith('INE') || fn.endsWith('ANE') || fn.endsWith('ELLE') || fn.endsWith('ELLY')) return 'Feminino';
+  return 'Masculino';
+}
+

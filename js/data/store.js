@@ -1,5 +1,5 @@
 // Armazenamento central com persistência em localStorage e reatividade
-import { INITIAL_FEDERATIONS, INITIAL_ATHLETES, CBT_OFFICIAL_ATHLETES_VERSION } from './federations.js';
+import { INITIAL_FEDERATIONS, INITIAL_ATHLETES, CBT_OFFICIAL_ATHLETES_VERSION, getAthleteGender } from './federations.js';
 import { INITIAL_CATEGORIES, DEFAULT_POINTS_TABLE, INITIAL_COURTS, INITIAL_TOURNAMENT } from './categories.js';
 import { createGraphBracket, propagateMatchResult, revertMatchResult, updateFirstRoundMatch, propagateAllByes } from '../modules/bracketEngine.js';
 
@@ -225,10 +225,14 @@ class AppStore {
           // Garante que pointsTable sempre contenha todos os 27 lugares com os valores padrão oficiais CBT
           parsed.pointsTable = { ...DEFAULT_POINTS_TABLE, ...(parsed.pointsTable || {}) };
 
-          // Garante que atletas sempre contenham a base completa do Tênis Integrado oficial CBT
+          // Garante que atletas sempre contenham a base completa do Tênis Integrado oficial CBT com gêneros corretos
           if (!Array.isArray(parsed.athletes) || parsed.athletes.length < 2000 || parsed._athletes_version !== CBT_OFFICIAL_ATHLETES_VERSION) {
             parsed.athletes = JSON.parse(JSON.stringify(INITIAL_ATHLETES));
             parsed._athletes_version = CBT_OFFICIAL_ATHLETES_VERSION;
+          } else {
+            parsed.athletes.forEach(a => {
+              a.genero = getAthleteGender(a);
+            });
           }
 
           if (parsed.tournament) {
@@ -331,6 +335,15 @@ class AppStore {
       categoryByes: remoteState.categoryByes || seed.categoryByes || {},
       users: (remoteState.users && remoteState.users.length > 0) ? remoteState.users : (this.state.users || seed.users)
     };
+
+    if (!remoteState.athletes || remoteState.athletes.length < 2000 || remoteState._athletes_version !== CBT_OFFICIAL_ATHLETES_VERSION) {
+      this.state.athletes = JSON.parse(JSON.stringify(INITIAL_ATHLETES));
+      this.state._athletes_version = CBT_OFFICIAL_ATHLETES_VERSION;
+    } else {
+      this.state.athletes.forEach(a => {
+        a.genero = getAthleteGender(a);
+      });
+    }
 
     // Regra: quando não tiver nenhum estado selecionado como Bye na categoria,
     // nos confrontos também não pode ter nenhum estado selecionado na primeira fase
@@ -453,7 +466,16 @@ class AppStore {
   }
 
   getAthletes() {
-    return this.state.athletes || [];
+    if (!this.state.athletes || this.state.athletes.length < 2000 || this.state._athletes_version !== CBT_OFFICIAL_ATHLETES_VERSION) {
+      this.state.athletes = JSON.parse(JSON.stringify(INITIAL_ATHLETES));
+      this.state._athletes_version = CBT_OFFICIAL_ATHLETES_VERSION;
+    }
+    this.state.athletes.forEach(a => {
+      if (!a.genero || a.genero === 'F' || a.genero === 'M' || a.genero === 'undefined') {
+        a.genero = getAthleteGender(a);
+      }
+    });
+    return this.state.athletes;
   }
 
   getPointsTable() {
