@@ -1766,14 +1766,16 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
   const currentId = (currentTeam.id || '').toLowerCase();
   const otherId = (otherTeam.id || '').toLowerCase();
 
-  // Helper de inferência de gênero seguro
-  function getAthleteGenderSafe(ath) {
-    if (ath.genero === 'F' || ath.genero === 'M') return ath.genero;
-    const fn = (ath.nome || '').trim().split(/\s+/)[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
-    if (['ANDREA','JENNIFER','MABEL','TARIN','PETRONY','SASHA','YOCHABEL','ANA','MARIA','JULIA','BRUNA','CAMILA','BEATRIZ','CAROLINA','LARISSA','AMANDA','LETICIA','FERNANDA','GABRIELA','MARIANA','LUISA','LUIZA','LAURA','ISABELA','ISABELLA','SOFIA','ALICE','MANUELA','VALENTINA','LIVIA','GIOVANNA','RAFAELA','NATHALIA','NATALIA','PAULA','PATRICIA','RENATA','VANESSA','PRISCILA','BIANCA','TATIANA','DANIELA','FLAVIA','ALINE','JAQUELINE','JESSICA','MARINA','LILIAN','THAIS','RAQUEL','DEBORA','SABRINA','TALITA','SIMONE','ANDRESSA','ADRIANA','CLAUDIA','CRISTINA','MONICA','CARLA','INGRID','NICOLE','MILENA','MIRELA','REBECA','SAMARA','VITORIA','YASMIN','SARAH','BARBARA','CLARA','LARA','LORENA','CECILIA','ELISA'].includes(fn)) return 'F';
-    if (fn.endsWith('A') && !['LUCA','LUCCA','JOSHUA'].includes(fn)) return 'F';
-    if (fn.endsWith('E') && ['ANE','INE','ELE','ELLE','ETE','ISE','ICE'].some(sfx => fn.endsWith(sfx))) return 'F';
-    return 'M';
+  // Helper de inferência e validação de gênero
+  function isAthleteFeminino(ath) {
+    const g = String(ath?.genero || '').trim().toUpperCase();
+    if (g === 'FEMININO' || g === 'F' || g === 'FEM' || g === 'MULHER') return true;
+    if (g === 'MASCULINO' || g === 'M' || g === 'MASC' || g === 'HOMEM') return false;
+    const fn = (ath?.nome || '').trim().split(/\s+/)[0].normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+    if (['ANDREA','JENNIFER','MABEL','SASHA','YOCHABEL','ANA','MARIA','JULIA','BRUNA','CAMILA','BEATRIZ','CAROLINA','LARISSA','AMANDA','LETICIA','FERNANDA','GABRIELA','MARIANA','LUISA','LUIZA','LAURA','ISABELA','ISABELLA','SOFIA','ALICE','MANUELA','VALENTINA','LIVIA','GIOVANNA','RAFAELA','NATHALIA','NATALIA','PAULA','PATRICIA','RENATA','VANESSA','PRISCILA','BIANCA','TATIANA','DANIELA','FLAVIA','ALINE','JAQUELINE','JESSICA','MARINA','LILIAN','THAIS','RAQUEL','DEBORA','SABRINA','TALITA','SIMONE','ANDRESSA','ADRIANA','CLAUDIA','CRISTINA','MONICA','CARLA','INGRID','NICOLE','MILENA','MIRELA','REBECA','SAMARA','VITORIA','YASMIN','SARAH','BARBARA','CLARA','LARA','LORENA','CECILIA','ELISA'].includes(fn)) return true;
+    if (fn.endsWith('A') && !['LUCA','LUCCA','JOSHUA','CAUA','KAUA','MAUA'].includes(fn)) return true;
+    if (fn.endsWith('E') && ['ANE','INE','ELE','ELLE','ETE','ISE','ICE'].some(sfx => fn.endsWith(sfx))) return true;
+    return false;
   }
 
   // Filtra atletas correspondentes estritamente ao Estado selecionado
@@ -1781,12 +1783,12 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
   if (currentAthletes.length === 0) {
     currentAthletes = allAthletes.filter(a => a.equipe_id === currentId);
   }
-  currentAthletes.forEach(a => { if (!a.genero) a.genero = getAthleteGenderSafe(a); });
+  currentAthletes.forEach(a => { if (!a.genero) a.genero = isAthleteFeminino(a) ? 'Feminino' : 'Masculino'; });
   currentAthletes.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 
   // Separação estrita por gênero
-  const currentAthletes_fem = currentAthletes.filter(a => a.genero === 'F');
-  const currentAthletes_masc = currentAthletes.filter(a => a.genero === 'M');
+  const currentAthletes_fem = currentAthletes.filter(a => isAthleteFeminino(a));
+  const currentAthletes_masc = currentAthletes.filter(a => !isAthleteFeminino(a));
   const currentAthletes_todos = currentAthletes;
 
   // Escalação atual gravada no jogo
@@ -1824,7 +1826,8 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
       const isSel = (ath.id === selectedVal || ath.nome === selectedVal || ath.cbt_id === selectedVal);
       const isCapitao = (ath.funcao === 'Capitão' || ath.is_capitao === true);
       const badges = [];
-      if (ath.genero) badges.push(ath.genero === 'F' ? 'Fem' : 'Masc');
+      const genderLabel = isAthleteFeminino(ath) ? 'Feminino' : 'Masculino';
+      badges.push(genderLabel);
       if (ath.idade) badges.push(`${ath.idade} anos`);
       if (ath.ranking) badges.push(`Rk: ${ath.ranking}`);
       if (isCapitao) badges.push('👑 Capitão');

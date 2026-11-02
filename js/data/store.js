@@ -954,7 +954,7 @@ class AppStore {
       uf: athlete.uf || (athlete.equipe_id ? athlete.equipe_id.toUpperCase() : ''),
       cbt_id: athlete.cbt_id || '',
       idade: athlete.idade || null,
-      genero: athlete.genero || 'M',
+      genero: String(athlete.genero || '').toUpperCase().startsWith('F') ? 'Feminino' : 'Masculino',
       funcao: athlete.funcao || null,
       is_capitao: Boolean(athlete.is_capitao || athlete.funcao === 'Capitão'),
       categorias: athlete.categorias || []

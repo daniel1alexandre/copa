@@ -188,7 +188,7 @@ export function renderTeamsAthletes() {
             <div style="font-size: 0.85rem; color: #0f766e; font-weight: 700;">
               👥 <strong>${stateAthletes.length} atletas inscritos</strong> 
               <span style="font-size: 0.78rem; color: #047857; background: #ccfbf1; padding: 0.1rem 0.5rem; border-radius: 4px; margin-left: 0.35rem; border: 1px solid #99f6e4;">
-                👩 ${stateAthletes.filter(a => a.genero === 'F').length} mulheres • 👨 ${stateAthletes.filter(a => a.genero !== 'F').length} homens
+                👩 ${stateAthletes.filter(a => String(a.genero || '').toUpperCase().startsWith('F')).length} mulheres • 👨 ${stateAthletes.filter(a => !String(a.genero || '').toUpperCase().startsWith('F')).length} homens
               </span>
               representando ${currentFed.nome} na Copa das Federações 2026 CBT.
             </div>
@@ -307,7 +307,7 @@ export function renderTeamsAthletes() {
                             ` : ''}
                           </div>
                           <div style="font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; margin-top: 0.2rem;">
-                            ${ath.genero === 'F' ? `
+                            ${String(ath.genero || '').toUpperCase().startsWith('F') ? `
                               <span style="font-size: 0.68rem; font-weight: 800; background: #fdf2f8; color: #be185d; border: 1px solid #fbcfe8; padding: 0.1rem 0.45rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.2rem;">
                                 👩 Feminino
                               </span>
@@ -534,7 +534,7 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
   const feds = store.getFederations();
   const categories = store.getActiveCategories();
   const isEditing = Boolean(athlete);
-  const currentGenero = (athlete?.genero || 'M').toUpperCase() === 'F' ? 'F' : 'M';
+  const currentGenero = String(athlete?.genero || '').toUpperCase().startsWith('F') ? 'Feminino' : 'Masculino';
 
   overlay.innerHTML = `
     <div class="modal-dialog" style="max-width: 520px;">
@@ -556,8 +556,8 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
               <span style="font-size: 0.72rem; color: #028090; font-weight: 800;">Obrigatório</span>
             </label>
             <select id="ath-form-genero" class="form-select" required style="font-weight: 800; font-size: 0.88rem; padding: 0.45rem 0.65rem; border: 1.5px solid #028090;">
-              <option value="F" ${currentGenero === 'F' ? 'selected' : ''}>👩 Feminino (Naipe Feminino e Mista)</option>
-              <option value="M" ${currentGenero === 'M' ? 'selected' : ''}>👨 Masculino (Naipe Masculino e Mista)</option>
+              <option value="Feminino" ${currentGenero === 'Feminino' ? 'selected' : ''}>👩 Feminino (Naipe Feminino e Mista)</option>
+              <option value="Masculino" ${currentGenero === 'Masculino' ? 'selected' : ''}>👨 Masculino (Naipe Masculino e Mista)</option>
             </select>
             <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem;">
               Ao alterar e salvar, o gênero é imediatamente assumido na lista de atletas e nas escalações de jogos.
@@ -636,14 +636,14 @@ function renderAthleteFormModal(athlete = null, defaultFedId = 'sp') {
       store.updateAthlete(athlete.id, { nome, genero, cbt_id, equipe_id, uf, funcao, is_capitao, categorias });
       toast.show({ 
         title: 'Atleta Atualizado', 
-        message: `${nome} foi atualizado com sucesso (${genero === 'F' ? 'Feminino' : 'Masculino'}${is_capitao ? ' • 👑 Capitão' : ''}).`, 
+        message: `${nome} foi atualizado com sucesso (${genero}${is_capitao ? ' • 👑 Capitão' : ''}).`, 
         type: 'success' 
       });
     } else {
       store.addAthlete({ nome, genero, cbt_id, equipe_id, uf, funcao, is_capitao, categorias });
       toast.show({ 
         title: 'Atleta Inscrito', 
-        message: `${nome} cadastrado na federação ${uf} (${genero === 'F' ? 'Feminino' : 'Masculino'}${is_capitao ? ' • 👑 Capitão' : ''}).`, 
+        message: `${nome} cadastrado na federação ${uf} (${genero}${is_capitao ? ' • 👑 Capitão' : ''}).`, 
         type: 'success' 
       });
     }
