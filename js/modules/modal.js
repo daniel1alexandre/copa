@@ -1822,13 +1822,16 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
         continue;
       }
       const isSel = (ath.id === selectedVal || ath.nome === selectedVal || ath.cbt_id === selectedVal);
+      const isCapitao = (ath.funcao === 'Capitão' || ath.is_capitao === true);
       const badges = [];
       if (ath.genero) badges.push(ath.genero === 'F' ? 'Fem' : 'Masc');
       if (ath.idade) badges.push(`${ath.idade} anos`);
       if (ath.ranking) badges.push(`Rk: ${ath.ranking}`);
-      if (ath.funcao === 'Capitão') badges.push('👑 Capitão');
+      if (isCapitao) badges.push('👑 Capitão');
       const extra = badges.length ? ` (${badges.join(' • ')})` : '';
-      out += `<option value="${ath.id}" ${isSel ? 'selected' : ''}>${ath.nome}${extra}</option>`;
+      const prefix = isCapitao ? '👑 [CAPITÃO] ' : '';
+      const optStyle = isCapitao ? 'style="font-weight: 800; color: #78350f; background-color: #fef3c7;"' : '';
+      out += `<option value="${ath.id}" ${isSel ? 'selected' : ''} ${optStyle}>${prefix}${ath.nome}${extra}</option>`;
     }
     return out;
   }
@@ -1855,25 +1858,6 @@ export function openMatchLineupModal(gameCode, categoryId = 'prof', targetSlot =
       <!-- CORPO DO MODAL -->
       <div class="modal-body" style="padding: 1.25rem 1.4rem; max-height: calc(85vh - 140px); overflow-y: auto;">
         
-        <!-- ABAS DE NAVEGAÇÃO ENTRE OS DOIS ESTADOS DO CONFRONTO -->
-        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.15rem; background: #f1f5f9; padding: 0.35rem; border-radius: var(--radius-md); border: 1px solid #e2e8f0;">
-          <button type="button" 
-                  onclick="window.openMatchLineupModal('${game.code}', '${categoryId}', 'A')"
-                  style="flex: 1; padding: 0.55rem 0.85rem; border-radius: 6px; font-weight: 800; font-size: 0.82rem; cursor: pointer; transition: all 0.15s ease; border: ${currentSlot === 'A' ? '2px solid #028090' : '1px solid transparent'}; background: ${currentSlot === 'A' ? '#ffffff' : 'transparent'}; color: ${currentSlot === 'A' ? '#004b57' : '#64748b'}; box-shadow: ${currentSlot === 'A' ? '0 2px 4px rgba(0,0,0,0.06)' : 'none'}; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-            <img src="assets/federations/${(teamA.id || '').toLowerCase()}.jpg" alt="${teamA.uf}" style="width: 24px; height: 17px; object-fit: contain; border-radius: 2px;" onerror="this.src='assets/logo.jpg'">
-            <span>${teamA.uf} - ${teamA.nome}</span>
-            ${(esc.feminino?.lado_a?.length >= 2 && esc.masculino?.lado_a?.length >= 2) ? '<span style="color: #10b981; font-weight: 900;">✓</span>' : '<span style="color: #94a3b8; font-size: 0.72rem; font-weight: 600;">(Pendente)</span>'}
-          </button>
-          
-          <button type="button" 
-                  onclick="window.openMatchLineupModal('${game.code}', '${categoryId}', 'B')"
-                  style="flex: 1; padding: 0.55rem 0.85rem; border-radius: 6px; font-weight: 800; font-size: 0.82rem; cursor: pointer; transition: all 0.15s ease; border: ${currentSlot === 'B' ? '2px solid #028090' : '1px solid transparent'}; background: ${currentSlot === 'B' ? '#ffffff' : 'transparent'}; color: ${currentSlot === 'B' ? '#004b57' : '#64748b'}; box-shadow: ${currentSlot === 'B' ? '0 2px 4px rgba(0,0,0,0.06)' : 'none'}; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-            <img src="assets/federations/${(teamB.id || '').toLowerCase()}.jpg" alt="${teamB.uf}" style="width: 24px; height: 17px; object-fit: contain; border-radius: 2px;" onerror="this.src='assets/logo.jpg'">
-            <span>${teamB.uf} - ${teamB.nome}</span>
-            ${(esc.feminino?.lado_b?.length >= 2 && esc.masculino?.lado_b?.length >= 2) ? '<span style="color: #10b981; font-weight: 900;">✓</span>' : '<span style="color: #94a3b8; font-size: 0.72rem; font-weight: 600;">(Pendente)</span>'}
-          </button>
-        </div>
-
         <!-- BANNERS DE STATUS -->
         ${isReadOnlyGuest ? `
           <div style="background: #f1f5f9; border: 1.5px solid #cbd5e1; border-radius: var(--radius-md); padding: 0.85rem 1.15rem; margin-bottom: 1.15rem; display: flex; align-items: center; gap: 0.75rem;">

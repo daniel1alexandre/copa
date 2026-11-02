@@ -192,13 +192,6 @@ export function renderTeamsAthletes() {
               </span>
               representando ${currentFed.nome} na Copa das Federações 2026 CBT.
             </div>
-            ${stateCaptains.length > 0 ? `
-              <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-                <span style="font-size: 0.76rem; font-weight: 900; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #78350f; border: 1.5px solid #d97706; padding: 0.25rem 0.75rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 5px rgba(217, 119, 6, 0.25);">
-                  👑 CAPITÃO CONVOCADO: <strong>${stateCaptains.map(c => c.nome).join(' • ')}</strong>
-                </span>
-              </div>
-            ` : ''}
           </div>
         </div>
 
