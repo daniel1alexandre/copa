@@ -16,6 +16,9 @@ export function calculateCategorySeeds(categoryId) {
 export function initSeedView() {
   window.selectSeedCategoryTab = (catId) => {
     selectedCategory = catId;
+    if (catId && catId !== 'todas') {
+      window.selectedTournamentCategory = catId;
+    }
     renderSeedView();
   };
 
@@ -33,6 +36,9 @@ export function initSeedView() {
         });
       }
       return;
+    }
+    if (catId && catId !== 'todas') {
+      window.selectedTournamentCategory = catId;
     }
     store.setCategoryDrawnSeed(catId, slotIndex, fedId || null);
     renderSeedView();

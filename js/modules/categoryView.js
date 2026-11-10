@@ -7,6 +7,7 @@ let selectedCategoryId = 'prof';
 export function initCategoryView() {
   window.selectCategoryTab = (catId) => {
     selectedCategoryId = catId;
+    window.selectedTournamentCategory = catId;
     if (typeof window.switchBracketCategory === 'function') {
       window.switchBracketCategory(catId);
     }
@@ -21,40 +22,15 @@ export function initCategoryView() {
     }
 
     const participatingFeds = store.getCategoryParticipatingFeds(selectedCategoryId);
-    const numByes = Math.max(0, 32 - participatingFeds.length);
     const validPartIds = participatingFeds.map(f => f.id);
 
-    let byes = [...store.getCategoryByes(selectedCategoryId)];
-    while (byes.length < numByes) byes.push(null);
-    byes = byes.slice(0, numByes);
-
-    if (fedId) {
-      if (!validPartIds.includes(fedId)) {
-        alert('O estado selecionado precisa estar na lista de participantes desta categoria.');
-        return;
-      }
-      // Se já estava em outro slot, limpa do slot anterior
-      const existingIndex = byes.indexOf(fedId);
-      if (existingIndex !== -1 && existingIndex !== slotIndex) {
-        byes[existingIndex] = null;
-      }
-      byes[slotIndex] = fedId;
-    } else {
-      byes[slotIndex] = null;
+    if (fedId && !validPartIds.includes(fedId)) {
+      alert('O estado selecionado precisa estar na lista de participantes desta categoria.');
+      return;
     }
 
-    // Se o slot alterado corresponder a uma vaga de sorteio (slotIndex + 1 > headCount e <= 6),
-    // sincroniza também no drawnSeeds da categoria
-    const rankedList = store.calculateCategorySeeds(selectedCategoryId);
-    const completeList = rankedList.filter(item => item.isComplete);
-    const headCount = Math.min(6, completeList.length);
     const slotPos = slotIndex + 1;
-    if (slotPos > headCount && slotPos <= 6) {
-      store.setCategoryDrawnSeed(selectedCategoryId, slotPos, fedId || null);
-    } else {
-      store.setCategoryByes(selectedCategoryId, byes, true);
-    }
-
+    store.setCategoryDrawnSeed(selectedCategoryId, slotPos, fedId || null);
     renderCategoryView();
   };
 
@@ -65,19 +41,11 @@ export function initCategoryView() {
       return;
     }
 
-    const byes = [...store.getCategoryByes(selectedCategoryId)];
+    const byes = store.getCategoryByes(selectedCategoryId);
     const idx = byes.indexOf(fedId);
     if (idx !== -1) {
-      byes[idx] = null;
-
-      // Se for vaga de sorteio, limpa também de drawnSeeds
       const slotPos = idx + 1;
-      const drawn = store.getCategoryDrawnSeeds(selectedCategoryId);
-      if (drawn[slotPos] === fedId) {
-        store.setCategoryDrawnSeed(selectedCategoryId, slotPos, null);
-      } else {
-        store.setCategoryByes(selectedCategoryId, byes, true);
-      }
+      store.setCategoryDrawnSeed(selectedCategoryId, slotPos, null);
 
       const fed = store.getFederations().find(f => f.id === fedId);
       toast.show({
@@ -99,11 +67,12 @@ export function initCategoryView() {
 
     const participatingFeds = store.getCategoryParticipatingFeds(selectedCategoryId);
     const numByes = Math.max(0, 32 - participatingFeds.length);
-    const byes = [...store.getCategoryByes(selectedCategoryId)];
+    const byes = store.getCategoryByes(selectedCategoryId);
 
     if (byes.includes(fedId)) return;
 
-    if (byes.length >= numByes) {
+    const firstEmptyIndex = byes.findIndex(b => !b);
+    if (firstEmptyIndex === -1 && byes.length >= numByes) {
       toast.show({
         title: 'Todas as Vagas Preenchidas',
         message: `Todas as ${numByes} vagas de BYE desta categoria já estão ocupadas. Clique no check (✓) de um estado para desmarcar e liberar vaga.`,
@@ -113,12 +82,13 @@ export function initCategoryView() {
       return;
     }
 
-    byes.push(fedId);
-    store.setCategoryByes(selectedCategoryId, byes);
+    const targetIndex = firstEmptyIndex !== -1 ? firstEmptyIndex : byes.length;
+    const slotPos = targetIndex + 1;
+    store.setCategoryDrawnSeed(selectedCategoryId, slotPos, fedId);
     const fed = store.getFederations().find(f => f.id === fedId);
     toast.show({
       title: 'BYE Definido',
-      message: `${fed?.nome || fedId} alocado como ${byes.length}º Ranking (Passa de BYE)!`,
+      message: `${fed?.nome || fedId} alocado como ${slotPos}º Ranking (Passa de BYE)!`,
       type: 'success',
       duration: 2500
     });
@@ -160,7 +130,7 @@ export function initCategoryView() {
       return;
     }
 
-    store.setCategoryByes(selectedCategoryId, []);
+    store.clearCategoryByes(selectedCategoryId);
     toast.show({
       title: 'BYEs e Confrontos Limpos',
       message: 'Todas as vagas de BYE e estados selecionados no menu Confrontos foram limpos.',
@@ -311,6 +281,10 @@ export function renderCategoryView() {
   const container = document.getElementById('view-categorias');
   if (!container) return;
 
+  if (window.selectedTournamentCategory && window.selectedTournamentCategory !== 'todas') {
+    selectedCategoryId = window.selectedTournamentCategory;
+  }
+
   const categories = store.getCategories();
   const currentCat = categories.find(c => c.id === selectedCategoryId) || categories[0];
   const allFeds = [...store.getFederations()].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
@@ -319,10 +293,7 @@ export function renderCategoryView() {
   const totalPart = participatingFeds.length;
   const numByes = Math.max(0, 32 - totalPart);
   const realMatches = Math.max(0, totalPart - 16);
-  let byesList = store.getCategoryByes(currentCat.id);
-  if (numByes > 0 && (!byesList || byesList.length === 0 || byesList.every(b => !b))) {
-    byesList = store.syncCategoryByesFromSeeds(currentCat.id, false);
-  }
+  const byesList = store.getCategoryByes(currentCat.id);
   window.filterCategoryByeList = () => {
     const input = document.getElementById('cat-bye-state-filter');
     const term = (input?.value || '').toLowerCase().trim();

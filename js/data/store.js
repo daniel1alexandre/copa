@@ -608,51 +608,99 @@ class AppStore {
     return list;
   }
 
-  syncCategoryByesFromSeeds(categoryId, updateBracket = true) {
-    const participatingFeds = this.getCategoryParticipatingFeds(categoryId);
-    const numByes = Math.max(0, 32 - participatingFeds.length);
-    if (numByes === 0) {
-      this.setCategoryByes(categoryId, [], updateBracket);
-      return [];
-    }
-
-    const currentByes = Array.isArray(this.state.categoryByes?.[categoryId])
-      ? [...this.state.categoryByes[categoryId]]
-      : [];
-    while (currentByes.length < numByes) currentByes.push(null);
-
+  getCategorySeeds(categoryId) {
+    const feds = this.getCategoryParticipatingFeds(categoryId);
+    const numByes = Math.max(0, 32 - feds.length);
     const rankedList = this.calculateCategorySeeds(categoryId);
-    const completeList = rankedList.filter(item => item.isComplete && participatingFeds.some(f => f.id === item.id));
+    const completeList = rankedList.filter(item => item.isComplete && feds.some(f => f.id === item.id));
     const headCount = Math.min(6, completeList.length);
     const topHeads = completeList.slice(0, headCount);
     const drawnSeeds = this.getCategoryDrawnSeeds(categoryId);
+    const partIds = feds.map(f => f.id);
 
-    const partIds = participatingFeds.map(f => f.id);
-    const newByes = Array(numByes).fill(null);
+    const maxSlots = Math.max(6, numByes, completeList.length);
+    const seeds = [];
     const usedIds = new Set();
 
-    for (let i = 0; i < numByes; i++) {
-      const pos = i + 1;
+    for (let pos = 1; pos <= maxSlots; pos++) {
       let targetFedId = null;
 
-      if (pos <= headCount) {
+      // 1. Se foi definido/alterado manualmente para este slot
+      if (drawnSeeds[pos]) {
+        targetFedId = drawnSeeds[pos];
+      } else if (pos <= headCount) {
+        // 2. Se for vaga oficial CBT
         targetFedId = topHeads[pos - 1]?.id || null;
-      } else if (pos <= 6) {
-        targetFedId = drawnSeeds[pos] || currentByes[i] || null;
-      } else {
-        targetFedId = completeList[pos - 1]?.id || drawnSeeds[pos] || currentByes[i] || null;
+      } else if (pos <= completeList.length) {
+        targetFedId = completeList[pos - 1]?.id || null;
       }
 
       if (targetFedId && partIds.includes(targetFedId) && !usedIds.has(targetFedId)) {
-        newByes[i] = targetFedId;
+        seeds.push(targetFedId);
         usedIds.add(targetFedId);
       } else {
-        newByes[i] = null;
+        seeds.push(null);
       }
     }
 
-    this.setCategoryByes(categoryId, newByes, updateBracket);
-    return newByes;
+    return seeds;
+  }
+
+  getCategoryByes(categoryId) {
+    const feds = this.getCategoryParticipatingFeds(categoryId);
+    const numByes = Math.max(0, 32 - feds.length);
+    if (numByes === 0) return [];
+
+    if (this.state.categoryByesCleared && this.state.categoryByesCleared[categoryId]) {
+      return [];
+    }
+
+    const seeds = this.getCategorySeeds(categoryId);
+    const byes = seeds.slice(0, numByes);
+    while (byes.length < numByes) {
+      byes.push(null);
+    }
+    return byes;
+  }
+
+  syncCategoryByesFromSeeds(categoryId, updateBracket = true) {
+    if (this.state.categoryByesCleared) {
+      delete this.state.categoryByesCleared[categoryId];
+    }
+
+    const byes = this.getCategoryByes(categoryId);
+    if (!this.state.categoryByes) {
+      this.state.categoryByes = {};
+    }
+    this.state.categoryByes[categoryId] = byes;
+
+    if (updateBracket) {
+      const feds = this.getCategoryParticipatingFeds(categoryId);
+      this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byes);
+      this.save(true, `BYEs da categoria ${categoryId} atualizados`);
+    }
+    return byes;
+  }
+
+  clearCategoryByes(categoryId) {
+    if (!this.state.categoryByesCleared) {
+      this.state.categoryByesCleared = {};
+    }
+    this.state.categoryByesCleared[categoryId] = true;
+
+    if (!this.state.categoryByes) {
+      this.state.categoryByes = {};
+    }
+    this.state.categoryByes[categoryId] = [];
+
+    if (this.state.categoryDrawnSeeds && this.state.categoryDrawnSeeds[categoryId]) {
+      this.state.categoryDrawnSeeds[categoryId] = {};
+    }
+
+    const feds = this.getCategoryParticipatingFeds(categoryId);
+    this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, []);
+    this.save(true, `BYEs e confrontos da categoria ${categoryId} limpos`);
+    return [];
   }
 
   setCategoryParticipatingFeds(categoryId, fedIds) {
@@ -661,30 +709,52 @@ class AppStore {
     }
     this.state.categoryParticipants[categoryId] = fedIds;
     
+    if (this.state.categoryByesCleared) {
+      delete this.state.categoryByesCleared[categoryId];
+    }
+
     // Sincroniza os BYEs com os cabeças de chave respeitando a nova quantidade de BYEs
     this.syncCategoryByesFromSeeds(categoryId, true);
     return this.getCategoryParticipatingFeds(categoryId);
-  }
-
-  getCategoryByes(categoryId) {
-    if (!this.state.categoryByes) {
-      this.state.categoryByes = {};
-    }
-    return this.state.categoryByes[categoryId] || [];
   }
 
   setCategoryByes(categoryId, byeFedIds, updateBracket = true) {
     if (!this.state.categoryByes) {
       this.state.categoryByes = {};
     }
+
+    if (!byeFedIds || byeFedIds.length === 0) {
+      return this.clearCategoryByes(categoryId);
+    }
+
+    if (this.state.categoryByesCleared) {
+      delete this.state.categoryByesCleared[categoryId];
+    }
+
     this.state.categoryByes[categoryId] = byeFedIds;
+
+    // Sincroniza também no categoryDrawnSeeds para que qualquer alteração de slot reflita nos Cabeças de Chave
+    if (!this.state.categoryDrawnSeeds) {
+      this.state.categoryDrawnSeeds = {};
+    }
+    if (!this.state.categoryDrawnSeeds[categoryId]) {
+      this.state.categoryDrawnSeeds[categoryId] = {};
+    }
+    if (Array.isArray(byeFedIds)) {
+      byeFedIds.forEach((fedId, idx) => {
+        const slotPos = idx + 1;
+        if (fedId) {
+          this.state.categoryDrawnSeeds[categoryId][slotPos] = fedId;
+        } else {
+          delete this.state.categoryDrawnSeeds[categoryId][slotPos];
+        }
+      });
+    }
     
     if (updateBracket) {
       const feds = this.getCategoryParticipatingFeds(categoryId);
       this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byeFedIds);
-      const actionSummary = (byeFedIds && byeFedIds.length > 0)
-        ? `BYEs da categoria ${categoryId} atualizados`
-        : `BYEs e estados dos confrontos da categoria ${categoryId} limpos`;
+      const actionSummary = `BYEs da categoria ${categoryId} atualizados`;
       this.save(true, actionSummary);
     }
   }
@@ -697,20 +767,45 @@ class AppStore {
   }
 
   setCategoryDrawnSeed(categoryId, slotIndex, fedId) {
+    if (this.state.categoryByesCleared) {
+      delete this.state.categoryByesCleared[categoryId];
+    }
+
     if (!this.state.categoryDrawnSeeds) {
       this.state.categoryDrawnSeeds = {};
     }
     if (!this.state.categoryDrawnSeeds[categoryId]) {
       this.state.categoryDrawnSeeds[categoryId] = {};
     }
+
     if (fedId) {
+      // Se já estava em outro slot nesta categoria, remove do slot anterior para não duplicar
+      Object.keys(this.state.categoryDrawnSeeds[categoryId]).forEach(key => {
+        if (Number(key) !== Number(slotIndex) && this.state.categoryDrawnSeeds[categoryId][key] === fedId) {
+          delete this.state.categoryDrawnSeeds[categoryId][key];
+        }
+      });
       this.state.categoryDrawnSeeds[categoryId][slotIndex] = fedId;
     } else {
       delete this.state.categoryDrawnSeeds[categoryId][slotIndex];
     }
     
-    // Atualiza imediatamente os BYEs para que o estado sorteado assuma sua devida posição no Menu Categorias
-    this.syncCategoryByesFromSeeds(categoryId, true);
+    // Atualiza imediatamente os BYEs e o chaveamento
+    const byes = this.getCategoryByes(categoryId);
+    if (!this.state.categoryByes) {
+      this.state.categoryByes = {};
+    }
+    this.state.categoryByes[categoryId] = byes;
+
+    const feds = this.getCategoryParticipatingFeds(categoryId);
+    this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byes);
+
+    const actionSummary = fedId
+      ? `Cabeça de chave #${slotIndex} da categoria ${categoryId} definido como ${fedId}`
+      : `Vaga #${slotIndex} de cabeça de chave da categoria ${categoryId} liberada`;
+
+    this.save(true, actionSummary);
+    return byes;
   }
 
   getGames(categoryId = 'prof') {

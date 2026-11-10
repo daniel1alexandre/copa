@@ -15,6 +15,9 @@ export function initBracketView() {
 
   window.switchBracketCategory = (catId) => {
     currentCategory = catId;
+    if (catId) {
+      window.selectedTournamentCategory = catId;
+    }
     renderBracket();
   };
 
