@@ -2,17 +2,18 @@
 const STANDARD_BYE_SLOTS_32 = [1, 30, 9, 22, 17, 14, 25, 6, 19, 11, 27, 3, 29, 5, 21, 13];
 
 export function createGraphBracket(federations, categoryId, categoryByes = []) {
-  // Separar as federações escolhidas para passar de BYE (respeitando a ordem de seleção)
-  const byeFeds = [];
-  if (Array.isArray(categoryByes)) {
-    categoryByes.forEach(byeId => {
-      const fed = federations.find(f => f.id === byeId);
-      if (fed) byeFeds.push(fed);
-    });
-  }
-
   // Quantidade de BYEs = 32 - N (onde N é o total de equipes participantes)
   const numByes = Math.max(0, 32 - federations.length);
+
+  // Separar as federações escolhidas para passar de BYE (respeitando rigorosamente a ordem de ranking e slots)
+  const byeFeds = [];
+  if (Array.isArray(categoryByes)) {
+    for (let i = 0; i < numByes; i++) {
+      const byeId = categoryByes[i];
+      const fed = byeId ? federations.find(f => f.id === byeId) : null;
+      byeFeds.push(fed || null);
+    }
+  }
 
   const byeSlots = STANDARD_BYE_SLOTS_32.slice(0, numByes);
   
@@ -30,7 +31,7 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
   // Os demais slots ficam VAZIOS (null) para preenchimento manual pelo usuário
   for (let i = 0; i < numByes; i++) {
     const oppSlot = byeOpponentSlots[i];
-    if (i < byeFeds.length) {
+    if (i < byeFeds.length && byeFeds[i]) {
       bracketSlots[oppSlot] = byeFeds[i];
     }
     // Se não houver federação atribuída a este BYE, o slot oponente fica null (aguardando)

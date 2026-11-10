@@ -33,19 +33,28 @@ export function initCategoryView() {
         alert('O estado selecionado precisa estar na lista de participantes desta categoria.');
         return;
       }
-      // Se já estava em outro slot, faz swap com o slot atual
+      // Se já estava em outro slot, limpa do slot anterior
       const existingIndex = byes.indexOf(fedId);
       if (existingIndex !== -1 && existingIndex !== slotIndex) {
-        byes[existingIndex] = byes[slotIndex] || null;
+        byes[existingIndex] = null;
       }
       byes[slotIndex] = fedId;
     } else {
       byes[slotIndex] = null;
     }
 
-    // Filtra nulos e salva
-    const cleanByes = byes.filter(id => id && validPartIds.includes(id));
-    store.setCategoryByes(selectedCategoryId, cleanByes);
+    // Se o slot alterado corresponder a uma vaga de sorteio (slotIndex + 1 > headCount e <= 6),
+    // sincroniza também no drawnSeeds da categoria
+    const rankedList = store.calculateCategorySeeds(selectedCategoryId);
+    const completeList = rankedList.filter(item => item.isComplete);
+    const headCount = Math.min(6, completeList.length);
+    const slotPos = slotIndex + 1;
+    if (slotPos > headCount && slotPos <= 6) {
+      store.setCategoryDrawnSeed(selectedCategoryId, slotPos, fedId || null);
+    } else {
+      store.setCategoryByes(selectedCategoryId, byes, true);
+    }
+
     renderCategoryView();
   };
 
@@ -59,12 +68,21 @@ export function initCategoryView() {
     const byes = [...store.getCategoryByes(selectedCategoryId)];
     const idx = byes.indexOf(fedId);
     if (idx !== -1) {
-      byes.splice(idx, 1);
-      store.setCategoryByes(selectedCategoryId, byes);
+      byes[idx] = null;
+
+      // Se for vaga de sorteio, limpa também de drawnSeeds
+      const slotPos = idx + 1;
+      const drawn = store.getCategoryDrawnSeeds(selectedCategoryId);
+      if (drawn[slotPos] === fedId) {
+        store.setCategoryDrawnSeed(selectedCategoryId, slotPos, null);
+      } else {
+        store.setCategoryByes(selectedCategoryId, byes, true);
+      }
+
       const fed = store.getFederations().find(f => f.id === fedId);
       toast.show({
-        title: 'Estado Habilitado',
-        message: `${fed?.nome || fedId} desmarcado do BYE e reabilitado para seleção!`,
+        title: 'Estado Desmarcado',
+        message: `${fed?.nome || fedId} desmarcado da vaga de BYE.`,
         type: 'info',
         duration: 2500
       });
@@ -107,7 +125,7 @@ export function initCategoryView() {
     renderCategoryView();
   };
 
-  // Preenchimento automático com base nos melhores rankings/seeds
+  // Preenchimento automático com base nos melhores rankings/seeds (Cabeças de Chave oficiais e sorteados)
   window.handleAutoFillSeeds = () => {
     if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
       toast.show({ title: 'Acesso Restrito', message: 'Apenas administradores podem preencher BYEs.', type: 'error' });
@@ -125,18 +143,11 @@ export function initCategoryView() {
       return;
     }
 
-    const sorted = [...feds].sort((a, b) => {
-      if (a.seed && b.seed) return a.seed - b.seed;
-      if (a.seed) return -1;
-      if (b.seed) return 1;
-      return a.nome.localeCompare(b.nome);
-    });
-
-    const autoByes = sorted.slice(0, numByes).map(f => f.id);
-    store.setCategoryByes(selectedCategoryId, autoByes);
+    const autoByes = store.syncCategoryByesFromSeeds(selectedCategoryId, true);
+    const filledCount = autoByes.filter(Boolean).length;
     toast.show({
-      title: 'BYEs Preenchidos!',
-      message: `${autoByes.length} vagas de BYE preenchidas por ordem de Ranking/Seed.`,
+      title: 'Cabeças de Chave Sincronizados!',
+      message: `${filledCount} vagas de BYE preenchidas com os Cabeças de Chave oficiais e sorteados da categoria (respeitando o limite de ${numByes} BYEs).`,
       type: 'success'
     });
     renderCategoryView();
@@ -308,7 +319,10 @@ export function renderCategoryView() {
   const totalPart = participatingFeds.length;
   const numByes = Math.max(0, 32 - totalPart);
   const realMatches = Math.max(0, totalPart - 16);
-  const byesList = store.getCategoryByes(currentCat.id);
+  let byesList = store.getCategoryByes(currentCat.id);
+  if (numByes > 0 && (!byesList || byesList.length === 0 || byesList.every(b => !b))) {
+    byesList = store.syncCategoryByesFromSeeds(currentCat.id, false);
+  }
   window.filterCategoryByeList = () => {
     const input = document.getElementById('cat-bye-state-filter');
     const term = (input?.value || '').toLowerCase().trim();
@@ -495,16 +509,24 @@ export function renderCategoryView() {
                 const selectedFedId = byesList[idx] || '';
                 const selectedFed = participatingFeds.find(f => f.id === selectedFedId);
 
+                const rankedList = store.calculateCategorySeeds(currentCat.id);
+                const completeList = rankedList.filter(item => item.isComplete);
+                const headCount = Math.min(6, completeList.length);
+                const isOfficialSeed = rankNum <= headCount;
+                const isDrawnSlot = rankNum > headCount && rankNum <= 6;
+                const drawnSeeds = store.getCategoryDrawnSeeds(currentCat.id);
+                const isDrawnSelected = isDrawnSlot && Boolean(drawnSeeds[rankNum]);
+
                 return `
                   <div class="bye-slot-card" style="border: 2px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background: ${selectedFed ? '#f0fdfa' : '#f8fafc'}; border-radius: var(--radius-md); padding: 0.85rem 1rem; box-shadow: var(--shadow-sm); transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between;">
                     
                     <div>
                       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
-                        <span style="background: ${selectedFed ? '#0f766e' : '#475569'}; color: white; font-weight: 800; font-size: 0.85rem; padding: 0.2rem 0.65rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
-                          🎖️ ${rankLabel} Ranking ${rankNum <= 4 ? `(Cabeça ${rankNum})` : ''}
+                        <span style="background: ${isOfficialSeed ? '#028090' : (selectedFed ? '#0f766e' : '#475569')}; color: white; font-weight: 800; font-size: 0.82rem; padding: 0.2rem 0.65rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
+                          ${isOfficialSeed ? `👑 ${rankLabel} Ranking (Cabeça ${rankNum})` : (isDrawnSlot ? `🎲 ${rankLabel} Ranking (Cabeça ${rankNum})` : `🎖️ ${rankLabel} Ranking`)}
                         </span>
                         <span style="font-size: 0.72rem; font-weight: 800; color: ${selectedFed ? '#047857' : '#94a3b8'}; background: ${selectedFed ? '#ecfdf5' : '#f1f5f9'}; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
-                          ${selectedFed ? '✅ Vaga Definida' : '⚪ Vaga Aberta'}
+                          ${selectedFed ? (isOfficialSeed ? '👑 Oficial CBT' : (isDrawnSelected ? '🎲 Sorteado' : '✅ Vaga Definida')) : '⚪ Vaga Aberta'}
                         </span>
                       </div>
 

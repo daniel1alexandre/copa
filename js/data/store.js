@@ -26,6 +26,24 @@ class AppStore {
     }
 
     this.state = this.loadState();
+    this.initializeCategoryByes();
+  }
+
+  initializeCategoryByes() {
+    try {
+      if (Array.isArray(this.state?.categories)) {
+        this.state.categories.forEach(cat => {
+          const byes = this.getCategoryByes(cat.id);
+          const feds = this.getCategoryParticipatingFeds(cat.id);
+          const nByes = Math.max(0, 32 - feds.length);
+          if (nByes > 0 && (!byes || byes.length === 0 || byes.every(b => !b))) {
+            this.syncCategoryByesFromSeeds(cat.id, false);
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('Erro ao inicializar BYEs das categorias:', e);
+    }
   }
 
   loadState() {
@@ -512,24 +530,140 @@ class AppStore {
     return [...this.state.federations].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
   }
 
+  calculateCategorySeeds(categoryId) {
+    const feds = this.getFederations();
+    const allAthletes = this.getAthletes();
+    const catAthletes = allAthletes.filter(a => a.categorias && a.categorias.includes(categoryId));
+
+    const getRankNumber = (ath) => {
+      if (!ath || !ath.ranking) return null;
+      const n = parseInt(String(ath.ranking).replace(/\D/g, ''), 10);
+      return isNaN(n) ? null : n;
+    };
+
+    const list = feds.map(fed => {
+      const aths = catAthletes.filter(a => a.uf === fed.uf || a.equipe_id === fed.id);
+      const fem = aths.filter(a => a.genero === 'Feminino');
+      const masc = aths.filter(a => a.genero === 'Masculino');
+
+      const femRanked = fem.filter(a => getRankNumber(a) !== null).sort((a, b) => getRankNumber(a) - getRankNumber(b));
+      const mascRanked = masc.filter(a => getRankNumber(a) !== null).sort((a, b) => getRankNumber(a) - getRankNumber(b));
+
+      const femUnranked = fem.filter(a => getRankNumber(a) === null);
+      const mascUnranked = masc.filter(a => getRankNumber(a) === null);
+
+      const has2Fem = femRanked.length >= 2;
+      const has2Masc = mascRanked.length >= 2;
+      const isComplete = has2Fem && has2Masc;
+
+      let somaRankings = null;
+      if (isComplete) {
+        somaRankings = getRankNumber(femRanked[0]) + getRankNumber(femRanked[1]) + getRankNumber(mascRanked[0]) + getRankNumber(mascRanked[1]);
+      }
+
+      const seedAnoAnterior = fed.seed || 999;
+      return {
+        id: fed.id,
+        uf: fed.uf,
+        nome: fed.nome,
+        sigla: fed.sigla,
+        imagem: fed.imagem || `assets/federations/${fed.id}.png`,
+        cor: fed.cor || '#028090',
+        totalAtletas: aths.length,
+        femTotal: fem.length,
+        mascTotal: masc.length,
+        femRankedCount: femRanked.length,
+        mascRankedCount: mascRanked.length,
+        isComplete,
+        has2Fem,
+        has2Masc,
+        somaRankings,
+        seedAnoAnterior,
+        fem1: femRanked[0] || femUnranked[0] || null,
+        fem2: femRanked[1] || femUnranked[1] || null,
+        masc1: mascRanked[0] || mascUnranked[0] || null,
+        masc2: mascRanked[1] || mascUnranked[1] || null,
+        totalRanked: femRanked.length + mascRanked.length
+      };
+    });
+
+    list.sort((a, b) => {
+      if (a.isComplete && !b.isComplete) return -1;
+      if (!a.isComplete && b.isComplete) return 1;
+      if (a.isComplete && b.isComplete) {
+        if (a.somaRankings !== b.somaRankings) {
+          return a.somaRankings - b.somaRankings;
+        }
+        return a.seedAnoAnterior - b.seedAnoAnterior;
+      }
+      if (a.totalRanked !== b.totalRanked) {
+        return b.totalRanked - a.totalRanked;
+      }
+      if (a.seedAnoAnterior !== b.seedAnoAnterior) {
+        return a.seedAnoAnterior - b.seedAnoAnterior;
+      }
+      return a.nome.localeCompare(b.nome, 'pt-BR');
+    });
+
+    return list;
+  }
+
+  syncCategoryByesFromSeeds(categoryId, updateBracket = true) {
+    const participatingFeds = this.getCategoryParticipatingFeds(categoryId);
+    const numByes = Math.max(0, 32 - participatingFeds.length);
+    if (numByes === 0) {
+      this.setCategoryByes(categoryId, [], updateBracket);
+      return [];
+    }
+
+    const currentByes = Array.isArray(this.state.categoryByes?.[categoryId])
+      ? [...this.state.categoryByes[categoryId]]
+      : [];
+    while (currentByes.length < numByes) currentByes.push(null);
+
+    const rankedList = this.calculateCategorySeeds(categoryId);
+    const completeList = rankedList.filter(item => item.isComplete && participatingFeds.some(f => f.id === item.id));
+    const headCount = Math.min(6, completeList.length);
+    const topHeads = completeList.slice(0, headCount);
+    const drawnSeeds = this.getCategoryDrawnSeeds(categoryId);
+
+    const partIds = participatingFeds.map(f => f.id);
+    const newByes = Array(numByes).fill(null);
+    const usedIds = new Set();
+
+    for (let i = 0; i < numByes; i++) {
+      const pos = i + 1;
+      let targetFedId = null;
+
+      if (pos <= headCount) {
+        targetFedId = topHeads[pos - 1]?.id || null;
+      } else if (pos <= 6) {
+        targetFedId = drawnSeeds[pos] || currentByes[i] || null;
+      } else {
+        targetFedId = completeList[pos - 1]?.id || drawnSeeds[pos] || currentByes[i] || null;
+      }
+
+      if (targetFedId && partIds.includes(targetFedId) && !usedIds.has(targetFedId)) {
+        newByes[i] = targetFedId;
+        usedIds.add(targetFedId);
+      } else {
+        newByes[i] = null;
+      }
+    }
+
+    this.setCategoryByes(categoryId, newByes, updateBracket);
+    return newByes;
+  }
+
   setCategoryParticipatingFeds(categoryId, fedIds) {
     if (!this.state.categoryParticipants) {
       this.state.categoryParticipants = {};
     }
     this.state.categoryParticipants[categoryId] = fedIds;
     
-    const feds = this.getCategoryParticipatingFeds(categoryId);
-    const numByes = Math.max(0, 32 - fedIds.length);
-
-    // Validar os BYEs atuais para garantir que só tenham federações participantes
-    let byes = (this.getCategoryByes(categoryId) || []).filter(id => fedIds.includes(id));
-    byes = byes.slice(0, numByes);
-    this.setCategoryByes(categoryId, byes, false);
-    
-    // Gera o chaveamento colocando APENAS os estados de BYE; se não houver BYEs, a 1ª fase fica totalmente vazia
-    this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byes);
-    this.save();
-    return feds;
+    // Sincroniza os BYEs com os cabeças de chave respeitando a nova quantidade de BYEs
+    this.syncCategoryByesFromSeeds(categoryId, true);
+    return this.getCategoryParticipatingFeds(categoryId);
   }
 
   getCategoryByes(categoryId) {
@@ -574,7 +708,9 @@ class AppStore {
     } else {
       delete this.state.categoryDrawnSeeds[categoryId][slotIndex];
     }
-    this.save(true, `Vaga sorteada #${slotIndex} de cabeça de chave atualizada`);
+    
+    // Atualiza imediatamente os BYEs para que o estado sorteado assuma sua devida posição no Menu Categorias
+    this.syncCategoryByesFromSeeds(categoryId, true);
   }
 
   getGames(categoryId = 'prof') {
