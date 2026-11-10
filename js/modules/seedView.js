@@ -108,6 +108,29 @@ export function initSeedView() {
   window.handlePrintSeeds = () => {
     window.print();
   };
+
+  window.handleSelectDrawnSeed = (catId, slotIndex, fedId) => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      if (window.toast && typeof window.toast.show === 'function') {
+        window.toast.show({
+          title: 'Acesso Restrito',
+          message: 'Apenas administradores podem sortear ou selecionar estados para as vagas de cabeça de chave.',
+          type: 'warning'
+        });
+      }
+      return;
+    }
+    store.setCategoryDrawnSeed(catId, slotIndex, fedId || null);
+    renderSeedView();
+    if (window.toast && typeof window.toast.show === 'function') {
+      const fed = fedId ? store.getFederation(fedId) : null;
+      window.toast.show({
+        title: 'Vaga Atualizada',
+        message: fed ? `${fed.nome} (${fed.uf}) selecionado para a vaga #${slotIndex} de Cabeça de Chave.` : `Vaga #${slotIndex} liberada para sorteio.`,
+        type: 'success'
+      });
+    }
+  };
 }
 
 export function renderSeedView() {
@@ -201,11 +224,18 @@ function renderOverviewAllCategories(categories) {
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px;">
   `;
 
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
+
   categories.forEach(cat => {
     const rankedList = calculateCategorySeeds(cat.id);
     const completeList = rankedList.filter(item => item.isComplete);
     const headCount = Math.min(6, completeList.length);
     const topHeads = completeList.slice(0, headCount);
+    const drawnSeeds = store.getCategoryDrawnSeeds(cat.id);
+    const participatingFeds = store.getCategoryParticipatingFeds(cat.id);
+
+    // Estados que NÃO podem ser selecionados: os já definidos como cabeças de chave oficiais
+    const officialSeedIds = topHeads.map(h => h.id);
 
     html += `
       <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
@@ -217,7 +247,7 @@ function renderOverviewAllCategories(categories) {
               <span>🎾</span> ${cat.nome}
             </div>
             <div style="font-size: 11.5px; color: #94a3b8; margin-top: 2px;">
-              Top ${headCount} Cabeças de Chave (máx 6)
+              ${headCount === 6 ? '6 Cabeças de Chave Definidos' : `${headCount} Cabeça(s) CBT + ${6 - headCount} Vaga(s) para Sorteio`}
             </div>
           </div>
           <button 
@@ -277,15 +307,56 @@ function renderOverviewAllCategories(categories) {
 
     for (let i = headCount; i < 6; i++) {
       const pos = i + 1;
+      const selectedFedId = drawnSeeds[pos] || null;
+      const selectedFed = selectedFedId ? store.getFederation(selectedFedId) : null;
+
+      // Estados elegíveis para sorteio: exclui os cabeças oficiais e outros que já foram sorteados nesta categoria
+      const otherDrawnIds = Object.entries(drawnSeeds)
+        .filter(([k, v]) => Number(k) !== pos && v)
+        .map(([k, v]) => v);
+
+      const availableFeds = participatingFeds.filter(f => 
+        !officialSeedIds.includes(f.id) && !otherDrawnIds.includes(f.id)
+      ).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
       html += `
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: #fafafa; border-radius: 8px; border: 1px dashed #cbd5e1; opacity: 0.65;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 11px; font-weight: 800; color: #94a3b8; background: #f1f5f9; padding: 3px 8px; border-radius: 12px;">
-              ${pos}º
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; background: ${selectedFed ? '#f0fdf4' : '#fafafa'}; border-radius: 8px; border: 1px dashed ${selectedFed ? '#86efac' : '#cbd5e1'}; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+            <span style="font-size: 11px; font-weight: 800; color: ${selectedFed ? '#15803d' : '#94a3b8'}; background: ${selectedFed ? '#dcfce7' : '#f1f5f9'}; padding: 3px 8px; border-radius: 12px; white-space: nowrap;">
+              🎲 ${pos}º
             </span>
-            <span style="font-size: 12.5px; color: #64748b; font-style: italic;">
-              Vaga livre (Sorteio)
-            </span>
+            ${selectedFed ? `
+              <img src="${selectedFed.imagem || `assets/federations/${selectedFed.id}.png`}" alt="${selectedFed.uf}" style="width: 24px; height: 18px; object-fit: cover; border-radius: 3px; border: 1px solid #cbd5e1;" onerror="this.src='assets/federations/${selectedFed.id}.jpg'">
+              <div style="min-width: 0;">
+                <strong style="font-size: 13px; color: #166534;">${selectedFed.uf}</strong>
+                <span style="font-size: 11px; color: #15803d; margin-left: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100px; display: inline-block; vertical-align: bottom;">
+                  (Sorteado)
+                </span>
+              </div>
+            ` : `
+              <span style="font-size: 12px; color: #64748b; font-style: italic;">
+                Vaga aberta (Sorteio):
+              </span>
+            `}
+          </div>
+
+          <div style="text-align: right;">
+            ${isAdmin ? `
+              <select 
+                onchange="window.handleSelectDrawnSeed('${cat.id}', ${pos}, this.value)" 
+                style="font-size: 11.5px; font-weight: 700; padding: 4px 6px; border-radius: 6px; border: 1px solid ${selectedFed ? '#22c55e' : '#cbd5e1'}; background: #fff; color: #0f172a; max-width: 140px; cursor: pointer;">
+                <option value="">-- Sortear Estado --</option>
+                ${availableFeds.map(f => `
+                  <option value="${f.id}" ${selectedFedId === f.id ? 'selected' : ''}>
+                    ${f.uf} - ${f.nome}
+                  </option>
+                `).join('')}
+              </select>
+            ` : `
+              <span style="font-size: 11px; font-weight: 700; color: ${selectedFed ? '#166534' : '#64748b'};">
+                ${selectedFed ? `${selectedFed.uf} (Sorteado)` : 'Aguardando sorteio'}
+              </span>
+            `}
           </div>
         </div>
       `;
@@ -300,27 +371,42 @@ function renderOverviewAllCategories(categories) {
   html += `</div>`;
   return html;
 }
+
 // Visão Detalhada de uma Categoria
 function renderSingleCategoryDetailed(category) {
   const rankedList = calculateCategorySeeds(category.id);
-  const top6 = rankedList.slice(0, 6);
+  const completeList = rankedList.filter(item => item.isComplete);
+  const headCount = Math.min(6, completeList.length);
+  const topHeads = completeList.slice(0, headCount);
+  const drawnSeeds = store.getCategoryDrawnSeeds(category.id);
+  const participatingFeds = store.getCategoryParticipatingFeds(category.id);
+  const officialSeedIds = topHeads.map(h => h.id);
+  const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
 
   let html = `
     <!-- DESTAQUE DOS 6 PRIMEIROS ESTADOS (CARDS PODIUM/CABECAS DE CHAVE) -->
     <div style="margin-bottom: 30px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h2 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
-          <span>🏆</span> Os 6 Primeiros Estados Cabeças de Chave • ${category.nome}
-        </h2>
-        <span style="font-size: 12px; color: #64748b; font-weight: 600;">
-          Classificação Oficial Gerada por Algoritmo CBT
-        </span>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <div>
+          <h2 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
+            <span>🏆</span> Os 6 Primeiros Estados Cabeças de Chave • ${category.nome}
+          </h2>
+          <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
+            ${headCount === 6 ? '6 Cabeças de Chave definidos pelos critérios oficiais CBT' : `${headCount} definido(s) por critérios CBT + ${6 - headCount} vaga(s) em aberto para sorteio`}
+          </div>
+        </div>
+        ${headCount < 6 && isAdmin ? `
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 8px; display: flex; align-items: center; gap: 6px;">
+            <span>ℹ️</span> Selecione os estados sorteados nos cards abaixo (apenas estados que não são cabeças oficiais estão disponíveis).
+          </div>
+        ` : ''}
       </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
   `;
 
-  top6.forEach((item, idx) => {
+  // 1. CARDS DOS CABEÇAS DE CHAVE OFICIAIS (Equipes completas ranqueadas)
+  topHeads.forEach((item, idx) => {
     const pos = idx + 1;
     let rankTitle = `${pos}º Cabeça de Chave`;
     let cardBorder = '#e2e8f0';
@@ -392,15 +478,9 @@ function renderSingleCategoryDetailed(category) {
                 <span style="font-size: 12px; font-weight: 600; color: #64748b;">
                   Soma dos Rankings:
                 </span>
-                ${item.isComplete ? `
-                  <span style="font-size: 18px; font-weight: 900; color: #028090;">
-                    ${item.somaRankings} pts
-                  </span>
-                ` : `
-                  <span style="font-size: 13px; font-weight: 800; color: #dc2626; background: #fee2e2; padding: 2px 8px; border-radius: 6px;">
-                    0 (Incompleto)
-                  </span>
-                `}
+                <span style="font-size: 18px; font-weight: 900; color: #028090;">
+                  ${item.somaRankings} pts
+                </span>
               </div>
 
               <div style="margin-top: 6px; font-size: 11.5px; color: #475569; display: flex; justify-content: space-between;">
@@ -411,7 +491,6 @@ function renderSingleCategoryDetailed(category) {
 
             <!-- Detalhamento dos 4 Atletas da Soma -->
             <div style="font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
-              
               <!-- Feminino -->
               <div style="background: #fdf2f8; padding: 8px 10px; border-radius: 8px; border: 1px solid #fbcfe8;">
                 <div style="font-size: 11px; font-weight: 700; color: #db2777; margin-bottom: 4px; display: flex; justify-content: space-between;">
@@ -435,7 +514,6 @@ function renderSingleCategoryDetailed(category) {
                   <div>2º: ${masc2Label}</div>
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -444,21 +522,185 @@ function renderSingleCategoryDetailed(category) {
             <span style="color: #64748b;">
               Total inscritos: <strong>${item.totalAtletas}</strong> (${item.femTotal}F / ${item.mascTotal}M)
             </span>
-            ${item.isComplete ? `
-              <span style="color: #16a34a; font-weight: 700; display: flex; align-items: center; gap: 4px;">
-                ✓ Elegível CBT
-              </span>
-            ` : `
-              <span style="color: #dc2626; font-weight: 700; display: flex; align-items: center; gap: 4px;">
-                ⚠ Penalidade Art. III
-              </span>
-            `}
+            <span style="color: #16a34a; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+              ✓ Elegível CBT
+            </span>
           </div>
         </div>
 
       </div>
     `;
   });
+
+  // 2. CARDS DAS VAGAS EM ABERTO / SORTEIO (posições de headCount + 1 até 6)
+  for (let pos = headCount + 1; pos <= 6; pos++) {
+    const selectedFedId = drawnSeeds[pos] || null;
+    const selectedFed = selectedFedId ? store.getFederation(selectedFedId) : null;
+    const fedItem = selectedFed ? rankedList.find(r => r.id === selectedFed.id) : null;
+
+    const otherDrawnIds = Object.entries(drawnSeeds)
+      .filter(([k, v]) => Number(k) !== pos && v)
+      .map(([k, v]) => v);
+
+    const availableFeds = participatingFeds.filter(f => 
+      !officialSeedIds.includes(f.id) && !otherDrawnIds.includes(f.id)
+    ).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+
+    if (selectedFed) {
+      html += `
+        <div style="background: #fff; border: 2px solid #22c55e; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(34,197,94,0.12); display: flex; flex-direction: column;">
+          
+          <!-- Top Header do Card Sorteado -->
+          <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); padding: 14px 16px; border-bottom: 1px solid #bbf7d0; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 18px;">🎲</span>
+              <strong style="font-size: 14px; color: #166534;">${pos}º Cabeça de Chave (Sorteio)</strong>
+            </div>
+            <span style="background: #15803d; color: #fff; font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 12px;">
+              #${pos} • Sorteado
+            </span>
+          </div>
+
+          <!-- Dados do Estado Sorteado -->
+          <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+                <img src="${selectedFed.imagem || `assets/federations/${selectedFed.id}.png`}" alt="${selectedFed.uf}" style="width: 44px; height: 32px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.08);" onerror="this.src='assets/federations/${selectedFed.id}.jpg'">
+                <div>
+                  <div style="font-size: 18px; font-weight: 800; color: #0f172a;">
+                    ${selectedFed.uf} • ${selectedFed.sigla || selectedFed.uf}
+                  </div>
+                  <div style="font-size: 12px; color: #64748b; line-height: 1.3;">
+                    ${selectedFed.nome}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Box Explicativo do Sorteio -->
+              <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px; margin-bottom: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 12px; font-weight: 600; color: #166534;">Origem da Vaga:</span>
+                  <span style="font-size: 11px; font-weight: 800; color: #15803d; background: #dcfce7; padding: 2px 8px; border-radius: 6px;">
+                    Definido por Sorteio
+                  </span>
+                </div>
+                <div style="font-size: 11.5px; color: #166534; line-height: 1.4;">
+                  Vaga preenchida por sorteio entre as federações participantes não cabeças de chave oficiais.
+                </div>
+                ${fedItem ? `
+                  <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed #86efac; font-size: 11px; color: #374151; display: flex; justify-content: space-between;">
+                    <span>Total Inscritos: <strong>${fedItem.totalAtletas}</strong> (${fedItem.femTotal}F / ${fedItem.mascTotal}M)</span>
+                    <span>Ranqueados: <strong>${fedItem.totalRanked}</strong></span>
+                  </div>
+                ` : ''}
+              </div>
+
+              ${isAdmin ? `
+                <!-- Seletor de alteração para Admin -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+                  <label style="display: block; font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 6px;">
+                    🔄 Alterar Estado ou Liberar Vaga:
+                  </label>
+                  <div style="display: flex; gap: 6px;">
+                    <select 
+                      onchange="window.handleSelectDrawnSeed('${category.id}', ${pos}, this.value)"
+                      style="flex: 1; font-size: 12px; font-weight: 700; padding: 6px 8px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer;">
+                      <option value="">-- Liberar Vaga (Voltar para Sorteio) --</option>
+                      ${availableFeds.map(f => `
+                        <option value="${f.id}" ${selectedFedId === f.id ? 'selected' : ''}>
+                          ${f.uf} - ${f.nome}
+                        </option>
+                      `).join('')}
+                    </select>
+                    <button 
+                      onclick="window.handleSelectDrawnSeed('${category.id}', ${pos}, '')" 
+                      title="Liberar vaga"
+                      style="background: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; font-size: 11px; font-weight: 700; padding: 6px 10px; border-radius: 6px; cursor: pointer;">
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+              <span style="color: #15803d; font-weight: 700;">
+                ✓ Cabeça de Chave por Sorteio
+              </span>
+              <span style="color: #64748b;">
+                Posição #${pos}
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      html += `
+        <div style="background: #fafafa; border: 2px dashed #cbd5e1; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column;">
+          
+          <!-- Top Header do Card em Aberto -->
+          <div style="background: #f1f5f9; padding: 14px 16px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 18px;">🎲</span>
+              <strong style="font-size: 14px; color: #475569;">${pos}º Cabeça de Chave (Vaga em Aberto)</strong>
+            </div>
+            <span style="background: #94a3b8; color: #fff; font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 12px;">
+              #${pos} • Em Aberto
+            </span>
+          </div>
+
+          <!-- Dados da Vaga em Aberto -->
+          <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="text-align: center; padding: 14px 8px; color: #64748b;">
+                <div style="font-size: 32px; margin-bottom: 6px;">🎲</div>
+                <div style="font-size: 14px; font-weight: 800; color: #334155; margin-bottom: 4px;">
+                  Vaga em Aberto para Sorteio
+                </div>
+                <p style="font-size: 11.5px; color: #64748b; margin: 0 auto; max-width: 290px; line-height: 1.4;">
+                  Por haver menos de 6 equipes completas ranqueadas (Art. III), esta vaga #${pos} deve ser definida por sorteio da organização.
+                </p>
+              </div>
+
+              ${isAdmin ? `
+                <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px; margin-top: 8px;">
+                  <label style="display: block; font-size: 12px; font-weight: 800; color: #1e40af; margin-bottom: 6px;">
+                    🎯 Selecionar Federação Sorteada:
+                  </label>
+                  <select 
+                    onchange="window.handleSelectDrawnSeed('${category.id}', ${pos}, this.value)" 
+                    style="width: 100%; font-size: 12.5px; font-weight: 700; padding: 8px 10px; border-radius: 6px; border: 1px solid #3b82f6; background: #fff; color: #0f172a; cursor: pointer;">
+                    <option value="">-- Escolher Estado Sorteado --</option>
+                    ${availableFeds.map(f => `
+                      <option value="${f.id}">
+                        ${f.uf} - ${f.nome}
+                      </option>
+                    `).join('')}
+                  </select>
+                  <div style="font-size: 10.5px; color: #2563eb; margin-top: 6px;">
+                    * Estados que já são cabeças de chave oficiais ou sorteados não aparecem nesta lista.
+                  </div>
+                </div>
+              ` : `
+                <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 12px; text-align: center; color: #64748b; font-size: 12px; margin-top: 8px;">
+                  ⏳ Aguardando realização do sorteio oficial pela organização.
+                </div>
+              `}
+            </div>
+
+            <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+              <span style="color: #94a3b8;">
+                Aguardando sorteio
+              </span>
+              <span style="color: #64748b; font-weight: 700;">
+                Vaga #${pos}
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
 
   html += `
       </div>
@@ -495,8 +737,17 @@ function renderSingleCategoryDetailed(category) {
 
   rankedList.forEach((item, idx) => {
     const pos = idx + 1;
-    const isTop6 = pos <= 6;
-    const rowBg = isTop6 ? (pos % 2 === 0 ? '#fffdf7' : '#ffffff') : (pos % 2 === 0 ? '#f8fafc' : '#ffffff');
+    const isOfficialSeed = topHeads.some(h => h.id === item.id);
+    const officialSeedPos = isOfficialSeed ? (topHeads.findIndex(h => h.id === item.id) + 1) : null;
+    const drawnEntry = Object.entries(drawnSeeds).find(([k, v]) => v === item.id);
+    const drawnSlotPos = drawnEntry ? Number(drawnEntry[0]) : null;
+
+    let rowBg = pos % 2 === 0 ? '#f8fafc' : '#ffffff';
+    if (isOfficialSeed) {
+      rowBg = pos % 2 === 0 ? '#fffdf7' : '#ffffff';
+    } else if (drawnSlotPos) {
+      rowBg = '#f0fdf4';
+    }
 
     const f1 = item.fem1 ? `${item.fem1.nome} (<strong>${item.fem1.ranking || 'S/R'}</strong>)` : '-';
     const f2 = item.fem2 ? `${item.fem2.nome} (<strong>${item.fem2.ranking || 'S/R'}</strong>)` : '-';
@@ -504,15 +755,19 @@ function renderSingleCategoryDetailed(category) {
     const m2 = item.masc2 ? `${item.masc2.nome} (<strong>${item.masc2.ranking || 'S/R'}</strong>)` : '-';
 
     html += `
-      <tr style="background: ${rowBg}; border-bottom: 1px solid #e2e8f0; ${isTop6 ? 'font-weight: 500;' : ''}">
+      <tr style="background: ${rowBg}; border-bottom: 1px solid #e2e8f0; ${isOfficialSeed || drawnSlotPos ? 'font-weight: 500;' : ''}">
         <td style="padding: 12px 14px; text-align: center;">
-          ${isTop6 ? `
-            <span style="background: ${pos === 1 ? '#fef3c7' : '#f1f5f9'}; color: ${pos === 1 ? '#b45309' : '#0f172a'}; font-weight: 800; padding: 3px 8px; border-radius: 12px; font-size: 11px;">
-              ${pos === 1 ? '👑 1º' : `${pos}º`}
+          ${isOfficialSeed ? `
+            <span style="background: ${officialSeedPos === 1 ? '#fef3c7' : '#f1f5f9'}; color: ${officialSeedPos === 1 ? '#b45309' : '#0f172a'}; font-weight: 800; padding: 3px 8px; border-radius: 12px; font-size: 11px;">
+              ${officialSeedPos === 1 ? '👑 1º' : `${officialSeedPos}º`}
+            </span>
+          ` : (drawnSlotPos ? `
+            <span style="background: #dcfce7; color: #15803d; font-weight: 800; padding: 3px 8px; border-radius: 12px; font-size: 11px;">
+              🎲 #${drawnSlotPos}
             </span>
           ` : `
             <span style="color: #64748b;">${pos}º</span>
-          `}
+          `)}
         </td>
         <td style="padding: 12px 14px;">
           <div style="display: flex; align-items: center; gap: 8px;">
@@ -544,9 +799,13 @@ function renderSingleCategoryDetailed(category) {
           ${item.seedAnoAnterior < 999 ? `<strong>${item.seedAnoAnterior}º</strong>` : '<span style="color: #94a3b8;">-</span>'}
         </td>
         <td style="padding: 12px 14px; text-align: center;">
-          ${isTop6 ? `
+          ${isOfficialSeed ? `
             <span style="background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 12px;">
-              Cabeça #${pos}
+              Cabeça #${officialSeedPos} (Oficial)
+            </span>
+          ` : (drawnSlotPos ? `
+            <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 12px;">
+              🎲 Cabeça #${drawnSlotPos} (Sorteio)
             </span>
           ` : (item.isComplete ? `
             <span style="background: #f1f5f9; color: #475569; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 12px;">
@@ -554,9 +813,9 @@ function renderSingleCategoryDetailed(category) {
             </span>
           ` : `
             <span style="background: #fef2f2; color: #991b1b; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 12px;">
-              Incompleto
+              Incompleto (Art. III)
             </span>
-          `)}
+          `))}
         </td>
       </tr>
     `;
@@ -571,4 +830,3 @@ function renderSingleCategoryDetailed(category) {
 
   return html;
 }
-

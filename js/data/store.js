@@ -240,6 +240,10 @@ class AppStore {
             if (!parsed.tournament.dataInicio) parsed.tournament.dataInicio = '2026-10-15';
           }
 
+          if (!parsed.categoryDrawnSeeds) {
+            parsed.categoryDrawnSeeds = {};
+          }
+
           return parsed;
         }
       }
@@ -269,6 +273,7 @@ class AppStore {
       athletes,
       brackets,
       categoryByes: { prof: [] },
+      categoryDrawnSeeds: {},
       pointsTable,
       lastUpdated: '1970-01-01T00:00:00.000Z'
     };
@@ -548,6 +553,28 @@ class AppStore {
         : `BYEs e estados dos confrontos da categoria ${categoryId} limpos`;
       this.save(true, actionSummary);
     }
+  }
+
+  getCategoryDrawnSeeds(categoryId) {
+    if (!this.state.categoryDrawnSeeds) {
+      this.state.categoryDrawnSeeds = {};
+    }
+    return this.state.categoryDrawnSeeds[categoryId] || {};
+  }
+
+  setCategoryDrawnSeed(categoryId, slotIndex, fedId) {
+    if (!this.state.categoryDrawnSeeds) {
+      this.state.categoryDrawnSeeds = {};
+    }
+    if (!this.state.categoryDrawnSeeds[categoryId]) {
+      this.state.categoryDrawnSeeds[categoryId] = {};
+    }
+    if (fedId) {
+      this.state.categoryDrawnSeeds[categoryId][slotIndex] = fedId;
+    } else {
+      delete this.state.categoryDrawnSeeds[categoryId][slotIndex];
+    }
+    this.save(true, `Vaga sorteada #${slotIndex} de cabeça de chave atualizada`);
   }
 
   getGames(categoryId = 'prof') {
