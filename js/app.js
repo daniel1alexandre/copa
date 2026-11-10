@@ -112,7 +112,8 @@ function updateBadges() {
 }
 
 // Inicialização da Aplicação
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
+  console.log('INIT APP EXECUTING');
   // Exposição global de funções para eventos HTML inline
   window.switchTab = switchTab;
   window.openMatchScore = (code, catId = 'prof') => openMatchModal(code, catId);
@@ -186,7 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (overlay) overlay.classList.remove('active');
     }
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 
 function initZoomController() {
   const DEFAULT_ZOOM = 85;

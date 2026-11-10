@@ -203,7 +203,6 @@ function renderOverviewAllCategories(categories) {
 
   categories.forEach(cat => {
     const rankedList = calculateCategorySeeds(cat.id);
-    // Filter only complete federations for head-of-key positions
     const completeList = rankedList.filter(item => item.isComplete);
     const headCount = Math.min(6, completeList.length);
     const topHeads = completeList.slice(0, headCount);
@@ -228,7 +227,7 @@ function renderOverviewAllCategories(categories) {
           </button>
         </div>
 
-        <!-- Lista das Cabeças de Chave -->
+        <!-- Lista dos Cabeças de Chave -->
         <div style="padding: 12px 16px; flex: 1; display: flex; flex-direction: column; gap: 8px;">
     `;
 
@@ -276,23 +275,17 @@ function renderOverviewAllCategories(categories) {
       `;
     });
 
-    // Render placeholder slots when fewer than 6 heads are available
     for (let i = headCount; i < 6; i++) {
       const pos = i + 1;
-      let badgeColor = '#64748b';
-      let badgeBg = '#f1f5f9';
-      let icon = `${pos}º`;
-      if (pos === 1) { badgeColor = '#b45309'; badgeBg = '#fef3c7'; icon = '👑 1º'; }
-      else if (pos === 2) { badgeColor = '#475569'; badgeBg = '#e2e8f0'; icon = '🥈 2º'; }
-      else if (pos === 3) { badgeColor = '#9a3412'; badgeBg = '#ffedd5'; icon = '🥉 3º'; }
-
       html += `
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: #fafafa; border-radius: 8px; border: 1px dashed #cbd5e1; opacity: 0.6;">
-          <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
-            <span style="font-size: 11px; font-weight: 800; color: ${badgeColor}; background: ${badgeBg}; padding: 3px 8px; border-radius: 12px; white-space: nowrap;">
-              ${icon}
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: #fafafa; border-radius: 8px; border: 1px dashed #cbd5e1; opacity: 0.65;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 11px; font-weight: 800; color: #94a3b8; background: #f1f5f9; padding: 3px 8px; border-radius: 12px;">
+              ${pos}º
             </span>
-            <span style="font-size: 13px; color: #555;">Vaga livre</span>
+            <span style="font-size: 12.5px; color: #64748b; font-style: italic;">
+              Vaga livre (Sorteio)
+            </span>
           </div>
         </div>
       `;
@@ -307,236 +300,8 @@ function renderOverviewAllCategories(categories) {
   html += `</div>`;
   return html;
 }
-
-  let html = `
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px;">
-  `;
-
-  categories.forEach(cat => {
-    const rankedList = calculateCategorySeeds(cat.id);
-    const top6 = rankedList.slice(0, 6);
-
-    html += `
-      <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
-        
-        <!-- Header da Categoria -->
-        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div style="font-size: 16px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px;">
-              <span>🎾</span> ${cat.nome}
-            </div>
-            <div style="font-size: 11.5px; color: #94a3b8; margin-top: 2px;">
-              Top 6 Cabeças de Chave
-            </div>
-          </div>
-          <button 
-            onclick="window.selectSeedCategoryTab('${cat.id}')"
-            style="background: rgba(2, 128, 144, 0.25); border: 1px solid rgba(2, 128, 144, 0.5); color: #38bdf8; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; cursor: pointer;">
-            Ver Detalhes ➜
-          </button>
-        </div>
-
-        <!-- Lista dos 6 Cabeças de Chave -->
-        <div style="padding: 12px 16px; flex: 1; display: flex; flex-direction: column; gap: 8px;">
-    `;
-
-    top6.forEach((item, idx) => {
-      const pos = idx + 1;
-      let badgeColor = '#64748b';
-      let badgeBg = '#f1f5f9';
-      let icon = `${pos}º`;
-
-      if (pos === 1) {
-        badgeColor = '#b45309';
-        badgeBg = '#fef3c7';
-        icon = '👑 1º';
-      } else if (pos === 2) {
-        badgeColor = '#475569';
-        badgeBg = '#e2e8f0';
-        icon = '🥈 2º';
-      } else if (pos === 3) {
-        badgeColor = '#9a3412';
-        badgeBg = '#ffedd5';
-        icon = '🥉 3º';
-      }
-
-      html += `
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: #f8fafc; border-radius: 8px; border: 1px solid #edf2f7;">
-          <div style="display: flex; align-items: center; gap: 10px; min-width: 0;">
-            <span style="font-size: 11px; font-weight: 800; color: ${badgeColor}; background: ${badgeBg}; padding: 3px 8px; border-radius: 12px; white-space: nowrap;">
-              ${icon}
-            </span>
-            <img src="${item.imagem}" alt="${item.uf}" style="width: 24px; height: 18px; object-fit: cover; border-radius: 3px; border: 1px solid #cbd5e1;" onerror="this.src='assets/federations/${item.id}.jpg'">
-            <div style="min-width: 0;">
-              <strong style="font-size: 13px; color: #0f172a;">${item.uf}</strong>
-              <span style="font-size: 11px; color: #64748b; margin-left: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; display: inline-block; vertical-align: bottom;">
-                ${item.nome}
-              </span>
-            </div>
-          </div>
-
-          <div style="text-align: right; white-space: nowrap;">
-            ${item.isComplete ? `
-              <span style="font-size: 12.5px; font-weight: 800; color: #028090;">
-                Soma: ${item.somaRankings}
-              </span>
-            ` : `
-              <span style="font-size: 11px; font-weight: 700; color: #dc2626; background: #fee2e2; padding: 2px 6px; border-radius: 4px;">
-                Pontuação 0
-              </span>
-            `}
-          </div>
-        </div>
-      `;
-    });
-
-    html += `
-        </div>
-      </div>
-    `;
-  });
-
-  html += `</div>`;
-  return html;
-}
-
 // Visão Detalhada de uma Categoria
 function renderSingleCategoryDetailed(category) {
-  const rankedList = calculateCategorySeeds(category.id);
-  const completeList = rankedList.filter(item => item.isComplete);
-  const headCount = Math.min(6, completeList.length);
-  const topHeads = completeList.slice(0, headCount);
-
-  let html = `
-    <!-- DESTAQUE DOS 6 PRIMEIROS ESTADOS (CARDS PODIUM/CABECAS DE CHAVE) -->
-    <div style="margin-bottom: 30px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h2 style="font-size: 18px; font-weight: 800; color: #0f172a; margin: 0; display: flex; align-items: center; gap: 8px;">
-          <span>🏆</span> Os ${headCount} Primeiros Estados Cabeças de Chave • ${category.nome}
-        </h2>
-        <span style="font-size: 12px; color: #64748b; font-weight: 600;">
-          Classificação Oficial Gerada por Algoritmo CBT
-        </span>
-      </div>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
-  `;
-
-  topHeads.forEach((item, idx) => {
-    const pos = idx + 1;
-    let rankTitle = `${pos}º Cabeça de Chave`;
-    let cardBorder = '#e2e8f0';
-    let headerBg = '#f8fafc';
-    let badgeBg = '#f1f5f9';
-    let badgeColor = '#475569';
-    let crown = '🏅';
-
-    if (pos === 1) {
-      rankTitle = '👑 1º Cabeça de Chave';
-      cardBorder = '#fbbf24';
-      headerBg = 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)';
-      badgeBg = '#f59e0b';
-      badgeColor = '#fff';
-      crown = '👑';
-    } else if (pos === 2) {
-      rankTitle = '🥈 2º Cabeça de Chave';
-      cardBorder = '#cbd5e1';
-      headerBg = 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)';
-      badgeBg = '#64748b';
-      badgeColor = '#fff';
-      crown = '🥈';
-    } else if (pos === 3) {
-      rankTitle = '🥉 3º Cabeça de Chave';
-      cardBorder = '#fdba74';
-      headerBg = 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)';
-      badgeBg = '#ea580c';
-      badgeColor = '#fff';
-      crown = '🥉';
-    }
-
-    const fem1Label = item.fem1 ? `${item.fem1.nome} <span style="color: #028090; font-weight: 700;">(${item.fem1.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrita</span>';
-    const fem2Label = item.fem2 ? `${item.fem2.nome} <span style="color: #028090; font-weight: 700;">(${item.fem2.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrita</span>';
-    const masc1Label = item.masc1 ? `${item.masc1.nome} <span style="color: #028090; font-weight: 700;">(${item.masc1.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrito</span>';
-    const masc2Label = item.masc2 ? `${item.masc2.nome} <span style="color: #028090; font-weight: 700;">(${item.masc2.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrito</span>';
-
-    html += `
-      <div style="background: #fff; border: 2px solid ${cardBorder}; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.06); display: flex; flex-direction: column;">
-        <!-- Top Header do Card -->
-        <div style="background: ${headerBg}; padding: 14px 16px; border-bottom: 1px solid ${cardBorder}; display: flex; justify-content: space-between; align-items: center;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span style="font-size: 18px;">${crown}</span>
-            <strong style="font-size: 14px; color: #0f172a;">${rankTitle}</strong>
-          </div>
-          <span style="background: ${badgeBg}; color: ${badgeColor}; font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 12px;">
-            #${pos}
-          </span>
-        </div>
-
-        <!-- Dados do Estado -->
-        <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-              <img src="${item.imagem}" alt="${item.uf}" style="width: 44px; height: 32px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.08);" onerror="this.src='assets/federations/${item.id}.jpg'">
-              <div>
-                <div style="font-size: 18px; font-weight: 800; color: #0f172a;">
-                  ${item.uf} • ${item.sigla}
-                </div>
-                <div style="font-size: 12px; color: #64748b; line-height: 1.3;">
-                  ${item.nome}
-                </div>
-              </div>
-            </div>
-
-            <!-- Box de Pontuação e Composição -->
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-bottom: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 12px; font-weight: 600; color: #64748b;">
-                  Soma dos Rankings:
-                </span>
-                <span style="font-size: 18px; font-weight: 900; color: #028090;">
-                  ${item.somaRankings} pts
-                </span>
-              </div>
-
-              <div style="margin-top: 6px; font-size: 11.5px; color: #475569; display: flex; justify-content: space-between;">
-                <span>Desempate (Ano Anterior):</span>
-                <strong>${item.seedAnoAnterior < 999 ? `${item.seedAnoAnterior}º Lugar` : 'Sem classificação anterior'}</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-  });
-
-  // Render placeholders for missing slots
-  for (let i = headCount; i < 6; i++) {
-    const pos = i + 1;
-    let badgeColor = '#64748b';
-    let badgeBg = '#f1f5f9';
-    let icon = `${pos}º`;
-    if (pos === 1) { badgeColor = '#b45309'; badgeBg = '#fef3c7'; icon = '👑 1º'; }
-    else if (pos === 2) { badgeColor = '#475569'; badgeBg = '#e2e8f0'; icon = '🥈 2º'; }
-    else if (pos === 3) { badgeColor = '#9a3412'; badgeBg = '#ffedd5'; icon = '🥉 3º'; }
-
-    html += `
-      <div style="background: #fafafa; border: 1px dashed #cbd5e1; border-radius: 14px; padding: 20px; text-align: center; opacity: 0.6;">
-        <span style="font-size: 11px; font-weight: 800; color: ${badgeColor}; background: ${badgeBg}; padding: 3px 8px; border-radius: 12px; white-space: nowrap;">
-          ${icon}
-        </span>
-        <div style="font-size: 13px; color: #555; margin-top: 6px;">Vaga livre</div>
-      </div>
-    `;
-  }
-
-  html += `
-        </div>
-      </div>
-    `;
-
-  return html;
-}
-
   const rankedList = calculateCategorySeeds(category.id);
   const top6 = rankedList.slice(0, 6);
 
