@@ -556,14 +556,10 @@ class AppStore {
       const has2Masc = mascRanked.length >= 2;
       const isComplete = has2Fem && has2Masc;
 
-      // Atletas ranqueados que entram na composição da pontuação (até 2 melhores de cada gênero)
-      const topFemRanked = femRanked.slice(0, 2);
-      const topMascRanked = mascRanked.slice(0, 2);
-      const rankedInSum = [...topFemRanked, ...topMascRanked];
-
+      // Pontuação CBT oficial apenas para equipes com pré-requisitos completos (2F + 2M ranqueados)
       let somaRankings = null;
-      if (rankedInSum.length > 0) {
-        somaRankings = rankedInSum.reduce((acc, a) => acc + (getRankNumber(a) || 0), 0);
+      if (isComplete) {
+        somaRankings = getRankNumber(femRanked[0]) + getRankNumber(femRanked[1]) + getRankNumber(mascRanked[0]) + getRankNumber(mascRanked[1]);
       }
 
       const totalRanked = femRanked.length + mascRanked.length;
@@ -596,7 +592,7 @@ class AppStore {
     });
 
     list.sort((a, b) => {
-      // 1º: Equipes completas (2F + 2M ranqueados) ordenadas pela menor soma de rankings
+      // 1º: Equipes que atendem aos pré-requisitos completos (2F + 2M ranqueados) ordenadas pela menor soma de rankings
       if (a.isComplete && !b.isComplete) return -1;
       if (!a.isComplete && b.isComplete) return 1;
       if (a.isComplete && b.isComplete) {
@@ -606,20 +602,7 @@ class AppStore {
         return a.seedAnoAnterior - b.seedAnoAnterior;
       }
 
-      // 2º: Estados que possuem pontuação na CBT (atletas ranqueados)
-      if (a.hasPoints && !b.hasPoints) return -1;
-      if (!a.hasPoints && b.hasPoints) return 1;
-      if (a.hasPoints && b.hasPoints) {
-        if (a.totalRanked !== b.totalRanked) {
-          return b.totalRanked - a.totalRanked;
-        }
-        if (a.somaRankings !== b.somaRankings) {
-          return a.somaRankings - b.somaRankings;
-        }
-        return a.seedAnoAnterior - b.seedAnoAnterior;
-      }
-
-      // 3º: Estados sem pontuação CBT ranqueada (desempate pelo ano anterior)
+      // 2º: Estados sem os pré-requisitos completos (desempate pelo ano anterior)
       if (a.seedAnoAnterior !== b.seedAnoAnterior) {
         return a.seedAnoAnterior - b.seedAnoAnterior;
       }
@@ -633,14 +616,15 @@ class AppStore {
     const feds = this.getCategoryParticipatingFeds(categoryId);
     const numByes = Math.max(0, 32 - feds.length);
     const rankedList = this.calculateCategorySeeds(categoryId);
-    // Estados que possuem pontuação na CBT
-    const pointsList = rankedList.filter(item => item.hasPoints && feds.some(f => f.id === item.id));
-    const headCount = Math.min(6, pointsList.length);
-    const topHeads = pointsList.slice(0, headCount);
+    // APENAS estados que possuem os pré-requisitos completos (2 homens e 2 mulheres ranqueados na CBT)
+    // podem ser cabeças de chave oficiais
+    const completeList = rankedList.filter(item => item.isComplete && feds.some(f => f.id === item.id));
+    const headCount = Math.min(6, completeList.length);
+    const topHeads = completeList.slice(0, headCount);
     const drawnSeeds = this.getCategoryDrawnSeeds(categoryId);
     const partIds = feds.map(f => f.id);
 
-    const maxSlots = Math.max(6, numByes, pointsList.length);
+    const maxSlots = Math.max(6, numByes, completeList.length);
     const seeds = [];
     const usedIds = new Set();
 
@@ -651,15 +635,9 @@ class AppStore {
       if (drawnSeeds[pos]) {
         targetFedId = drawnSeeds[pos];
       } else if (pos <= headCount) {
-        // 2. Se for vaga oficial CBT por pontuação
+        // 2. Se for vaga oficial CBT por pré-requisitos completos (2M + 2F)
         const cbtFedId = topHeads[pos - 1]?.id || null;
         // Se este estado oficial foi explicitamente alocado em outro slot, não duplica aqui
-        const isDrawnInOtherSlot = cbtFedId && Object.entries(drawnSeeds).some(([k, v]) => Number(k) !== pos && v === cbtFedId);
-        if (!isDrawnInOtherSlot) {
-          targetFedId = cbtFedId;
-        }
-      } else if (pos <= pointsList.length) {
-        const cbtFedId = pointsList[pos - 1]?.id || null;
         const isDrawnInOtherSlot = cbtFedId && Object.entries(drawnSeeds).some(([k, v]) => Number(k) !== pos && v === cbtFedId);
         if (!isDrawnInOtherSlot) {
           targetFedId = cbtFedId;

@@ -481,10 +481,10 @@ export function renderCategoryView() {
                 const selectedFed = participatingFeds.find(f => f.id === selectedFedId);
 
                 const rankedList = store.calculateCategorySeeds(currentCat.id);
-                const pointsList = rankedList.filter(item => item.hasPoints);
-                const headCount = Math.min(6, pointsList.length);
+                const completeList = rankedList.filter(item => item.isComplete);
+                const headCount = Math.min(6, completeList.length);
                 const isOfficialSeed = rankNum <= headCount;
-                const defaultCbtFed = isOfficialSeed ? pointsList[rankNum - 1] : null;
+                const defaultCbtFed = isOfficialSeed ? completeList[rankNum - 1] : null;
                 const isDrawnSlot = rankNum > headCount && rankNum <= 6;
                 const drawnSeeds = store.getCategoryDrawnSeeds(currentCat.id);
                 const isAlteredOfficial = isOfficialSeed && Boolean(drawnSeeds[rankNum] && drawnSeeds[rankNum] !== defaultCbtFed?.id);

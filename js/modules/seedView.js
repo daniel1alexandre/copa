@@ -148,9 +148,9 @@ function renderOverviewAllCategories(categories) {
 
   categories.forEach(cat => {
     const rankedList = calculateCategorySeeds(cat.id);
-    const pointsList = rankedList.filter(item => item.hasPoints);
-    const headCount = Math.min(6, pointsList.length);
-    const topHeads = pointsList.slice(0, headCount);
+    const completeList = rankedList.filter(item => item.isComplete);
+    const headCount = Math.min(6, completeList.length);
+    const topHeads = completeList.slice(0, headCount);
     const drawnSeeds = store.getCategoryDrawnSeeds(cat.id);
     const participatingFeds = store.getCategoryParticipatingFeds(cat.id);
 
@@ -167,7 +167,7 @@ function renderOverviewAllCategories(categories) {
               <span>🎾</span> ${cat.nome}
             </div>
             <div style="font-size: 11.5px; color: #94a3b8; margin-top: 2px;">
-              ${headCount === 6 ? '6 Cabeças Definidos por Pontuação CBT' : `${headCount} Cabeça(s) por Pontuação CBT + ${6 - headCount} Vaga(s) para Sorteio`}
+              ${headCount === 6 ? '6 Cabeças Definidos por Pontuação CBT' : `${headCount} Cabeça(s) Oficial CBT (2M + 2F) + ${6 - headCount} Vaga(s) para Sorteio`}
             </div>
           </div>
           <button 
@@ -315,9 +315,9 @@ function renderOverviewAllCategories(categories) {
 // Visão Detalhada de uma Categoria
 function renderSingleCategoryDetailed(category) {
   const rankedList = calculateCategorySeeds(category.id);
-  const pointsList = rankedList.filter(item => item.hasPoints);
-  const headCount = Math.min(6, pointsList.length);
-  const topHeads = pointsList.slice(0, headCount);
+  const completeList = rankedList.filter(item => item.isComplete);
+  const headCount = Math.min(6, completeList.length);
+  const topHeads = completeList.slice(0, headCount);
   const drawnSeeds = store.getCategoryDrawnSeeds(category.id);
   const participatingFeds = store.getCategoryParticipatingFeds(category.id);
   const officialSeedIds = topHeads.map(h => h.id);
@@ -332,7 +332,7 @@ function renderSingleCategoryDetailed(category) {
             <span>🏆</span> Os 6 Primeiros Estados Cabeças de Chave • ${category.nome}
           </h2>
           <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
-            ${headCount === 6 ? '6 Cabeças de Chave definidos por pontuação oficial CBT (alterações permitidas no Congresso Técnico)' : `${headCount} definido(s) por pontuação CBT + ${6 - headCount} vaga(s) em aberto para sorteio no Congresso Técnico`}
+            ${headCount === 6 ? '6 Cabeças de Chave definidos por pontuação oficial CBT (2M + 2F ranqueados)' : `${headCount} definido(s) por critérios oficiais CBT (2M + 2F ranqueados) + ${6 - headCount} vaga(s) em aberto para sorteio no Congresso Técnico`}
           </div>
         </div>
         ${headCount < 6 && isAdmin ? `
@@ -501,7 +501,7 @@ function renderSingleCategoryDetailed(category) {
                   <select 
                     onchange="window.handleSelectDrawnSeed('${category.id}', ${pos}, this.value)"
                     style="flex: 1; font-size: 12px; font-weight: 700; padding: 6px 8px; border-radius: 6px; border: 1px solid ${isAltered ? '#f59e0b' : '#cbd5e1'}; background: #fff; cursor: pointer;">
-                    <option value="">👑 Padrão Oficial CBT: ${defaultCbtFed.uf} - ${defaultCbtFed.nome}</option>
+                    <option value="">👑 Padrão Oficial CBT: ${defaultCbtFed.uf} - ${defaultCbtFed.nome}${defaultCbtFed.somaRankings !== null ? ` (${defaultCbtFed.somaRankings} pts)` : ''}</option>
                     ${availableFeds.map(f => `
                       <option value="${f.id}" ${currentFedId === f.id && isAltered ? 'selected' : ''}>
                         ${f.uf} - ${f.nome}
@@ -530,7 +530,7 @@ function renderSingleCategoryDetailed(category) {
               Total inscritos: <strong>${displayRankedItem.totalAtletas || defaultCbtFed.totalAtletas}</strong>
             </span>
             <span style="color: ${isAltered ? '#b45309' : '#16a34a'}; font-weight: 700; display: flex; align-items: center; gap: 4px;">
-              ${isAltered ? '🔄 Alterado no Congresso' : (displayRankedItem.isComplete ? '✓ Elegível CBT (Completo)' : `✓ Pontuação Oficial CBT (${displayRankedItem.totalRanked} ranq.)`)}
+              ${isAltered ? '🔄 Alterado no Congresso' : '✓ Elegível CBT (Completo: 2M + 2F)'}
             </span>
           </div>
         </div>
@@ -789,12 +789,11 @@ function renderSingleCategoryDetailed(category) {
           <div>2º: ${m2}</div>
         </td>
         <td style="padding: 12px 14px; text-align: center;">
-          ${item.hasPoints && item.somaRankings !== null ? `
+          ${item.isComplete && item.somaRankings !== null ? `
             <strong style="font-size: 14px; color: #028090;">${item.somaRankings} pts</strong>
-            <div style="font-size: 10px; color: #64748b;">${item.totalRanked} ranqueado(s)</div>
           ` : `
             <span style="color: #94a3b8; font-size: 11px; font-style: italic;">
-              Sem ranking CBT
+              Incompleto (Art. III)
             </span>
           `}
         </td>
@@ -804,19 +803,19 @@ function renderSingleCategoryDetailed(category) {
         <td style="padding: 12px 14px; text-align: center;">
           ${isOfficialSeed ? `
             <span style="background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 12px;">
-              Cabeça #${officialSeedPos} (${item.isComplete ? 'Completo' : `${item.totalRanked} ranq.`})
+              Cabeça #${officialSeedPos} (Oficial)
             </span>
           ` : (drawnSlotPos ? `
             <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 12px;">
               🎲 Cabeça #${drawnSlotPos} (Sorteio)
             </span>
-          ` : (item.hasPoints ? `
+          ` : (item.isComplete ? `
             <span style="background: #f1f5f9; color: #475569; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 12px;">
-              ${item.totalRanked} Ranqueado(s)
+              Elegível
             </span>
           ` : `
-            <span style="background: #f8fafc; color: #94a3b8; font-size: 11px; font-weight: 500; padding: 4px 8px; border-radius: 12px;">
-              Sem Ranking
+            <span style="background: #fef2f2; color: #991b1b; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 12px;">
+              Incompleto (Art. III)
             </span>
           `))}
         </td>
