@@ -484,20 +484,22 @@ export function renderCategoryView() {
                 const completeList = rankedList.filter(item => item.isComplete);
                 const headCount = Math.min(6, completeList.length);
                 const isOfficialSeed = rankNum <= headCount;
+                const defaultCbtFed = isOfficialSeed ? completeList[rankNum - 1] : null;
                 const isDrawnSlot = rankNum > headCount && rankNum <= 6;
                 const drawnSeeds = store.getCategoryDrawnSeeds(currentCat.id);
+                const isAlteredOfficial = isOfficialSeed && Boolean(drawnSeeds[rankNum] && drawnSeeds[rankNum] !== defaultCbtFed?.id);
                 const isDrawnSelected = isDrawnSlot && Boolean(drawnSeeds[rankNum]);
 
                 return `
-                  <div class="bye-slot-card" style="border: 2px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background: ${selectedFed ? '#f0fdfa' : '#f8fafc'}; border-radius: var(--radius-md); padding: 0.85rem 1rem; box-shadow: var(--shadow-sm); transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between;">
+                  <div class="bye-slot-card" style="border: 2px solid ${isAlteredOfficial ? '#f59e0b' : (selectedFed ? '#0d9488' : '#cbd5e1')}; background: ${isAlteredOfficial ? '#fffbeb' : (selectedFed ? '#f0fdfa' : '#f8fafc')}; border-radius: var(--radius-md); padding: 0.85rem 1rem; box-shadow: var(--shadow-sm); transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between;">
                     
                     <div>
                       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
-                        <span style="background: ${isOfficialSeed ? '#028090' : (selectedFed ? '#0f766e' : '#475569')}; color: white; font-weight: 800; font-size: 0.82rem; padding: 0.2rem 0.65rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
-                          ${isOfficialSeed ? `👑 ${rankLabel} Ranking (Cabeça ${rankNum})` : (isDrawnSlot ? `🎲 ${rankLabel} Ranking (Cabeça ${rankNum})` : `🎖️ ${rankLabel} Ranking`)}
+                        <span style="background: ${isAlteredOfficial ? '#d97706' : (isOfficialSeed ? '#028090' : (selectedFed ? '#0f766e' : '#475569'))}; color: white; font-weight: 800; font-size: 0.82rem; padding: 0.2rem 0.65rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
+                          ${isAlteredOfficial ? `🔄 ${rankLabel} Ranking (Congresso)` : (isOfficialSeed ? `👑 ${rankLabel} Ranking (Cabeça ${rankNum})` : (isDrawnSlot ? `🎲 ${rankLabel} Ranking (Cabeça ${rankNum})` : `🎖️ ${rankLabel} Ranking`))}
                         </span>
-                        <span style="font-size: 0.72rem; font-weight: 800; color: ${selectedFed ? '#047857' : '#94a3b8'}; background: ${selectedFed ? '#ecfdf5' : '#f1f5f9'}; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
-                          ${selectedFed ? (isOfficialSeed ? '👑 Oficial CBT' : (isDrawnSelected ? '🎲 Sorteado' : '✅ Vaga Definida')) : '⚪ Vaga Aberta'}
+                        <span style="font-size: 0.72rem; font-weight: 800; color: ${isAlteredOfficial ? '#b45309' : (selectedFed ? '#047857' : '#94a3b8')}; background: ${isAlteredOfficial ? '#fef3c7' : (selectedFed ? '#ecfdf5' : '#f1f5f9')}; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
+                          ${isAlteredOfficial ? `🔄 Alterado no Congresso (Oficial: ${defaultCbtFed?.uf})` : (selectedFed ? (isOfficialSeed ? '👑 Oficial CBT' : (isDrawnSelected ? '🎲 Sorteado' : '✅ Vaga Definida')) : '⚪ Vaga Aberta')}
                         </span>
                       </div>
 
@@ -507,10 +509,10 @@ export function renderCategoryView() {
 
                       <div style="display: flex; align-items: center; gap: 0.45rem;">
                         <select class="form-select" 
-                                style="width: 100%; font-size: 0.88rem; font-weight: 700; border: 1.5px solid ${selectedFed ? '#0d9488' : '#cbd5e1'}; background-color: ${!isAdmin ? '#f8fafc' : '#ffffff'}; padding: 0.45rem 0.6rem; border-radius: var(--radius-sm); ${!isAdmin ? 'cursor: not-allowed;' : ''}"
+                                style="width: 100%; font-size: 0.88rem; font-weight: 700; border: 1.5px solid ${isAlteredOfficial ? '#f59e0b' : (selectedFed ? '#0d9488' : '#cbd5e1')}; background-color: ${!isAdmin ? '#f8fafc' : '#ffffff'}; padding: 0.45rem 0.6rem; border-radius: var(--radius-sm); ${!isAdmin ? 'cursor: not-allowed;' : ''}"
                                 ${!isAdmin ? 'disabled' : ''}
                                 onchange="window.handleByeSlotSelectChange(${idx}, this.value)">
-                          <option value="">-- Selecione o ${rankLabel} Estado --</option>
+                          <option value="">${isOfficialSeed && defaultCbtFed ? `👑 Padrão Oficial CBT: ${defaultCbtFed.nome} (${defaultCbtFed.uf})` : `-- Selecione o ${rankLabel} Estado --`}</option>
                           ${participatingFeds.map(f => {
                             const otherIdx = byesList.indexOf(f.id);
                             const isCurrent = f.id === selectedFedId;
@@ -522,7 +524,17 @@ export function renderCategoryView() {
                           }).join('')}
                         </select>
 
-                        ${isAdmin && selectedFed ? `
+                        ${isAdmin && isAlteredOfficial ? `
+                          <button title="Restaurar padrão oficial CBT (${defaultCbtFed?.uf})" 
+                                  onclick="window.handleByeSlotSelectChange(${idx}, '')"
+                                  style="background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; width: 34px; height: 34px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;"
+                                  onmouseover="this.style.background='#fde68a'"
+                                  onmouseout="this.style.background='#fef3c7'">
+                            ↩️
+                          </button>
+                        ` : ''}
+
+                        ${isAdmin && selectedFed && !isAlteredOfficial ? `
                           <button title="Desmarcar ${rankLabel} Ranking e reabilitar estado" 
                                   onclick="window.handleUnselectCategoryBye('${selectedFed.id}')"
                                   style="background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; width: 34px; height: 34px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;"

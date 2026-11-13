@@ -625,14 +625,23 @@ class AppStore {
     for (let pos = 1; pos <= maxSlots; pos++) {
       let targetFedId = null;
 
-      // 1. Se foi definido/alterado manualmente para este slot
+      // 1. Se foi definido/alterado manualmente para este slot (inclusive em congresso técnico)
       if (drawnSeeds[pos]) {
         targetFedId = drawnSeeds[pos];
       } else if (pos <= headCount) {
-        // 2. Se for vaga oficial CBT
-        targetFedId = topHeads[pos - 1]?.id || null;
+        // 2. Se for vaga oficial CBT por pontuação
+        const cbtFedId = topHeads[pos - 1]?.id || null;
+        // Se este estado oficial foi explicitamente alocado em outro slot, não duplica aqui
+        const isDrawnInOtherSlot = cbtFedId && Object.entries(drawnSeeds).some(([k, v]) => Number(k) !== pos && v === cbtFedId);
+        if (!isDrawnInOtherSlot) {
+          targetFedId = cbtFedId;
+        }
       } else if (pos <= completeList.length) {
-        targetFedId = completeList[pos - 1]?.id || null;
+        const cbtFedId = completeList[pos - 1]?.id || null;
+        const isDrawnInOtherSlot = cbtFedId && Object.entries(drawnSeeds).some(([k, v]) => Number(k) !== pos && v === cbtFedId);
+        if (!isDrawnInOtherSlot) {
+          targetFedId = cbtFedId;
+        }
       }
 
       if (targetFedId && partIds.includes(targetFedId) && !usedIds.has(targetFedId)) {
