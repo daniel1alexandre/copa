@@ -498,9 +498,16 @@ export function renderCategoryView() {
                         <span style="background: ${isAlteredOfficial ? '#d97706' : (isOfficialSeed ? '#028090' : (selectedFed ? '#0f766e' : '#475569'))}; color: white; font-weight: 800; font-size: 0.82rem; padding: 0.2rem 0.65rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
                           ${isAlteredOfficial ? `🔄 ${rankLabel} Ranking (Congresso)` : (isOfficialSeed ? `👑 ${rankLabel} Ranking (Cabeça ${rankNum})` : (isDrawnSlot ? `🎲 ${rankLabel} Ranking (Cabeça ${rankNum})` : `🎖️ ${rankLabel} Ranking`))}
                         </span>
-                        <span style="font-size: 0.72rem; font-weight: 800; color: ${isAlteredOfficial ? '#b45309' : (selectedFed ? '#047857' : '#94a3b8')}; background: ${isAlteredOfficial ? '#fef3c7' : (selectedFed ? '#ecfdf5' : '#f1f5f9')}; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
-                          ${isAlteredOfficial ? `🔄 Alterado no Congresso (Oficial: ${defaultCbtFed?.uf})` : (selectedFed ? (isOfficialSeed ? '👑 Oficial CBT' : (isDrawnSelected ? '🎲 Sorteado' : '✅ Vaga Definida')) : '⚪ Vaga Aberta')}
-                        </span>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                          ${isOfficialSeed && defaultCbtFed?.somaRankings !== null ? `
+                            <span style="font-size: 0.75rem; font-weight: 800; color: #028090; background: #f0fdfa; border: 1px solid #99f6e4; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
+                              ${defaultCbtFed.somaRankings} pts
+                            </span>
+                          ` : ''}
+                          <span style="font-size: 0.72rem; font-weight: 800; color: ${isAlteredOfficial ? '#b45309' : (selectedFed ? '#047857' : '#94a3b8')}; background: ${isAlteredOfficial ? '#fef3c7' : (selectedFed ? '#ecfdf5' : '#f1f5f9')}; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
+                            ${isAlteredOfficial ? `🔄 Alterado no Congresso (Oficial: ${defaultCbtFed?.uf})` : (selectedFed ? (isOfficialSeed ? '👑 Oficial CBT' : (isDrawnSelected ? '🎲 Sorteado' : '✅ Vaga Definida')) : '⚪ Vaga Aberta')}
+                          </span>
+                        </div>
                       </div>
 
                       <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--accent-dark-blue); margin-bottom: 0.35rem;">

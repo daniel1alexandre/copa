@@ -141,7 +141,7 @@ export function renderSeedView() {
 // Visão Geral: Mostra os 6 primeiros de todas as 11 categorias
 function renderOverviewAllCategories(categories) {
   let html = `
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px;">
   `;
 
   const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
@@ -227,24 +227,24 @@ function renderOverviewAllCategories(categories) {
             </div>
           </div>
 
-          <div style="text-align: right; white-space: nowrap;">
+          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; white-space: nowrap;">
+            <span style="font-size: 12px; font-weight: 800; color: ${isAltered ? '#b45309' : '#028090'}; background: ${isAltered ? '#fef3c7' : '#f0fdfa'}; border: 1px solid ${isAltered ? '#fcd34d' : '#99f6e4'}; padding: 2px 7px; border-radius: 6px;" title="Pontuação Oficial CBT: ${displayRankedItem.somaRankings !== null ? `${displayRankedItem.somaRankings} pts` : 'Sem ranking'}">
+              ${displayRankedItem.somaRankings !== null ? `${displayRankedItem.somaRankings} pts` : 'Sem ranking'}
+            </span>
+
             ${isAdmin ? `
               <select 
                 onchange="window.handleSelectDrawnSeed('${cat.id}', ${pos}, this.value)" 
                 title="Alterar cabeça de chave no Congresso Técnico"
-                style="font-size: 11px; font-weight: 700; padding: 3px 6px; border-radius: 6px; border: 1px solid ${isAltered ? '#f59e0b' : '#cbd5e1'}; background: ${isAltered ? '#fffbeb' : '#fff'}; color: #0f172a; max-width: 145px; cursor: pointer;">
-                <option value="">👑 ${defaultCbtFed.uf} (Oficial CBT: ${defaultCbtFed.somaRankings !== null ? `${defaultCbtFed.somaRankings} pts` : 'S/R'})</option>
+                style="font-size: 11px; font-weight: 700; padding: 3px 6px; border-radius: 6px; border: 1px solid ${isAltered ? '#f59e0b' : '#cbd5e1'}; background: ${isAltered ? '#fffbeb' : '#fff'}; color: #0f172a; max-width: 115px; cursor: pointer;">
+                <option value="">👑 ${defaultCbtFed.uf} ${isAltered ? '(Oficial)' : ''}</option>
                 ${availableFeds.map(f => `
                   <option value="${f.id}" ${currentFedId === f.id && isAltered ? 'selected' : ''}>
                     ${f.uf} - ${f.nome}
                   </option>
                 `).join('')}
               </select>
-            ` : `
-              <span style="font-size: 12.5px; font-weight: 800; color: ${isAltered ? '#b45309' : '#028090'};">
-                ${displayRankedItem.somaRankings !== null ? `${displayRankedItem.somaRankings} pts` : 'Sem ranking'}
-              </span>
-            `}
+            ` : ''}
           </div>
         </div>
       `;
@@ -254,6 +254,7 @@ function renderOverviewAllCategories(categories) {
       const pos = i + 1;
       const selectedFedId = drawnSeeds[pos] || null;
       const selectedFed = selectedFedId ? store.getFederation(selectedFedId) : null;
+      const selectedRanked = selectedFedId ? rankedList.find(r => r.id === selectedFedId) : null;
 
       // Estados elegíveis para sorteio: exclui qualquer estado que já esteja em outro slot
       const assignedInOtherSlots = currentSeeds.filter((id, idx) => idx !== (pos - 1) && id);
@@ -280,11 +281,17 @@ function renderOverviewAllCategories(categories) {
             `}
           </div>
 
-          <div style="text-align: right;">
+          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; white-space: nowrap;">
+            ${selectedRanked && selectedRanked.somaRankings !== null ? `
+              <span style="font-size: 11.5px; font-weight: 800; color: #166534; background: #dcfce7; border: 1px solid #86efac; padding: 2px 6px; border-radius: 6px;">
+                ${selectedRanked.somaRankings} pts
+              </span>
+            ` : ''}
+
             ${isAdmin ? `
               <select 
                 onchange="window.handleSelectDrawnSeed('${cat.id}', ${pos}, this.value)" 
-                style="font-size: 11.5px; font-weight: 700; padding: 4px 6px; border-radius: 6px; border: 1px solid ${selectedFed ? '#22c55e' : '#cbd5e1'}; background: #fff; color: #0f172a; max-width: 140px; cursor: pointer;">
+                style="font-size: 11.5px; font-weight: 700; padding: 4px 6px; border-radius: 6px; border: 1px solid ${selectedFed ? '#22c55e' : '#cbd5e1'}; background: #fff; color: #0f172a; max-width: 135px; cursor: pointer;">
                 <option value="">-- Sortear Estado --</option>
                 ${availableFeds.map(f => `
                   <option value="${f.id}" ${selectedFedId === f.id ? 'selected' : ''}>
