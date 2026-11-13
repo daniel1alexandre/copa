@@ -481,10 +481,10 @@ export function renderCategoryView() {
                 const selectedFed = participatingFeds.find(f => f.id === selectedFedId);
 
                 const rankedList = store.calculateCategorySeeds(currentCat.id);
-                const completeList = rankedList.filter(item => item.isComplete);
-                const headCount = Math.min(6, completeList.length);
+                const pointsList = rankedList.filter(item => item.hasPoints);
+                const headCount = Math.min(6, pointsList.length);
                 const isOfficialSeed = rankNum <= headCount;
-                const defaultCbtFed = isOfficialSeed ? completeList[rankNum - 1] : null;
+                const defaultCbtFed = isOfficialSeed ? pointsList[rankNum - 1] : null;
                 const isDrawnSlot = rankNum > headCount && rankNum <= 6;
                 const drawnSeeds = store.getCategoryDrawnSeeds(currentCat.id);
                 const isAlteredOfficial = isOfficialSeed && Boolean(drawnSeeds[rankNum] && drawnSeeds[rankNum] !== defaultCbtFed?.id);
@@ -512,7 +512,7 @@ export function renderCategoryView() {
                                 style="width: 100%; font-size: 0.88rem; font-weight: 700; border: 1.5px solid ${isAlteredOfficial ? '#f59e0b' : (selectedFed ? '#0d9488' : '#cbd5e1')}; background-color: ${!isAdmin ? '#f8fafc' : '#ffffff'}; padding: 0.45rem 0.6rem; border-radius: var(--radius-sm); ${!isAdmin ? 'cursor: not-allowed;' : ''}"
                                 ${!isAdmin ? 'disabled' : ''}
                                 onchange="window.handleByeSlotSelectChange(${idx}, this.value)">
-                          <option value="">${isOfficialSeed && defaultCbtFed ? `👑 Padrão Oficial CBT: ${defaultCbtFed.nome} (${defaultCbtFed.uf})` : `-- Selecione o ${rankLabel} Estado --`}</option>
+                          <option value="">${isOfficialSeed && defaultCbtFed ? `👑 Padrão Oficial CBT: ${defaultCbtFed.nome} (${defaultCbtFed.uf}${defaultCbtFed.somaRankings !== null ? ` - ${defaultCbtFed.somaRankings} pts` : ''})` : `-- Selecione o ${rankLabel} Estado --`}</option>
                           ${participatingFeds.map(f => {
                             const otherIdx = byesList.indexOf(f.id);
                             const isCurrent = f.id === selectedFedId;

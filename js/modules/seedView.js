@@ -148,9 +148,9 @@ function renderOverviewAllCategories(categories) {
 
   categories.forEach(cat => {
     const rankedList = calculateCategorySeeds(cat.id);
-    const completeList = rankedList.filter(item => item.isComplete);
-    const headCount = Math.min(6, completeList.length);
-    const topHeads = completeList.slice(0, headCount);
+    const pointsList = rankedList.filter(item => item.hasPoints);
+    const headCount = Math.min(6, pointsList.length);
+    const topHeads = pointsList.slice(0, headCount);
     const drawnSeeds = store.getCategoryDrawnSeeds(cat.id);
     const participatingFeds = store.getCategoryParticipatingFeds(cat.id);
 
@@ -167,7 +167,7 @@ function renderOverviewAllCategories(categories) {
               <span>🎾</span> ${cat.nome}
             </div>
             <div style="font-size: 11.5px; color: #94a3b8; margin-top: 2px;">
-              ${headCount === 6 ? '6 Cabeças de Chave Definidos' : `${headCount} Cabeça(s) CBT + ${6 - headCount} Vaga(s) para Sorteio`}
+              ${headCount === 6 ? '6 Cabeças Definidos por Pontuação CBT' : `${headCount} Cabeça(s) por Pontuação CBT + ${6 - headCount} Vaga(s) para Sorteio`}
             </div>
           </div>
           <button 
@@ -188,7 +188,8 @@ function renderOverviewAllCategories(categories) {
       const defaultCbtFed = item;
       const currentFedId = drawnSeeds[pos] || defaultCbtFed.id;
       const isAltered = Boolean(drawnSeeds[pos] && drawnSeeds[pos] !== defaultCbtFed.id);
-      const displayFed = isAltered ? (store.getFederation(currentFedId) || defaultCbtFed) : defaultCbtFed;
+      const displayRankedItem = rankedList.find(r => r.id === currentFedId) || defaultCbtFed;
+      const displayFed = store.getFederation(currentFedId) || defaultCbtFed;
 
       const assignedInOtherSlots = currentSeeds.filter((id, i) => i !== (pos - 1) && id);
       const availableFeds = participatingFeds.filter(f => !assignedInOtherSlots.includes(f.id)).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
@@ -232,7 +233,7 @@ function renderOverviewAllCategories(categories) {
                 onchange="window.handleSelectDrawnSeed('${cat.id}', ${pos}, this.value)" 
                 title="Alterar cabeça de chave no Congresso Técnico"
                 style="font-size: 11px; font-weight: 700; padding: 3px 6px; border-radius: 6px; border: 1px solid ${isAltered ? '#f59e0b' : '#cbd5e1'}; background: ${isAltered ? '#fffbeb' : '#fff'}; color: #0f172a; max-width: 145px; cursor: pointer;">
-                <option value="">👑 ${defaultCbtFed.uf} (Oficial CBT)</option>
+                <option value="">👑 ${defaultCbtFed.uf} (Oficial CBT: ${defaultCbtFed.somaRankings !== null ? `${defaultCbtFed.somaRankings} pts` : 'S/R'})</option>
                 ${availableFeds.map(f => `
                   <option value="${f.id}" ${currentFedId === f.id && isAltered ? 'selected' : ''}>
                     ${f.uf} - ${f.nome}
@@ -241,7 +242,7 @@ function renderOverviewAllCategories(categories) {
               </select>
             ` : `
               <span style="font-size: 12.5px; font-weight: 800; color: ${isAltered ? '#b45309' : '#028090'};">
-                ${isAltered ? 'Alterado' : `Soma: ${defaultCbtFed.somaRankings}`}
+                ${displayRankedItem.somaRankings !== null ? `${displayRankedItem.somaRankings} pts` : 'Sem ranking'}
               </span>
             `}
           </div>
@@ -314,9 +315,9 @@ function renderOverviewAllCategories(categories) {
 // Visão Detalhada de uma Categoria
 function renderSingleCategoryDetailed(category) {
   const rankedList = calculateCategorySeeds(category.id);
-  const completeList = rankedList.filter(item => item.isComplete);
-  const headCount = Math.min(6, completeList.length);
-  const topHeads = completeList.slice(0, headCount);
+  const pointsList = rankedList.filter(item => item.hasPoints);
+  const headCount = Math.min(6, pointsList.length);
+  const topHeads = pointsList.slice(0, headCount);
   const drawnSeeds = store.getCategoryDrawnSeeds(category.id);
   const participatingFeds = store.getCategoryParticipatingFeds(category.id);
   const officialSeedIds = topHeads.map(h => h.id);
@@ -331,7 +332,7 @@ function renderSingleCategoryDetailed(category) {
             <span>🏆</span> Os 6 Primeiros Estados Cabeças de Chave • ${category.nome}
           </h2>
           <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
-            ${headCount === 6 ? '6 Cabeças de Chave definidos pelos critérios oficiais CBT' : `${headCount} definido(s) por critérios CBT + ${6 - headCount} vaga(s) em aberto para sorteio`}
+            ${headCount === 6 ? '6 Cabeças de Chave definidos por pontuação oficial CBT (alterações permitidas no Congresso Técnico)' : `${headCount} definido(s) por pontuação CBT + ${6 - headCount} vaga(s) em aberto para sorteio no Congresso Técnico`}
           </div>
         </div>
         ${headCount < 6 && isAdmin ? `
@@ -352,7 +353,8 @@ function renderSingleCategoryDetailed(category) {
     const defaultCbtFed = item;
     const currentFedId = drawnSeeds[pos] || defaultCbtFed.id;
     const isAltered = Boolean(drawnSeeds[pos] && drawnSeeds[pos] !== defaultCbtFed.id);
-    const displayFed = isAltered ? (store.getFederation(currentFedId) || defaultCbtFed) : defaultCbtFed;
+    const displayRankedItem = rankedList.find(r => r.id === currentFedId) || defaultCbtFed;
+    const displayFed = store.getFederation(currentFedId) || defaultCbtFed;
 
     const assignedInOtherSlots = currentSeeds.filter((id, i) => i !== (pos - 1) && id);
     const availableFeds = participatingFeds.filter(f => !assignedInOtherSlots.includes(f.id)).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
@@ -391,10 +393,10 @@ function renderSingleCategoryDetailed(category) {
       rankTitle = `${pos}º Cabeça de Chave (Congresso Técnico)`;
     }
 
-    const fem1Label = defaultCbtFed.fem1 ? `${defaultCbtFed.fem1.nome} <span style="color: #028090; font-weight: 700;">(${defaultCbtFed.fem1.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrita</span>';
-    const fem2Label = defaultCbtFed.fem2 ? `${defaultCbtFed.fem2.nome} <span style="color: #028090; font-weight: 700;">(${defaultCbtFed.fem2.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrita</span>';
-    const masc1Label = defaultCbtFed.masc1 ? `${defaultCbtFed.masc1.nome} <span style="color: #028090; font-weight: 700;">(${defaultCbtFed.masc1.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrito</span>';
-    const masc2Label = defaultCbtFed.masc2 ? `${defaultCbtFed.masc2.nome} <span style="color: #028090; font-weight: 700;">(${defaultCbtFed.masc2.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrito</span>';
+    const fem1Label = displayRankedItem.fem1 ? `${displayRankedItem.fem1.nome} <span style="color: #028090; font-weight: 700;">(${displayRankedItem.fem1.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrita</span>';
+    const fem2Label = displayRankedItem.fem2 ? `${displayRankedItem.fem2.nome} <span style="color: #028090; font-weight: 700;">(${displayRankedItem.fem2.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrita</span>';
+    const masc1Label = displayRankedItem.masc1 ? `${displayRankedItem.masc1.nome} <span style="color: #028090; font-weight: 700;">(${displayRankedItem.masc1.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrito</span>';
+    const masc2Label = displayRankedItem.masc2 ? `${displayRankedItem.masc2.nome} <span style="color: #028090; font-weight: 700;">(${displayRankedItem.masc2.ranking || 'Sem ranking'})</span>` : '<span style="color: #94a3b8;">Não inscrito</span>';
 
     html += `
       <div style="background: #fff; border: 2px solid ${cardBorder}; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.06); display: flex; flex-direction: column;">
@@ -439,54 +441,54 @@ function renderSingleCategoryDetailed(category) {
                   ` : ''}
                 </div>
                 <div>
-                  Estado apurado por pontos: <strong>${defaultCbtFed.nome} (${defaultCbtFed.uf})</strong> • Soma: <strong>${defaultCbtFed.somaRankings} pts</strong>
+                  Estado apurado por pontos: <strong>${defaultCbtFed.nome} (${defaultCbtFed.uf})</strong> • Soma: <strong>${defaultCbtFed.somaRankings !== null ? `${defaultCbtFed.somaRankings} pts` : 'Sem ranking'}</strong>
                 </div>
               </div>
-            ` : `
-              <!-- Box de Pontuação e Composição Oficial CBT -->
-              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-bottom: 14px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <span style="font-size: 12px; font-weight: 600; color: #64748b;">
-                    Soma dos Rankings:
-                  </span>
-                  <span style="font-size: 18px; font-weight: 900; color: #028090;">
-                    ${defaultCbtFed.somaRankings} pts
-                  </span>
-                </div>
+            ` : ''}
 
-                <div style="margin-top: 6px; font-size: 11.5px; color: #475569; display: flex; justify-content: space-between;">
-                  <span>Desempate (Ano Anterior):</span>
-                  <strong>${defaultCbtFed.seedAnoAnterior < 999 ? `${defaultCbtFed.seedAnoAnterior}º Lugar` : 'Sem classificação anterior'}</strong>
+            <!-- Box de Pontuação e Composição Oficial CBT do Estado Apresentado -->
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-bottom: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 12px; font-weight: 600; color: #64748b;">
+                  ${displayRankedItem.isComplete ? 'Soma dos Rankings (Equipe Completa):' : (displayRankedItem.hasPoints ? `Pontuação CBT (${displayRankedItem.totalRanked} atleta${displayRankedItem.totalRanked > 1 ? 's' : ''} ranqueado${displayRankedItem.totalRanked > 1 ? 's' : ''}):` : 'Pontuação CBT:')}
+                </span>
+                <span style="font-size: 18px; font-weight: 900; color: #028090;">
+                  ${displayRankedItem.somaRankings !== null ? `${displayRankedItem.somaRankings} pts` : 'Sem ranking'}
+                </span>
+              </div>
+
+              <div style="margin-top: 6px; font-size: 11.5px; color: #475569; display: flex; justify-content: space-between;">
+                <span>Desempate (Ano Anterior):</span>
+                <strong>${displayRankedItem.seedAnoAnterior < 999 ? `${displayRankedItem.seedAnoAnterior}º Lugar` : 'Sem classificação anterior'}</strong>
+              </div>
+            </div>
+
+            <!-- Detalhamento dos Atletas da Composição -->
+            <div style="font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
+              <!-- Feminino -->
+              <div style="background: #fdf2f8; padding: 8px 10px; border-radius: 8px; border: 1px solid #fbcfe8;">
+                <div style="font-size: 11px; font-weight: 700; color: #db2777; margin-bottom: 4px; display: flex; justify-content: space-between;">
+                  <span>👩 Melhores Feminino:</span>
+                  <span>${displayRankedItem.femRankedCount} ranqueada(s)</span>
+                </div>
+                <div style="font-size: 11.5px; color: #1e293b; line-height: 1.4;">
+                  <div>1ª: ${fem1Label}</div>
+                  <div>2ª: ${fem2Label}</div>
                 </div>
               </div>
 
-              <!-- Detalhamento dos 4 Atletas da Soma -->
-              <div style="font-size: 12px; display: flex; flex-direction: column; gap: 8px;">
-                <!-- Feminino -->
-                <div style="background: #fdf2f8; padding: 8px 10px; border-radius: 8px; border: 1px solid #fbcfe8;">
-                  <div style="font-size: 11px; font-weight: 700; color: #db2777; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                    <span>👩 2 Melhores Feminino:</span>
-                    <span>${defaultCbtFed.femRankedCount} ranqueada(s)</span>
-                  </div>
-                  <div style="font-size: 11.5px; color: #1e293b; line-height: 1.4;">
-                    <div>1ª: ${fem1Label}</div>
-                    <div>2ª: ${fem2Label}</div>
-                  </div>
+              <!-- Masculino -->
+              <div style="background: #eff6ff; padding: 8px 10px; border-radius: 8px; border: 1px solid #bfdbfe;">
+                <div style="font-size: 11px; font-weight: 700; color: #2563eb; margin-bottom: 4px; display: flex; justify-content: space-between;">
+                  <span>👨 Melhores Masculino:</span>
+                  <span>${displayRankedItem.mascRankedCount} ranqueado(s)</span>
                 </div>
-
-                <!-- Masculino -->
-                <div style="background: #eff6ff; padding: 8px 10px; border-radius: 8px; border: 1px solid #bfdbfe;">
-                  <div style="font-size: 11px; font-weight: 700; color: #2563eb; margin-bottom: 4px; display: flex; justify-content: space-between;">
-                    <span>👨 2 Melhores Masculino:</span>
-                    <span>${defaultCbtFed.mascRankedCount} ranqueado(s)</span>
-                  </div>
-                  <div style="font-size: 11.5px; color: #1e293b; line-height: 1.4;">
-                    <div>1º: ${masc1Label}</div>
-                    <div>2º: ${masc2Label}</div>
-                  </div>
+                <div style="font-size: 11.5px; color: #1e293b; line-height: 1.4;">
+                  <div>1º: ${masc1Label}</div>
+                  <div>2º: ${masc2Label}</div>
                 </div>
               </div>
-            `}
+            </div>
 
             ${isAdmin ? `
               <!-- Seletor para alteração no Congresso Técnico -->
@@ -525,10 +527,10 @@ function renderSingleCategoryDetailed(category) {
           <!-- Rodapé do Card com Status de Elegibilidade -->
           <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
             <span style="color: #64748b;">
-              Total inscritos: <strong>${displayFed.totalAtletas || defaultCbtFed.totalAtletas}</strong>
+              Total inscritos: <strong>${displayRankedItem.totalAtletas || defaultCbtFed.totalAtletas}</strong>
             </span>
             <span style="color: ${isAltered ? '#b45309' : '#16a34a'}; font-weight: 700; display: flex; align-items: center; gap: 4px;">
-              ${isAltered ? '🔄 Alterado no Congresso' : '✓ Elegível CBT (Pontuação)'}
+              ${isAltered ? '🔄 Alterado no Congresso' : (displayRankedItem.isComplete ? '✓ Elegível CBT (Completo)' : `✓ Pontuação Oficial CBT (${displayRankedItem.totalRanked} ranq.)`)}
             </span>
           </div>
         </div>
@@ -787,11 +789,12 @@ function renderSingleCategoryDetailed(category) {
           <div>2º: ${m2}</div>
         </td>
         <td style="padding: 12px 14px; text-align: center;">
-          ${item.isComplete ? `
-            <strong style="font-size: 14px; color: #028090;">${item.somaRankings}</strong>
+          ${item.hasPoints && item.somaRankings !== null ? `
+            <strong style="font-size: 14px; color: #028090;">${item.somaRankings} pts</strong>
+            <div style="font-size: 10px; color: #64748b;">${item.totalRanked} ranqueado(s)</div>
           ` : `
-            <span style="color: #dc2626; font-size: 11px; background: #fee2e2; padding: 2px 6px; border-radius: 4px; font-weight: 700;">
-              0 (Incompleto)
+            <span style="color: #94a3b8; font-size: 11px; font-style: italic;">
+              Sem ranking CBT
             </span>
           `}
         </td>
@@ -801,19 +804,19 @@ function renderSingleCategoryDetailed(category) {
         <td style="padding: 12px 14px; text-align: center;">
           ${isOfficialSeed ? `
             <span style="background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 12px;">
-              Cabeça #${officialSeedPos} (Oficial)
+              Cabeça #${officialSeedPos} (${item.isComplete ? 'Completo' : `${item.totalRanked} ranq.`})
             </span>
           ` : (drawnSlotPos ? `
             <span style="background: #dcfce7; color: #166534; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 12px;">
               🎲 Cabeça #${drawnSlotPos} (Sorteio)
             </span>
-          ` : (item.isComplete ? `
+          ` : (item.hasPoints ? `
             <span style="background: #f1f5f9; color: #475569; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 12px;">
-              Elegível
+              ${item.totalRanked} Ranqueado(s)
             </span>
           ` : `
-            <span style="background: #fef2f2; color: #991b1b; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 12px;">
-              Incompleto (Art. III)
+            <span style="background: #f8fafc; color: #94a3b8; font-size: 11px; font-weight: 500; padding: 4px 8px; border-radius: 12px;">
+              Sem Ranking
             </span>
           `))}
         </td>
