@@ -141,7 +141,7 @@ export function renderSeedView() {
 // Visão Geral: Mostra os 6 primeiros de todas as 11 categorias
 function renderOverviewAllCategories(categories) {
   let html = `
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px;">
   `;
 
   const isAdmin = Boolean(window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin());
@@ -213,39 +213,49 @@ function renderOverviewAllCategories(categories) {
       }
 
       html += `
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: ${isAltered ? '#fffbeb' : '#f8fafc'}; border-radius: 8px; border: 1px solid ${isAltered ? '#fde68a' : '#edf2f7'}; gap: 8px;">
-          <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
-            <span style="font-size: 11px; font-weight: 800; color: ${badgeColor}; background: ${badgeBg}; padding: 3px 8px; border-radius: 12px; white-space: nowrap;">
-              ${icon}
-            </span>
-            <img src="${displayFed.imagem || `assets/federations/${displayFed.id}.png`}" alt="${displayFed.uf}" style="width: 24px; height: 18px; object-fit: cover; border-radius: 3px; border: 1px solid #cbd5e1;" onerror="this.src='assets/federations/${displayFed.id}.jpg'">
-            <div style="min-width: 0;">
-              <strong style="font-size: 13px; color: #0f172a;">${displayFed.uf}</strong>
-              <span style="font-size: 11px; color: ${isAltered ? '#b45309' : '#64748b'}; margin-left: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 110px; display: inline-block; vertical-align: bottom;">
-                ${isAltered ? `(Congresso)` : displayFed.nome}
+        <div style="padding: 10px 12px; background: ${isAltered ? '#fffbeb' : '#f8fafc'}; border-radius: 10px; border: 1px solid ${isAltered ? '#fde68a' : '#edf2f7'}; display: flex; flex-direction: column; gap: 6px;">
+          <!-- Linha Superior: Cabeça, Bandeira, UF, Nome do Estado e Pontuação em Destaque -->
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
+              <span style="font-size: 11.5px; font-weight: 800; color: ${badgeColor}; background: ${badgeBg}; padding: 3px 8px; border-radius: 12px; white-space: nowrap; flex-shrink: 0;">
+                ${icon}
+              </span>
+              <img src="${displayFed.imagem || `assets/federations/${displayFed.id}.png`}" alt="${displayFed.uf}" style="width: 24px; height: 18px; object-fit: cover; border-radius: 3px; border: 1px solid #cbd5e1; flex-shrink: 0;" onerror="this.src='assets/federations/${displayFed.id}.jpg'">
+              <div style="min-width: 0;">
+                <strong style="font-size: 13.5px; color: #0f172a;">${displayFed.uf}</strong>
+                <span style="font-size: 12px; color: #475569; margin-left: 5px; font-weight: 500;">
+                  ${isAltered ? `(Congresso)` : displayFed.nome}
+                </span>
+              </div>
+            </div>
+
+            <!-- Pontuação em Destaque à Direita -->
+            <div style="flex-shrink: 0;">
+              <span style="font-size: 13px; font-weight: 800; color: ${isAltered ? '#b45309' : '#028090'}; background: ${isAltered ? '#fef3c7' : '#f0fdfa'}; border: 1.5px solid ${isAltered ? '#fcd34d' : '#99f6e4'}; padding: 3px 9px; border-radius: 8px; white-space: nowrap;">
+                ${displayRankedItem.somaRankings !== null ? `${displayRankedItem.somaRankings} pts` : 'Sem ranking'}
               </span>
             </div>
           </div>
 
-          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; white-space: nowrap;">
-            <span style="font-size: 12px; font-weight: 800; color: ${isAltered ? '#b45309' : '#028090'}; background: ${isAltered ? '#fef3c7' : '#f0fdfa'}; border: 1px solid ${isAltered ? '#fcd34d' : '#99f6e4'}; padding: 2px 7px; border-radius: 6px;" title="Pontuação Oficial CBT: ${displayRankedItem.somaRankings !== null ? `${displayRankedItem.somaRankings} pts` : 'Sem ranking'}">
-              ${displayRankedItem.somaRankings !== null ? `${displayRankedItem.somaRankings} pts` : 'Sem ranking'}
-            </span>
-
-            ${isAdmin ? `
+          ${isAdmin ? `
+            <!-- Linha Inferior: Alteração de Cabeça de Chave no Congresso Técnico -->
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 2px; padding-top: 6px; border-top: 1px dashed ${isAltered ? '#fde68a' : '#e2e8f0'}; font-size: 11px;">
+              <span style="color: ${isAltered ? '#b45309' : '#64748b'}; font-weight: 600; white-space: nowrap;">
+                ${isAltered ? '🔄 Alterado no Congresso:' : '👑 Oficial CBT:'}
+              </span>
               <select 
                 onchange="window.handleSelectDrawnSeed('${cat.id}', ${pos}, this.value)" 
                 title="Alterar cabeça de chave no Congresso Técnico"
-                style="font-size: 11px; font-weight: 700; padding: 3px 6px; border-radius: 6px; border: 1px solid ${isAltered ? '#f59e0b' : '#cbd5e1'}; background: ${isAltered ? '#fffbeb' : '#fff'}; color: #0f172a; max-width: 115px; cursor: pointer;">
-                <option value="">👑 ${defaultCbtFed.uf} ${isAltered ? '(Oficial)' : ''}</option>
+                style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; border: 1px solid ${isAltered ? '#f59e0b' : '#cbd5e1'}; background: ${isAltered ? '#fffbeb' : '#fff'}; color: #0f172a; max-width: 230px; cursor: pointer;">
+                <option value="">👑 ${defaultCbtFed.uf} - ${defaultCbtFed.nome} (Padrão Oficial)</option>
                 ${availableFeds.map(f => `
                   <option value="${f.id}" ${currentFedId === f.id && isAltered ? 'selected' : ''}>
                     ${f.uf} - ${f.nome}
                   </option>
                 `).join('')}
               </select>
-            ` : ''}
-          </div>
+            </div>
+          ` : ''}
         </div>
       `;
     });
@@ -261,50 +271,53 @@ function renderOverviewAllCategories(categories) {
       const availableFeds = participatingFeds.filter(f => !assignedInOtherSlots.includes(f.id)).sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
 
       html += `
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; background: ${selectedFed ? '#f0fdf4' : '#fafafa'}; border-radius: 8px; border: 1px dashed ${selectedFed ? '#86efac' : '#cbd5e1'}; gap: 8px;">
-          <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
-            <span style="font-size: 11px; font-weight: 800; color: ${selectedFed ? '#15803d' : '#94a3b8'}; background: ${selectedFed ? '#dcfce7' : '#f1f5f9'}; padding: 3px 8px; border-radius: 12px; white-space: nowrap;">
-              🎲 ${pos}º
-            </span>
-            ${selectedFed ? `
-              <img src="${selectedFed.imagem || `assets/federations/${selectedFed.id}.png`}" alt="${selectedFed.uf}" style="width: 24px; height: 18px; object-fit: cover; border-radius: 3px; border: 1px solid #cbd5e1;" onerror="this.src='assets/federations/${selectedFed.id}.jpg'">
-              <div style="min-width: 0;">
-                <strong style="font-size: 13px; color: #166534;">${selectedFed.uf}</strong>
-                <span style="font-size: 11px; color: #15803d; margin-left: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100px; display: inline-block; vertical-align: bottom;">
-                  (Sorteado)
+        <div style="padding: 10px 12px; background: ${selectedFed ? '#f0fdf4' : '#fafafa'}; border-radius: 10px; border: 1px dashed ${selectedFed ? '#86efac' : '#cbd5e1'}; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1;">
+              <span style="font-size: 11px; font-weight: 800; color: ${selectedFed ? '#15803d' : '#94a3b8'}; background: ${selectedFed ? '#dcfce7' : '#f1f5f9'}; padding: 3px 8px; border-radius: 12px; white-space: nowrap; flex-shrink: 0;">
+                🎲 ${pos}º
+              </span>
+              ${selectedFed ? `
+                <img src="${selectedFed.imagem || `assets/federations/${selectedFed.id}.png`}" alt="${selectedFed.uf}" style="width: 24px; height: 18px; object-fit: cover; border-radius: 3px; border: 1px solid #cbd5e1; flex-shrink: 0;" onerror="this.src='assets/federations/${selectedFed.id}.jpg'">
+                <div style="min-width: 0;">
+                  <strong style="font-size: 13.5px; color: #166534;">${selectedFed.uf}</strong>
+                  <span style="font-size: 12px; color: #15803d; margin-left: 5px; font-weight: 500;">
+                    ${selectedFed.nome} (Sorteado)
+                  </span>
+                </div>
+              ` : `
+                <span style="font-size: 12px; color: #64748b; font-style: italic;">
+                  Vaga aberta para Sorteio
+                </span>
+              `}
+            </div>
+
+            ${selectedRanked && selectedRanked.somaRankings !== null ? `
+              <div style="flex-shrink: 0;">
+                <span style="font-size: 13px; font-weight: 800; color: #166534; background: #dcfce7; border: 1.5px solid #86efac; padding: 3px 9px; border-radius: 8px; white-space: nowrap;">
+                  ${selectedRanked.somaRankings} pts
                 </span>
               </div>
-            ` : `
-              <span style="font-size: 12px; color: #64748b; font-style: italic;">
-                Vaga aberta (Sorteio):
-              </span>
-            `}
+            ` : ''}
           </div>
 
-          <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; white-space: nowrap;">
-            ${selectedRanked && selectedRanked.somaRankings !== null ? `
-              <span style="font-size: 11.5px; font-weight: 800; color: #166534; background: #dcfce7; border: 1px solid #86efac; padding: 2px 6px; border-radius: 6px;">
-                ${selectedRanked.somaRankings} pts
+          ${isAdmin ? `
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 2px; padding-top: 6px; border-top: 1px dashed ${selectedFed ? '#bbf7d0' : '#e2e8f0'}; font-size: 11px;">
+              <span style="color: ${selectedFed ? '#166534' : '#64748b'}; font-weight: 600; white-space: nowrap;">
+                ${selectedFed ? '🎲 Estado Definido:' : '🎲 Sorteio do Congresso:'}
               </span>
-            ` : ''}
-
-            ${isAdmin ? `
               <select 
                 onchange="window.handleSelectDrawnSeed('${cat.id}', ${pos}, this.value)" 
-                style="font-size: 11.5px; font-weight: 700; padding: 4px 6px; border-radius: 6px; border: 1px solid ${selectedFed ? '#22c55e' : '#cbd5e1'}; background: #fff; color: #0f172a; max-width: 135px; cursor: pointer;">
-                <option value="">-- Sortear Estado --</option>
+                style="font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; border: 1px solid ${selectedFed ? '#22c55e' : '#cbd5e1'}; background: #fff; color: #0f172a; max-width: 230px; cursor: pointer;">
+                <option value="">${selectedFed ? '-- Alterar / Liberar Sorteio --' : '-- Escolher Estado Sorteado --'}</option>
                 ${availableFeds.map(f => `
                   <option value="${f.id}" ${selectedFedId === f.id ? 'selected' : ''}>
                     ${f.uf} - ${f.nome}
                   </option>
                 `).join('')}
               </select>
-            ` : `
-              <span style="font-size: 11px; font-weight: 700; color: ${selectedFed ? '#166534' : '#64748b'};">
-                ${selectedFed ? `${selectedFed.uf} (Sorteado)` : 'Aguardando sorteio'}
-              </span>
-            `}
-          </div>
+            </div>
+          ` : ''}
         </div>
       `;
     }
