@@ -280,6 +280,14 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
   const totalFeds = federations.length;
   const targetByes = Math.max(0, 32 - totalFeds);
 
+  const cbtSeeds = store.calculateCategorySeeds(categoryId);
+  const cbtMap = {};
+  cbtSeeds.forEach((item, idx) => {
+    if (item.somaRankings !== null) {
+      cbtMap[item.id] = { pos: idx + 1, pts: item.somaRankings };
+    }
+  });
+
   const overlay = document.getElementById('match-modal-overlay');
   if (!overlay) return;
 
@@ -370,9 +378,9 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
                           ${federations.map(f => {
                             const byesList = store.getCategoryByes(categoryId);
                             const byeRank = byesList.indexOf(f.id) + 1;
-                            const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
+                            const seedLabel = cbtMap[fed.id] ? `${cbtMap[fed.id].pts} pts CBT` : (byeRank > 0 ? `[#${byeRank}]` : '');
                             return `
-                            <option value="${f.id}" ${g.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
+                            <option value="${f.id}" ${g.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf})${cbtMap[f.id] ? ` [CBT: ${cbtMap[f.id].pts} pts]` : ''}</option>
                             `;
                           }).join('')}
                         </select>
@@ -390,7 +398,7 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
                             const byeRank = byesList.indexOf(f.id) + 1;
                             const seedLabel = byeRank > 0 ? `[#${byeRank}]` : '';
                             return `
-                            <option value="${f.id}" ${(!g.is_bye && g.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf}) ${seedLabel}</option>
+                            <option value="${f.id}" ${(!g.is_bye && g.lado_b?.id === f.id) ? 'selected' : ''}>${f.nome} (${f.uf})${cbtMap[f.id] ? ` [CBT: ${cbtMap[f.id].pts} pts]` : ''}</option>
                             `;
                           }).join('')}
                         </select>

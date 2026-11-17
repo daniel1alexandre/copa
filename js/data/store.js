@@ -30,20 +30,8 @@ class AppStore {
   }
 
   initializeCategoryByes() {
-    try {
-      if (Array.isArray(this.state?.categories)) {
-        this.state.categories.forEach(cat => {
-          const byes = this.getCategoryByes(cat.id);
-          const feds = this.getCategoryParticipatingFeds(cat.id);
-          const nByes = Math.max(0, 32 - feds.length);
-          if (nByes > 0 && (!byes || byes.length === 0 || byes.every(b => !b))) {
-            this.syncCategoryByesFromSeeds(cat.id, false);
-          }
-        });
-      }
-    } catch (e) {
-      console.warn('Erro ao inicializar BYEs das categorias:', e);
-    }
+    // Os estados que possuem as pontuações CBT não devem ser inseridos na categoria como bye automaticamente.
+    // Os confrontos devem ser colocados selecionando os estados manualmente.
   }
 
   loadState() {
@@ -225,18 +213,6 @@ class AppStore {
                   ? parsed.categoryParticipants[catId].map(id => INITIAL_FEDERATIONS.find(f => f.id === id)).filter(Boolean)
                   : INITIAL_FEDERATIONS;
                 parsed.brackets[catId] = createGraphBracket(feds, catId, catByes);
-              } else if (catByes.length === 0 && parsed.brackets[catId]) {
-                // Regra: quando não tiver nenhum estado selecionado como Bye na categoria,
-                // nos confrontos também não pode ter nenhum estado selecionado na primeira fase
-                const hasR32Team = parsed.brackets[catId].some(
-                  g => g.fase === '1ª Fase' && (g.lado_a || g.lado_b)
-                );
-                if (hasR32Team) {
-                  const feds = (parsed.categoryParticipants && parsed.categoryParticipants[catId])
-                    ? parsed.categoryParticipants[catId].map(id => INITIAL_FEDERATIONS.find(f => f.id === id)).filter(Boolean)
-                    : INITIAL_FEDERATIONS;
-                  parsed.brackets[catId] = createGraphBracket(feds, catId, []);
-                }
               }
             });
           }
@@ -368,22 +344,6 @@ class AppStore {
       });
     }
 
-    // Regra: quando não tiver nenhum estado selecionado como Bye na categoria,
-    // nos confrontos também não pode ter nenhum estado selecionado na primeira fase
-    if (this.state.brackets) {
-      Object.keys(this.state.brackets).forEach(catId => {
-        const catByes = (this.state.categoryByes && this.state.categoryByes[catId]) || [];
-        if (catByes.length === 0 && this.state.brackets[catId]) {
-          const hasR32Team = this.state.brackets[catId].some(
-            g => g.fase === '1ª Fase' && (g.lado_a || g.lado_b)
-          );
-          if (hasR32Team) {
-            const feds = this.getCategoryParticipatingFeds(catId);
-            this.state.brackets[catId] = createGraphBracket(feds, catId, []);
-          }
-        }
-      });
-    }
     if (saveToStorage && typeof localStorage !== 'undefined') {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
@@ -656,20 +616,11 @@ class AppStore {
   }
 
   getCategoryByes(categoryId) {
-    const feds = this.getCategoryParticipatingFeds(categoryId);
-    const numByes = Math.max(0, 32 - feds.length);
-    if (numByes === 0) return [];
-
-    if (this.state.categoryByesCleared && this.state.categoryByesCleared[categoryId]) {
-      return [];
+    if (!this.state.categoryByes) {
+      this.state.categoryByes = {};
     }
-
-    const seeds = this.getCategorySeeds(categoryId);
-    const byes = seeds.slice(0, numByes);
-    while (byes.length < numByes) {
-      byes.push(null);
-    }
-    return byes;
+    // Estados com pontuação CBT não são inseridos na categoria como bye automaticamente
+    return this.state.categoryByes[categoryId] || [];
   }
 
   syncCategoryByesFromSeeds(categoryId, updateBracket = true) {
@@ -722,9 +673,11 @@ class AppStore {
       delete this.state.categoryByesCleared[categoryId];
     }
 
-    // Sincroniza os BYEs com os cabeças de chave respeitando a nova quantidade de BYEs
-    this.syncCategoryByesFromSeeds(categoryId, true);
-    return this.getCategoryParticipatingFeds(categoryId);
+    const feds = this.getCategoryParticipatingFeds(categoryId);
+    const byes = this.getCategoryByes(categoryId);
+    this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byes);
+    this.save(true, `Participantes da categoria ${categoryId} atualizados`);
+    return feds;
   }
 
   setCategoryByes(categoryId, byeFedIds, updateBracket = true) {
@@ -824,16 +777,6 @@ class AppStore {
     if (!this.state.brackets[categoryId]) {
       this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, byes);
       this.save(false);
-    } else if (byes.length === 0) {
-      // Regra oficial: quando não tiver nenhum estado selecionado como Bye na categoria,
-      // nos confrontos também não pode ter nenhum estado selecionado na primeira fase
-      const hasAnyR32Team = this.state.brackets[categoryId].some(
-        g => g.fase === '1ª Fase' && (g.lado_a || g.lado_b)
-      );
-      if (hasAnyR32Team) {
-        this.state.brackets[categoryId] = createGraphBracket(feds, categoryId, []);
-        this.save(false);
-      }
     }
     return this.state.brackets[categoryId];
   }

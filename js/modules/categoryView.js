@@ -311,13 +311,13 @@ export function renderCategoryView() {
     <div style="background: linear-gradient(135deg, #091b2c 0%, #004b57 60%, #028090 100%); border-radius: var(--radius-lg); padding: 1.5rem; color: white; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; box-shadow: var(--shadow-md);">
       <div>
         <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255, 183, 3, 0.2); color: #ffb703; padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem;">
-          🎾 Configuração de Estados e BYEs por Ranking
+          🎾 Configuração de Categorias e Pontuações CBT
         </div>
         <h2 style="font-family: var(--font-display); font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em;">
-          Gestão de Categorias, Participantes e BYEs
+          Gestão de Categorias, Participantes e Confrontos
         </h2>
         <p style="color: rgba(255, 255, 255, 0.85); font-size: 0.95rem; margin-top: 0.25rem;">
-          Defina as federações estaduais participantes e preencha as casas de BYE com seus respectivos rankings (1º, 2º, 3º...) para definir quem avança direto às Oitavas.
+          Defina as federações estaduais participantes, consulte as pontuações CBT oficiais e monte os confrontos selecionando os estados manualmente.
         </p>
       </div>
 
@@ -431,200 +431,116 @@ export function renderCategoryView() {
         </div>
       </div>
 
-      <!-- EXPLICAÇÃO DA REGRA DE BYE -->
+      <!-- EXPLICAÇÃO DA REGRA DO CHAVEAMENTO -->
       <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 0.85rem 1rem; font-size: 0.85rem; color: #92400e; display: flex; align-items: center; gap: 0.65rem;">
         <span style="font-size: 1.25rem;">💡</span>
         <span>
           <strong>Regra Oficial do Chaveamento:</strong> A chave possui 32 posições. 
-          Para <strong>${totalPart} estados participantes</strong>, são geradas exatamente <strong>${numByes} vagas de BYE</strong>. 
-          Preencha abaixo os estados correspondentes aos rankings (1º, 2º, 3º...) para alocá-los nas posições de BYE.
+          Para <strong>${totalPart} estados participantes</strong>, são ${realMatches} confrontos na 1ª fase e ${numByes} vagas de avanço para as Oitavas de Final. 
+          As pontuações CBT dos estados estão calculadas abaixo como referência técnica, <strong>sem inserção automática de BYE</strong>, permitindo que a comissão técnica monte os confrontos selecionando os estados manualmente.
         </span>
       </div>
     </div>
 
-    <!-- SEÇÃO DE CASAS PARA PREENCHER OS ESTADOS DE BYE POR RANKING -->
+    <!-- SEÇÃO: CÁLCULO DAS PONTUAÇÕES CBT DOS ESTADOS -->
     <div class="card" style="margin-bottom: 1.5rem; border: 2px solid #028090; background: #ffffff;">
       <div class="card-header" style="background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%); border-bottom: 1px solid #99f6e4; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
         <div>
           <div style="display: inline-flex; align-items: center; gap: 0.4rem; background: #028090; color: white; padding: 0.2rem 0.6rem; border-radius: var(--radius-full); font-size: 0.72rem; font-weight: 800; text-transform: uppercase;">
-            ⏩ Alocação de BYEs por Ranking
+            📊 Apuração Oficial CBT
           </div>
           <h3 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; color: #004b57; margin-top: 0.35rem;">
-            🏆 Casas para Preenchimento dos Estados de BYE (${numByes} vagas na categoria ${currentCat.nome})
+            Cálculo dos Estados com Pontuações CBT — ${currentCat.nome}
           </h3>
           <p style="color: #0f766e; font-size: 0.85rem; margin-top: 0.2rem;">
-            Conforme os <strong>${totalPart} estados</strong> desta categoria, preencha as <strong>${numByes} casas</strong> abaixo com o estado de cada ranking (1º, 2º, 3º...).
+            Pontuação oficial calculada pela soma dos rankings dos 2 melhores atletas femininos e 2 melhores masculinos de cada federação.
           </p>
         </div>
 
-        ${isAdmin ? `
-          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-            <button class="btn btn-sm" onclick="window.handleAutoFillSeeds()" style="background: #028090; color: white; border: none; font-weight: 700; font-size: 0.8rem; padding: 0.45rem 0.85rem; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; gap: 0.35rem; box-shadow: var(--shadow-sm);">
-              ⚡ Preencher por Ranking (Seeds)
-            </button>
-            <button class="btn btn-outline btn-sm" onclick="window.handleClearAllByes()" style="font-size: 0.8rem; font-weight: 700; padding: 0.45rem 0.85rem;">
-              🗑️ Limpar Todos os BYEs
-            </button>
-          </div>
-        ` : ''}
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="btn btn-primary btn-sm" onclick="window.openConfigureFirstRoundModal('${currentCat.id}')" style="font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.4rem; box-shadow: var(--shadow-sm);">
+            ⚔️ Definir Confrontos Manualmente
+          </button>
+        </div>
       </div>
 
       <div style="padding: 1.25rem;">
-        ${numByes > 0 ? `
-          <div class="first-round-modal-layout" style="grid-template-columns: 1fr 340px; gap: 1.25rem; align-items: start;">
-            <!-- COLUNA 1: CASAS DE BYE POR RANKING -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0.85rem;">
-              ${Array.from({ length: numByes }).map((_, idx) => {
-                const rankNum = idx + 1;
-                const rankLabel = `${rankNum}º`;
-                const selectedFedId = byesList[idx] || '';
-                const selectedFed = participatingFeds.find(f => f.id === selectedFedId);
+        <!-- AVISO OFICIAL: NÃO INSERIDO COMO BYE -->
+        <div style="background: #fffbeb; border: 1.5px solid #fde68a; border-radius: var(--radius-md); padding: 0.9rem 1.15rem; font-size: 0.85rem; color: #92400e; margin-bottom: 1.25rem; display: flex; align-items: flex-start; gap: 0.75rem;">
+          <span style="font-size: 1.35rem; line-height: 1;">📌</span>
+          <div>
+            <strong style="color: #78350f;">Regra Oficial dos Confrontos:</strong>
+            Os estados abaixo possuem as pontuações CBT calculadas oficialmente para consulta e referência técnica, 
+            <strong>mas eles não são inseridos na categoria como BYE</strong>. É permitido colocar os confrontos selecionando os estados manualmente na 1ª Rodada.
+          </div>
+        </div>
 
+        <!-- TABELA DE PONTUAÇÕES CBT -->
+        <div style="overflow-x: auto;">
+          <table class="table" style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+            <thead>
+              <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; text-align: left;">
+                <th style="padding: 0.65rem 0.75rem; font-weight: 800; color: #004b57; width: 50px;">Pos</th>
+                <th style="padding: 0.65rem 0.75rem; font-weight: 800; color: #004b57;">Estado / Federação</th>
+                <th style="padding: 0.65rem 0.75rem; font-weight: 800; color: #004b57; text-align: center;">Pontuação CBT (Soma)</th>
+                <th style="padding: 0.65rem 0.75rem; font-weight: 800; color: #004b57;">Top Atletas Femininos (2 Melhores)</th>
+                <th style="padding: 0.65rem 0.75rem; font-weight: 800; color: #004b57;">Top Atletas Masculinos (2 Melhores)</th>
+                <th style="padding: 0.65rem 0.75rem; font-weight: 800; color: #004b57; text-align: center;">Status Pré-requisitos</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${(() => {
                 const rankedList = store.calculateCategorySeeds(currentCat.id);
-                const completeList = rankedList.filter(item => item.isComplete);
-                const headCount = Math.min(6, completeList.length);
-                const isOfficialSeed = rankNum <= headCount;
-                const defaultCbtFed = isOfficialSeed ? completeList[rankNum - 1] : null;
-                const isDrawnSlot = rankNum > headCount && rankNum <= 6;
-                const drawnSeeds = store.getCategoryDrawnSeeds(currentCat.id);
-                const isAlteredOfficial = isOfficialSeed && Boolean(drawnSeeds[rankNum] && drawnSeeds[rankNum] !== defaultCbtFed?.id);
-                const isDrawnSelected = isDrawnSlot && Boolean(drawnSeeds[rankNum]);
-
-                return `
-                  <div class="bye-slot-card" style="border: 2px solid ${isAlteredOfficial ? '#f59e0b' : (selectedFed ? '#0d9488' : '#cbd5e1')}; background: ${isAlteredOfficial ? '#fffbeb' : (selectedFed ? '#f0fdfa' : '#f8fafc')}; border-radius: var(--radius-md); padding: 0.85rem 1rem; box-shadow: var(--shadow-sm); transition: all 0.2s ease; display: flex; flex-direction: column; justify-content: space-between;">
-                    
-                    <div>
-                      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
-                        <span style="background: ${isAlteredOfficial ? '#d97706' : (isOfficialSeed ? '#028090' : (selectedFed ? '#0f766e' : '#475569'))}; color: white; font-weight: 800; font-size: 0.82rem; padding: 0.2rem 0.65rem; border-radius: var(--radius-full); display: inline-flex; align-items: center; gap: 0.35rem;">
-                          ${isAlteredOfficial ? `🔄 ${rankLabel} Ranking (Congresso)` : (isOfficialSeed ? `👑 ${rankLabel} Ranking (Cabeça ${rankNum})` : (isDrawnSlot ? `🎲 ${rankLabel} Ranking (Cabeça ${rankNum})` : `🎖️ ${rankLabel} Ranking`))}
-                        </span>
-                        <div style="display: flex; align-items: center; gap: 4px;">
-                          ${isOfficialSeed && defaultCbtFed?.somaRankings !== null ? `
-                            <span style="font-size: 0.75rem; font-weight: 800; color: #028090; background: #f0fdfa; border: 1px solid #99f6e4; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
-                              ${defaultCbtFed.somaRankings} pts
-                            </span>
-                          ` : ''}
-                          <span style="font-size: 0.72rem; font-weight: 800; color: ${isAlteredOfficial ? '#b45309' : (selectedFed ? '#047857' : '#94a3b8')}; background: ${isAlteredOfficial ? '#fef3c7' : (selectedFed ? '#ecfdf5' : '#f1f5f9')}; padding: 0.15rem 0.45rem; border-radius: var(--radius-xs);">
-                            ${isAlteredOfficial ? `🔄 Alterado no Congresso (Oficial: ${defaultCbtFed?.uf})` : (selectedFed ? (isOfficialSeed ? '👑 Oficial CBT' : (isDrawnSelected ? '🎲 Sorteado' : '✅ Vaga Definida')) : '⚪ Vaga Aberta')}
+                const participatingRanked = rankedList.filter(item => participatingIds.has(item.id));
+                return participatingRanked.map((item, idx) => {
+                  const hasPoints = item.somaRankings !== null;
+                  return `
+                    <tr style="border-bottom: 1px solid #f1f5f9; ${hasPoints ? 'background: #ffffff;' : 'background: #fafafa; opacity: 0.85;'}">
+                      <td style="padding: 0.65rem 0.75rem; font-weight: 800; color: ${idx < 6 ? '#028090' : '#64748b'};">
+                        ${idx + 1}º
+                      </td>
+                      <td style="padding: 0.65rem 0.75rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                          <img src="assets/federations/${item.id}.jpg" alt="${item.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${item.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${item.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 28px; height: 20px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.15); background: #ffffff; padding: 1px;">
+                          <strong style="color: #0f172a;">${item.nome}</strong>
+                          <span style="font-size: 0.75rem; color: #64748b; font-weight: 700;">(${item.uf})</span>
+                        </div>
+                      </td>
+                      <td style="padding: 0.65rem 0.75rem; text-align: center;">
+                        ${hasPoints ? `
+                          <span style="background: #f0fdfa; border: 1.5px solid #99f6e4; color: #0f766e; font-weight: 800; font-size: 0.85rem; padding: 0.2rem 0.65rem; border-radius: 4px;">
+                            ${item.somaRankings} pts
                           </span>
-                        </div>
-                      </div>
-
-                      <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--accent-dark-blue); margin-bottom: 0.35rem;">
-                        Estado do <strong>${rankLabel} Ranking</strong> (Passa de BYE):
-                      </label>
-
-                      <div style="display: flex; align-items: center; gap: 0.45rem;">
-                        <select class="form-select" 
-                                style="width: 100%; font-size: 0.88rem; font-weight: 700; border: 1.5px solid ${isAlteredOfficial ? '#f59e0b' : (selectedFed ? '#0d9488' : '#cbd5e1')}; background-color: ${!isAdmin ? '#f8fafc' : '#ffffff'}; padding: 0.45rem 0.6rem; border-radius: var(--radius-sm); ${!isAdmin ? 'cursor: not-allowed;' : ''}"
-                                ${!isAdmin ? 'disabled' : ''}
-                                onchange="window.handleByeSlotSelectChange(${idx}, this.value)">
-                          <option value="">${isOfficialSeed && defaultCbtFed ? `👑 Padrão Oficial CBT: ${defaultCbtFed.nome} (${defaultCbtFed.uf}${defaultCbtFed.somaRankings !== null ? ` - ${defaultCbtFed.somaRankings} pts` : ''})` : `-- Selecione o ${rankLabel} Estado --`}</option>
-                          ${participatingFeds.map(f => {
-                            const otherIdx = byesList.indexOf(f.id);
-                            const isCurrent = f.id === selectedFedId;
-                            const alreadyInOther = otherIdx !== -1 && otherIdx !== idx;
-                            if (alreadyInOther) {
-                              return `<option value="${f.id}" disabled style="color: #94a3b8; background: #f8fafc;">${f.nome} (${f.uf}) — 🔒 Já no ${otherIdx + 1}º Ranking</option>`;
-                            }
-                            return `<option value="${f.id}" ${isCurrent ? 'selected' : ''}>${f.nome} (${f.uf})</option>`;
-                          }).join('')}
-                        </select>
-
-                        ${isAdmin && isAlteredOfficial ? `
-                          <button title="Restaurar padrão oficial CBT (${defaultCbtFed?.uf})" 
-                                  onclick="window.handleByeSlotSelectChange(${idx}, '')"
-                                  style="background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; width: 34px; height: 34px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;"
-                                  onmouseover="this.style.background='#fde68a'"
-                                  onmouseout="this.style.background='#fef3c7'">
-                            ↩️
-                          </button>
-                        ` : ''}
-
-                        ${isAdmin && selectedFed && !isAlteredOfficial ? `
-                          <button title="Desmarcar ${rankLabel} Ranking e reabilitar estado" 
-                                  onclick="window.handleUnselectCategoryBye('${selectedFed.id}')"
-                                  style="background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; width: 34px; height: 34px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0;"
-                                  onmouseover="this.style.background='#fecaca'"
-                                  onmouseout="this.style.background='#fee2e2'">
-                            ✕
-                          </button>
-                        ` : ''}
-                      </div>
-                    </div>
-
-                    <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px dashed ${selectedFed ? '#99f6e4' : '#e2e8f0'}; min-height: 28px; display: flex; align-items: center;">
-                      ${selectedFed ? `
-                        <div style="display: flex; align-items: center; gap: 0.5rem; overflow: hidden;">
-                          <img src="assets/federations/${selectedFed.id}.jpg" alt="${selectedFed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${selectedFed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${selectedFed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 32px; height: 24px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.18); background: #ffffff; padding: 1px; flex-shrink: 0;">
-                          <span style="font-size: 0.8rem; font-weight: 700; color: #0f766e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            ${selectedFed.nome} (${selectedFed.uf})
+                        ` : `
+                          <span style="color: #94a3b8; font-size: 0.78rem; font-weight: 600;">Sem soma válida</span>
+                        `}
+                      </td>
+                      <td style="padding: 0.65rem 0.75rem; font-size: 0.8rem; color: #334155;">
+                        ${item.fem1 ? `<span>1ª: ${item.fem1.nome} ${item.fem1.ranking ? `(#${item.fem1.ranking})` : ''}</span>` : '<span style="color:#94a3b8;">-</span>'}<br>
+                        ${item.fem2 ? `<span>2ª: ${item.fem2.nome} ${item.fem2.ranking ? `(#${item.fem2.ranking})` : ''}</span>` : '<span style="color:#94a3b8;">-</span>'}
+                      </td>
+                      <td style="padding: 0.65rem 0.75rem; font-size: 0.8rem; color: #334155;">
+                        ${item.masc1 ? `<span>1º: ${item.masc1.nome} ${item.masc1.ranking ? `(#${item.masc1.ranking})` : ''}</span>` : '<span style="color:#94a3b8;">-</span>'}<br>
+                        ${item.masc2 ? `<span>2º: ${item.masc2.nome} ${item.masc2.ranking ? `(#${item.masc2.ranking})` : ''}</span>` : '<span style="color:#94a3b8;">-</span>'}
+                      </td>
+                      <td style="padding: 0.65rem 0.75rem; text-align: center;">
+                        ${item.isComplete ? `
+                          <span style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 700; font-size: 0.75rem;">
+                            ✅ Completo (2F + 2M)
                           </span>
-                        </div>
-                      ` : `
-                        <span style="font-size: 0.72rem; color: #94a3b8; font-style: italic;">
-                          Nenhum estado selecionado para esta vaga.
-                        </span>
-                      `}
-                    </div>
-                  </div>
-                `;
-              }).join('')}
-            </div>
-
-            <!-- COLUNA 2: RELAÇÃO DOS ESTADOS JÁ SELECIONADOS E DISPONÍVEIS -->
-            <div class="state-selection-panel" style="max-height: 520px;">
-              <div class="state-selection-header">
-                <div class="state-selection-title">
-                  <span>📋 Relação dos Estados</span>
-                  <span style="font-size: 0.72rem; font-weight: 800; color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 0.15rem 0.45rem; border-radius: 4px;">
-                    ${byesList.length}/${numByes} BYEs
-                  </span>
-                </div>
-                <input type="text" id="cat-bye-state-filter" class="state-selection-search" placeholder="🔍 Filtrar estado (ex: SP, RJ)..." oninput="window.filterCategoryByeList()">
-                <div style="font-size: 0.7rem; color: #64748b; line-height: 1.35; margin-top: 0.25rem;">
-                  Estados de BYE ficam <strong>clareados com check (✓)</strong>. Clique no check para <strong>desmarcar e reabilitar</strong>!
-                </div>
-              </div>
-              <div class="state-selection-list" id="cat-bye-state-items-container">
-                ${participatingFeds.map(f => {
-                  const isBye = byesList.includes(f.id);
-                  const byeRank = byesList.indexOf(f.id) + 1;
-                  if (isBye) {
-                    return `
-                      <div class="state-select-item is-selected" data-fed-id="${f.id}" style="cursor: not-allowed;" title="${f.nome} (${f.uf}) é ${byeRank}º Ranking (Passa de BYE). Clique no check para desmarcar!">
-                        <div class="state-item-left">
-                          <img src="assets/federations/${f.id}.jpg" alt="${f.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${f.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${f.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
-                          <span class="state-item-name">${f.nome} (${f.uf})</span>
-                        </div>
-                        <button type="button" class="btn-state-unselect-check" title="Clique para desmarcar do BYE e reabilitar" onclick="event.stopPropagation(); window.handleUnselectCategoryBye('${f.id}')">
-                          <span class="check-symbol">✓</span>
-                          <span class="check-slot-tag">${byeRank}º Ranking</span>
-                        </button>
-                      </div>
-                    `;
-                  } else {
-                    return `
-                      <div class="state-select-item is-available" data-fed-id="${f.id}" onclick="window.handlePickCategoryBye('${f.id}')" title="Clique para alocar ${f.nome} (${f.uf}) na próxima vaga de BYE">
-                        <div class="state-item-left">
-                          <img src="assets/federations/${f.id}.jpg" alt="${f.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${f.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${f.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" class="state-item-flag">
-                          <span class="state-item-name">${f.nome} (${f.uf})</span>
-                        </div>
-                        <button type="button" class="btn-state-assign-quick" title="Alocar no próximo BYE" onclick="event.stopPropagation(); window.handlePickCategoryBye('${f.id}')">
-                          + Selecionar
-                        </button>
-                      </div>
-                    `;
-                  }
-                }).join('')}
-              </div>
-            </div>
-          </div>
-        ` : `
-          <div style="text-align: center; padding: 1.5rem; background: #f8fafc; border-radius: var(--radius-md); color: var(--text-muted); font-size: 0.95rem;">
-            🎉 Esta categoria possui 32 participantes completos, portanto não há vagas de BYE necessárias.
-          </div>
-        `}
+                        ` : `
+                          <span style="background: #f1f5f9; color: #64748b; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; font-size: 0.75rem;">
+                            Incompleto (${item.femRankedCount}F, ${item.mascRankedCount}M)
+                          </span>
+                        `}
+                      </td>
+                    </tr>
+                  `;
+                }).join('');
+              })()}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -659,38 +575,23 @@ export function renderCategoryView() {
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; margin-top: 1rem;">
         ${allFeds.map(fed => {
           const isChecked = participatingIds.has(fed.id);
-          const isBye = byesList.includes(fed.id);
-          const byeRank = byesList.indexOf(fed.id) + 1;
 
           return `
-            <div onclick="window.handleToggleCategoryBye('${fed.id}', event)"
-                 style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; border: 2px ${isBye ? 'dashed #059669' : 'solid ' + (isChecked ? 'var(--primary-light)' : 'var(--border-light)')}; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s ease; background: ${isBye ? '#f0fdf4' : (isChecked ? '#f8fafc' : '#ffffff')}; opacity: ${isBye ? '0.55' : '1'};"
-                 ${isBye ? `onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.55'"` : ''}>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.65rem 0.85rem; border: 2px solid ${isChecked ? 'var(--primary-light)' : 'var(--border-light)'}; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s ease; background: ${isChecked ? '#f8fafc' : '#ffffff'};"
+                 onclick="const cb = this.querySelector('input[type=checkbox]'); if (cb) { cb.checked = !cb.checked; window.handleToggleCategoryParticipant('${fed.id}', cb.checked); }">
               <div style="display: flex; align-items: center; gap: 0.65rem;">
                 <img src="assets/federations/${fed.id}.jpg" alt="${fed.uf}" onerror="if (!this.dataset.triedPng) { this.dataset.triedPng = '1'; this.src='assets/federations/${fed.id}.png'; } else if (!this.dataset.triedSvg) { this.dataset.triedSvg = '1'; this.src='assets/federations/${fed.id}.svg'; } else { this.onerror=null; this.src='assets/logo.jpg'; }" style="width: 36px; height: 26px; border-radius: 3px; object-fit: contain; box-shadow: 0 1px 3px rgba(0,0,0,0.2); background: #ffffff; padding: 1px; flex-shrink: 0;">
                 <div>
-                  <strong style="color: ${isBye ? '#065f46' : 'var(--accent-dark-blue)'}; font-size: 0.9rem;">
+                  <strong style="color: var(--accent-dark-blue); font-size: 0.9rem;">
                     ${fed.nome} (${fed.uf})
                   </strong>
-                  ${isBye ? `
-                    <div style="font-size: 0.75rem; color: #047857; font-weight: 800;">
-                      ⏩ BYE: ${byeRank}º Ranking
-                    </div>
-                  ` : `
-                    <div style="font-size: 0.75rem; color: var(--text-muted);">
-                      ${isChecked ? 'Participante regular' : 'Não participante'}
-                    </div>
-                  `}
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">
+                    ${isChecked ? 'Participante inscrito' : 'Não inscrito'}
+                  </div>
                 </div>
               </div>
 
               <div style="display: flex; align-items: center; gap: 0.45rem;">
-                ${isBye ? `
-                  <button type="button" class="btn-state-unselect-check" title="Clique para desmarcar do BYE e reabilitar" onclick="event.stopPropagation(); window.handleUnselectCategoryBye('${fed.id}')">
-                    <span class="check-symbol">✓</span>
-                    <span class="check-slot-tag">${byeRank}º BYE</span>
-                  </button>
-                ` : ''}
                 <input type="checkbox" 
                        class="cat-fed-checkbox" 
                        value="${fed.id}" 
