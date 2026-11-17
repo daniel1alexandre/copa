@@ -914,14 +914,16 @@ class AppStore {
   // EDIÇÃO DE CONFRONTOS DA 1ª RODADA E BYES
   // ==========================================
   updateFirstRoundMatch(categoryId, gameCode, teamAId, teamBId, isBye, byeSlot = 'B') {
+    const rawIdA = typeof teamAId === 'object' ? teamAId?.id : teamAId;
+    const rawIdB = typeof teamBId === 'object' ? teamBId?.id : teamBId;
     const games = this.getGames(categoryId);
-    const isByeA = teamAId === 'BYE' || teamAId === 'bye';
-    const isByeB = teamBId === 'BYE' || teamBId === 'bye';
+    const isByeA = rawIdA === 'BYE' || rawIdA === 'bye';
+    const isByeB = rawIdB === 'BYE' || rawIdB === 'bye';
     const isActuallyBye = Boolean(isBye || isByeA || isByeB);
-    const effectiveByeSlot = (isByeB || (!teamBId && isActuallyBye)) ? 'B' : ((isByeA || (!teamAId && isActuallyBye)) ? 'A' : byeSlot);
+    const effectiveByeSlot = (isByeB || (!rawIdB && isActuallyBye)) ? 'B' : ((isByeA || (!rawIdA && isActuallyBye)) ? 'A' : byeSlot);
 
-    const teamA = (teamAId && !isByeA) ? this.getFederation(teamAId) : null;
-    const teamB = (teamBId && !isByeB) ? this.getFederation(teamBId) : null;
+    const teamA = (rawIdA && !isByeA) ? this.getFederation(rawIdA) : null;
+    const teamB = (rawIdB && !isByeB) ? this.getFederation(rawIdB) : null;
 
     const oldGame = games.find(g => g.code === gameCode);
     const wasBye = oldGame ? oldGame.is_bye : false;
