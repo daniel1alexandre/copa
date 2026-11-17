@@ -53,6 +53,14 @@ export function initBracketView() {
       window.openConfigureFirstRoundModal(currentCategory);
     }
   };
+
+  window.handleClearCurrentCategoryMatchups = () => {
+    if (confirm(`Deseja limpar todos os confrontos da 1ª rodada da categoria ${currentCategory} para montagem 100% manual?`)) {
+      store.clearCategoryMatchups(currentCategory);
+      toast.show({ title: 'Confrontos Limpos', message: 'Confrontos da categoria liberados para montagem manual.', type: 'info' });
+      renderBracket();
+    }
+  };
 }
 
 export function getBracketSubtabHeaderInfo(subtab) {
@@ -160,7 +168,10 @@ export function renderBracket() {
 
       <div class="bracket-controls-right" style="display: flex; align-items: center; gap: 0.5rem;">
         ${isAdmin ? `
-          <button class="btn btn-outline btn-sm" style="color: #dc2626; border-color: #fca5a5; background: #fef2f2; font-weight: 700; height: 32px;" onclick="window.clearAllResults()">
+          <button class="btn btn-outline btn-sm" style="color: #ea580c; border-color: #fdba74; background: #fff7ed; font-weight: 700; height: 32px;" onclick="window.handleClearCurrentCategoryMatchups()" title="Limpa todos os confrontos desta categoria para montagem manual">
+            🧹 Limpar Confrontos
+          </button>
+          <button class="btn btn-outline btn-sm" style="color: #dc2626; border-color: #fca5a5; background: #fef2f2; font-weight: 700; height: 32px;" onclick="window.clearAllResults()" title="Limpa os placares mantendo a 1ª fase">
             🗑️ Limpar Resultados
           </button>
         ` : ''}

@@ -1,6 +1,7 @@
 // Módulo de Classificação e Ranking Geral das Federações
 import { store } from '../data/store.js';
 import { calculateCategoryPlacements } from './bracketEngine.js';
+import { toast } from './toast.js';
 
 let sortColumn = 'total'; // 'total', 'nome', ou id da categoria (ex: 'prof', 'cat_a')
 let sortAscending = false;
@@ -18,6 +19,18 @@ export function initRankingView() {
 
   window.handlePrintRanking = () => {
     window.print();
+  };
+
+  window.handleClearAllClassifications = () => {
+    if (!window.auth || typeof window.auth.isAdmin !== 'function' || !window.auth.isAdmin()) {
+      toast.show({ title: 'Acesso Restrito', message: 'Apenas o administrador (Baumann) pode limpar as classificações.', type: 'warning' });
+      return;
+    }
+    if (confirm('Tem certeza de que deseja limpar todas as classificações e confrontos de todas as categorias para permitir montagem 100% manual?')) {
+      store.clearAllClassificationsAndBrackets();
+      toast.show({ title: 'Classificações Limpas', message: 'Todas as categorias foram zeradas e liberadas para montagem manual de confrontos.', type: 'success' });
+      renderRanking();
+    }
   };
 }
 
@@ -96,7 +109,12 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
       </div>
 
       ${showPrintBtn ? `
-        <div style="display: flex; gap: 0.75rem;">
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          ${window.auth && typeof window.auth.isAdmin === 'function' && window.auth.isAdmin() ? `
+            <button class="btn btn-outline" style="color: #ef4444; border-color: rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.1);" onclick="window.handleClearAllClassifications()">
+              🧹 Limpar Todas as Classificações
+            </button>
+          ` : ''}
           <button class="btn btn-outline" style="color: #ffffff; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.1);" onclick="window.handlePrintRanking()">
             🖨️ Imprimir / Salvar PDF
           </button>
@@ -104,6 +122,7 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
       ` : ''}
     </div>
 
+    ${top1 && top1.total > 0 ? `
     <!-- PÓDIO OLÍMPICO (TOP 3) -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
       <!-- 2º LUGAR (PRATA) -->
@@ -151,6 +170,20 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
         </div>
       </div>
     </div>
+    ` : `
+    <!-- AVISO DE CLASSIFICAÇÃO LIMPA / AGUARDANDO JOGOS -->
+    <div class="card" style="margin-bottom: 1.5rem; background: rgba(255, 255, 255, 0.95); border-left: 5px solid #028090; padding: 1.25rem 1.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span style="font-size: 1.75rem;">⏳</span>
+        <div>
+          <h4 style="margin: 0; color: #0b1a30; font-size: 1.05rem; font-weight: 800;">Classificação Geral Limpa — Aguardando Início dos Confrontos</h4>
+          <p style="margin: 0.2rem 0 0 0; color: #475569; font-size: 0.85rem;">
+            Todas as categorias estão liberadas para montagem manual de confrontos. Os pontos e o pódio olímpico serão computados automaticamente conforme os jogos forem finalizados.
+          </p>
+        </div>
+      </div>
+    </div>
+    `}
 
     <!-- TABELA GERAL ORDENÁVEL COM TODAS AS 27 FEDERAÇÕES E CATEGORIAS -->
     <div class="card" style="padding: 0; overflow: hidden;">

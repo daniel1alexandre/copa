@@ -22,22 +22,19 @@ export function createGraphBracket(federations, categoryId, categoryByes = []) {
 
   const bracketSlots = Array(32).fill(null);
   
-  // Posiciona os BYEs
-  for (let i = 0; i < numByes; i++) {
-    bracketSlots[byeSlots[i]] = { isBye: true, code: `B${i + 1}` };
-  }
-
-  // Posiciona SOMENTE os times escolhidos para passar de BYE contra os slots de BYE
-  // Os demais slots ficam VAZIOS (null) para preenchimento manual pelo usuário
-  for (let i = 0; i < numByes; i++) {
-    const oppSlot = byeOpponentSlots[i];
-    if (i < byeFeds.length && byeFeds[i]) {
-      bracketSlots[oppSlot] = byeFeds[i];
+  // Posiciona os BYEs SOMENTE se houver federações expressamente escolhidas para passar de BYE
+  const hasDefinedByes = byeFeds.some(Boolean);
+  if (hasDefinedByes) {
+    for (let i = 0; i < numByes; i++) {
+      if (byeFeds[i]) {
+        bracketSlots[byeSlots[i]] = { isBye: true, code: `B${i + 1}` };
+        const oppSlot = byeOpponentSlots[i];
+        bracketSlots[oppSlot] = byeFeds[i];
+      }
     }
-    // Se não houver federação atribuída a este BYE, o slot oponente fica null (aguardando)
   }
 
-  // Os demais slots (não-BYE) ficam TODOS como null para preenchimento manual
+  // Os demais slots ficam TODOS como null para preenchimento manual pelo usuário
 
   const games = [];
 
@@ -1163,6 +1160,27 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
         prioridade: prioridade
       });
     }
+  }
+
+  // Verifica se há pelo menos um confronto com resultado disputado ou encerrado nesta categoria
+  const hasPlayedMatches = games.some(g => g.status === 'encerrado' && g.vencedor_id && (g.placar_jogo1 || g.resultado_jogo1 || !g.is_bye));
+
+  // Se a categoria ainda não teve confrontos disputados, as equipes iniciam com 0 pontos (classificação limpa)
+  if (!hasPlayedMatches) {
+    participatingFeds.forEach(fed => {
+      teamMap.set(fed.id, {
+        id: fed.id,
+        equipe_id: fed.id,
+        nome: fed.nome,
+        sigla: fed.sigla,
+        uf: fed.uf,
+        pontos: 0,
+        faseAtual: 'Aguardando Início',
+        colocacao: null,
+        prioridade: 0
+      });
+    });
+    return Array.from(teamMap.values());
   }
 
   // 1. Equipes participantes iniciam com pontuação base de participação (1 ponto CBT)

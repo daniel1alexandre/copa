@@ -238,6 +238,28 @@ class AppStore {
             parsed.categoryDrawnSeeds = {};
           }
 
+          // Migração / Limpeza: Se ainda não estiver na versão de chaveamento limpo manual,
+          // reseta todas as classificações e brackets das categorias para começar do zero (100% manual)
+          if (!parsed._clean_manual_version || parsed._clean_manual_version < 3) {
+            const allCats = Array.isArray(parsed.categories) ? parsed.categories : INITIAL_CATEGORIES;
+            if (!parsed.brackets) parsed.brackets = {};
+            if (!parsed.categoryByes) parsed.categoryByes = {};
+            if (!parsed.categoryDrawnSeeds) parsed.categoryDrawnSeeds = {};
+
+            allCats.forEach(cat => {
+              const feds = (parsed.categoryParticipants && parsed.categoryParticipants[cat.id])
+                ? parsed.categoryParticipants[cat.id].map(id => INITIAL_FEDERATIONS.find(f => f.id === id)).filter(Boolean)
+                : INITIAL_FEDERATIONS;
+              parsed.brackets[cat.id] = createGraphBracket(feds, cat.id, []);
+              parsed.categoryByes[cat.id] = [];
+              parsed.categoryDrawnSeeds[cat.id] = {};
+            });
+            parsed._clean_manual_version = 3;
+            try {
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+            } catch (err) {}
+          }
+
           return parsed;
         }
       }
@@ -255,9 +277,16 @@ class AppStore {
     const tournament = JSON.parse(JSON.stringify(INITIAL_TOURNAMENT));
     const pointsTable = JSON.parse(JSON.stringify(DEFAULT_POINTS_TABLE));
 
-    // Gera o grafo da categoria Profissional sem BYEs pré-definidos e sem estados escalados
+    // Gera os grafos de TODAS as categorias sem BYEs pré-definidos e sem estados pré-escalados (100% manual)
     const brackets = {};
-    brackets['prof'] = createGraphBracket(federations, 'prof', []);
+    const categoryByes = {};
+    const categoryDrawnSeeds = {};
+
+    categories.forEach(cat => {
+      brackets[cat.id] = createGraphBracket(federations, cat.id, []);
+      categoryByes[cat.id] = [];
+      categoryDrawnSeeds[cat.id] = {};
+    });
 
     const state = {
       tournament,
@@ -266,10 +295,11 @@ class AppStore {
       courts,
       athletes,
       brackets,
-      categoryByes: { prof: [] },
-      categoryDrawnSeeds: {},
+      categoryByes,
+      categoryDrawnSeeds,
       pointsTable,
-      lastUpdated: '1970-01-01T00:00:00.000Z'
+      _clean_manual_version: 3,
+      lastUpdated: new Date().toISOString()
     };
 
     try {
@@ -1341,10 +1371,43 @@ class AppStore {
     this.save();
   }
 
+  clearAllClassificationsAndBrackets() {
+    const categories = this.getCategories();
+    
+    if (!this.state.brackets) this.state.brackets = {};
+    if (!this.state.categoryByes) this.state.categoryByes = {};
+    if (!this.state.categoryDrawnSeeds) this.state.categoryDrawnSeeds = {};
+
+    categories.forEach(cat => {
+      const partFeds = this.getCategoryParticipatingFeds(cat.id);
+      this.state.brackets[cat.id] = createGraphBracket(partFeds, cat.id, []);
+      this.state.categoryByes[cat.id] = [];
+      this.state.categoryDrawnSeeds[cat.id] = {};
+    });
+
+    this.undoStack = [];
+    this.save(true, 'Todas as classificações foram limpas e as categorias preparadas para montagem manual');
+    return true;
+  }
+
+  clearCategoryMatchups(categoryId) {
+    const partFeds = this.getCategoryParticipatingFeds(categoryId);
+    if (!this.state.brackets) this.state.brackets = {};
+    if (!this.state.categoryByes) this.state.categoryByes = {};
+    if (!this.state.categoryDrawnSeeds) this.state.categoryDrawnSeeds = {};
+
+    this.state.brackets[categoryId] = createGraphBracket(partFeds, categoryId, []);
+    this.state.categoryByes[categoryId] = [];
+    this.state.categoryDrawnSeeds[categoryId] = {};
+
+    this.save(true, `Confrontos da categoria ${categoryId} limpos para montagem manual`);
+    return { success: true };
+  }
+
   resetAllData() {
     this.state = this.createInitialSeed();
     this.undoStack = [];
-    this.save();
+    this.save(true, 'Dados reiniciados e categorias preparadas para montagem manual');
     return true;
   }
 

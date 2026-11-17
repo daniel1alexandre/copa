@@ -378,7 +378,7 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
                           ${federations.map(f => {
                             const byesList = store.getCategoryByes(categoryId);
                             const byeRank = byesList.indexOf(f.id) + 1;
-                            const seedLabel = cbtMap[fed.id] ? `${cbtMap[fed.id].pts} pts CBT` : (byeRank > 0 ? `[#${byeRank}]` : '');
+                            const seedLabel = cbtMap[f.id] ? `${cbtMap[f.id].pts} pts CBT` : (byeRank > 0 ? `[#${byeRank}]` : '');
                             return `
                             <option value="${f.id}" ${g.lado_a?.id === f.id ? 'selected' : ''}>${f.nome} (${f.uf})${cbtMap[f.id] ? ` [CBT: ${cbtMap[f.id].pts} pts]` : ''}</option>
                             `;
@@ -412,10 +412,15 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
         </div>
       </div>
 
-      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem;">
-        <button type="button" class="btn btn-outline btn-sm" onclick="window.handleResetDefaultSeeds('${categoryId}')">
-          🎲 Restaurar Sorteio por Cabeças de Chave
-        </button>
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; flex-wrap: wrap; gap: 0.5rem;">
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button type="button" class="btn btn-outline btn-sm" style="color: #dc2626; border-color: #fca5a5; background: #fef2f2;" onclick="window.handleClearCategoryMatchups('${categoryId}')">
+            🧹 Limpar Todos os Confrontos Desta Categoria
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="window.handleResetDefaultSeeds('${categoryId}')">
+            🎲 Restaurar Sorteio por Cabeças de Chave
+          </button>
+        </div>
         <div style="display: flex; gap: 0.5rem;">
           <button type="button" class="btn btn-outline" onclick="document.getElementById('match-modal-overlay').classList.remove('active')">Cancelar</button>
           ${window.auth.isAdmin() ? `
@@ -784,6 +789,15 @@ export function openConfigureFirstRoundModal(categoryId = 'prof') {
 
   window.filterFirstRoundStateList = () => {
     window.renderFirstRoundStateList();
+  };
+
+  window.handleClearCategoryMatchups = (catId) => {
+    if (confirm('Deseja limpar todos os confrontos da 1ª rodada desta categoria para preencher 100% manualmente?')) {
+      store.clearCategoryMatchups(catId);
+      toast.show({ title: 'Confrontos Limpos', message: 'Todos os confrontos da categoria foram limpos para montagem manual.', type: 'info' });
+      openConfigureFirstRoundModal(catId);
+      if (window.renderBracket) window.renderBracket();
+    }
   };
 
   window.handleResetDefaultSeeds = (catId) => {
