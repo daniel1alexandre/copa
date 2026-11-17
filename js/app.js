@@ -6,12 +6,12 @@ import { renderDashboard } from './modules/dashboard.js';
 import { initCategoryView, renderCategoryView } from './modules/categoryView.js';
 import { initBracketView, renderBracket } from './modules/bracketView.js';
 import { initRankingView, renderRanking } from './modules/rankingView.js';
-import { initSeedView, renderSeedView } from './modules/seedView.js';
+// import { initSeedView, renderSeedView } from './modules/seedView.js'; // Menu removido
 import { initTeamsAthletesView, renderTeamsAthletes } from './modules/teamsAthletesView.js';
 import { initConfigView, renderConfig } from './modules/configView.js';
 import { openMatchModal, openScheduleModal, openConfigureFirstRoundModal, openEditFirstRoundCardModal } from './modules/modal.js';
 
-const GUEST_ALLOWED_TABS = ['chaveamento', 'cabeca-chave', 'ranking', 'atletas'];
+const GUEST_ALLOWED_TABS = ['chaveamento', 'ranking', 'atletas'];
 let activeTab = 'home';
 
 export function updateNavTabsAccess() {
@@ -52,7 +52,7 @@ function switchTab(tabId) {
     if (window.toast && typeof window.toast.show === 'function') {
       window.toast.show({
         title: 'Acesso Restrito',
-        message: 'No modo visitante/espectador, os menus Confrontos, Cabeça de Chave, Classificação e Atletas estão liberados para consulta.',
+        message: 'No modo visitante/espectador, os menus Confrontos, Classificação e Atletas estão liberados para consulta.',
         type: 'warning'
       });
     }
@@ -91,7 +91,6 @@ function renderCurrentView() {
     else if (activeTab === 'categorias') renderCategoryView();
     else if (activeTab === 'atletas' || activeTab === 'cadastro') renderTeamsAthletes();
     else if (activeTab === 'chaveamento') renderBracket();
-    else if (activeTab === 'cabeca-chave') renderSeedView();
     else if (activeTab === 'ranking') renderRanking();
     else if (activeTab === 'configuracoes') renderConfig();
   } catch (err) {
@@ -129,7 +128,7 @@ function initApp() {
   // Inicializa submódulos de eventos
   initCategoryView();
   initBracketView();
-  initSeedView();
+  // initSeedView(); // Menu removido
   initRankingView();
   initTeamsAthletesView();
   initConfigView();
