@@ -649,8 +649,18 @@ class AppStore {
     if (!this.state.categoryByes) {
       this.state.categoryByes = {};
     }
-    // Estados com pontuação CBT não são inseridos na categoria como bye automaticamente
-    return this.state.categoryByes[categoryId] || [];
+    if (Array.isArray(this.state.categoryByes[categoryId]) && this.state.categoryByes[categoryId].length > 0) {
+      return this.state.categoryByes[categoryId];
+    }
+    if (this.state.categoryByesCleared && this.state.categoryByesCleared[categoryId]) {
+      return [];
+    }
+    // Por padrão, os cabeças de chave ocupam as vagas de BYE até o limite de BYEs da categoria
+    const feds = this.getCategoryParticipatingFeds(categoryId);
+    const numByes = Math.max(0, 32 - feds.length);
+    if (numByes === 0) return [];
+    const seeds = this.getCategorySeeds(categoryId).filter(Boolean);
+    return seeds.slice(0, numByes);
   }
 
   syncCategoryByesFromSeeds(categoryId, updateBracket = true) {

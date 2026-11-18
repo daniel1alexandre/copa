@@ -117,7 +117,9 @@ export function renderBracket() {
   const currentCatObj = categories.find(c => c.id === currentCategory) || categories[0];
   const participatingFeds = store.getCategoryParticipatingFeds(currentCategory);
   const pointsTable = store.getPointsTable();
-  const placements = calculateCategoryPlacements(allCategoryGames, pointsTable, participatingFeds);
+  const catByes = store.getCategoryByes(currentCategory);
+  const catSeeds = store.getCategorySeeds(currentCategory);
+  const placements = calculateCategoryPlacements(allCategoryGames, pointsTable, participatingFeds, catByes, catSeeds);
 
   const totalPart = participatingFeds.length;
   const numByes = Math.max(0, 32 - totalPart);

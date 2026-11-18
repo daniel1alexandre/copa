@@ -61,7 +61,9 @@ export function getRankedData(col = sortColumn, asc = sortAscending) {
   categories.forEach(cat => {
     const games = store.getGames(cat.id);
     const partFeds = store.getCategoryParticipatingFeds(cat.id);
-    const placements = calculateCategoryPlacements(games, pointsTable, partFeds);
+    const catByes = store.getCategoryByes(cat.id);
+    const catSeeds = store.getCategorySeeds(cat.id);
+    const placements = calculateCategoryPlacements(games, pointsTable, partFeds, catByes, catSeeds);
 
     placements.forEach(p => {
       if (scoreMatrix[p.equipe_id]) {
@@ -79,9 +81,12 @@ export function getRankedData(col = sortColumn, asc = sortAscending) {
     let valB = b[col];
 
     if (typeof valA === 'string') {
-      return asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+      return asc ? valA.localeCompare(valB, 'pt-BR') : valB.localeCompare(valA, 'pt-BR');
     }
-    return asc ? (valA || 0) - (valB || 0) : (valB || 0) - (valA || 0);
+    if ((valB || 0) !== (valA || 0)) {
+      return asc ? (valA || 0) - (valB || 0) : (valB || 0) - (valA || 0);
+    }
+    return a.nome.localeCompare(b.nome, 'pt-BR');
   });
 
   rankedList.forEach((item, idx) => {
@@ -232,13 +237,27 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
                 ${categories.map(cat => {
                   const pts = item[cat.id];
                   const fase = item[`fase_${cat.id}`];
+                  const isBye = /bye/i.test(fase || '');
+                  const isChamp = /campe|1º/i.test(fase || '');
+                  const isVice = /vice|2º/i.test(fase || '');
+                  const isTop4 = /semi|3º|4º/i.test(fase || '');
+                  const isTop8 = /quartas/i.test(fase || '');
+
+                  let badgeBg = '#f1f5f9';
+                  let badgeColor = '#475569';
+                  if (isChamp) { badgeBg = '#fef3c7'; badgeColor = '#b45309'; }
+                  else if (isVice) { badgeBg = '#f1f5f9'; badgeColor = '#334155'; }
+                  else if (isTop4) { badgeBg = '#eff6ff'; badgeColor = '#1d4ed8'; }
+                  else if (isTop8) { badgeBg = '#ecfdf5'; badgeColor = '#047857'; }
+                  else if (isBye) { badgeBg = 'rgba(2, 128, 144, 0.12)'; badgeColor = '#004b57'; }
+
                   return `
                     <td style="text-align: center; vertical-align: middle;">
                       ${pts > 0 ? `
-                        <div style="font-weight: 800; color: var(--primary); font-size: 0.9rem;">
-                          ${pts} <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted);">pts</span>
+                        <div style="font-weight: 800; color: var(--primary); font-size: 0.92rem;">
+                          ${pts} <span style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted);">${pts === 1 ? 'pt' : 'pts'}</span>
                         </div>
-                        <div style="font-size: 0.65rem; color: #047857; font-weight: 600; white-space: nowrap; max-width: 80px; overflow: hidden; text-overflow: ellipsis; margin: 0 auto;" title="${fase || ''}">
+                        <div style="display: inline-block; font-size: 0.65rem; font-weight: 700; background: ${badgeBg}; color: ${badgeColor}; padding: 1px 5px; border-radius: 4px; white-space: nowrap; max-width: 82px; overflow: hidden; text-overflow: ellipsis; margin-top: 2px;" title="${fase || ''}">
                           ${fase || '1ª Fase'}
                         </div>
                       ` : `
@@ -248,7 +267,7 @@ export function renderRankingHTML(rankedList, categories, currentSortCol = sortC
                   `;
                 }).join('')}
                 <td style="text-align: center; vertical-align: middle; background: rgba(2, 128, 144, 0.08); font-weight: 900; font-size: 1.25rem; color: var(--accent-dark-blue);">
-                  ${item.total} <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700;">pts</span>
+                  ${item.total} <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700;">${item.total === 1 ? 'pt' : 'pts'}</span>
                 </td>
               </tr>
             `).join('')}

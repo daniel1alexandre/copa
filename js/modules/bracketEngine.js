@@ -1143,23 +1143,54 @@ export function revertMatchResult(games, gameCode, previousState) {
   return { success: true, game };
 }
 
-// Calcula classificação e pontuação progressiva da categoria conforme os estados passam de fase
-export function calculateCategoryPlacements(games, pointsTable = {}, participatingFeds = []) {
+// Calcula classificação e pontuação progressiva da categoria conforme os estados iniciam e passam de fase
+export function calculateCategoryPlacements(games = [], pointsTable = {}, participatingFeds = [], categoryByes = [], categorySeeds = []) {
   const teamMap = new Map(); // teamId -> { team, pontos, faseAtual, colocacao, prioridade }
 
-  // Inicializa todas as federações participantes com 0 pontos e 'Aguardando Início'
+  const numByes = Math.max(0, 32 - participatingFeds.length);
+  const byeTeamIds = new Set();
+
+  // 1. Identifica BYEs explícitos configurados na categoria
+  if (Array.isArray(categoryByes) && categoryByes.length > 0) {
+    categoryByes.slice(0, numByes).forEach(id => {
+      if (id) byeTeamIds.add(id);
+    });
+  }
+
+  // 2. Se faltam BYEs, completa com os primeiros cabeças de chave da categoria
+  if (byeTeamIds.size < numByes && Array.isArray(categorySeeds)) {
+    categorySeeds.forEach(id => {
+      if (id && byeTeamIds.size < numByes) {
+        byeTeamIds.add(id);
+      }
+    });
+  }
+
+  // 3. Também identifica BYEs diretamente presentes na 1ª fase dos confrontos
+  games.forEach(g => {
+    if (g.fase === '1ª Fase' && g.is_bye) {
+      if (g.lado_a && !g.lado_a.isBye && g.lado_a.id) byeTeamIds.add(g.lado_a.id);
+      if (g.lado_b && !g.lado_b.isBye && g.lado_b.id) byeTeamIds.add(g.lado_b.id);
+      if (g.vencedor_id && g.vencedor_id !== 'bye') byeTeamIds.add(g.vencedor_id);
+    }
+  });
+
+  // Inicializa todas as federações participantes com a pontuação e fase em que iniciaram:
+  // - Quem iniciou de BYE avança direto para as Oitavas de Final (Top 16) e garante no mínimo 12 pts (pointsTable[16])
+  // - Quem iniciou na 1ª Fase disputa a 1ª rodada e garante no mínimo a pontuação de 27º lugar (1 pt - pointsTable[27])
   participatingFeds.forEach(fed => {
     if (!fed || !fed.id) return;
+    const hasBye = byeTeamIds.has(fed.id);
     teamMap.set(fed.id, {
       id: fed.id,
       equipe_id: fed.id,
       nome: fed.nome,
       sigla: fed.sigla,
       uf: fed.uf,
-      pontos: 0,
-      faseAtual: 'Aguardando Início',
-      colocacao: null,
-      prioridade: 0
+      pontos: hasBye ? (pointsTable[16] || 12) : (pointsTable[27] || 1),
+      faseAtual: hasBye ? 'Oitavas (BYE)' : '1ª Fase',
+      colocacao: hasBye ? 16 : 27,
+      prioridade: hasBye ? 2 : 1
     });
   });
 
@@ -1167,22 +1198,23 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   games.forEach(g => {
     [g.lado_a, g.lado_b].forEach(team => {
       if (team && team.id && !teamMap.has(team.id)) {
+        const hasBye = byeTeamIds.has(team.id);
         teamMap.set(team.id, {
           id: team.id,
           equipe_id: team.id,
           nome: team.nome,
           sigla: team.sigla,
           uf: team.uf,
-          pontos: 0,
-          faseAtual: 'Aguardando Início',
-          colocacao: null,
-          prioridade: 0
+          pontos: hasBye ? (pointsTable[16] || 12) : (pointsTable[27] || 1),
+          faseAtual: hasBye ? 'Oitavas (BYE)' : '1ª Fase',
+          colocacao: hasBye ? 16 : 27,
+          prioridade: hasBye ? 2 : 1
         });
       }
     });
   });
 
-  // Função auxiliar para registrar ou subir a pontuação de uma equipe
+  // Função auxiliar para registrar ou subir a pontuação de uma equipe conforme ela avança
   function registerPoints(team, points, faseName, colocacaoVal, prioridade) {
     if (!team || !team.id) return;
     const existing = teamMap.get(team.id);
@@ -1212,15 +1244,15 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   // 1. PRIMEIRA FASE (C1 a C16)
   const r32Games = games.filter(g => g.fase === '1ª Fase');
   r32Games.forEach(g => {
-    if (g.is_bye && g.vencedor_id) {
+    if (g.is_bye) {
       // Equipe passou de BYE direto para as Oitavas de Final (Top 16)
-      const byeTeam = (g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b) || { id: g.vencedor_id };
-      registerPoints(byeTeam, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
+      const byeTeam = (g.lado_a?.id && !g.lado_a.isBye ? g.lado_a : (g.lado_b?.id && !g.lado_b.isBye ? g.lado_b : null)) || (g.vencedor_id ? { id: g.vencedor_id } : null);
+      if (byeTeam) registerPoints(byeTeam, pointsTable[16] || 12, 'Oitavas (BYE)', 16, 2);
     } else if (g.status === 'encerrado' && g.vencedor_id) {
       // Equipe venceu o confronto da 1ª fase e passou para as Oitavas de Final (Top 16)
       const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
       const loser = g.lado_a?.id === g.vencedor_id ? g.lado_b : g.lado_a;
-      if (winner) registerPoints(winner, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
+      if (winner) registerPoints(winner, pointsTable[16] || 12, 'Oitavas (Top 16)', 16, 2);
       if (loser) registerPoints(loser, pointsTable[27] || 1, '1ª Fase (Reversa)', 27, 1);
     }
   });
@@ -1229,8 +1261,8 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
   const oitavasGames = games.filter(g => g.fase === 'Oitavas de Final');
   oitavasGames.forEach(g => {
     // Qualquer equipe presente nas Oitavas porque avançou garante no mínimo 12 pts (Top 16)
-    if (g.lado_a) registerPoints(g.lado_a, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
-    if (g.lado_b) registerPoints(g.lado_b, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
+    if (g.lado_a && !g.lado_a.isBye) registerPoints(g.lado_a, pointsTable[16] || 12, 'Oitavas (Top 16)', 16, 2);
+    if (g.lado_b && !g.lado_b.isBye) registerPoints(g.lado_b, pointsTable[16] || 12, 'Oitavas (Top 16)', 16, 2);
 
     if (g.status === 'encerrado' && g.vencedor_id) {
       const winner = g.lado_a?.id === g.vencedor_id ? g.lado_a : g.lado_b;
@@ -1238,7 +1270,7 @@ export function calculateCategoryPlacements(games, pointsTable = {}, participati
       // Vencedor passou para as Quartas de Final (Top 8)
       if (winner) registerPoints(winner, pointsTable[8] || 26, 'Quartas de Final (Top 8)', 8, 3);
       // Perdedor vai para a Reversa de 9º a 16º
-      if (loser) registerPoints(loser, pointsTable[16] || 12, 'Oitavas de Final (Top 16)', 16, 2);
+      if (loser) registerPoints(loser, pointsTable[16] || 12, 'Disputa 9º–16º', 16, 2);
     }
   });
 
